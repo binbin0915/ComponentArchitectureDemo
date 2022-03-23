@@ -1,0 +1,68 @@
+apply plugin: "com.android.library"
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    viewBinding {
+        enabled = true
+    }
+}
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+
+    //Jetpack
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'    //协程支持
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'    //Lifecycle 扩展库
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-alpha02'    //livedata扩展库
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'    //viewModel扩展库
+
+    //网络库
+    implementation project(":library:lib-network")
+    //UI 组件库
+    api project(":library:lib-widget")
+    //状态栏
+    api 'com.gitee.zackratos:UltimateBarX:0.6.1'
+    //toast
+    api 'com.github.yinshuai0324:ToastX:1.0.2'
+    //路由
+    implementation('com.alibaba:arouter-api:1.5.2') {
+        //过滤掉v4包里面的东西 防止和AndroidX冲突
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    kapt 'com.alibaba:arouter-compiler:1.5.2'    //ARouter路由compiler
+}

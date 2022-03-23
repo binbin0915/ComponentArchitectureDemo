@@ -1,0 +1,86 @@
+apply plugin: getModelType()
+apply plugin: "kotlin-android"
+apply plugin: 'kotlin-kapt'
+
+String getModelType() {
+    if (isRunModel.toBoolean()) {
+        return "com.android.application"
+    } else {
+        return "com.android.library"
+    }
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        if (isRunModel.toBoolean()) {
+            applicationId "com.model.splash"
+        }
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+    }
+
+
+    buildTypes {
+        prod {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'boolean', 'IS_RUN_MODEL', "${isRunModel.toBoolean()}"
+        }
+        beta {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'boolean', 'IS_RUN_MODEL', "${isRunModel.toBoolean()}"
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'boolean', 'IS_RUN_MODEL', "${isRunModel.toBoolean()}"
+        }
+    }
+
+    sourceSets {
+        main {
+            if (isRunModel.toBoolean()) {
+                //独立运行
+                manifest.srcFile 'src/main/alone/AndroidManifest.xml'
+            } else {
+                //合并到宿主
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                resources {
+                    //正式版本时，排除debug文件夹下所有调试文件
+                    exclude 'src/debug/*'
+                }
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    viewBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    //Jetpack
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'     //协程支持
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-alpha02'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+
+    //公共基础包
+    implementation project(":library:lib-common")
+    //日志打印
+    implementation project(":library:lib-logcat")
+    implementation project(":library:lib-widget")
+}

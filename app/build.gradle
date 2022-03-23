@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.wangkai.myapplication'
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.wangkai.myapplication"
+        minSdk 21
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    //公共基础包
+    implementation project(":library:lib-common")
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    if (!isRunModel.toBoolean()) {
+        implementation project(":model:model-splash")
+        implementation project(":model:model-home")
+        implementation project(":model:model-login")
+    }
+}

@@ -1,0 +1,29 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+rootProject.name = "My Application"
+//宿主App
+include ':app'
+//基础依赖库
+include ':library:lib-base' //--基础
+include ':library:lib-common' //--公共
+include ':library:lib-widget' //--widget（页面状态）
+include ':library:lib-network'//--网络
+include ':library:lib-router' //--路由
+include ':library:lib-logcat' //--日志
+//业务模块
+include ':model:model-splash'
+include ':model:model-home'
+include ':model:model-login'

@@ -1,0 +1,30 @@
+apply from: "../../app-model-build.gradle"
+android {
+    defaultConfig {
+        if (isRunModel.toBoolean()) {
+            applicationId "com.model.home"
+        }
+    }
+    //统一资源前缀，规范资源引用
+    resourcePrefix "home_"
+}
+
+//ARouter 配置
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
+dependencies {
+    //公共基础包
+    implementation project(":library:lib-common")
+    implementation 'com.google.android.material:material:1.5.0'
+
+    //路由
+    implementation('com.alibaba:arouter-api:1.5.2') {
+        //过滤掉v4包里面的东西 防止和AndroidX冲突
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    kapt 'com.alibaba:arouter-compiler:1.5.2'    //ARouter路由compiler
+}
