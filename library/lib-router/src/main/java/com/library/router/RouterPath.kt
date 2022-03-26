@@ -26,6 +26,11 @@ class RouterPath {
          */
         const val GROUP_LOGIN = "login"
 
+        /**
+         * 组-kotlin学习页面
+         */
+        const val GROUP_KOTLIN = "mykotlin"
+
 
         /***********页面***********/
 
@@ -38,6 +43,11 @@ class RouterPath {
          * 登录页面
          */
         const val PAGE_LOGIN_ACTIVITY = "/login/LoginActivity"
+
+        /**
+         * kotlin基础学习页面
+         */
+        const val PAGE_KOTLIN_BASE_ACTIVITY = "/mykotlin/KotlinBaseActivity"
 
 
         /***********服务***********/

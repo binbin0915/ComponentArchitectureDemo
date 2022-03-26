@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.model.splash">
-
+    package="com.model.home">
 
     <application
         android:name="com.library.base.application.DebugApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/login_app_name"
+        android:label="@string/mykotlin_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BaseApplication">
-        <activity android:name="com.model.login.LoginActivity">
+        android:theme="@style/mykotlin_Theme.BaseApplication">
+        <activity android:name="com.model.mykotlin.activity.KotlinBaseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

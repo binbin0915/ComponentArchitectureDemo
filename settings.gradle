@@ -24,6 +24,7 @@ include ':library:lib-network'//--网络
 include ':library:lib-router' //--路由
 include ':library:lib-logcat' //--日志
 //业务模块
-include ':model:model-splash'
-include ':model:model-home'
-include ':model:model-login'
+include ':model:model-splash'//启动页
+include ':model:model-home'//首页
+include ':model:model-login'//登录页
+include ':model:model-mykotlin'//kotlin示例

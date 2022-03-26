@@ -40,5 +40,6 @@ dependencies {
         implementation project(":model:model-splash")
         implementation project(":model:model-home")
         implementation project(":model:model-login")
+        implementation project(":model:model-mykotlin")
     }
 }

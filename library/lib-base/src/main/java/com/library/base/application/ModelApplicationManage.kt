@@ -18,6 +18,8 @@ object ModelApplicationManage {
         applications.add("com.model.home.application.HomeModelApplication")
         //登录模块
         applications.add("com.model.login.application.LoginModelApplication")
+        //kotlin学习模块
+        applications.add("com.model.mykotlin.application.MyKotlinModelApplication")
     }
 
 }

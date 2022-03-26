@@ -9,6 +9,8 @@
 [JDK版本：OPENJDK 11]
 [Gradle版本：7.4-bin]
 
+<font color=Blue>Test</font>
+
 ## 项目背景
 
     基于Jetpack组件，并且使用Kotlin语言进行开发  
@@ -24,3 +26,5 @@
     第四步:在业务模块下新建application包,在里面创建此模块的application类,用于model的SDK初始化
     第五步:在ModelApplicationManage里面注册刚刚创建好的application类,宿主App会自动初始化model的application
     第六步:在宿主app的build.gradle文件里面依赖新建的Mdoel模块
+    第七步：复制res文件夹
+    第八步：路更新由表
