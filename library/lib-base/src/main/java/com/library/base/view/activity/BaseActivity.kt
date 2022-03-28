@@ -10,7 +10,6 @@ import com.library.base.expand.*
 import com.library.base.utils.inflateBindingWithGeneric
 import com.library.base.viewmodel.BaseViewModel
 import com.library.widget.status.MultiStateContainer
-import com.library.widget.status.MultiStatePage
 import com.library.widget.status.PageStatus
 import com.library.widget.status.bindMultiState
 import kotlinx.coroutines.CoroutineScope

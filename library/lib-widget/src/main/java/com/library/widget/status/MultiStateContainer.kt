@@ -11,7 +11,7 @@ import android.widget.FrameLayout
 import com.library.widget.status.state.*
 
 /**
- * 作用描述：多状态页
+ * 作用描述：多状态页容器布局
  *
  * 创建时间：2022/03/18
  * @author：WangKai

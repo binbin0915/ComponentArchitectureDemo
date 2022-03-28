@@ -13,6 +13,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * lifecycleScope提供了协程支持
+ */
+
 class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
     View.OnClickListener {
 

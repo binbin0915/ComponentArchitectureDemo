@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 
 /**
- * 作用描述：多状态页
+ * 作用描述：多状态页接口，继承此接口实现具体页面
  *
  * 创建时间：2022/03/18
  * @author：WangKai

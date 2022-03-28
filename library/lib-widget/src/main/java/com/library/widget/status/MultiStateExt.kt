@@ -4,7 +4,10 @@ import android.app.Activity
 import android.view.View
 
 /**
- * 作用描述：多状态页
+ * 作用描述：多状态页的拓展方法
+ *
+ * 1. view绑定
+ * 2. activity绑定
  *
  * 创建时间：2022/03/18
  * @author：WangKai
