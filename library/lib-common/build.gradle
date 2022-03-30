@@ -37,15 +37,33 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //retrofit
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
     //gson解析的支持
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0"){
+    api("com.squareup.retrofit2:converter-gson:2.9.0"){
         exclude group: 'com.google.code.gson',module: "gson"
     }
-    implementation 'com.google.code.gson:gson:2.8.7'
+    api 'com.google.code.gson:gson:2.9.0'
 
+    //第三方库
+    implementation ("com.gitee.yupfeg:logger:1.2.2")
+    implementation("com.gitee.yupfeg:ExecutorProvider:1.0.2")
+
+    //autoDisposable
+    api ("com.uber.autodispose2:autodispose:2.1.1")
+    api ("com.uber.autodispose2:autodispose-androidx-lifecycle:2.1.1")
+    //协程支持
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    //RxJava3
+    api ("io.reactivex.rxjava3:rxjava:3.1.3")
+    api ("io.reactivex.rxjava3:rxandroid:3.0.0")
+    api ("io.reactivex.rxjava3:rxkotlin:3.0.1")
+    //不中断事件流的RxJava3热流拓展
+    api ("com.jakewharton.rxrelay3:rxrelay:3.0.0")
+    //retrofit对于RxJava3返回对象的支持
+    api ("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
     //动画库
-    api 'com.airbnb.android:lottie:3.7.1'
+    api 'com.airbnb.android:lottie:4.2.2'
     //基础组件库
     api project(":library:lib-base")
     //网络

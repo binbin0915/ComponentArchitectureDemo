@@ -4,7 +4,11 @@
 
     <application>
         <activity
+            android:name=".activity.NetNormalActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.KotlinBaseActivity"
             android:exported="false" />
     </application>
+
 </manifest>

@@ -31,6 +31,7 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
     override fun initData() {
         viewBinding.btKotlinBase.setOnClickListener(this)
         viewBinding.btKotlinFunction.setOnClickListener(this)
+        viewBinding.btNetworkBase.setOnClickListener(this)
     }
 
     /**
@@ -63,7 +64,7 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
             }
 
             R.id.bt_network_base -> {
-
+                JumpActivity.jump(RouterPath.GROUP_KOTLIN, RouterPath.PAGE_NET_NORMAL_ACTIVITY)
             }
 
             R.id.bt_network_replace_url -> {
