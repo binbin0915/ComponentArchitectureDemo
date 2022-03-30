@@ -61,6 +61,22 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
             R.id.bt_kotlin_function -> {
 
             }
+
+            R.id.bt_network_base -> {
+
+            }
+
+            R.id.bt_network_replace_url -> {
+
+            }
+
+            R.id.bt_network_download -> {
+
+            }
+
+
+
+
         }
     }
 }

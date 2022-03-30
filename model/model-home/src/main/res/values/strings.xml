@@ -3,4 +3,7 @@
     <string name="home_bt_text_kotlin1">kotlin 基础</string>
     <string name="home_bt_text_kotlin2">kotlin 函数的基本用法</string>
     <string name="home_bt_text_kotlin3">3</string>
+    <string name="home_bt_text_network_base">network的基本用法</string>
+    <string name="home_bt_text_network_replace_url">多network</string>
+    <string name="home_bt_text_network_download">网络下载</string>
 </resources>

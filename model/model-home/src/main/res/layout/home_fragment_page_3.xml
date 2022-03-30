@@ -39,6 +39,36 @@
                 android:textAllCaps="false" />
 
 
+            <Button
+                android:id="@+id/bt_network_base"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/home_bt_text_network_base"
+                android:textAllCaps="false" />
+
+
+            <Button
+                android:id="@+id/bt_network_replace_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/home_bt_text_network_replace_url"
+                android:textAllCaps="false" />
+
+
+            <Button
+                android:id="@+id/bt_network_download"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/home_bt_text_network_download"
+                android:textAllCaps="false" />
+
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
