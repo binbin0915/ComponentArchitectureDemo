@@ -3,8 +3,8 @@ package com.library.base.application
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
-import android.util.Log
 import com.library.base.utils.ApplicationInitUtils
+import kotlin.properties.Delegates
 
 /**
  * 作用描述：Application的基类
@@ -13,9 +13,17 @@ import com.library.base.utils.ApplicationInitUtils
  * @author：WangKai
  */
 abstract class BaseApplication : Application() {
+    //instance
+    companion object{
+        var appContext: Context by Delegates.notNull()
+            private set
+        lateinit var instance : BaseApplication
+    }
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
+        appContext = this.applicationContext
         appInit()
         ApplicationInitUtils.initOnCreate(this)
     }

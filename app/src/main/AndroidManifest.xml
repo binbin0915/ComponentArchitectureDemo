@@ -2,19 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wangkai.myapplication">
+    <!--app权限在这里申请-->
 
     <!-- 开启网络访问权限 -->
-    <uses-permission android:name="android.permission.INTERNET">
-    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 允许访问网络状态的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 允许访问wifi状态的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 允许修改网络状态的权限 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE">
-    </uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!-- 允许修改wifi状态的权限 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
 
     <application
@@ -28,6 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/SplashTheme.BaseApplication"
         tools:targetApi="31">
+        <!--入口activity-->
         <activity
             android:name="com.model.splash.SplashMainActivity"
             android:exported="true">

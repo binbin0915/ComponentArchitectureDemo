@@ -18,9 +18,6 @@ import kotlinx.coroutines.launch
  */
 class HomeMainActivityViewModel : BaseViewModel() {
     val pageData = MutableLiveData<ArrayList<String>>()
-    //获取service
-
-//    private val apiService = getApiService(HomeApiService::class.java)
 
     fun getPageData() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -28,18 +25,5 @@ class HomeMainActivityViewModel : BaseViewModel() {
                 pageData.value = arrayListOf("第一个页面", "第二个页面", "第三个页面", "第四个页面")
             }
         }
-
-        //dsl请求
-
-//        safeApiRequest<MyData> {
-//            api = { apiService.getData() }
-//            onSuccess {
-//                Log.e("AAAAAAAAAAAAAAAAAAAAA", "onSuccess")
-//            }
-//            onFailed { errorMsg, code ->
-//                Log.e("AAAAAAAAAAAAAAAAAAAAA", "onFailed:$errorMsg   onFailed:$code")
-//            }
-//        }
-
     }
 }

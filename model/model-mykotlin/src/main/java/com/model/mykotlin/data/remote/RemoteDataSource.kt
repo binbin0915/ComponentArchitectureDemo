@@ -1,9 +1,9 @@
 package com.model.mykotlin.data.remote
 
+import com.library.base.application.BaseApplication
 import com.library.common.tools.delegate.wanAndroidApiDelegate
 import com.library.common.tools.download.ApkFileDownloadProducer
 import com.library.common.tools.rxjava3.preHandlerRxJava3Response
-import com.model.mykotlin.application.MyKotlinModelApplication
 import com.model.mykotlin.data.entity.JueJinHttpResultBean
 import com.model.mykotlin.data.entity.WanAndroidArticleListResponseEntity
 import com.yupfeg.remote.HttpRequestMediator
@@ -26,9 +26,9 @@ object RemoteDataSource {
 
     private const val TEST_DOWNLOAD_APK_NAME = "testDownload.apk"
 
-    private val mApiService : TestApiService by wanAndroidApiDelegate()
+    private val mApiService: TestApiService by wanAndroidApiDelegate()
 
-    private val mApkDownloadProducer : ApkFileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED){
+    private val mApkDownloadProducer: ApkFileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         ApkFileDownloadProducer(
             requestTag = HttpRequestMediator.DEFAULT_DOWNLOAD_CLIENT_KEY,
             requestConfig = createApkDownloadHttpRequestConfig()
@@ -52,7 +52,7 @@ object RemoteDataSource {
      * 基于RxJava3获取wanAndroid的文章列表数据
      * @param pageIndex 分页页数
      * */
-    fun queryWanAndroidArticlesByRxJava3(pageIndex : Int) : Maybe<WanAndroidArticleListResponseEntity>{
+    fun queryWanAndroidArticlesByRxJava3(pageIndex: Int): Maybe<WanAndroidArticleListResponseEntity> {
         return mApiService.getWanAndroidArticlesByRxJava3(pageIndex)
             .compose(preHandlerRxJava3Response())
     }
@@ -61,12 +61,12 @@ object RemoteDataSource {
      * 基于kotlin 协程获取wanAndroid的文章列表数据
      * @param pageIndex 分页页数
      * */
-    suspend fun queryWanAndroidArticleByCoroutine(pageIndex: Int) : WanAndroidArticleListResponseEntity{
+    suspend fun queryWanAndroidArticleByCoroutine(pageIndex: Int): WanAndroidArticleListResponseEntity {
         val result = mApiService.queryWanAndroidArticleByCoroutine(pageIndex)
         val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(result)
-        if (!isSuccess){
+        if (!isSuccess) {
             //业务执行异常
-            throw RestApiException(result.code,result.message)
+            throw RestApiException(result.code, result.message)
         }
         //业务执行成功
         return result
@@ -76,7 +76,7 @@ object RemoteDataSource {
      * 基于RxJava3，获取掘金PC端的文章列表接口
      * * 无法正常请求，仅用于测试动态切换baseUrl
      * */
-    fun queryJueJinAdvertsByRxJava3() : Maybe<JueJinHttpResultBean>{
+    fun queryJueJinAdvertsByRxJava3(): Maybe<JueJinHttpResultBean> {
         return mApiService.queryJueJinAdverts()
     }
 
@@ -84,8 +84,8 @@ object RemoteDataSource {
      * 基于RxJava3，获取百度PC端查询接口
      * * 无法正常请求，仅用于测试动态切换baseUrl
      */
-    fun queryBaiduData() : Maybe<JueJinHttpResultBean>{
-        return mApiService.queryBaiduData("98010089_dg","android")
+    fun queryBaiduData(): Maybe<JueJinHttpResultBean> {
+        return mApiService.queryBaiduData("98010089_dg", "android")
     }
 
     /**
@@ -93,7 +93,7 @@ object RemoteDataSource {
      * @param fileUrl
      * @return
      */
-    fun observeApkDownloadProgress(fileUrl: String) : Flowable<DownloadProgressBean>{
+    fun observeApkDownloadProgress(fileUrl: String): Flowable<DownloadProgressBean> {
         return mApkDownloadProducer.observeDownloadProgressChange(fileUrl)
             .observeOn(AndroidSchedulers.mainThread())
     }
@@ -103,19 +103,19 @@ object RemoteDataSource {
      * @param fileUrl
      * @return
      */
-    fun downloadApk(fileUrl : String) : Maybe<Unit>{
+    fun downloadApk(fileUrl: String): Maybe<Unit> {
         val downloadPath = getApkDownloadFilePath()
         val downloadFile = File(downloadPath)
-        if (downloadFile.exists()){
+        if (downloadFile.exists()) {
             //删除已存在的文件
             downloadFile.delete()
         }
-        return mApkDownloadProducer.downloadApk(fileUrl,downloadPath)
+        return mApkDownloadProducer.downloadApk(fileUrl, downloadPath)
     }
 
 
-    private fun getApkDownloadFilePath() : String{
-        val appFileDirPath = ""
+    private fun getApkDownloadFilePath(): String {
+        val appFileDirPath = BaseApplication.instance.applicationContext.filesDir.absolutePath
         val apkDirPath = appFileDirPath + File.separator + ".apk"
         return "$apkDirPath$TEST_DOWNLOAD_APK_NAME"
     }
