@@ -20,9 +20,9 @@ include ':app'
 include ':library:lib-base' //--基础
 include ':library:lib-common' //--公共
 include ':library:lib-widget' //--widget（页面状态）
-include ':library:lib-network'//--网络
 include ':library:lib-router' //--路由
 include ':library:lib-logcat' //--日志
+include ':library:lib-network' //--日志
 //业务模块
 include ':model:model-splash'//启动页
 include ':model:model-home'//首页

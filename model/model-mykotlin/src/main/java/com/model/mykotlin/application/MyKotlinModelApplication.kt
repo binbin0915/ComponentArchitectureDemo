@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.res.Configuration
 import com.alibaba.android.arouter.launcher.ARouter
 import com.library.base.application.BaseModelApplication
-import com.library.network.NetworkManage
 import com.model.mykotlin.BuildConfig
+import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 
 /**
  * 作用描述：
@@ -26,7 +26,6 @@ class MyKotlinModelApplication : BaseModelApplication() {
         ARouter.init(application)
         if (BuildConfig.IS_RUN_MODEL) {
             //已模块化运行的话 需要初始化网络请求框架
-            NetworkManage.config().build()
         }
     }
 

@@ -1,7 +1,5 @@
 package com.model.home.api
 
-import com.library.network.data.NetworkData
-
 /**
  * 作用描述：首页模块Api服务
  *
@@ -9,5 +7,5 @@ import com.library.network.data.NetworkData
  * @author：WangKai
  */
 interface HomeApiService {
-    suspend fun getData(): NetworkData<String>
+
 }

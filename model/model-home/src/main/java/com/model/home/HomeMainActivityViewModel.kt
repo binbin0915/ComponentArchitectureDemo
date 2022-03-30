@@ -1,9 +1,11 @@
 package com.model.home
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.library.base.viewmodel.BaseViewModel
 import com.model.home.api.HomeApiService
+import com.model.home.api.MyData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,7 +18,9 @@ import kotlinx.coroutines.launch
  */
 class HomeMainActivityViewModel : BaseViewModel() {
     val pageData = MutableLiveData<ArrayList<String>>()
-    val apiService = getApiService(HomeApiService::class.java)
+    //获取service
+
+//    private val apiService = getApiService(HomeApiService::class.java)
 
     fun getPageData() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -25,15 +29,17 @@ class HomeMainActivityViewModel : BaseViewModel() {
             }
         }
 
-        safeApiRequest<String> {
-            api = { apiService.getData() }
-            onSuccess {
+        //dsl请求
 
-            }
-            onFailed { errorMsg, code ->
-
-            }
-        }
+//        safeApiRequest<MyData> {
+//            api = { apiService.getData() }
+//            onSuccess {
+//                Log.e("AAAAAAAAAAAAAAAAAAAAA", "onSuccess")
+//            }
+//            onFailed { errorMsg, code ->
+//                Log.e("AAAAAAAAAAAAAAAAAAAAA", "onFailed:$errorMsg   onFailed:$code")
+//            }
+//        }
 
     }
 }

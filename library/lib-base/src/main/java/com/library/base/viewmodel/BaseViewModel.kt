@@ -6,15 +6,7 @@ import com.library.base.data.EventType
 import com.library.base.data.ViewModelEventData
 import com.library.base.expand.ToastType
 import com.library.base.livedata.SingleLiveEvent
-import com.library.network.ApiRequest
-import com.library.network.NetworkManage
-import com.library.network.callback.NetworkRequestEventCallback
-import com.library.network.data.NetworkData
-import com.library.network.dsl.NetworkRequestDsl
 import com.library.widget.status.PageStatus
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * 作用描述:ViewModel的基类
@@ -30,19 +22,19 @@ open class BaseViewModel : ViewModel() {
     val eventNoticeData = SingleLiveEvent<ViewModelEventData>()
 
 
-    /**
-     * 获取Api服务
-     */
-    fun <T> getApiService(key: String = NetworkManage.GLOBAL_API_KEY, clazz: Class<T>): T {
-        return NetworkManage.createApiService(key, clazz)
-    }
-
-    /**
-     * 获取Api服务
-     */
-    fun <T> getApiService(clazz: Class<T>): T {
-        return NetworkManage.createApiService(NetworkManage.GLOBAL_API_KEY, clazz)
-    }
+//    /**
+//     * 获取Api服务
+//     */
+//    fun <T> getApiService(key: String = NetworkManage.GLOBAL_API_KEY, clazz: Class<T>): T {
+//        return NetworkManage.createApiService(key, clazz)
+//    }
+//
+//    /**
+//     * 获取Api服务
+//     */
+//    fun <T> getApiService(clazz: Class<T>): T {
+//        return NetworkManage.createApiService(NetworkManage.GLOBAL_API_KEY, clazz)
+//    }
 
 
     /**
@@ -91,48 +83,4 @@ open class BaseViewModel : ViewModel() {
         eventNoticeData.value =
             ViewModelEventData(EventType.EVENT_CHANGE_PAGE_STATUS, pageStatus = status)
     }
-
-
-    /**
-     * 网络请求 需要自己捕获异常
-     */
-    fun <T> apiRequest(block: suspend () -> NetworkData<T>?) {
-        viewModelScope.launch(Dispatchers.Main) {
-            ApiRequest.apiRequest(block)
-        }
-    }
-
-
-    /**
-     * 安全调用 网络同步请求请求
-     */
-    suspend fun <T> safeApiRequestAwait(api: suspend () -> NetworkData<T>): NetworkData<T> {
-        return ApiRequest.safeApiRequestAwait(object : NetworkRequestEventCallback {
-            override fun onDismissLoading() {
-                dismissLoading()
-            }
-
-            override fun onResponseCode(code: Int) {
-
-            }
-        }, api)
-    }
-
-    /**
-     * 安全调用-异步请求
-     */
-    fun <T> safeApiRequest(dsl: NetworkRequestDsl<T>.() -> Unit) {
-        viewModelScope.launch(Dispatchers.Main) {
-            ApiRequest.safeApiRequest(this@BaseViewModel, object : NetworkRequestEventCallback {
-                override fun onDismissLoading() {
-                    dismissLoading()
-                }
-
-                override fun onResponseCode(code: Int) {
-                    TODO("Not yet implemented")
-                }
-            }, dsl)
-        }
-    }
-
 }

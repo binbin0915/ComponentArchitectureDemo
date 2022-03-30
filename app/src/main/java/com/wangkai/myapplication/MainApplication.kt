@@ -1,7 +1,8 @@
 package com.wangkai.myapplication
 
 import com.library.base.application.BaseApplication
-import com.library.network.NetworkManage
+import com.library.common.GlobalResponseHandler
+import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 
 /**
  * 作用描述：壳项目MainApplication
@@ -12,6 +13,7 @@ import com.library.network.NetworkManage
 class MainApplication : BaseApplication() {
 
     override fun appInit() {
-        NetworkManage.config().build()
+        //设置全局http响应
+        GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())
     }
 }
