@@ -3,7 +3,7 @@
     package="com.model.splash">
 
     <application>
-        <activity android:name=".SplashMainActivity" />
+        <activity android:name=".SplashMainActivity" android:theme="@style/SplashTheme.BaseApplication" />
     </application>
 
 </manifest>

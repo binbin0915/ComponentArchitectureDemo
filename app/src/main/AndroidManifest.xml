@@ -25,10 +25,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/SplashTheme.BaseApplication"
+        android:theme="@style/APPTheme.BaseApplication"
         tools:targetApi="31">
         <!--入口activity-->
         <activity
+            android:theme="@style/SplashTheme.BaseApplication"
             android:name="com.model.splash.SplashMainActivity"
             android:exported="true">
             <intent-filter>

@@ -10,7 +10,8 @@
         <item name="colorSecondaryVariant">@color/splash_teal_200</item>
         <item name="colorOnSecondary">@color/splash_black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" >@color/splash_black</item>
         <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">@color/splash_black</item>
     </style>
 </resources>
