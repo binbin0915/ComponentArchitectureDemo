@@ -1,5 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
+    <!--闪屏页夜间模式的主题-->
     <style name="SplashTheme.BaseApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/splash_purple_200</item>
@@ -9,9 +9,11 @@
         <item name="colorSecondary">@color/splash_teal_200</item>
         <item name="colorSecondaryVariant">@color/splash_teal_200</item>
         <item name="colorOnSecondary">@color/splash_black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/splash_black</item>
-        <!-- Customize your theme here. -->
+        <!--布局的背景色-->
+        <item name="android:windowBackground">@color/splash_black</item>
+        <!--状态栏颜色-->
+        <item name="android:statusBarColor">@color/splash_black</item>
+        <!--导航栏颜色-->
         <item name="android:navigationBarColor">@color/splash_black</item>
     </style>
 </resources>

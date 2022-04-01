@@ -1,5 +1,5 @@
 <resources>
-    <!-- Base application theme. -->
+    <!--APP日间模式的主题-->
     <style name="APPTheme.BaseApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
@@ -9,8 +9,10 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" >@color/white</item>
-        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/white</item>
+        <!--状态栏颜色-->
+        <item name="android:statusBarColor" >#00000000</item>
+        <!--导航栏颜色-->
+        <item name="android:navigationBarColor">#00000000</item>
     </style>
 </resources>
