@@ -1,6 +1,8 @@
 package com.library.base.view.activity
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
@@ -44,12 +46,25 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         super.onCreate(savedInstanceState)
         viewBinding = inflateBindingWithGeneric(layoutInflater)
         setContentView(viewBinding.root)
-        //设置状态栏样式
-        setBarStyle(statusBarStyle())
+
+        when (applicationContext.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                setBarStyle(statusBarStyle(), true)
+
+            }
+
+            Configuration.UI_MODE_NIGHT_YES -> {
+                setBarStyle(statusBarStyle(), false)
+
+
+            }
+        }
+
         pageStatus = bindMultiState {
             //重试
             onRetry()
         }
+
         if (defaultLoadingStatus()) {
             pageStatus.changePageStatus(PageStatus.STATUS_LOADING)
         }

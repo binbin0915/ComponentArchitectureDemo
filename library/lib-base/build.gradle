@@ -55,7 +55,7 @@ dependencies {
     //UI 组件库
     implementation project(":library:lib-widget")
     //状态栏
-    implementation 'com.gitee.zackratos:UltimateBarX:0.6.1'
+    implementation 'com.gitee.zackratos:UltimateBarX:0.8.0'
     //toast
     implementation 'com.github.yinshuai0324:ToastX:1.0.2'
     //路由
