@@ -13,7 +13,7 @@ class SplashMainActivity : BaseActivity<BaseViewModel, SplashActivityMainBinding
     Animator.AnimatorListener {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
+//        if (hasFocus) hideSystemUI()
     }
 
     private fun hideSystemUI() {
