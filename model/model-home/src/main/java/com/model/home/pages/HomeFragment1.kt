@@ -71,6 +71,9 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
         showSucceedStatus()
     }
 
+    /**
+     * 点击重试会调用
+     */
     override fun onRetry() {
         //requireContext()
         showToast(ToastType.INFO, "重试监听")

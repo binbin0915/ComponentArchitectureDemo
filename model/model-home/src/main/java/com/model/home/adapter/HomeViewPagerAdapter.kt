@@ -14,11 +14,9 @@ import com.model.home.pages.HomeFragment4
  * 创建时间：2022/03/18
  * @author：WangKai
  */
-class HomeViewPagerAdapter constructor(activity: FragmentActivity) :
-    FragmentStateAdapter(activity) {
-    var data = arrayListOf<String>()
+class HomeViewPagerAdapter(activity: FragmentActivity, private val itemCount: Int) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {
-        return data.size
+        return itemCount
     }
 
     override fun createFragment(position: Int): Fragment {
