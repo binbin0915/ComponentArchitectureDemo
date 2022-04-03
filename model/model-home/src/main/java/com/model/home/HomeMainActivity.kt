@@ -24,10 +24,19 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
         //获取网络数据
         viewModel.getPageData()
 
-        //注册切换回调
-        viewBinding.viewPager.registerOnPageChangeCallback(viewPagerCallback)
-
-        //注册点击回调
+        //1.注册viewpager页面滑动回调 -- 抽象类的使用
+        viewBinding.viewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> viewBinding.bottomBar.selectedItemId = R.id.menu1
+                    1 -> viewBinding.bottomBar.selectedItemId = R.id.menu2
+                    2 -> viewBinding.bottomBar.selectedItemId = R.id.menu3
+                    3 -> viewBinding.bottomBar.selectedItemId = R.id.menu4
+                }
+            }
+        })
+        //2.注册BottomNavigationView点击监听 -- kotlin接口的使用
         viewBinding.bottomBar.setOnItemSelectedListener { item: MenuItem ->
             when (item.itemId) {
                 R.id.menu1 -> {
@@ -47,20 +56,6 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
                     true
                 }
                 else -> false
-            }
-        }
-    }
-
-    /**
-     * viewpager页面滑动监听
-     */
-    private val viewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            when (position) {
-                0 -> viewBinding.bottomBar.selectedItemId = R.id.menu1
-                1 -> viewBinding.bottomBar.selectedItemId = R.id.menu2
-                2 -> viewBinding.bottomBar.selectedItemId = R.id.menu3
-                3 -> viewBinding.bottomBar.selectedItemId = R.id.menu4
             }
         }
     }
