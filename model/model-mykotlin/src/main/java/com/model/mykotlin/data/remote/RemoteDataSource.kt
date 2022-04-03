@@ -1,7 +1,7 @@
 package com.model.mykotlin.data.remote
 
 import com.library.base.application.BaseApplication
-import com.library.common.tools.delegate.wanAndroidApiDelegate
+import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
 import com.library.common.tools.download.ApkFileDownloadProducer
 import com.library.common.tools.rxjava3.preHandlerRxJava3Response
 import com.model.mykotlin.data.entity.JueJinHttpResultBean
@@ -19,14 +19,70 @@ import java.io.File
 
 /**
  * 远程网络数据源
- * @author yuPFeG
- * @date 2021/09/23
+ *
+ * 基本使用
+ * *
+ *
+ *
+ *
+ *
+ *
+ * @author WangKai
+ * @date 2022/04/03
  */
 object RemoteDataSource {
 
-    private const val TEST_DOWNLOAD_APK_NAME = "testDownload.apk"
-
+    /**
+     * wanAndroid的网络请求retrofit api接口的委托
+     * * 通过by关键字委托创建api接口实例
+     * */
     private val mApiService: TestApiService by wanAndroidApiDelegate()
+
+    /**
+     * 基于kotlin 协程获取wanAndroid的文章列表数据
+     * @param pageIndex 分页页数
+     * */
+    suspend fun queryWanAndroidArticleByCoroutine(pageIndex: Int): WanAndroidArticleListResponseEntity {
+        val result = mApiService.queryWanAndroidArticleByCoroutine(pageIndex)
+        val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(result)
+        if (!isSuccess) {
+            //业务执行异常
+            throw RestApiException(result.code, result.message)
+        }
+        //业务执行成功
+        return result
+    }
+
+    /**
+     * 基于RxJava3获取wanAndroid的文章列表数据
+     * @param pageIndex 分页页数
+     * */
+    fun queryWanAndroidArticlesByRxJava3(pageIndex: Int): Maybe<WanAndroidArticleListResponseEntity> {
+        return mApiService.getWanAndroidArticlesByRxJava3(pageIndex)
+            .compose(preHandlerRxJava3Response())
+    }
+
+    /**
+     * 基于RxJava3，获取掘金PC端的文章列表接口
+     * * 无法正常请求，仅用于测试动态切换baseUrl
+     * */
+    fun queryJueJinAdvertsByRxJava3(): Maybe<JueJinHttpResultBean> {
+        return mApiService.queryJueJinAdverts()
+    }
+
+    /**
+     * 基于RxJava3，获取百度PC端查询接口
+     * * 无法正常请求，仅用于测试动态切换baseUrl
+     */
+    fun queryBaiduData(): Maybe<JueJinHttpResultBean> {
+        return mApiService.queryBaiduData("98010089_dg", "android")
+    }
+
+    /**
+     * 下载的配置
+     */
+
+    private const val TEST_DOWNLOAD_APK_NAME = "testDownload.apk"
 
     private val mApkDownloadProducer: ApkFileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         ApkFileDownloadProducer(
@@ -46,46 +102,6 @@ object RemoteDataSource {
             // createSynchronous()则使用下游subscribeOn提供的线程池)
             callAdapterFactories.add(RxJava3CallAdapterFactory.create())
         }
-    }
-
-    /**
-     * 基于RxJava3获取wanAndroid的文章列表数据
-     * @param pageIndex 分页页数
-     * */
-    fun queryWanAndroidArticlesByRxJava3(pageIndex: Int): Maybe<WanAndroidArticleListResponseEntity> {
-        return mApiService.getWanAndroidArticlesByRxJava3(pageIndex)
-            .compose(preHandlerRxJava3Response())
-    }
-
-    /**
-     * 基于kotlin 协程获取wanAndroid的文章列表数据
-     * @param pageIndex 分页页数
-     * */
-    suspend fun queryWanAndroidArticleByCoroutine(pageIndex: Int): WanAndroidArticleListResponseEntity {
-        val result = mApiService.queryWanAndroidArticleByCoroutine(pageIndex)
-        val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(result)
-        if (!isSuccess) {
-            //业务执行异常
-            throw RestApiException(result.code, result.message)
-        }
-        //业务执行成功
-        return result
-    }
-
-    /**
-     * 基于RxJava3，获取掘金PC端的文章列表接口
-     * * 无法正常请求，仅用于测试动态切换baseUrl
-     * */
-    fun queryJueJinAdvertsByRxJava3(): Maybe<JueJinHttpResultBean> {
-        return mApiService.queryJueJinAdverts()
-    }
-
-    /**
-     * 基于RxJava3，获取百度PC端查询接口
-     * * 无法正常请求，仅用于测试动态切换baseUrl
-     */
-    fun queryBaiduData(): Maybe<JueJinHttpResultBean> {
-        return mApiService.queryBaiduData("98010089_dg", "android")
     }
 
     /**

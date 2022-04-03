@@ -14,7 +14,7 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
         super.onCreate(savedInstanceState)
 
         viewBinding.btnNormalUseRxjava3.setOnClickListener {
-            viewModel.queryWanAndroidArticleByCoroutine()
+            viewModel.queryWanAndroidArticlesByRxJava3()
         }
 
         viewBinding.btnNormalUseCoroutine.setOnClickListener {

@@ -1,4 +1,4 @@
-package com.library.common.tools.delegate
+package com.model.mykotlin.data.delegate
 
 import com.google.gson.GsonBuilder
 import com.library.common.LoggerHttpLogPrinterImpl
@@ -20,11 +20,10 @@ inline fun <reified T> wanAndroidApiDelegate() = WanAndroidApiDelegator(clazz = 
 /**
  * 玩Android的个公开Api接口网络请求配置代理类
  * @param clazz 需要代理的retrofit api接口的类对象
- * @author yuPFeG
- * @date 2021/03/30
+ * @author WangKai
  */
-class WanAndroidApiDelegator<T>(clazz: Class<T>)
-    : BaseRequestApiDelegator<T>(clazz, HttpRequestMediator.DEFAULT_CLIENT_KEY){
+class WanAndroidApiDelegator<T>(clazz: Class<T>) :
+    BaseRequestApiDelegator<T>(clazz, HttpRequestMediator.DEFAULT_CLIENT_KEY) {
     override fun addHttpRequestConfig(configKey: String) {
         addDslRemoteConfig(configKey) {
             baseUrl = "https://www.wanandroid.com/"
@@ -46,7 +45,6 @@ class WanAndroidApiDelegator<T>(clazz: Class<T>)
                 // 而createAsync()则使用okHttp内置的线程池)
 //                add(RxJava2CallAdapterFactory.create())
             }
-
         }
     }
 }

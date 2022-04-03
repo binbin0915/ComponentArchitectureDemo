@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.library.base.expand.ToastType
 import com.library.base.view.fragment.BaseFragment
 import com.library.base.viewmodel.BaseViewModel
 import com.library.widget.status.PageStatus
@@ -71,7 +72,8 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
     }
 
     override fun onRetry() {
-        Toast.makeText(requireContext(), "重试监听", Toast.LENGTH_SHORT).show()
+        //requireContext()
+        showToast(ToastType.INFO, "重试监听")
     }
 
     private fun showSucceedStatus() {

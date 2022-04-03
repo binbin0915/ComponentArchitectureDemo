@@ -23,4 +23,17 @@ class NetNormalViewModel: BaseViewModel() {
             }
         }
     }
+
+    fun queryWanAndroidArticlesByRxJava3(){
+        viewModelScope.launch{
+            //TODO 仅作测试，后续使用flow优化
+            try {
+                val responseEntity = RemoteDataSource.queryWanAndroidArticlesByRxJava3(0)
+                articleJsonStringLiveData.value = "query WanAndroid Article from Coroutine \n $responseEntity"
+            }catch (e : Exception){
+                GlobalHttpResponseProcessor.handleHttpError(e)
+                articleJsonStringLiveData.value = "query WanAndroid Article from Coroutine $e"
+            }
+        }
+    }
 }

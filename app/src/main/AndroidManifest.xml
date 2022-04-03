@@ -19,6 +19,7 @@
     <application
         android:name=".MainApplication"
         android:allowBackup="false"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -29,15 +30,23 @@
         tools:targetApi="31">
         <!--入口activity-->
         <activity
-            android:theme="@style/SplashTheme.BaseApplication"
             android:name="com.model.splash.SplashMainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme.BaseApplication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--x5内核首次加载时优化的Service声明。-->
+        <!--该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。-->
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt" />
+
     </application>
 
 </manifest>
