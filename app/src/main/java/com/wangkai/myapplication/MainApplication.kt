@@ -33,14 +33,14 @@ class MainApplication : BaseApplication() {
              * @param arg0 是否使用X5内核，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
              */
             override fun onViewInitFinished(arg0: Boolean) {
-                Log.e("AAAAAAAAAAAAAAA", "内核加载成功：$arg0")
+
             }
 
             /**
              * 内核初始化完成，可能为系统内核，也可能为系统内核
              */
             override fun onCoreInitFinished() {
-                Log.e("AAAAAAAAAAAAAAA", "内核初始化完成")
+
             }
         }
         QbSdk.initX5Environment(appContext, cb)

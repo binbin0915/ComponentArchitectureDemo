@@ -25,19 +25,31 @@ class SplashMainActivity : BaseActivity<BaseViewModel, SplashActivityMainBinding
 
     }
 
-    override fun onAnimationStart(p0: Animator?) {
+    /**
+     * 动画开始
+     */
+    override fun onAnimationStart(animator: Animator) {
 
     }
 
-    override fun onAnimationEnd(p0: Animator?) {
+    /**
+     * 动画结束
+     */
+    override fun onAnimationEnd(animator: Animator) {
         JumpActivity.jump(this, RouterPath.GROUP_HOME, RouterPath.PAGE_HOME_MAIN_ACTIVITY, true)
     }
 
-    override fun onAnimationCancel(p0: Animator?) {
+    /**
+     * 动画取消
+     */
+    override fun onAnimationCancel(animator: Animator) {
 
     }
 
-    override fun onAnimationRepeat(p0: Animator?) {
+    /**
+     * 动画重复播放
+     */
+    override fun onAnimationRepeat(animator: Animator) {
 
     }
 }
