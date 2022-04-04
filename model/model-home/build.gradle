@@ -21,6 +21,10 @@ dependencies {
     implementation project(":library:lib-common")
     implementation 'com.google.android.material:material:1.5.0'
 
+    implementation 'com.umeng.umsdk:common:9.4.7'// 必选
+    implementation 'com.umeng.umsdk:asms:1.4.0'// 必选
+    implementation 'com.umeng.umsdk:abtest:1.0.0'//使用U-App中ABTest能力，可选
+
     //路由
     implementation('com.alibaba:arouter-api:1.5.2') {
         //过滤掉v4包里面的东西 防止和AndroidX冲突

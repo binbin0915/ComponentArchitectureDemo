@@ -5,6 +5,10 @@
 > https://github.com/550609334/DSLAnimator.git   这是一个可以让你使用DSL去写动画的库
 > https://github.com/Petterpx/FloatingX.git      Android免权限悬浮窗，支持全局、局部悬浮，支持边缘吸附、回弹、自定义动画、位置保存、窗口化及分屏后位置修复等。
 
+[界面设计]
+> https://mastergo.com/community/resource/551?from=card
+> https://mastergo.com/community/resource/405?from=card
+
 组件化架构+Jetpack
 
 ## 运行环境
@@ -15,9 +19,6 @@
 [Gradle版本：7.4-bin]
 
 <font color=Blue>Test</font>
-
-
-
 
 ## 项目背景
 

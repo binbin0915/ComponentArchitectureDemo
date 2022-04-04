@@ -1,11 +1,11 @@
 package com.wangkai.myapplication
 
-import android.util.Log
 import com.library.base.application.BaseApplication
 import com.library.common.GlobalResponseHandler
 import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.QbSdk.PreInitCallback
+import com.umeng.commonsdk.UMConfigure
 import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 
 
@@ -44,6 +44,22 @@ class MainApplication : BaseApplication() {
             }
         }
         QbSdk.initX5Environment(appContext, cb)
+
+        //友盟的初始化
+        /**
+         * 注意: 即使您已经在AndroidManifest.xml中配置过appkey和channel值，也需要在App代码中调
+         * 用初始化接口（如需要使用AndroidManifest.xml中配置好的appkey和channel值，
+         * UMConfigure.init调用中appkey和channel参数请置为null）。
+         * * deviceType
+         * * pushSecret
+         */
+        UMConfigure.preInit(this,"624aef686adb343c47f143a4","test");
+        UMConfigure.init(
+            appContext, "624aef686adb343c47f143a4", "test", UMConfigure.DEVICE_TYPE_PHONE, ""
+        )
+        //友盟日志
+        UMConfigure.setLogEnabled(true)
+
         //设置全局http响应
         GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())
     }

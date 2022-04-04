@@ -3,7 +3,6 @@ package com.model.mykotlin.activity
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.view.activity.BaseActivity
-import com.library.base.viewmodel.BaseViewModel
 import com.library.router.RouterPath
 import com.model.mykotlin.databinding.MykotlinActivityNetNormalBinding
 import com.model.mykotlin.viewmodel.NetNormalViewModel
@@ -21,7 +20,7 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
             viewModel.queryWanAndroidArticleByCoroutine()
         }
 
-        viewModel.articleJsonStringLiveData.observe(this){jsonString->
+        viewModel.articleJsonStringLiveData.observe(this) { jsonString ->
             viewBinding.tvNormalUseResultContent.text = jsonString
         }
 

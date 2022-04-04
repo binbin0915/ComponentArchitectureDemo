@@ -1,5 +1,6 @@
 package com.model.home
 
+import android.util.Log
 import android.view.MenuItem
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -7,6 +8,8 @@ import com.library.base.view.activity.BaseActivity
 import com.library.router.RouterPath
 import com.model.home.adapter.HomeViewPagerAdapter
 import com.model.home.databinding.HomeActivityMainBinding
+import com.umeng.analytics.MobclickAgent
+import com.umeng.commonsdk.UMConfigure
 
 @Route(path = RouterPath.PAGE_HOME_MAIN_ACTIVITY, group = RouterPath.GROUP_HOME)
 class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMainBinding>() {
@@ -15,6 +18,12 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
 
     override fun createdObserve() {
         viewModel.pageData.observe(this) {}
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        //点击back退出时调用，用来保存友盟统计数据
+        MobclickAgent.onKillProcess(applicationContext)
     }
 
     override fun initData() {
