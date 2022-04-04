@@ -1,8 +1,6 @@
 package com.model.splash
 
 import android.animation.Animator
-import android.os.Bundle
-import android.view.View
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
 import com.library.router.JumpActivity

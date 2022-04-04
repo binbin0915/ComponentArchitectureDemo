@@ -3,7 +3,10 @@
     package="com.model.splash">
 
     <application>
-        <activity android:name=".SplashMainActivity" android:theme="@style/SplashTheme.BaseApplication" />
+        <activity
+            android:name=".SplashMainActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/SplashTheme.BaseApplication" />
     </application>
 
 </manifest>
