@@ -48,6 +48,7 @@ class RouterPath {
          * kotlin基础学习页面
          */
         const val PAGE_KOTLIN_BASE_ACTIVITY = "/mykotlin/KotlinBaseActivity"
+        const val PAGE_KOTLIN_FILE_OPERATOR_ACTIVITY = "/mykotlin/KotlinFileOperatorActivity"
         const val PAGE_NET_NORMAL_ACTIVITY = "/mykotlin/NetNormalActivity"
 
 

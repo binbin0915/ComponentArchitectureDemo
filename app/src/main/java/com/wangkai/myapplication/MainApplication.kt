@@ -1,5 +1,6 @@
 package com.wangkai.myapplication
 
+import ando.file.core.FileOperator
 import com.library.base.application.BaseApplication
 import com.library.common.GlobalResponseHandler
 import com.tencent.smtt.export.external.TbsCoreSettings
@@ -18,6 +19,9 @@ import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 class MainApplication : BaseApplication() {
 
     override fun appInit() {
+        /*文件系统初始化*/
+        FileOperator.init(instance, BuildConfig.DEBUG)
+
         /*---------------------------------------tbs相关---------------------------------------*/
         // 在调用TBS初始化、创建WebView之前进行如下配置
         val map = HashMap<String, Any>()

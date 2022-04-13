@@ -4,6 +4,9 @@
 
     <application>
         <activity
+            android:name=".activity.FileOperatorActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.NetNormalActivity"
             android:exported="false" />
         <activity

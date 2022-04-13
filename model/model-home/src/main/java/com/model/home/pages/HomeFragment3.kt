@@ -60,7 +60,7 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
             }
 
             R.id.bt_kotlin_function -> {
-
+                JumpActivity.jump(RouterPath.GROUP_KOTLIN, RouterPath.PAGE_KOTLIN_FILE_OPERATOR_ACTIVITY)
             }
 
             R.id.bt_network_base -> {
