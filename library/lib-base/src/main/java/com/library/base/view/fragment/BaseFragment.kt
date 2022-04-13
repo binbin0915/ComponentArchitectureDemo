@@ -20,6 +20,7 @@ import com.library.base.viewmodel.BaseViewModel
 import com.library.widget.status.MultiStateContainer
 import com.library.widget.status.MultiStatePage
 import com.library.widget.status.PageStatus
+import com.library.widget.status.bindMultiState
 
 /**
  * 作用描述：Fragment 基类  MVVM架构 使用ViewBind查找控件
@@ -56,7 +57,7 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         viewBinding = inflateBindingWithGeneric(layoutInflater, container, false)
-        pageStatus = MultiStatePage.bindMultiState(viewBinding.root) {
+        pageStatus = viewBinding.root.bindMultiState {
             //重试处理
             onRetry()
         }
