@@ -18,6 +18,7 @@ import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 class MainApplication : BaseApplication() {
 
     override fun appInit() {
+        /*---------------------------------------tbs相关---------------------------------------*/
         // 在调用TBS初始化、创建WebView之前进行如下配置
         val map = HashMap<String, Any>()
         map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
@@ -45,22 +46,20 @@ class MainApplication : BaseApplication() {
         }
         QbSdk.initX5Environment(appContext, cb)
 
-        //友盟的初始化
-        /**
-         * 注意: 即使您已经在AndroidManifest.xml中配置过appkey和channel值，也需要在App代码中调
-         * 用初始化接口（如需要使用AndroidManifest.xml中配置好的appkey和channel值，
-         * UMConfigure.init调用中appkey和channel参数请置为null）。
-         * * deviceType
-         * * pushSecret
-         */
-        UMConfigure.preInit(this,"624aef686adb343c47f143a4","test");
+        /*---------------------------------------友盟相关---------------------------------------*/
+        // 友盟的预初始化
+        UMConfigure.preInit(this, "624aef686adb343c47f143a4", "test")
+        // 友盟的初始化
+        // 注意:
+        //  1. 即使您已经在AndroidManifest.xml中配置过appkey和channel值，也需要在App代码中调用初始化接口（如需要使用AndroidManifest.xml中配置好的appkey和channel值，
+        //  2. UMConfigure.init调用中appkey和channel参数请置为null）。
         UMConfigure.init(
             appContext, "624aef686adb343c47f143a4", "test", UMConfigure.DEVICE_TYPE_PHONE, ""
         )
-        //友盟日志
+        // 友盟日志
         UMConfigure.setLogEnabled(true)
 
-        //设置全局http响应
+        // 设置全局http响应
         GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())
     }
 }

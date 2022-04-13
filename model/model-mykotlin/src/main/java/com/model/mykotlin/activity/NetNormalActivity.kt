@@ -27,7 +27,14 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
     }
 
     override fun initData() {
+        crashInJava()
+    }
 
+    /**
+     * 测试友盟异常捕获
+     */
+    private fun crashInJava() {
+        throw NullPointerException("Player cannot juggle swords")
     }
 
     override fun createdObserve() {

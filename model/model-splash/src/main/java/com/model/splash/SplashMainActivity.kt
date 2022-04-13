@@ -9,6 +9,9 @@ import com.model.splash.databinding.SplashActivityMainBinding
 
 class SplashMainActivity : BaseActivity<BaseViewModel, SplashActivityMainBinding>(),
     Animator.AnimatorListener {
+    /**
+     * 窗口获得焦点
+     */
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
     }
