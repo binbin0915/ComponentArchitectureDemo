@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import com.alibaba.android.arouter.launcher.ARouter
 import com.library.base.application.BaseModelApplication
-import com.library.common.GlobalResponseHandler
+import com.library.common.netconfig.GlobalResponseHandler
 import com.model.mykotlin.BuildConfig
 import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 

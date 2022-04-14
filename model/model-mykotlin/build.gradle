@@ -30,6 +30,7 @@ dependencies {
 
     //公共基础包
     implementation project(":library:lib-common")
+    implementation project(':library:lib-file')
 
     implementation 'io.noties.markwon:core:4.6.2'
     //markdown

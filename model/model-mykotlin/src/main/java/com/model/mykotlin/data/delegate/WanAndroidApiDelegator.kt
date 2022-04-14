@@ -1,7 +1,7 @@
 package com.model.mykotlin.data.delegate
 
 import com.google.gson.GsonBuilder
-import com.library.common.LoggerHttpLogPrinterImpl
+import com.library.common.netconfig.LoggerHttpLogPrinterImpl
 import com.yupfeg.executor.ExecutorProvider
 import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.ext.addDslRemoteConfig

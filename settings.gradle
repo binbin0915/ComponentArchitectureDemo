@@ -22,8 +22,9 @@ include ':app'
 include ':library:lib-base'         //--mvvm基本封装
 include ':library:lib-widget'       //--常用组件封装
 include ':library:lib-router'       //--路由
-include ':library:lib_file'         //--文件系统
+include ':library:lib-file'         //--文件系统
 include ':library:lib-logcat'       //--日志系统
+include ':library:lib-permission'   //--权限管理系统
 include ':library:lib-network'      //--网络请求的封装
 include ':library:lib-common'       //--网络公共配置的地方
 //业务模块
@@ -31,3 +32,4 @@ include ':model:model-splash'//启动页
 include ':model:model-home'//首页
 include ':model:model-login'//登录页
 include ':model:model-mykotlin'//kotlin示例
+

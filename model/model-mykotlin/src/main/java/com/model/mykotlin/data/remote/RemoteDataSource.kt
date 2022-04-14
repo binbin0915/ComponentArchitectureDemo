@@ -2,8 +2,8 @@ package com.model.mykotlin.data.remote
 
 import com.library.base.application.BaseApplication
 import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
-import com.library.common.tools.download.ApkFileDownloadProducer
-import com.library.common.tools.rxjava3.preHandlerRxJava3Response
+import com.library.common.netconfig.tools.download.ApkFileDownloadProducer
+import com.library.common.netconfig.tools.rxjava3.preHandlerRxJava3Response
 import com.model.mykotlin.data.entity.JueJinHttpResultBean
 import com.model.mykotlin.data.entity.WanAndroidArticleListResponseEntity
 import com.yupfeg.remote.HttpRequestMediator

@@ -6,4 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".activity.FileOperatorActivity">
 
+    <Button
+        android:id="@+id/btn_select_single_img"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="@string/mykotlin_select_single_img"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

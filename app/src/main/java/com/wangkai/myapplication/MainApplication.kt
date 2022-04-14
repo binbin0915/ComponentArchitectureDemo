@@ -2,7 +2,7 @@ package com.wangkai.myapplication
 
 import ando.file.core.FileOperator
 import com.library.base.application.BaseApplication
-import com.library.common.GlobalResponseHandler
+import com.library.common.netconfig.GlobalResponseHandler
 import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.QbSdk.PreInitCallback

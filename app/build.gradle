@@ -52,7 +52,7 @@ dependencies {
     implementation project(":library:lib-logcat")
     //用于设置主题
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation project(path: ':library:lib_file')
+    implementation project(path: ':library:lib-file')
     if (!isRunModel.toBoolean()) {
         implementation project(":model:model-splash")
         implementation project(":model:model-home")
