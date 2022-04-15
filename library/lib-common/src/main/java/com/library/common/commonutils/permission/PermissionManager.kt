@@ -31,7 +31,7 @@ object PermissionManager {
         block: (allGranted: Boolean, grantedList: List<String>, deniedList: List<String>) -> Unit
     ) {
         PermissionX.init(activity).permissions(*permissions)
-            //请求权限之前
+            //用户拒绝一次权限后
 //            .onExplainRequestReason { scope, deniedList, beforeRequest ->
 //                val message = "PermissionX需要您同意以下权限才能正常使用"
 //                val dialog = PermissionDialog(activity, message, deniedList)
@@ -39,7 +39,6 @@ object PermissionManager {
 //            }
             //永久拒绝权限
             .onForwardToSettings { scope, deniedList ->
-                Log.e("AAAAAAAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAAA")
                 val message = "您需要去设置中手动开启以下权限"
 //                val dialog = PermissionDialog(activity, message, deniedList)
 //                scope.showForwardToSettingsDialog(dialog)
