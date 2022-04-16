@@ -1,14 +1,10 @@
 package com.model.mykotlin.activity
 
 import android.Manifest
-import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.flywith24.activityresult.ActivityResultLauncher
 import com.library.base.view.activity.BaseActivity
@@ -44,15 +40,15 @@ class FileOperatorActivity : BaseActivity<BaseViewModel, MykotlinActivityFileOpe
                 ),
                 //全部权限均已申请成功
                 allGranted = {
-                    Log.e("AAAAAAAAAAAAAAAA", "全部权限均已申请成功")
+                    Log.e("FileOperatorActivity", "全部权限均已申请成功")
                 },
                 //权限申请失败且未勾选不再询问，下次可继续申请
                 denied = { list ->
-                    Log.e("AAAAAAAAAAAAAAAA", "下次可继续申请list:$list")
+                    Log.e("FileOperatorActivity", "下次可继续申请list:$list")
                 },
                 //权限申请失败且已勾选不再询问，需要向用户解释原因并引导用户开启权限
                 explained = { list ->
-                    Log.e("AAAAAAAAAAAAAAAA", "勾选不再询问list:$list")
+                    Log.e("FileOperatorActivity", "勾选不再询问list:$list")
                     forwardToSettings()
                 })
         }
@@ -67,7 +63,7 @@ class FileOperatorActivity : BaseActivity<BaseViewModel, MykotlinActivityFileOpe
             },
             //回调结果
             onActivityResult = {
-                Log.e("AAAAAAAAAAAAAAAA", "resultCode:" + it?.resultCode)
+                Log.e("FileOperatorActivity", "resultCode:" + it?.resultCode)
             })
     }
 
