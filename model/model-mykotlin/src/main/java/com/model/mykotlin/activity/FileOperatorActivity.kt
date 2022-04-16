@@ -64,7 +64,9 @@ class FileOperatorActivity : BaseActivity<BaseViewModel, MykotlinActivityFileOpe
             setIntent = {
                 it.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                 it.data = Uri.fromParts("package", packageName, null)
-            }, onActivityResult = {
+            },
+            //回调结果
+            onActivityResult = {
                 Log.e("AAAAAAAAAAAAAAAA", "resultCode:" + it?.resultCode)
             })
     }
