@@ -1,8 +1,5 @@
 package com.library.base.expand
 
-import android.app.Activity
-import com.library.base.view.activity.BaseActivity
-import com.library.base.viewmodel.BaseViewModel
 import java.lang.reflect.ParameterizedType
 
 /**

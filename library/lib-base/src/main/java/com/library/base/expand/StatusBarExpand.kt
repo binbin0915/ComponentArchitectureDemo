@@ -1,6 +1,5 @@
 package com.library.base.expand
 
-import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import com.zackratos.ultimatebarx.ultimatebarx.navigationBar
 import com.zackratos.ultimatebarx.ultimatebarx.statusBar

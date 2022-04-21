@@ -21,22 +21,6 @@ open class BaseViewModel : ViewModel() {
      */
     val eventNoticeData = SingleLiveEvent<ViewModelEventData>()
 
-
-//    /**
-//     * 获取Api服务
-//     */
-//    fun <T> getApiService(key: String = NetworkManage.GLOBAL_API_KEY, clazz: Class<T>): T {
-//        return NetworkManage.createApiService(key, clazz)
-//    }
-//
-//    /**
-//     * 获取Api服务
-//     */
-//    fun <T> getApiService(clazz: Class<T>): T {
-//        return NetworkManage.createApiService(NetworkManage.GLOBAL_API_KEY, clazz)
-//    }
-
-
     /**
      * 显示Toast
      */

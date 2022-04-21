@@ -17,19 +17,12 @@ fun <VB : ViewBinding> Any.inflateBindingWithGeneric(layoutInflater: LayoutInfla
 
 @JvmName("inflateWithGeneric")
 fun <VB : ViewBinding> Any.inflateBindingWithGeneric(
-    layoutInflater: LayoutInflater,
-    parent: ViewGroup?,
-    attachToParent: Boolean
-): VB =
-    withGenericBindingClass<VB>(this) { clazz ->
-        clazz.getMethod(
-            "inflate",
-            LayoutInflater::class.java,
-            ViewGroup::class.java,
-            Boolean::class.java
-        )
-            .invoke(null, layoutInflater, parent, attachToParent) as VB
-    }
+    layoutInflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean
+): VB = withGenericBindingClass<VB>(this) { clazz ->
+    clazz.getMethod(
+        "inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java
+    ).invoke(null, layoutInflater, parent, attachToParent) as VB
+}
 
 @JvmName("inflateWithGeneric")
 fun <VB : ViewBinding> Any.inflateBindingWithGeneric(parent: ViewGroup): VB =
@@ -39,7 +32,6 @@ fun <VB : ViewBinding> Any.bindViewWithGeneric(view: View): VB =
     withGenericBindingClass<VB>(this) { clazz ->
         clazz.getMethod("bind", View::class.java).invoke(null, view) as VB
     }
-
 
 
 private fun <VB : ViewBinding> withGenericBindingClass(any: Any, block: (Class<VB>) -> VB): VB {
