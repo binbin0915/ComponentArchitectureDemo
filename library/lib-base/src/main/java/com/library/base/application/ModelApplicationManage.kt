@@ -20,6 +20,8 @@ object ModelApplicationManage {
         applications.add("com.model.login.application.LoginModelApplication")
         //kotlin学习模块
         applications.add("com.model.mykotlin.application.MyKotlinModelApplication")
+        //airpods模块
+        applications.add("com.model.airpods.application.AirpodsModelApplication")
     }
 
 }

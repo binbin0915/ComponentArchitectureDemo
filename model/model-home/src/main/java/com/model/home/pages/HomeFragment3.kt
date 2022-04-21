@@ -68,7 +68,7 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
             }
 
             R.id.bt_network_replace_url -> {
-
+                JumpActivity.jump(RouterPath.GROUP_AIRPODS, RouterPath.PAGE_AIRPODS_MAIN_ACTIVITY)
             }
 
             R.id.bt_network_download -> {

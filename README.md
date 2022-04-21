@@ -29,8 +29,19 @@
 
 #### 新建业务模块
 
-    第一步:在business文件夹下新建一个AndroidModel
-    第二部:修改Model的build.gradle文件,引入根目录的公共配置app-model-build.gradle
+    第一步:在model文件夹下新建一个AndroidModel -- 右键 - new - Model
+    第二步:修改Model的build.gradle文件
+    引入根目录的公共配置app-model-build.gradle
+    //公共基础包
+    implementation project(":library:lib-common")
+    //路由
+    implementation('com.alibaba:arouter-api:1.5.2') {
+        //过滤掉v4包里面的东西 防止和AndroidX冲突
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    kapt 'com.alibaba:arouter-compiler:1.5.2'    //ARouter路由compiler
+    修改资源前缀
+    -------------这个时候就能重新rebuild了------------------------
     第三步:在model下的main文件夹内新建alone文件夹,把复制一份清单文件放在里面,这个是独立运行时才会用到
     第四步:在业务模块下新建application包,在里面创建此模块的application类,用于model的SDK初始化
     第五步:在ModelApplicationManage里面注册刚刚创建好的application类,宿主App会自动初始化model的application

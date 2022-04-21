@@ -9,9 +9,8 @@ package com.library.router
 class RouterPath {
     companion object {
 
-        /***********分组***********/
-
         /**
+         * # 分组
          * 组-开屏页
          */
         const val GROUP_SPLASH = "splash"
@@ -31,10 +30,13 @@ class RouterPath {
          */
         const val GROUP_KOTLIN = "mykotlin"
 
-
-        /***********页面***********/
+        /**
+         * 组-airpods页面
+         */
+        const val GROUP_AIRPODS = "airpods"
 
         /**
+         * # 页面
          * 首页模块主页
          */
         const val PAGE_HOME_MAIN_ACTIVITY = "/home/HomeMainActivity"
@@ -51,10 +53,13 @@ class RouterPath {
         const val PAGE_KOTLIN_FILE_OPERATOR_ACTIVITY = "/mykotlin/KotlinFileOperatorActivity"
         const val PAGE_NET_NORMAL_ACTIVITY = "/mykotlin/NetNormalActivity"
 
-
-        /***********服务***********/
+        /**
+         * airpods界面
+         */
+        const val PAGE_AIRPODS_MAIN_ACTIVITY = "/airpods/AirpodsMainActivity"
 
         /**
+         * # 服务
          * 登录模块对外提供的服务
          */
         const val SERVICE_LOGIN = "/login/LoginServiceImp"
