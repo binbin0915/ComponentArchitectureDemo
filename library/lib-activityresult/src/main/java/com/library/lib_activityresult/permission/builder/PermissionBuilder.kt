@@ -1,4 +1,4 @@
-package com.library.lib_activityresult.permission.dsl
+package com.library.lib_activityresult.permission.builder
 
 /**
  * 描述：单权限申请

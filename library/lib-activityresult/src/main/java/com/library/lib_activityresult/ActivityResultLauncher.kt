@@ -31,7 +31,7 @@ class ActivityResultLauncher :
 //        launcher.launch(intent)
 //    }
 
-    inline fun lunchAction(
+    inline fun lunch(
         crossinline setIntent: (intent: Intent) -> Unit = {},
         noinline onActivityResult: (result: ActivityResult?) -> Unit = {},
     ) {

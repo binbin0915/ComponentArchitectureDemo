@@ -48,20 +48,19 @@ fun Context.toastShort(msg: String?) {
  * T : String.filePath / Uri / File
  */
 fun <T> compressImage(context: Context, photos: List<T>, success: (index: Int, uri: Uri?) -> Unit) {
-    ImageCompressor
-        .with(context)
-        .load(photos)
-        .ignoreBy(50)//单位 Byte
-        .setTargetDir(getCompressedImageCacheDir())
-        .setFocusAlpha(false)
-        .enableCache(true)
-        .filter(object : ImageCompressPredicate {
+    ImageCompressor.with(context).run {
+        load(photos)
+        ignoreBy(50)//单位 Byte
+        setTargetDir(getCompressedImageCacheDir())
+        setFocusAlpha(false)
+        enableCache(true)
+        filter(object : ImageCompressPredicate {
             override fun apply(uri: Uri?): Boolean {
                 //FileLogger.i("compressImage predicate $uri  ${FileUri.getFilePathByUri(uri)}")
                 return if (uri != null) !FileUtils.getExtension(uri).endsWith("gif") else false
             }
         })
-        .setRenameListener(object : OnImageRenameListener {
+        setRenameListener(object : OnImageRenameListener {
             override fun rename(uri: Uri?): String? {
                 try {
                     val fileName = FileUtils.getFileNameFromUri(uri)
@@ -74,7 +73,7 @@ fun <T> compressImage(context: Context, photos: List<T>, success: (index: Int, u
                 return ""
             }
         })
-        .setImageCompressListener(object : OnImageCompressListener {
+        setImageCompressListener(object : OnImageCompressListener {
             override fun onStart() {}
             override fun onSuccess(index: Int, uri: Uri?) {
                 success.invoke(index, uri)
@@ -83,5 +82,7 @@ fun <T> compressImage(context: Context, photos: List<T>, success: (index: Int, u
             override fun onError(e: Throwable?) {
                 FileLogger.e("compressImage onError ${e?.message}")
             }
-        }).launch()
+        })
+        launch()
+    }
 }

@@ -1,7 +1,7 @@
 package com.library.lib_activityresult.permission
 
 import androidx.activity.result.contract.ActivityResultContracts
-import com.library.lib_activityresult.permission.dsl.PermissionBuilder
+import com.library.lib_activityresult.permission.builder.PermissionBuilder
 import com.library.lib_activityresult.BaseLauncher
 
 /**
