@@ -1,9 +1,8 @@
-package com.library.lib_activityresult.permission.dsl
+package com.library.launcher.permission.dsl
 
 import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 
 

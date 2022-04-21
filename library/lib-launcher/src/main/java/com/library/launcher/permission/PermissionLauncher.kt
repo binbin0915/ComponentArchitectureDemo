@@ -1,8 +1,8 @@
-package com.library.lib_activityresult.permission
+package com.library.launcher.permission
 
 import androidx.activity.result.contract.ActivityResultContracts
-import com.library.lib_activityresult.permission.builder.PermissionBuilder
-import com.library.lib_activityresult.BaseLauncher
+import com.library.launcher.permission.builder.PermissionBuilder
+import com.library.launcher.BaseLauncher
 
 /**
  * 描述：使用ActivityResults单权限申请

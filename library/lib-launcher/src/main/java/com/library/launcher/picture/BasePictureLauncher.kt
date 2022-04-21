@@ -1,11 +1,11 @@
-package com.library.lib_activityresult.picture
+package com.library.launcher.picture
 
 import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.LifecycleOwner
-import com.library.lib_activityresult.BaseLauncher
-import com.library.lib_activityresult.permission.PermissionLauncher
+import com.library.launcher.BaseLauncher
+import com.library.launcher.permission.PermissionLauncher
 
 /**
  * 描述：拍照

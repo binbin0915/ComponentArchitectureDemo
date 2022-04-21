@@ -1,9 +1,9 @@
-package com.library.lib_activityresult.permission.dsl
+package com.library.launcher.permission.dsl
 
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
-import com.library.lib_activityresult.permission.builder.MultiPermissionBuilder
-import com.library.lib_activityresult.permission.builder.PermissionBuilder
+import com.library.launcher.permission.builder.MultiPermissionBuilder
+import com.library.launcher.permission.builder.PermissionBuilder
 
 
 /**

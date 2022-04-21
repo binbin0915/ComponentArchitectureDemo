@@ -1,4 +1,4 @@
-package com.library.lib_activityresult
+package com.library.launcher
 
 import android.app.Activity
 import androidx.activity.ComponentActivity

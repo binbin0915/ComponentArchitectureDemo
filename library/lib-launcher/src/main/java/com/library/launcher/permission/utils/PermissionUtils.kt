@@ -1,4 +1,4 @@
-package com.library.lib_activityresult.permission.utils
+package com.library.launcher.permission.utils
 
 import android.content.Context
 import android.content.pm.PackageManager

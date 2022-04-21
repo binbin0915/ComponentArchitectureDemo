@@ -1,4 +1,4 @@
-package com.library.lib_activityresult
+package com.library.launcher
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

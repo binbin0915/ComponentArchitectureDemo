@@ -18,8 +18,8 @@ import com.library.base.expand.toastError
 import com.library.base.expand.toastSucceed
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
-import com.library.lib_activityresult.permission.MultiPermissionLauncher
-import com.library.lib_activityresult.permission.utils.checkPermissions
+import com.library.launcher.permission.MultiPermissionLauncher
+import com.library.launcher.permission.utils.checkPermissions
 import com.library.router.RouterPath
 import com.model.mykotlin.databinding.MykotlinActivityFileOperatorBinding
 

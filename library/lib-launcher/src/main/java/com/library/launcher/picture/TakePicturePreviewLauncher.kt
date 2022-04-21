@@ -1,4 +1,4 @@
-package com.library.lib_activityresult.picture
+package com.library.launcher.picture
 
 import android.Manifest
 import android.graphics.Bitmap

@@ -1,4 +1,4 @@
-package com.library.lib_activityresult.permission.builder
+package com.library.launcher.permission.builder
 
 /**
  * 描述：多权限申请

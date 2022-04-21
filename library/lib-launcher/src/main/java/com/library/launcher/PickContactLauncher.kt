@@ -1,11 +1,11 @@
-package com.library.lib_activityresult
+package com.library.launcher
 
 import android.Manifest
 import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.LifecycleOwner
-import com.library.lib_activityresult.permission.PermissionLauncher
+import com.library.launcher.permission.PermissionLauncher
 
 /**
  * 描述：

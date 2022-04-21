@@ -1,4 +1,4 @@
-package com.library.lib_activityresult
+package com.library.launcher
 
 import org.junit.Test
 

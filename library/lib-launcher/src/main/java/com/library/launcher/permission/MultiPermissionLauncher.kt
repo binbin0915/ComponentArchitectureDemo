@@ -1,9 +1,9 @@
-package com.library.lib_activityresult.permission
+package com.library.launcher.permission
 
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import com.library.lib_activityresult.BaseLauncher
+import com.library.launcher.BaseLauncher
 
 /**
  * 描述：使用ActivityResults多权限申请

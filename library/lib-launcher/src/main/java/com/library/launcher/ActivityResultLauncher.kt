@@ -1,12 +1,9 @@
 package com.flywith24.activityresult
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import com.library.lib_activityresult.BaseLauncher
+import com.library.launcher.BaseLauncher
 
 /**
  * 描述：启动activity
