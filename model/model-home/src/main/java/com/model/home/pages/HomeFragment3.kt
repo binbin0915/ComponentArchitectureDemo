@@ -1,7 +1,6 @@
 package com.model.home.pages
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.library.base.view.fragment.BaseFragment
