@@ -25,7 +25,6 @@ class AirpodsModelApplication : BaseModelApplication() {
             ARouter.openLog()
             ARouter.openDebug()
         }
-        Log.e("AAAAAAAAAAAAA","AirpodsModelApplication已经初始化")
         ARouter.init(application)
         if (BuildConfig.IS_RUN_MODEL) {
             //已模块化运行的话 需要初始化网络请求框架

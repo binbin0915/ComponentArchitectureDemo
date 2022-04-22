@@ -1,5 +1,6 @@
 package com.model.airpods.util
 
+import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
@@ -8,8 +9,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.util.Log
 import androidx.annotation.CheckResult
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -44,12 +47,15 @@ fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow<ConnectionStat
     awaitClose { unregisterReceiver(receiver) }
 }.conflate()
 
-suspend fun Context.getConnected() =
-    suspendCancellableCoroutine<ConnectionState> { continuation ->
-        checkMainThread()
-        val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+suspend fun Context.getConnected() = suspendCancellableCoroutine<ConnectionState> { continuation ->
+    checkMainThread()
+    val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+    //检查权限
+    if (ActivityCompat.checkSelfPermission(
+            this, Manifest.permission.BLUETOOTH_CONNECT
+        ) == PackageManager.PERMISSION_GRANTED
+    ) {
         val headset: Int = manager.adapter.getProfileConnectionState(BluetoothProfile.HEADSET)
-        Log.w("AAAAAAAAAAAAAAA", "HEADSET ConnectionState = $headset")
         if (headset != BluetoothProfile.STATE_CONNECTED) {
             continuation.resume(ConnectionState(isConnected = false))
             return@suspendCancellableCoroutine
@@ -60,48 +66,47 @@ suspend fun Context.getConnected() =
                 proxy?.connectedDevices ?: return
                 for (device in proxy.connectedDevices) {
                     if (device.checkUUID()) {
-                        //Log.e("AAAAAAAAAAAAAAA","getProfileProxy: AIRPODS ALREADY CONNECTED: ${device.name}")
-                        continuation.resume(ConnectionState(deviceName = device.name))
+                        try {
+                            continuation.resume(ConnectionState(deviceName = device.name))
+                        } catch (e: SecurityException) {
+                            e.printStackTrace()
+                        }
                         break
                     }
                 }
             }
 
             override fun onServiceDisconnected(profile: Int) {
-//                ankoLogger.warn { "getProfileProxy onServiceDisconnected" }
+
             }
         }
         manager.adapter.getProfileProxy(this, listener, BluetoothProfile.HEADSET)
         continuation.invokeOnCancellation {
             manager.adapter.getProfileProxy(
-                this,
-                null,
-                BluetoothProfile.HEADSET
+                this, null, BluetoothProfile.HEADSET
             )
         }
     }
-
-
-//val ankoLogger by lazy { AnkoLogger("Connection") }
+}
 
 fun Intent.parseIntent(): ConnectionState {
     when (action) {
         BluetoothAdapter.ACTION_STATE_CHANGED -> {
-            val state =
-                getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
+            val state = getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
             if (state == BluetoothAdapter.STATE_OFF || state == BluetoothAdapter.STATE_TURNING_OFF) { //bluetooth turned off, stop scanner and remove notification
                 return ConnectionState(isConnected = false)
             }
         }
         BluetoothDevice.ACTION_ACL_CONNECTED, BluetoothDevice.ACTION_ACL_DISCONNECTED, BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED -> {
-            val device =
-                getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
+            val device = getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
             if (device != null && device.checkUUID()) {
                 if (action == BluetoothDevice.ACTION_ACL_CONNECTED) {
-//                    ankoLogger.info { "ACL is connected: bluetoothDevice=${device.name}, address=${device.address}" }
-                    return ConnectionState(deviceName = device.name)
+                    try {
+                        return ConnectionState(deviceName = device.name)
+                    } catch (e: SecurityException) {
+                        e.printStackTrace()
+                    }
                 } else if (action == BluetoothDevice.ACTION_ACL_DISCONNECTED) {
-//                    ankoLogger.info { "ACL is disconnected: bluetoothDevice=${device.name}, address=${device.address}" }
                     return ConnectionState(isConnected = false)
                 }
             }
