@@ -1,6 +1,7 @@
 package com.model.home.pages
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.library.base.view.fragment.BaseFragment
@@ -32,6 +33,8 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
         viewBinding.btKotlinBase.setOnClickListener(this)
         viewBinding.btKotlinFunction.setOnClickListener(this)
         viewBinding.btNetworkBase.setOnClickListener(this)
+        viewBinding.btNetworkReplaceUrl.setOnClickListener(this)
+        viewBinding.btNetworkDownload.setOnClickListener(this)
     }
 
     /**
@@ -60,7 +63,9 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
             }
 
             R.id.bt_kotlin_function -> {
-                JumpActivity.jump(RouterPath.GROUP_KOTLIN, RouterPath.PAGE_KOTLIN_FILE_OPERATOR_ACTIVITY)
+                JumpActivity.jump(
+                    RouterPath.GROUP_KOTLIN, RouterPath.PAGE_KOTLIN_FILE_OPERATOR_ACTIVITY
+                )
             }
 
             R.id.bt_network_base -> {
@@ -74,8 +79,6 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
             R.id.bt_network_download -> {
 
             }
-
-
 
 
         }

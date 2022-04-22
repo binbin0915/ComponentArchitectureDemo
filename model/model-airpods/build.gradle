@@ -2,36 +2,13 @@ apply from: "../../app-model-build.gradle"
 apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    namespace 'com.model.airpods'
-    compileSdk 32
-
     defaultConfig {
         if (isRunModel.toBoolean()) {
             applicationId "com.model.airpods"
         }
-        minSdk 21
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     //统一资源前缀，规范资源引用
     resourcePrefix "airpods_"
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 }
 
 //ARouter 配置
