@@ -1,13 +1,9 @@
 package com.model.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.library.base.viewmodel.BaseViewModel
-import com.model.home.api.HomeApiService
-import com.model.home.api.MyData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**

@@ -2,7 +2,6 @@ package com.model.home.pages
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.library.base.expand.ToastType
 import com.library.base.view.fragment.BaseFragment

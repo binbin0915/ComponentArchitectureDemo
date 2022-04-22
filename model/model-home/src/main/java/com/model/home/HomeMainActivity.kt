@@ -1,6 +1,5 @@
 package com.model.home
 
-import android.util.Log
 import android.view.MenuItem
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -9,7 +8,6 @@ import com.library.router.RouterPath
 import com.model.home.adapter.HomeViewPagerAdapter
 import com.model.home.databinding.HomeActivityMainBinding
 import com.umeng.analytics.MobclickAgent
-import com.umeng.commonsdk.UMConfigure
 
 @Route(path = RouterPath.PAGE_HOME_MAIN_ACTIVITY, group = RouterPath.GROUP_HOME)
 class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMainBinding>() {

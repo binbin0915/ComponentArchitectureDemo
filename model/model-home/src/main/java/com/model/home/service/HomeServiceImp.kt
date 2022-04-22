@@ -1,7 +1,6 @@
 package com.model.home.service
 
 import android.content.Context
-import android.util.Log
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.logcat.AppLog
 import com.library.router.RouterPath

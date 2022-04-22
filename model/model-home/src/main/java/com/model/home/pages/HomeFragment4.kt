@@ -1,14 +1,10 @@
 package com.model.home.pages
 
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.launcher.ARouter
 import com.library.base.view.fragment.BaseFragment
 import com.library.base.viewmodel.BaseViewModel
-import com.library.logcat.AppLog
 import com.library.router.JumpActivity
 import com.library.router.RouterPath
 import com.library.router.service.LoginService
