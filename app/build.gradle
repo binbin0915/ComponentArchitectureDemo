@@ -14,6 +14,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        flavorDimensions "default"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //统一资源前缀，规范资源引用
         resourcePrefix "app_"
@@ -25,6 +27,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        app_1 {
+            applicationId "com.wangkai.test1"
+            versionName "1.0"
+            manifestPlaceholders = [app_name: "@string/app_name",]
+        }
+        app_2 {
+            applicationId "com.wangkai.test2"
+            versionName "1.0"
+            manifestPlaceholders = [app_name: "@string/app_name",]
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -35,7 +51,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include:['*.jar'], dir:'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // 下面各SDK根据宿主App是否使用相关业务按需引入。
     // 友盟统计SDK
     implementation 'com.umeng.umsdk:common:9.4.7'// 必选
@@ -43,8 +59,6 @@ dependencies {
     implementation 'com.umeng.umsdk:apm:1.5.2' // U-APM包依赖(必选)
     implementation 'com.umeng.umsdk:abtest:1.0.0'//使用U-App中ABTest能力，可选
     //
-
-
 
 
     //主题包
