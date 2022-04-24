@@ -1,8 +1,11 @@
 package com.model.airpods.service
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.model.airpods.util.airPodsConnectionState
@@ -31,17 +34,21 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     private var connectionJob: Job? = null
     private fun checkConnection() {
         connectionJob = lifecycleScope.launch {
-            val state = getConnected()
-            Log.e("AAAAAAAAAAA","connection state = $state")
-            if (state.isConnected) {
-                airPodsConnectionState.value = state
+            //检查权限
+            if (ActivityCompat.checkSelfPermission(
+                    applicationContext, Manifest.permission.BLUETOOTH_CONNECT
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                val state = getConnected()
+                if (state.isConnected) {
+                    airPodsConnectionState.value = state
+                }
             }
         }
     }
 
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.e("AAAAAAAAAAA", "onStartCommand: flags=$flags")
         if (intent?.action == "com.model.airpods.ACTION_POPUP") {
             checkConnection()
         }

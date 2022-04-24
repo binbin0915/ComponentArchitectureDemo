@@ -1,6 +1,6 @@
 package com.model.airpods.util
 
-import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
@@ -9,10 +9,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.PackageManager
-import android.util.Log
 import androidx.annotation.CheckResult
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -47,45 +44,39 @@ fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow<ConnectionStat
     awaitClose { unregisterReceiver(receiver) }
 }.conflate()
 
+@SuppressLint("MissingPermission")
 suspend fun Context.getConnected() = suspendCancellableCoroutine<ConnectionState> { continuation ->
     checkMainThread()
     val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-    //检查权限
-    if (ActivityCompat.checkSelfPermission(
-            this, Manifest.permission.BLUETOOTH_CONNECT
-        ) == PackageManager.PERMISSION_GRANTED
-    ) {
-        val headset: Int = manager.adapter.getProfileConnectionState(BluetoothProfile.HEADSET)
-        if (headset != BluetoothProfile.STATE_CONNECTED) {
-            continuation.resume(ConnectionState(isConnected = false))
-            return@suspendCancellableCoroutine
-        }
-        val listener = object : BluetoothProfile.ServiceListener {
-            override fun onServiceConnected(profile: Int, proxy: BluetoothProfile?) {
-                if (profile != BluetoothProfile.HEADSET) return
-                proxy?.connectedDevices ?: return
-                for (device in proxy.connectedDevices) {
-                    if (device.checkUUID()) {
-                        try {
-                            continuation.resume(ConnectionState(deviceName = device.name))
-                        } catch (e: SecurityException) {
-                            e.printStackTrace()
-                        }
-                        break
+    val headset: Int = manager.adapter.getProfileConnectionState(BluetoothProfile.HEADSET)
+    if (headset != BluetoothProfile.STATE_CONNECTED) {
+        continuation.resume(ConnectionState(isConnected = false))
+        return@suspendCancellableCoroutine
+    }
+    val listener = object : BluetoothProfile.ServiceListener {
+        override fun onServiceConnected(profile: Int, proxy: BluetoothProfile?) {
+            if (profile != BluetoothProfile.HEADSET) return
+            proxy?.connectedDevices ?: return
+            for (device in proxy.connectedDevices) {
+                if (device.checkUUID()) {
+                    try {
+                        continuation.resume(ConnectionState(deviceName = device.name))
+                    } catch (e: SecurityException) {
+                        e.printStackTrace()
                     }
+                    break
                 }
             }
-
-            override fun onServiceDisconnected(profile: Int) {
-
-            }
         }
-        manager.adapter.getProfileProxy(this, listener, BluetoothProfile.HEADSET)
-        continuation.invokeOnCancellation {
-            manager.adapter.getProfileProxy(
-                this, null, BluetoothProfile.HEADSET
-            )
+
+        override fun onServiceDisconnected(profile: Int) {
         }
+    }
+    manager.adapter.getProfileProxy(this, listener, BluetoothProfile.HEADSET)
+    continuation.invokeOnCancellation {
+        manager.adapter.getProfileProxy(
+            this, null, BluetoothProfile.HEADSET
+        )
     }
 }
 

@@ -2,6 +2,9 @@ package com.model.airpods.model
 
 import androidx.annotation.Keep
 
+/**
+ * airpods信息
+ */
 @Keep
 data class BatteryState(
     val timestamp: Long,
@@ -14,5 +17,8 @@ data class BatteryState(
     val model: String
 )
 
+/**
+ * airpods连接状态
+ */
 @Keep
 data class ConnectionState(val isConnected: Boolean = true, val deviceName: String = "")
