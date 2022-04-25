@@ -58,6 +58,8 @@ dependencies {
     implementation 'com.gitee.zackratos:UltimateBarX:0.8.0'
     //toast
     implementation 'com.github.yinshuai0324:ToastX:1.0.2'
+    //用于启动分析
+    api 'com.umeng.umsdk:apm:1.5.2'
     //路由
     implementation('com.alibaba:arouter-api:1.5.2') {
         //过滤掉v4包里面的东西 防止和AndroidX冲突

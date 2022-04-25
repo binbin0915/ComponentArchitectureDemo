@@ -42,18 +42,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!--友盟统计的集成测试配置-->
-            <!--1.唤起码默认为“um.该app对应的appkey”，不可改变-->
-            <!--2.请使用单独intent-filter,和其他intent-filter并列，不要将上述代码填入其他intent-filter里；-->
-            <!--3.该功能仅9.4.0及以上版本的SDK支持-->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--            &lt;!&ndash;友盟统计的集成测试配置&ndash;&gt;-->
+<!--            &lt;!&ndash;1.唤起码默认为“um.该app对应的appkey”，不可改变&ndash;&gt;-->
+<!--            &lt;!&ndash;2.请使用单独intent-filter,和其他intent-filter并列，不要将上述代码填入其他intent-filter里；&ndash;&gt;-->
+<!--            &lt;!&ndash;3.该功能仅9.4.0及以上版本的SDK支持&ndash;&gt;-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-                <data android:scheme="um.624aef686adb343c47f143a4" />
-            </intent-filter>
+<!--                <data android:scheme="um.624aef686adb343c47f143a4" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <!--x5内核首次加载时优化的Service声明。-->

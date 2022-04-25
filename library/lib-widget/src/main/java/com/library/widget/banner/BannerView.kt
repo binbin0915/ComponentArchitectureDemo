@@ -15,17 +15,15 @@ import android.util.TypedValue
 import android.view.*
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.*
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
 
 import com.library.widget.R
+import com.library.widget.banner.ext.dp
 import com.library.widget.databinding.ItemBannerImageBinding
 import kotlinx.coroutines.*
-import java.lang.Math.abs
 import kotlin.reflect.KClass
 import kotlin.reflect.full.functions
 
