@@ -1,6 +1,9 @@
 package com.model.home
 
+import android.graphics.Color
+import android.view.Gravity
 import android.view.MenuItem
+import androidx.core.view.GravityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.view.activity.BaseActivity
@@ -30,6 +33,10 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
 
         //获取网络数据
         viewModel.getPageData()
+
+        viewBinding.layoutDrawer.setScrimColor(Color.TRANSPARENT)
+        viewBinding.layoutDrawer.openDrawer(GravityCompat.START)
+
 
         //1.注册viewpager页面滑动回调 -- 抽象类的使用
         viewBinding.viewPager.registerOnPageChangeCallback(object :
