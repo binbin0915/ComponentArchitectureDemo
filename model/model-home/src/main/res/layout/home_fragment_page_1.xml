@@ -5,14 +5,73 @@
     android:layout_height="match_parent"
     android:padding="20dp">
 
-
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
+        android:id="@+id/ll_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="页面状态测试"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_title_page1"
+            android:textColor="@color/black90"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_juzi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_juzi"
+            android:textColor="@color/black40"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/home_imageview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="@string/home_portrait_description"
+        android:src="@drawable/home_portrait"
+        app:layout_constraintBottom_toBottomOf="@+id/ll_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ll_top" />
+
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="-20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="-20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_top" />
+
+
+    <com.library.widget.banner.BannerView
+        android:id="@+id/home_banner"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        app:autoplay="true"
+        app:displayTextBackground="#4D000000"
+        app:displayTextColor="@color/white"
+        app:displayTextGravity="left"
+        app:displayTextSize="16sp"
+        app:displayTextStyle="bold"
+        app:indicatorGravity="bottom|right"
+        app:isNumberIndicator="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_line"
+        app:loopPlay="true" />
 
 
     <Button
@@ -21,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="错误状态"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/home_banner" />
 
     <Button
         android:id="@+id/errorRetryBtn"
@@ -71,6 +130,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="加载中状态"
-        app:layout_constraintTop_toBottomOf="@+id/networkBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/networkRetryBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

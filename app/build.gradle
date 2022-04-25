@@ -29,8 +29,8 @@ android {
     }
 
     productFlavors {
-        app_1 {
-            applicationId "com.wangkai.test1"
+        app {
+            applicationId "com.wangkai.myapplication"
             versionName "1.0"
             manifestPlaceholders = [app_name: "@string/app_name",]
         }
