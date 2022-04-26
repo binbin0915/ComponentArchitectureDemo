@@ -51,8 +51,10 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
         sharedViewModel.isOpen.observe(this) {
             if (it) {
                 viewBinding.layoutDrawer.openDrawer(GravityCompat.START)
+                viewBinding.motionLayout.transitionToState(R.id.end)
             } else {
                 viewBinding.layoutDrawer.closeDrawer(GravityCompat.START)
+                viewBinding.motionLayout.transitionToState(R.id.start)
             }
         }
 
