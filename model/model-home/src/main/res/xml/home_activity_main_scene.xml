@@ -21,19 +21,25 @@
             android:id="@+id/cardView_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rotation="8"
-            android:translationX="360dp" />
+            android:rotation="2"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:translationX="260dp" />
         <Constraint
             android:id="@+id/cardView_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rotation="12"
-            android:translationX="380dp" />
+            android:rotation="6"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:translationX="310dp" />
         <Constraint
             android:id="@+id/cardView_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rotation="14"
-            android:translationX="400dp" />
+            android:rotation="8"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:translationX="360dp" />
     </ConstraintSet>
 </MotionScene>

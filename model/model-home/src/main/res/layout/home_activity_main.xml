@@ -15,20 +15,23 @@
         app:layoutDescription="@xml/home_activity_main_scene">
         <!--卡片1-->
         <View
+            android:paddingTop="20dp"
             android:id="@+id/cardView_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#80FFFFFF" />
         <!--卡片2-->
         <View
+            android:paddingTop="20dp"
             android:id="@+id/cardView_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#90FFFFFF" />
         <!--首页-->
         <LinearLayout
-            android:id="@+id/cardView_3"
+            android:paddingTop="20dp"
             android:background="?android:attr/windowBackground"
+            android:id="@+id/cardView_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <androidx.constraintlayout.widget.ConstraintLayout
