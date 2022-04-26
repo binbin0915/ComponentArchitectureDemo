@@ -49,13 +49,10 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         when (applicationContext.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_NO -> {
                 setBarStyle(statusBarStyle(), true)
-
             }
 
             Configuration.UI_MODE_NIGHT_YES -> {
                 setBarStyle(statusBarStyle(), false)
-
-
             }
         }
 

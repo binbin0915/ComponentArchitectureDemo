@@ -2,10 +2,13 @@ package com.model.home
 
 import android.graphics.Color
 import android.view.MenuItem
+import android.view.View
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.library.base.expand.StatusBarStyle
 import com.library.base.view.activity.BaseActivity
 import com.library.router.RouterPath
 import com.model.home.adapter.HomeViewPagerAdapter
@@ -21,6 +24,13 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
 
     override fun createdObserve() {
         viewModel.pageData.observe(this) {}
+    }
+
+    /**
+     * 布局侵入状态栏
+     */
+    override fun statusBarStyle(): StatusBarStyle {
+        return StatusBarStyle.ONLY_STATUS
     }
 
     override fun onBackPressed() {
@@ -45,6 +55,29 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
                 viewBinding.layoutDrawer.closeDrawer(GravityCompat.START)
             }
         }
+
+        /**
+         * layoutDrawer监听
+         */
+        val drawerListener = object : DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+
+            }
+        }
+        viewBinding.layoutDrawer.addDrawerListener(drawerListener)
+
 
         //获取网络数据
         viewModel.getPageData()
