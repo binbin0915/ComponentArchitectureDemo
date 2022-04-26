@@ -3,12 +3,14 @@ package com.model.home.pages
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.library.base.expand.ToastType
 import com.library.base.view.fragment.BaseFragment
 import com.library.base.viewmodel.BaseViewModel
 import com.library.widget.status.PageStatus
+import com.model.home.HomeMainActivityShareViewModel
 import com.model.home.R
 import com.model.home.bean.BannerInfo
 import com.model.home.databinding.HomeFragmentPage1Binding
@@ -23,6 +25,8 @@ import kotlinx.coroutines.launch
 
 class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
     View.OnClickListener {
+
+    private lateinit var sharedViewModel: HomeMainActivityShareViewModel
 
 
     override fun lazyInit() {
@@ -52,6 +56,10 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
     )
 
     override fun initData() {
+        sharedViewModel =
+            ViewModelProvider(requireActivity())[HomeMainActivityShareViewModel::class.java]
+        viewBinding.homeImageview.setOnClickListener(this)
+
         viewBinding.emptyBtn.setOnClickListener(this)
         viewBinding.emptyRetryBtn.setOnClickListener(this)
         viewBinding.errorBtn.setOnClickListener(this)
@@ -97,6 +105,9 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
             R.id.networkBtn -> changePageStatus(PageStatus.STATUS_NET_ERROR)
             R.id.networkRetryBtn -> changePageStatus(PageStatus.STATUS_NET_ERROR_RETRY)
             R.id.loadingBtn -> changePageStatus(PageStatus.STATUS_LOADING)
+            R.id.home_imageview -> {
+                sharedViewModel.setIsOpen(true)
+            }
         }
         showSucceedStatus()
     }

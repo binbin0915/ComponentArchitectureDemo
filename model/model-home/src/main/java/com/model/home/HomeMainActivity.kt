@@ -1,9 +1,9 @@
 package com.model.home
 
 import android.graphics.Color
-import android.view.Gravity
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.view.activity.BaseActivity
@@ -16,6 +16,8 @@ import com.umeng.analytics.MobclickAgent
 class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMainBinding>() {
 
     private lateinit var adapter: HomeViewPagerAdapter
+
+    private lateinit var sharedViewModel: HomeMainActivityShareViewModel
 
     override fun createdObserve() {
         viewModel.pageData.observe(this) {}
@@ -31,11 +33,21 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
         adapter = HomeViewPagerAdapter(this, 4)
         viewBinding.viewPager.adapter = adapter
 
-        //获取网络数据
-        viewModel.getPageData()
+        sharedViewModel = ViewModelProvider(
+            this, ViewModelProvider.NewInstanceFactory()
+        )[HomeMainActivityShareViewModel::class.java]
 
         viewBinding.layoutDrawer.setScrimColor(Color.TRANSPARENT)
-        viewBinding.layoutDrawer.openDrawer(GravityCompat.START)
+        sharedViewModel.isOpen.observe(this) {
+            if (it) {
+                viewBinding.layoutDrawer.openDrawer(GravityCompat.START)
+            } else {
+                viewBinding.layoutDrawer.closeDrawer(GravityCompat.START)
+            }
+        }
+
+        //获取网络数据
+        viewModel.getPageData()
 
 
         //1.注册viewpager页面滑动回调 -- 抽象类的使用
