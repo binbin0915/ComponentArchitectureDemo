@@ -106,7 +106,7 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
             R.id.networkRetryBtn -> changePageStatus(PageStatus.STATUS_NET_ERROR_RETRY)
             R.id.loadingBtn -> changePageStatus(PageStatus.STATUS_LOADING)
             R.id.home_imageview -> {
-                sharedViewModel.setIsOpen(true)
+                sharedViewModel.isClick.value = true
             }
         }
         showSucceedStatus()

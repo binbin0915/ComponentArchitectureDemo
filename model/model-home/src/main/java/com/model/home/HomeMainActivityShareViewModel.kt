@@ -14,12 +14,5 @@ import kotlinx.coroutines.launch
  */
 class HomeMainActivityShareViewModel : BaseViewModel() {
     var isOpen = MutableLiveData<Boolean>()
-
-    fun setIsOpen(boolean: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            viewModelScope.launch(Dispatchers.Main) {
-                isOpen.value = boolean
-            }
-        }
-    }
+    var isClick = MutableLiveData<Boolean>()
 }
