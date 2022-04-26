@@ -6,11 +6,7 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="200">
-        <KeyFrameSet>
-
-
-        </KeyFrameSet>
+        motion:duration="500">
         <OnClick motion:targetId="@+id/button" />
     </Transition>
 
@@ -26,32 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:rotation="8"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
+            android:translationX="360dp" />
         <Constraint
             android:id="@+id/cardView_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rotation="10"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
+            android:rotation="12"
+            android:translationX="380dp" />
         <Constraint
             android:id="@+id/cardView_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rotation="12"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:rotation="14"
+            android:translationX="400dp" />
     </ConstraintSet>
 </MotionScene>
