@@ -5,7 +5,7 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="1000">
+        motion:duration="100">
 
         <!--- - - - - - - - -   - - - - - - -
             A: 位置关键帧： KeyPosition
@@ -49,8 +49,6 @@
                 android:translationX="210dp" />
 
         </KeyFrameSet>
-        <OnSwipe motion:maxAcceleration="0.1"
-            motion:maxVelocity="0.8" />
     </Transition>
 
 
