@@ -10,6 +10,7 @@
         <item name="colorSecondaryVariant">@color/splash_teal_200</item>
         <item name="colorOnSecondary">@color/splash_black</item>
         <!--布局的背景色-->
+        <!--        <item name="android:windowBackground">@drawable/splash_preview_night</item>-->
         <item name="android:windowBackground">@color/splash_black</item>
         <!--状态栏颜色-->
         <item name="android:statusBarColor">@color/splash_black</item>

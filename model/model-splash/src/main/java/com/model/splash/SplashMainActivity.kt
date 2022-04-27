@@ -45,9 +45,8 @@ class SplashMainActivity : BaseActivity<BaseViewModel, SplashActivityMainBinding
 
 
     override fun initData() {
-//        viewBinding.animView.addAnimatorListener(this)
-//        viewBinding.animView.playAnimation()
-        JumpActivity.jump(this, RouterPath.GROUP_HOME, RouterPath.PAGE_HOME_MAIN_ACTIVITY, true)
+        viewBinding.animView.addAnimatorListener(this)
+        viewBinding.animView.playAnimation()
     }
 
     override fun createdObserve() {
@@ -65,7 +64,7 @@ class SplashMainActivity : BaseActivity<BaseViewModel, SplashActivityMainBinding
      * 动画结束
      */
     override fun onAnimationEnd(animator: Animator) {
-
+        JumpActivity.jump(this, RouterPath.GROUP_HOME, RouterPath.PAGE_HOME_MAIN_ACTIVITY, true)
     }
 
     /**
