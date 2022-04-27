@@ -5,13 +5,13 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.expand.StatusBarStyle
 import com.library.base.view.activity.BaseActivity
 import com.library.router.RouterPath
+import com.library.widget.drawer.DrawerLayout
 import com.model.home.adapter.HomeViewPagerAdapter
 import com.model.home.databinding.HomeActivityMainBinding
 import com.umeng.analytics.MobclickAgent

@@ -5,31 +5,80 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="500" />
+        motion:duration="1000">
 
+        <!--- - - - - - - - -   - - - - - - -
+            A: 位置关键帧： KeyPosition
+            B: 属性关键帧： KeyAttribute
+            C: 循环关键帧： KeyCycle
+            D: 时间周期关键帧： KeyTimeCycle
+         - - - - - - - -   - - - - - - - -->
+        <KeyFrameSet>
+            <!--framePosition 0=起点100=终点 什么时候关键帧起作用-->
+            <!--motionTarget 目标View-->
+            <!--keyPositionType 使用的坐标系， parentRelative, deltaRelative, pathRelative-->
+            <KeyAttribute
+                motion:motionTarget="@+id/cardView_3"
+                motion:framePosition="50"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:rotation="10"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:translationX="250dp" />
+
+            <KeyAttribute
+                motion:motionTarget="@+id/cardView_2"
+                motion:framePosition="50"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:rotation="6"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:translationX="230dp" />
+
+
+            <KeyAttribute
+                motion:motionTarget="@+id/cardView_1"
+                motion:framePosition="50"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:rotation="2"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:translationX="210dp" />
+
+        </KeyFrameSet>
+        <OnSwipe motion:maxAcceleration="0.1"
+            motion:maxVelocity="0.8" />
+    </Transition>
+
+
+    <!--开始状态-->
     <ConstraintSet android:id="@+id/start">
         <Constraint android:id="@+id/cardView_1" />
         <Constraint android:id="@+id/cardView_2" />
         <Constraint android:id="@+id/cardView_3" />
     </ConstraintSet>
 
+    <!--结束状态-->
     <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@+id/cardView_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rotation="2"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:translationX="260dp" />
+            android:rotation="0"
+            android:scaleX="0.72"
+            android:scaleY="0.72"
+            android:translationX="170dp" />
         <Constraint
             android:id="@+id/cardView_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rotation="6"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
-            android:translationX="310dp" />
+            android:rotation="4"
+            android:scaleX="0.76"
+            android:scaleY="0.76"
+            android:translationX="190dp" />
         <Constraint
             android:id="@+id/cardView_3"
             android:layout_width="match_parent"
@@ -37,6 +86,6 @@
             android:rotation="8"
             android:scaleX="0.8"
             android:scaleY="0.8"
-            android:translationX="360dp" />
+            android:translationX="210dp" />
     </ConstraintSet>
 </MotionScene>
