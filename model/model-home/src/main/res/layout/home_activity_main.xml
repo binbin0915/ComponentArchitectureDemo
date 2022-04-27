@@ -16,32 +16,33 @@
         app:layoutDescription="@xml/home_activity_main_scene">
         <!--卡片1-->
         <androidx.cardview.widget.CardView
-            android:paddingTop="20dp"
             android:id="@+id/cardView_1"
-            app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardBackgroundColor="#80FFFFFF" />
+            android:paddingTop="20dp"
+            app:cardBackgroundColor="#80FFFFFF"
+            app:cardElevation="0dp" />
         <!--卡片2-->
         <androidx.cardview.widget.CardView
-            android:paddingTop="20dp"
             android:id="@+id/cardView_2"
-            app:cardElevation="0dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardBackgroundColor="#90FFFFFF" />
+            android:paddingTop="20dp"
+            app:cardBackgroundColor="#90FFFFFF"
+            app:cardElevation="0dp" />
         <!--首页-->
         <androidx.cardview.widget.CardView
-            android:paddingTop="20dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="?android:attr/windowBackground"
             android:id="@+id/cardView_3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="?android:attr/windowBackground"
+            app:cardElevation="0dp">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingTop="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
