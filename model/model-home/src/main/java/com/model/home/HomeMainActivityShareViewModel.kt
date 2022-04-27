@@ -7,12 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * 作用描述：
+ * 作用描述：activity和fragment共享的ViewModel
  *
  * 创建时间：2022/03/18
  * @author：WangKai
  */
 class HomeMainActivityShareViewModel : BaseViewModel() {
-    var isOpen = MutableLiveData<Boolean>()
     var isClick = MutableLiveData<Boolean>()
 }

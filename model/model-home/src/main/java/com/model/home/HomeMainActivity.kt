@@ -50,8 +50,6 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
 
         viewBinding.layoutDrawer.setScrimColor(Color.TRANSPARENT)
         sharedViewModel.isClick.observe(this) {
-            //设为打开状态
-            sharedViewModel.isOpen.value = true
             viewBinding.layoutDrawer.openDrawer(GravityCompat.START)
         }
 
@@ -60,43 +58,16 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
          */
         val drawerListener = object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-
-                if (sharedViewModel.isOpen.value == true) {
-                    //打开状态，马上要关闭
-                    sharedViewModel.isOpen.value = false
-                    viewBinding.motionLayout.transitionToState(R.id.end)
-//                    if (viewBinding.layoutDrawer.isOpen) {
-//                        viewBinding.motionLayout.transitionToState(R.id.end)
-//                    } else {
-//                        viewBinding.motionLayout.transitionToState(R.id.start)
-//                    }
-                }
-
-
+                viewBinding.motionLayout.progress = slideOffset
             }
 
             override fun onDrawerOpened(drawerView: View) {
-
             }
 
             override fun onDrawerClosed(drawerView: View) {
-
             }
 
             override fun onDrawerStateChanged(newState: Int) {
-//                if (newState == DrawerLayout.STATE_IDLE) {
-//                    if (viewBinding.layoutDrawer.isOpen) {
-//                        viewBinding.motionLayout.transitionToState(R.id.end)
-//                    } else {
-//                        viewBinding.motionLayout.transitionToState(R.id.start)
-//                    }
-//                } else if (newState == DrawerLayout.STATE_SETTLING) {
-//                    if (viewBinding.layoutDrawer.isOpen) {
-//                        viewBinding.motionLayout.transitionToState(R.id.end)
-//                    } else {
-//                        viewBinding.motionLayout.transitionToState(R.id.start)
-//                    }
-//                }
             }
         }
         viewBinding.layoutDrawer.addDrawerListener(drawerListener)
