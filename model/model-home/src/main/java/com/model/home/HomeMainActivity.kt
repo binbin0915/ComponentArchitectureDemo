@@ -35,6 +35,18 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
         return StatusBarStyle.ONLY_STATUS
     }
 
+    /**
+     * ### bug：后台恢复后motionLayout被还原
+     * fix：为了保证后台长时间驻留app被杀死导致motionLayout被还原，
+     * 目前的解决办法只能牺牲体验，当app回到首页，重置layoutDrawer状态
+     */
+    override fun onResume() {
+        super.onResume()
+        if (viewBinding.layoutDrawer.isOpen) {
+            viewBinding.layoutDrawer.closeDrawer(GravityCompat.START)
+        }
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
         //点击back退出时调用，用来保存友盟统计数据
