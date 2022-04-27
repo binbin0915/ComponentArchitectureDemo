@@ -13,7 +13,7 @@ internal val Float.dp
         displayMetrics
     )
 
-internal val Int.dp
+val Int.dp
     get() = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         this.toFloat(),

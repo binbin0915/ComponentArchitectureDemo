@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.expand.StatusBarStyle
 import com.library.base.view.activity.BaseActivity
 import com.library.router.RouterPath
+import com.library.widget.banner.ext.dp
 import com.library.widget.drawer.DrawerLayout
 import com.model.home.adapter.HomeViewPagerAdapter
 import com.model.home.databinding.HomeActivityMainBinding
@@ -59,6 +60,9 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
         val drawerListener = object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 viewBinding.motionLayout.progress = slideOffset
+                viewBinding.cardView1.radius = slideOffset * 18.dp.toInt()
+                viewBinding.cardView2.radius = slideOffset * 18.dp.toInt()
+                viewBinding.cardView3.radius = slideOffset * 18.dp.toInt()
             }
 
             override fun onDrawerOpened(drawerView: View) {

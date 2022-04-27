@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="100">
+        motion:duration="1000">
 
         <!--- - - - - - - - -   - - - - - - -
             A: 位置关键帧： KeyPosition
@@ -18,35 +19,35 @@
             <!--motionTarget 目标View-->
             <!--keyPositionType 使用的坐标系， parentRelative, deltaRelative, pathRelative-->
             <KeyAttribute
-                motion:motionTarget="@+id/cardView_3"
-                motion:framePosition="50"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:rotation="10"
                 android:scaleX="0.8"
                 android:scaleY="0.8"
-                android:translationX="250dp" />
+                android:translationX="250dp"
+                motion:framePosition="50"
+                motion:motionTarget="@+id/cardView_3" />
 
             <KeyAttribute
-                motion:motionTarget="@+id/cardView_2"
-                motion:framePosition="50"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:rotation="6"
                 android:scaleX="0.8"
                 android:scaleY="0.8"
-                android:translationX="230dp" />
+                android:translationX="230dp"
+                motion:framePosition="50"
+                motion:motionTarget="@+id/cardView_2" />
 
 
             <KeyAttribute
-                motion:motionTarget="@+id/cardView_1"
-                motion:framePosition="50"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:rotation="2"
                 android:scaleX="0.8"
                 android:scaleY="0.8"
-                android:translationX="210dp" />
+                android:translationX="210dp"
+                motion:framePosition="50"
+                motion:motionTarget="@+id/cardView_1" />
 
         </KeyFrameSet>
     </Transition>
@@ -68,7 +69,11 @@
             android:rotation="0"
             android:scaleX="0.72"
             android:scaleY="0.72"
-            android:translationX="170dp" />
+            android:translationX="170dp">
+<!--            <CustomAttribute-->
+<!--                motion:attributeName="radius"-->
+<!--                motion:customDimension="14dp" />-->
+        </Constraint>
         <Constraint
             android:id="@+id/cardView_2"
             android:layout_width="match_parent"
@@ -76,7 +81,11 @@
             android:rotation="4"
             android:scaleX="0.76"
             android:scaleY="0.76"
-            android:translationX="190dp" />
+            android:translationX="190dp">
+<!--            <CustomAttribute-->
+<!--                motion:attributeName="radius"-->
+<!--                motion:customDimension="14dp" />-->
+        </Constraint>
         <Constraint
             android:id="@+id/cardView_3"
             android:layout_width="match_parent"
@@ -84,6 +93,10 @@
             android:rotation="8"
             android:scaleX="0.8"
             android:scaleY="0.8"
-            android:translationX="210dp" />
+            android:translationX="210dp">
+<!--            <CustomAttribute-->
+<!--                motion:attributeName="radius"-->
+<!--                motion:customDimension="14dp" />-->
+        </Constraint>
     </ConstraintSet>
 </MotionScene>
