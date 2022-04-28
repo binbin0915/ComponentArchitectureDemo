@@ -73,7 +73,7 @@ dependencies {
         implementation project(":model:model-splash")
         implementation project(":model:model-home")
         implementation project(":model:model-login")
-        implementation project(":model:model-mykotlin")
+        implementation project(":model:model-kotlin")
         implementation project(":model:model-airpods")
     }
 }

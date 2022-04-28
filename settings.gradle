@@ -31,5 +31,5 @@ include ':library:lib-common'          //--网络公共配置的地方
 include ':model:model-splash'//启动页
 include ':model:model-home'//首页
 include ':model:model-login'//登录页
-include ':model:model-mykotlin'//kotlin示例
+include ':model:model-kotlin'//kotlin示例
 include ':model:model-airpods'//airpods弹窗模块
