@@ -7,7 +7,7 @@
 /captures
 .externalNativeBuild
 .cxx
-/model/model-mykotlin/build
+/model/model-kotlin/build
 /buildSrc/build/classes/kotlin/main/META-INF/buildSrc.kotlin_module
 /buildSrc/build/classes/kotlin/main/AndroidX.class
 /buildSrc/build/classes/kotlin/main/AndroidXVersion.class
