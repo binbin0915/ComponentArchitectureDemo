@@ -4,11 +4,18 @@
 > https://github.com/princekin-f/EasyFloat       浮窗从未如此简单  
 > https://github.com/550609334/DSLAnimator.git   这是一个可以让你使用DSL去写动画的库  
 > https://github.com/Petterpx/FloatingX.git      Android免权限悬浮窗，支持全局、局部悬浮，支持边缘吸附、回弹、自定义动画、位置保存、窗口化及分屏后位置修复等。  
-> https://github.com/angcyo/DslTabLayout.git     ♥️ Android界最万能的TabLayout(不仅仅是TabLayout). 高能自绘控件, 继承自ViewGroup, 非组合控件.  
+> https://github.com/angcyo/DslTabLayout.git     ♥️ Android界最万能的TabLayout(不仅仅是TabLayout). 高能自绘控件, 继承自ViewGroup, 非组合控件.
+> 
+> https://github.com/xuehuayous/DelegationAdapter.git  一种优雅的方式来使用RecyclerView
 
 [界面设计]
 > https://mastergo.com/community/resource/551?from=card  
-> https://mastergo.com/community/resource/405?from=card  
+> https://mastergo.com/community/resource/405?from=card
+
+
+[Spring Boot]  
+https://github.com/dyc87112/SpringBoot-Learning/tree/master/2.x
+https://blog.didispace.com  
 
 组件化架构+Jetpack
 
@@ -17,7 +24,7 @@
 [AndroidStudio dolphin | 2021.3.1 Canary3]  
 [支持的Android版本:minSdk 21 targetSdk 32]  
 [JDK版本：OPENJDK 11]  
-[Gradle版本：7.4-bin]  
+[Gradle版本：7.4-bin]
 
 <font color=Blue>Test</font>
 
