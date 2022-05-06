@@ -22,7 +22,7 @@ class GlobalResponseHandler : HttpResponseHandler{
         /**
          * 响应成功
          */
-        const val SUCCESS = 0
+        const val SUCCESS = 20000
         /**
          * Token 过期
          */
