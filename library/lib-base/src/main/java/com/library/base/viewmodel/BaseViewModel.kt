@@ -1,9 +1,6 @@
 package com.library.base.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.library.base.data.EventType
-import com.library.base.data.ViewModelEventData
 import com.library.base.expand.ToastType
 import com.library.base.livedata.SingleLiveEvent
 import com.library.widget.status.PageStatus

@@ -1,4 +1,4 @@
-package com.library.base.data
+package com.library.base.viewmodel
 
 import com.library.base.expand.ToastType
 import com.library.widget.status.PageStatus

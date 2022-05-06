@@ -17,7 +17,7 @@ import com.model.login.viewmodel.LoginViewModel
 class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() {
 
     @Autowired(name = RouterPath.SERVICE_HOME)
-    lateinit var loginService: HomeService
+    lateinit var homeService: HomeService
 
     override fun initData() {
         viewBinding.loginBtn.setOnClickListener {
@@ -28,7 +28,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
         }
 
         viewModel.loginLiveData.observe(this) { jsonString ->
-            loginService.loginSucceed(jsonString)
+            homeService.loginSucceed(jsonString)
             finish()
         }
     }

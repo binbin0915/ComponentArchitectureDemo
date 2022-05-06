@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
-import com.library.base.data.EventType
 import com.library.base.expand.ToastType
 import com.library.base.expand.getVmClazz
 import com.library.base.expand.toast
 import com.library.base.utils.inflateBindingWithGeneric
 import com.library.base.viewmodel.BaseViewModel
+import com.library.base.viewmodel.EventType
 import com.library.widget.status.MultiStateContainer
 import com.library.widget.status.MultiStatePage
 import com.library.widget.status.PageStatus
