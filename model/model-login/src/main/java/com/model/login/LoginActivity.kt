@@ -23,12 +23,11 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
         viewBinding.loginBtn.setOnClickListener {
             //登录接口
             viewModel.queryLoginByCoroutine()
-
-
         }
-
+        //获取到登录数据
         viewModel.loginLiveData.observe(this) { jsonString ->
-            homeService.loginSucceed(jsonString)
+            //保存登录信息
+
             finish()
         }
     }

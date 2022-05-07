@@ -9,5 +9,5 @@ import com.alibaba.android.arouter.facade.template.IProvider
  * @author：WangKai
  */
 interface HomeService : IProvider {
-    fun loginSucceed(userName: String)
+    fun loginSucceed()
 }

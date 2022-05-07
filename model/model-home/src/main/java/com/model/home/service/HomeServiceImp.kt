@@ -15,8 +15,8 @@ import com.library.router.service.HomeService
 @Route(path = RouterPath.SERVICE_HOME, name = "首页模块服务")
 class HomeServiceImp : HomeService {
 
-    override fun loginSucceed(userName: String) {
-        AppLog.log("登录成功:${userName}")
+    override fun loginSucceed() {
+        AppLog.log("登录成功")
         //更新首页
 
 
