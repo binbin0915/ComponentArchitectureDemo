@@ -1,7 +1,6 @@
 package com.model.home
 
 import android.graphics.Color
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.GravityCompat
@@ -15,6 +14,8 @@ import com.library.widget.banner.ext.dp
 import com.library.widget.drawer.DrawerLayout
 import com.model.home.adapter.HomeViewPagerAdapter
 import com.model.home.databinding.HomeActivityMainBinding
+import com.model.home.viewmodel.HomeMainActivityShareViewModel
+import com.model.home.viewmodel.HomeMainActivityViewModel
 import com.umeng.analytics.MobclickAgent
 
 @Route(path = RouterPath.PAGE_HOME_MAIN_ACTIVITY, group = RouterPath.GROUP_HOME)

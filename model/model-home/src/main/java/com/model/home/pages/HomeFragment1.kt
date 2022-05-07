@@ -10,11 +10,11 @@ import com.library.base.expand.ToastType
 import com.library.base.view.fragment.BaseFragment
 import com.library.base.viewmodel.BaseViewModel
 import com.library.widget.status.PageStatus
-import com.model.home.HomeMainActivityShareViewModel
+import com.model.home.viewmodel.HomeMainActivityShareViewModel
 import com.model.home.R
 import com.model.home.bean.BannerInfo
 import com.model.home.databinding.HomeFragmentPage1Binding
-import com.model.home.transformer.ZoomPageTransformer
+import com.library.widget.banner.transformer.ZoomPageTransformer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

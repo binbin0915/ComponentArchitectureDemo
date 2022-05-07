@@ -17,6 +17,9 @@ class HomeServiceImp : HomeService {
 
     override fun loginSucceed(userName: String) {
         AppLog.log("登录成功:${userName}")
+        //更新首页
+
+
     }
 
     override fun init(context: Context?) {

@@ -1,4 +1,4 @@
-package com.model.home
+package com.model.home.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

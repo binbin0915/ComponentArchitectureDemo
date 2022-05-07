@@ -1,4 +1,4 @@
-package com.model.home.transformer
+package com.library.widget.banner.transformer
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
