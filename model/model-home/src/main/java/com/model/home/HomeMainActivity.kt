@@ -1,8 +1,10 @@
 package com.model.home
 
 import android.graphics.Color
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
@@ -22,8 +24,7 @@ import com.umeng.analytics.MobclickAgent
 class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMainBinding>() {
 
     private lateinit var adapter: HomeViewPagerAdapter
-
-    private lateinit var sharedViewModel: HomeMainActivityShareViewModel
+    private val sharedViewModel by viewModels<HomeMainActivityShareViewModel>()
 
     override fun createdObserve() {
         viewModel.pageData.observe(this) {}
@@ -58,12 +59,9 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
         adapter = HomeViewPagerAdapter(this, 4)
         viewBinding.viewPager.adapter = adapter
 
-        sharedViewModel = ViewModelProvider(
-            this, ViewModelProvider.NewInstanceFactory()
-        )[HomeMainActivityShareViewModel::class.java]
-
         viewBinding.layoutDrawer.setScrimColor(Color.TRANSPARENT)
         sharedViewModel.isClick.observe(this) {
+            Log.e("AAAAAAAAAAAAA", "111111111111111")
             viewBinding.layoutDrawer.openDrawer(GravityCompat.START)
         }
 

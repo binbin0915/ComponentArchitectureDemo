@@ -1,5 +1,8 @@
 package com.model.home.viewmodel
 
+import android.app.Application
+import android.util.Log
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.library.base.viewmodel.BaseViewModel

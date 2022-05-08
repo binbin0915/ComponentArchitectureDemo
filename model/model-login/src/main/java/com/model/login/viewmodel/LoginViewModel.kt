@@ -1,13 +1,18 @@
 package com.model.login.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
 import com.library.base.viewmodel.BaseViewModel
 import com.model.login.data.LoginData
 import com.model.login.data.LoginDataSource
 import kotlinx.coroutines.launch
 
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel(application: Application) : BaseViewModel() {
+    //持久化
+    private val preference = PreferenceManager.getDefaultSharedPreferences(application)
+
 
     //livedata
     val loginLiveData = MutableLiveData<LoginData>()
