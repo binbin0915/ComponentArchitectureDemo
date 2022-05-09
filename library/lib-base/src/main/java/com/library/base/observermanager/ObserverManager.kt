@@ -12,7 +12,7 @@ package com.library.base.observermanager
  * @author WangKai
  */
 
-class ObserverManager : SubjectListener {
+open class ObserverManager : SubjectListener {
     companion object {
         //观察者接口集合
         private val list: ArrayList<ObserverListener> = ArrayList()
