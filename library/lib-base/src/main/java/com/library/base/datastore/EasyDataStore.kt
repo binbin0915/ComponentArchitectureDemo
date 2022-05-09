@@ -65,7 +65,7 @@ object EasyDataStore {
     /**
      * 清空数据
      */
-    suspend fun clearDataStore() = dataStore.edit { it.clear() }
+    private suspend fun clearDataStore() = dataStore.edit { it.clear() }
 
     /**
      * 存放Int数据
