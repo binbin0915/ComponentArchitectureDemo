@@ -2,6 +2,8 @@ package com.model.login
 
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.library.base.datastore.Constrains
+import com.library.base.datastore.EasyDataStore
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
 import com.library.router.RouterPath
@@ -25,9 +27,10 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
             viewModel.queryLoginByCoroutine()
         }
         //获取到登录数据
-        viewModel.loginLiveData.observe(this) { jsonString ->
+        viewModel.loginLiveData.observe(this) { login_nickname ->
             //保存登录信息
-
+            EasyDataStore.putData(Constrains.LOGIN_NICKNAME, login_nickname)
+            homeService.loginSucceed()
             finish()
         }
     }
