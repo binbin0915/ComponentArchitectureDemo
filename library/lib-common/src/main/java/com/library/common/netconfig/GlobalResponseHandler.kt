@@ -1,6 +1,7 @@
 package com.library.common.netconfig
 
 import com.google.gson.JsonParseException
+import com.library.base.datastore.EasyDataStore
 import com.yupfeg.remote.data.HttpResponseParsable
 import com.yupfeg.remote.tools.handler.HttpResponseHandler
 import com.yupfeg.remote.tools.handler.RestApiException
@@ -106,6 +107,7 @@ class GlobalResponseHandler : HttpResponseHandler{
             //token失效
             TOKEN_INVALID ->{
                 //清空用户本地缓存
+                EasyDataStore.clearData()
                 //TODO 跳转到登录页
             }
             else->{

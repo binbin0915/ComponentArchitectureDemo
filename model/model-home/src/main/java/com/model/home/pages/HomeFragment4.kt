@@ -40,8 +40,6 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
         }
 
         viewBinding.loginBtn.setOnClickListener {
-            //清除以前的登录信息
-            EasyDataStore.clearData()
             JumpActivity.jump(RouterPath.GROUP_LOGIN, RouterPath.PAGE_LOGIN_ACTIVITY)
         }
     }
