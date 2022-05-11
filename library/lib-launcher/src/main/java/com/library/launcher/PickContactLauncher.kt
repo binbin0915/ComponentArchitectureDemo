@@ -13,7 +13,7 @@ import com.library.launcher.permission.PermissionLauncher
  * 创建日期： 2022/04/16
  * @author WangKai
  */
-class PickContactLauncher : BaseLauncher<Void, Uri>(ActivityResultContracts.PickContact()) {
+class PickContactLauncher : BaseLauncher<Void?, Uri?>(ActivityResultContracts.PickContact()) {
     var onError: (message: String) -> Unit = {}
     var onSuccess: (uri: Uri?) -> Unit = {}
     val permission by lazy { PermissionLauncher() }
