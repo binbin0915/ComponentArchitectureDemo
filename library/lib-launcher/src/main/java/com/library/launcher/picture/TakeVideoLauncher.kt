@@ -14,7 +14,7 @@ import java.io.File
  * 创建日期： 2022/04/16
  * @author WangKai
  */
-class TakeVideoLauncher : BasePictureLauncher<Uri, Bitmap>(ActivityResultContracts.TakeVideo()) {
+class TakeVideoLauncher : BasePictureLauncher<Uri, Boolean>(ActivityResultContracts.CaptureVideo()) {
     var onError: (message: String) -> Unit = {}
     var onSuccess: (path: String) -> Unit = {}
     var path: String = ""
@@ -46,7 +46,7 @@ class TakeVideoLauncher : BasePictureLauncher<Uri, Bitmap>(ActivityResultContrac
         }
     }
 
-    override fun onActivityResult(result: Bitmap?) {
+    override fun onActivityResult(result: Boolean?) {
         onSuccess.invoke(path)
     }
 }

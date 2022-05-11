@@ -11,7 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
  * @author WangKai
  */
 class TakePicturePreviewLauncher :
-    BasePictureLauncher<Void, Bitmap>(ActivityResultContracts.TakePicturePreview()) {
+    BasePictureLauncher<Void?, Bitmap?>(ActivityResultContracts.TakePicturePreview()) {
     var onSuccess: (bitmap: Bitmap) -> Unit = {}
     var onError: (message: String) -> Unit = {}
 
