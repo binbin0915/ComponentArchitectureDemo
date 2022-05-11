@@ -3,8 +3,6 @@ package com.library.router
 import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import com.alibaba.android.arouter.launcher.ARouter
 import com.library.router.params.JumpParams
 

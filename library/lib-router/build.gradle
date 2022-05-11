@@ -4,7 +4,9 @@ plugins {
     id 'kotlin-kapt'
 }
 
-
+/**
+ * 基础路由系统，建立模块之间连接
+ * */
 android {
     compileSdk 32
 
@@ -40,12 +42,9 @@ kapt {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    //日志打印模块
-    implementation project(":library:lib-logcat")
-    //ARouter
+    //在service中用到的
+    implementation 'androidx.lifecycle:lifecycle-livedata-core-ktx:2.4.1'
+    //ARouter基础
     implementation('com.alibaba:arouter-api:1.5.2') {
         //过滤掉v4包里面的东西 防止和AndroidX冲突
         exclude group: 'com.android.support', module: 'support-v4'

@@ -2,7 +2,9 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
 }
-
+/**
+ * 一些公共库，公共utils
+ * */
 android {
     compileSdk 32
 

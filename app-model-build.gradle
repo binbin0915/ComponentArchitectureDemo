@@ -70,14 +70,15 @@ android {
         enabled = true
     }
 }
-
+/**
+ * 模块中需要引入的公共库*/
 dependencies {
-    //Jetpack
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'     //协程支持
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
-
+    //协程支持
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    //KTX
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
     //公共基础包
     implementation project(":library:lib-common")
     //日志打印

@@ -2,7 +2,9 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
 }
-
+/**
+ * 常用组件的封装，或直接引入其他第三方库做统一依赖管理
+ * */
 android {
     compileSdk 32
 
@@ -29,18 +31,23 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 }
 
 dependencies {
+    //kotlin基础库
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.10"
+    //kotlin协程
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+    //基础KTX拓展
     implementation 'androidx.core:core-ktx:1.7.0'
+    //AndroidJetpack基础组件
     implementation 'androidx.appcompat:appcompat:1.4.1'
+    //material组件
     implementation 'com.google.android.material:material:1.5.0'
+    //-------------------------------第三方开源库--------------------------------
     api 'com.github.yinshuai0324:GeneralAppWidget:1.0.2'
-
     api "com.github.kongzue.DialogX:DialogX:0.0.45.beta1"
 }

@@ -1,6 +1,9 @@
 apply plugin: "com.android.library"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+/**
+ * 基础的MVVM架构封装
+ * */
 android {
     compileSdk 32
 
@@ -54,9 +57,9 @@ dependencies {
     //协程支持
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
     //相关 ktx 拓展
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'    //Lifecycle 扩展库
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'    //livedata扩展库
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'    //viewModel扩展库
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'    //Lifecycle 扩展库
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'    //livedata扩展库
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'    //viewModel扩展库
     //网络库 -- 用于在basemodel中封装
     implementation project(":library:lib-network")
     //UI 组件库
