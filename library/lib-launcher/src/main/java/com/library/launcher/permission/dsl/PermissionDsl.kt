@@ -29,14 +29,14 @@ inline fun ComponentActivity.permission(
 }
 
 inline fun ComponentActivity.permissions(
-    vararg permissions: String,//权限
+    permissions: Array<String>,//权限
     builderPermission: MultiPermissionBuilder.() -> Unit
 ) {
     val builder =
         MultiPermissionBuilder()
     builder.builderPermission()
     requestMultiplePermissions(
-        *permissions,
+        permissions,
         allGranted = builder.allGranted,
         denied = builder.denied,
         explained = builder.explained
@@ -59,14 +59,14 @@ inline fun Fragment.permission(
 }
 
 inline fun Fragment.permissions(
-    vararg permissions: String,//权限
+    permissions: Array<String>,//权限
     builderPermission: MultiPermissionBuilder.() -> Unit
 ) {
     val builder =
         MultiPermissionBuilder()
     builder.builderPermission()
     requestMultiplePermissions(
-        *permissions,
+        permissions,
         allGranted = builder.allGranted,
         denied = builder.denied,
         explained = builder.explained

@@ -48,12 +48,12 @@ inline fun ComponentActivity.requestPermission(
  * [explained] 被拒绝且勾选不再询问，同时被拒绝且勾选不再询问的权限列表
  */
 inline fun ComponentActivity.requestMultiplePermissions(
-    vararg permissions: String,
+    permissions: Array<String>,
     crossinline denied: (List<String>) -> Unit = {},
     crossinline explained: (List<String>) -> Unit = {},
     crossinline allGranted: () -> Unit = {}
 ) {
-    registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result: MutableMap<String, Boolean> ->
+    registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result: Map<String, Boolean> ->
         //过滤 value 为 false 的元素并转换为 list
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val deniedList = result.filter { !it.value }.map { it.key }
@@ -109,12 +109,12 @@ inline fun Fragment.requestPermission(
  * [explained] 被拒绝且勾选不再询问，同时被拒绝且勾选不再询问的权限列表
  */
 inline fun Fragment.requestMultiplePermissions(
-    vararg permissions: String,
+    permissions: Array<String>,
     crossinline denied: (List<String>) -> Unit = {},
     crossinline explained: (List<String>) -> Unit = {},
     crossinline allGranted: () -> Unit = {}
 ) {
-    registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result: MutableMap<String, Boolean> ->
+    registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result: Map<String, Boolean> ->
         //过滤 value 为 false 的元素并转换为 list
         val deniedList = result.filter { !it.value }.map { it.key }
         when {
