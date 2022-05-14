@@ -5,6 +5,7 @@ import ando.file.core.FileLogger
 import ando.file.core.FileUtils
 import ando.file.selector.*
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -19,21 +20,28 @@ import com.library.base.expand.toastSucceed
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
 import com.library.launcher.permission.MultiPermissionLauncher
+import com.library.launcher.permission.PermissionLauncher
 import com.library.launcher.permission.utils.checkPermissions
+import com.library.launcher.picture.TakeVideoLauncher
 import com.library.router.RouterPath
 import com.model.mykotlin.databinding.MykotlinActivityFileOperatorBinding
 
 @Route(path = RouterPath.PAGE_KOTLIN_FILE_OPERATOR_ACTIVITY, group = RouterPath.GROUP_KOTLIN)
 class FileOperatorActivity : BaseActivity<BaseViewModel, MykotlinActivityFileOperatorBinding>() {
     private val multiPermissionLauncher by lazy { MultiPermissionLauncher() }
+    private val permissionLauncher by lazy { PermissionLauncher() }
+    private val takeVideoLauncher by lazy { TakeVideoLauncher() }
     private val activityLauncher by lazy { ActivityResultLauncher() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycle.addObserver(multiPermissionLauncher)
+        lifecycle.addObserver(permissionLauncher)
         lifecycle.addObserver(activityLauncher)
+        lifecycle.addObserver(takeVideoLauncher)
         viewBinding.btnSelectSingleImg.setOnClickListener {
-            requestMultiPermissions()
+//            requestMultiPermissions()
+            takeVideoLauncher()
         }
     }
 
@@ -75,6 +83,35 @@ class FileOperatorActivity : BaseActivity<BaseViewModel, MykotlinActivityFileOpe
                         false
                     }
             })
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun takeVideoLauncher() {
+        permissionLauncher.lunch(""){
+            //全部权限均已申请成功
+            granted = {
+                //处理成功后的逻辑
+                takeVideoLauncher.lunch { path ->
+                    Log.e("AAAAAAAAAAAAAAAAAA","PATH:$path")
+                }
+            }
+            //权限申请失败且未勾选不再询问，下次可继续申请
+            denied = { list ->
+                Log.e("FileOperatorActivity", "下次可继续申请list:$list")
+            }
+            //权限申请失败且已勾选不再询问，需要向用户解释原因并引导用户开启权限
+            explained = {
+                MessageDialog.show("权限", "前往设置手动开启相机权限", "去开启", "取消")// 文本
+                    .setCancelable(false)//是否允许点击外部区域或返回键关闭
+                    .setOkButton { _, _ ->
+                        forwardToSettings()
+                        false
+                    }.setCancelButton { _, _ ->
+                        finish()
+                        false
+                    }
+            }
+        }
     }
 
     private fun forwardToSettings() {
