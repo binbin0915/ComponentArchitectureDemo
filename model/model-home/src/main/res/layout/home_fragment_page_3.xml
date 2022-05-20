@@ -58,6 +58,15 @@
                 android:text="@string/home_bt_text_network_replace_url"
                 android:textAllCaps="false" />
 
+            <Button
+                android:id="@+id/bt_arcore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/home_bt_text_arcore"
+                android:textAllCaps="false" />
+
 
             <Button
                 android:id="@+id/bt_network_download"

@@ -87,7 +87,7 @@ class FileOperatorActivity : BaseActivity<BaseViewModel, MykotlinActivityFileOpe
 
     @SuppressLint("MissingPermission")
     private fun takeVideoLauncher() {
-        permissionLauncher.lunch(""){
+        permissionLauncher.lunch(Manifest.permission.CAMERA){
             //全部权限均已申请成功
             granted = {
                 //处理成功后的逻辑
