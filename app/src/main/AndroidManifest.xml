@@ -30,6 +30,15 @@
         android:theme="@style/APPTheme.BaseApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <provider
+            android:name="ando.file.core.FileProvider"
+            android:authorities="${applicationId}.andoFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/ando_paths" />
+        </provider>
         <!--入口activity-->
         <activity
             android:name="com.model.splash.SplashMainActivity"

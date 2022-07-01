@@ -5,12 +5,17 @@ import ando.file.core.FileLogger
 import ando.file.core.FileUtils
 import ando.file.selector.*
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.Settings
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.flywith24.activityresult.ActivityResultLauncher
 import com.kongzue.dialogx.dialogs.MessageDialog
@@ -19,21 +24,31 @@ import com.library.base.expand.toastSucceed
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
 import com.library.launcher.permission.MultiPermissionLauncher
+import com.library.launcher.permission.PermissionLauncher
 import com.library.launcher.permission.utils.checkPermissions
+import com.library.launcher.picture.TakeVideoLauncher
 import com.library.router.RouterPath
 import com.model.mykotlin.databinding.MykotlinActivityFileOperatorBinding
+import java.io.File
 
 @Route(path = RouterPath.PAGE_KOTLIN_FILE_OPERATOR_ACTIVITY, group = RouterPath.GROUP_KOTLIN)
 class FileOperatorActivity : BaseActivity<BaseViewModel, MykotlinActivityFileOperatorBinding>() {
     private val multiPermissionLauncher by lazy { MultiPermissionLauncher() }
+    private val permissionLauncher by lazy { PermissionLauncher() }
     private val activityLauncher by lazy { ActivityResultLauncher() }
+    private val takeVideoLauncher by lazy { TakeVideoLauncher() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycle.addObserver(multiPermissionLauncher)
+        lifecycle.addObserver(permissionLauncher)
         lifecycle.addObserver(activityLauncher)
+        lifecycle.addObserver(takeVideoLauncher)
         viewBinding.btnSelectSingleImg.setOnClickListener {
-            requestMultiPermissions()
+            //请求多权限
+//            requestMultiPermissions()
+            //录像并返回路径
+            takeVideoLauncher()
         }
     }
 
@@ -94,6 +109,24 @@ class FileOperatorActivity : BaseActivity<BaseViewModel, MykotlinActivityFileOpe
                 chooseFile()
                 toastSucceed("手动开启权限成功")
             })
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private fun takeVideoLauncher() {
+        permissionLauncher.lunch(Manifest.permission.CAMERA) {
+            granted = {
+                takeVideoLauncher.lunch { path ->
+                    Log.e("AAAAAAAAAAAAAAAAAAAAAAA", "PATH+$path")
+                }
+            }
+            denied = {
+
+            }
+            explained = {
+
+            }
+        }
     }
 
     /**
