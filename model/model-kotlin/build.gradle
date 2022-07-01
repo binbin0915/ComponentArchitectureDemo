@@ -35,9 +35,10 @@ dependencies {
 
     implementation 'io.noties.markwon:core:4.6.2'
     //markdown
-    implementation"io.noties.markwon:html:4.6.2"
+    implementation "io.noties.markwon:html:4.6.2"
     implementation 'com.github.kingideayou:MarkwonCodeEx:1.0.0'
-
+    //ARCore
+    implementation 'com.google.ar:core:1.31.0'
     //路由
     implementation('com.alibaba:arouter-api:1.5.2') {
         //过滤掉v4包里面的东西 防止和AndroidX冲突

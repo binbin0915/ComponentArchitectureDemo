@@ -7,6 +7,14 @@
 
     <application>
         <activity
+            android:name=".activity.ARCoreActivity"
+            android:exported="false" />
+        <!-- ARCore -->
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
+
+        <activity
             android:name=".activity.FileOperatorActivity"
             android:exported="false" />
         <activity

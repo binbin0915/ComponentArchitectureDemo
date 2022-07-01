@@ -34,6 +34,7 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
         viewBinding.btNetworkBase.setOnClickListener(this)
         viewBinding.btNetworkReplaceUrl.setOnClickListener(this)
         viewBinding.btNetworkDownload.setOnClickListener(this)
+        viewBinding.btArcore.setOnClickListener(this)
     }
 
     /**
@@ -75,8 +76,8 @@ class HomeFragment3 : BaseFragment<BaseViewModel, HomeFragmentPage3Binding>(),
                 JumpActivity.jump(RouterPath.GROUP_AIRPODS, RouterPath.PAGE_AIRPODS_MAIN_ACTIVITY)
             }
 
-            R.id.bt_network_download -> {
-
+            R.id.bt_arcore -> {
+                JumpActivity.jump(RouterPath.GROUP_KOTLIN, RouterPath.PAGE_ARCORE_ACTIVITY)
             }
 
 
