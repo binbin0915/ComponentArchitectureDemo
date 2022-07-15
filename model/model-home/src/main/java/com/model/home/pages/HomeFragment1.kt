@@ -21,6 +21,8 @@ import kotlinx.coroutines.launch
 
 /**
  * lifecycleScope提供了协程支持
+ *
+ * app首页home
  */
 
 class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
@@ -103,9 +105,7 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
             R.id.networkBtn -> changePageStatus(PageStatus.STATUS_NET_ERROR)
             R.id.networkRetryBtn -> changePageStatus(PageStatus.STATUS_NET_ERROR_RETRY)
             R.id.loadingBtn -> changePageStatus(PageStatus.STATUS_LOADING)
-            R.id.home_imageview -> {
-                sharedViewModel.isClick.value = true
-            }
+            R.id.home_imageview -> sharedViewModel.isClick.value = true
         }
         showSucceedStatus()
     }
@@ -114,8 +114,7 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
      * 点击重试会调用
      */
     override fun onRetry() {
-        //requireContext()
-        showToast(ToastType.INFO, "重试监听")
+        viewModel.toast(ToastType.INFO, "重试111监听")
     }
 
     private fun showSucceedStatus() {

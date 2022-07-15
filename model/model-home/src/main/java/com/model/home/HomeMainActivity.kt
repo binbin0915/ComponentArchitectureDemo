@@ -1,12 +1,10 @@
 package com.model.home
 
 import android.graphics.Color
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.expand.StatusBarStyle
@@ -24,6 +22,10 @@ import com.umeng.analytics.MobclickAgent
 class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMainBinding>() {
 
     private lateinit var adapter: HomeViewPagerAdapter
+
+    /**
+     * activity和fragment共享的ViewModel
+     */
     private val sharedViewModel by viewModels<HomeMainActivityShareViewModel>()
 
     override fun createdObserve() {
@@ -56,14 +58,20 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
     }
 
     override fun initData() {
-        adapter = HomeViewPagerAdapter(this, 4)
-        viewBinding.viewPager.adapter = adapter
 
+        /**
+         * 侧边菜单动画
+         */
         viewBinding.layoutDrawer.setScrimColor(Color.TRANSPARENT)
         sharedViewModel.isClick.observe(this) {
-            Log.e("AAAAAAAAAAAAA", "111111111111111")
             viewBinding.layoutDrawer.openDrawer(GravityCompat.START)
         }
+
+        /**
+         * fragment页面
+         */
+        adapter = HomeViewPagerAdapter(this, 4)
+        viewBinding.viewPager.adapter = adapter
 
         /**
          * layoutDrawer监听

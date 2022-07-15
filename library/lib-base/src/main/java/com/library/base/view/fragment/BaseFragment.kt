@@ -16,7 +16,6 @@ import com.library.base.utils.inflateBindingWithGeneric
 import com.library.base.viewmodel.BaseViewModel
 import com.library.base.viewmodel.EventType
 import com.library.widget.status.MultiStateContainer
-import com.library.widget.status.MultiStatePage
 import com.library.widget.status.PageStatus
 import com.library.widget.status.bindMultiState
 
@@ -192,7 +191,7 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
     /**
      * 显示Toast
      */
-    fun showToast(type: ToastType = ToastType.INFO, msg: String?) {
+    fun showToast(type: ToastType = ToastType.INFO, msg: String) {
         requireActivity().toast(type, msg)
     }
 

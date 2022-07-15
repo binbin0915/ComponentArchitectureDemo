@@ -3,6 +3,7 @@ package com.model.splash
 import android.animation.Animator
 import android.os.Bundle
 import com.efs.sdk.launch.LaunchManager
+import com.library.base.expand.StatusBarStyle
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
 import com.library.router.JumpActivity
@@ -43,6 +44,12 @@ class SplashMainActivity : BaseActivity<BaseViewModel, SplashActivityMainBinding
         LaunchManager.onTracePage(this, LaunchManager.PAGE_ON_STOP, true);
     }
 
+    /**
+     * 全屏显示
+     */
+    override fun statusBarStyle(): StatusBarStyle {
+        return StatusBarStyle.IMMERSION
+    }
 
     override fun initData() {
         viewBinding.animView.addAnimatorListener(this)

@@ -21,8 +21,8 @@ open class BaseViewModel : ViewModel() {
     /**
      * 显示Toast
      */
-    fun toast(toastType: ToastType = ToastType.INFO, msg: String?) {
-        msg?.let {
+    fun toast(toastType: ToastType = ToastType.INFO, msg: String) {
+        msg.let {
             eventNoticeData.value =
                 ViewModelEventData(type = EventType.EVENT_TOAST, desc = it, toastType = toastType)
         }

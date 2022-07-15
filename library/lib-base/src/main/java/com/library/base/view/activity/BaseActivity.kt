@@ -155,7 +155,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     /**
      * 显示Toast
      */
-    fun showToast(type: ToastType = ToastType.INFO, msg: String?) {
+    fun showToast(type: ToastType = ToastType.INFO, msg: String) {
         toast(type, msg)
     }
 }

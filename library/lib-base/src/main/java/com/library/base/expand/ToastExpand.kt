@@ -10,9 +10,9 @@ import com.app.toast.ToastX
  * 创建时间：2022/03/18
  * @author：WangKai
  */
-fun Context.toast(type: ToastType, msg: String?) {
+fun Context.toast(type: ToastType, msg: String) {
     if (this is Activity) {
-        msg?.let {
+        msg.let {
             when (type) {
                 ToastType.INFO -> this.toast(it)
                 ToastType.SUCCESS -> this.toastSucceed(it)
@@ -24,32 +24,32 @@ fun Context.toast(type: ToastType, msg: String?) {
     }
 }
 
-fun Activity.toast(msg: String?) {
-    msg?.let {
+fun Activity.toast(msg: String) {
+    msg.let {
         ToastX.showInfoToast(this, msg)
     }
 }
 
-fun Activity.toastError(msg: String?) {
-    msg?.let {
+fun Activity.toastError(msg: String) {
+    msg.let {
         ToastX.showErrorToast(this, msg)
     }
 }
 
-fun Activity.toastSucceed(msg: String?) {
-    msg?.let {
+fun Activity.toastSucceed(msg: String) {
+    msg.let {
         ToastX.showSucceedToast(this, msg)
     }
 }
 
-fun Activity.toastWarning(msg: String?) {
-    msg?.let {
+fun Activity.toastWarning(msg: String) {
+    msg.let {
         ToastX.showWarnToast(this, msg)
     }
 }
 
-fun Activity.toastDelete(msg: String?) {
-    msg?.let {
+fun Activity.toastDelete(msg: String) {
+    msg.let {
         ToastX.showWarnToast(this, msg)
     }
 }
