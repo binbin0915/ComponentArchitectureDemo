@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -31,6 +32,7 @@ class BannerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet?, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+    //指示器属性
     private var showIndicator = true
     private var indicatorBackground: Drawable = ColorDrawable(Color.TRANSPARENT)
     private var indicatorDrawableResId = R.drawable.selector_banner_indicator
@@ -43,10 +45,10 @@ class BannerView @JvmOverloads constructor(
     private var indicatorMarginEnd = 0
     private var indicatorMarginTop = 0
     private var indicatorMarginBottom = 0
-
     private var isNumberIndicator = false
     private var numberIndicatorTextColor = Color.WHITE
     private var numberIndicatorTextSize = 14.dp.toInt()
+
     private var autoplay = true
     private var loopPlay = true
     private var autoplayInterval = 3000//ms
@@ -424,33 +426,14 @@ class BannerView @JvmOverloads constructor(
         viewPager.setPageTransformer(transformer)
     }
 
-//    private var mInitialTouchX = 0f
-//    private var mInitialTouchY = 0f
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         if (autoplay && allowUserScrollable) {
             when (ev.action) {
                 MotionEvent.ACTION_DOWN -> {
                     stopAutoplay()
-//                    mInitialTouchX = ev.x
-//                    mInitialTouchY = ev.y
                 }
                 MotionEvent.ACTION_MOVE -> {
-//                    val dx = ev.x - mInitialTouchX
-//                    val dy = ev.y - mInitialTouchY
-//                    var hasScrollView = false
-//                    for (i in 0 until childCount) {
-//                        val child = getChildAt(i)
-//                        if (child.canScrollHorizontally(-1) && dx > 0) {
-//                            hasScrollView = true
-//                        }
-//                        if (child.canScrollHorizontally(1) && dx < 0) {
-//                            hasScrollView = true
-//                        }
-//                    }
-//                    val r = kotlin.math.abs(dy) / kotlin.math.abs(dx)
-//                    if (r < 0.6f && hasScrollView) { // 比例可调整
-//                        requestDisallowInterceptTouchEvent(true)
-//                    }
+                    //防止滑动冲突
                     requestDisallowInterceptTouchEvent(true)
                 }
                 MotionEvent.ACTION_UP -> {
@@ -471,12 +454,15 @@ class BannerView @JvmOverloads constructor(
             return
         }
         stopAutoplay()
+        Log.e("AAAAAAAAAAAAXXS", "自动播放11111")
         autoplayJob = viewScope.launch {
             while (isActive) {
                 delay(autoplayInterval.toLong())
                 if (!loopPlay && viewPager.currentItem == dataSize - 1) {
+                    Log.e("AAAAAAAAAAAAXXS", "自动播放2222")
                     viewPager.setCurrentItem(0, false)
                 } else {
+                    Log.e("AAAAAAAAAAAAXXS", "自动播放3333")
                     viewPager.setCurrentItemWithAnim(
                         viewPager.currentItem + 1,
                         pageChangeDuration.toLong(),
@@ -499,6 +485,7 @@ class BannerView @JvmOverloads constructor(
     }
 
     private fun stopAutoplay() {
+        Log.e("AAAAAAAAAAAAXXS", "停止轮播")
         autoplayJob?.cancel()
         autoplayJob = null
     }

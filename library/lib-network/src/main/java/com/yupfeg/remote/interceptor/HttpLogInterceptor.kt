@@ -15,15 +15,15 @@ import java.util.concurrent.TimeUnit
  * 输出http请求日志的网络层拦截器.
  * （在实际发出请求前拦截）
  * * 仅实现打印请求日志功能
- * @author yuPFeG
- * @date 2020/02/21
+ * @author WangKai
+ * @date 2022/07/04
  */
 open class HttpLogInterceptor(
     private val logPrinter: HttpLogPrinter
-) : Interceptor{
-    companion object{
+) : Interceptor {
+    companion object {
         private val UTF8 = Charset.forName("UTF-8")
-        private const val DEBUG_HTTP_LOG_TAG = "okHttp"
+        private const val DEBUG_HTTP_LOG_TAG = "okHttpTag"
 
         /**
          * 默认Logcat输出日志的最大长度
@@ -42,20 +42,17 @@ open class HttpLogInterceptor(
         request.body?.contentType()?.charset(UTF8)
         //创建新网络请求(url等参数不需要重复添加)
         val newRequest = builder.build()
-        //打印请求log
+        //描述：打印请求log
         printRequestDebugLog(newRequest, chain.connection())
         //执行网络请求，获取响应返回
         val response = chain.proceed(newRequest)
         val chainMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
         response.body?.contentType()?.charset(UTF8)
-
-        //打印响应log
-        printResponseDebugLog(response,chainMs)
+        //描述：打印响应log
+        printResponseDebugLog(response, chainMs)
         return response
     }
-
-    // <editor-fold desc="网络请求日志">
-
+    //描述：-----------------------------------------网络请求日志--------------------------------------
     /**
      * 在Debug模式下，打印请求日志信息
      * @param newRequest 请求
@@ -87,7 +84,7 @@ open class HttpLogInterceptor(
                 newRequest.method, requestUrl, protocol.name
             )
             //输出网络请求日志
-            preparePrintLongLog(Log.DEBUG,continueRequestPrefix,this.toString())
+            preparePrintLongLog(Log.DEBUG, continueRequestPrefix, this.toString())
         }
     }
 
@@ -96,11 +93,11 @@ open class HttpLogInterceptor(
      * @param body [RequestBody]
      * @return true - body内容长度过多，输出到logcat需要
      * */
-    protected open fun StringBuilder.appendRequestBodyContent(body : RequestBody?) : Boolean{
-        body?:return false
+    protected open fun StringBuilder.appendRequestBodyContent(body: RequestBody?): Boolean {
+        body ?: return false
 
         append("\n")
-        body.contentType()?.also {contentType->
+        body.contentType()?.also { contentType ->
             append("Content-Type : $contentType \n")
         }
         body.contentLength().takeIf { it > 0 }?.also {
@@ -111,7 +108,7 @@ open class HttpLogInterceptor(
             append(">>> MultipartBody START \n ")
             appendMultipartBodyContent(it)
             append(">>> MultipartBody END \n ")
-        }?:run{
+        } ?: run {
             append(">>> Body START \n ")
             append("${body.parseBodyToString()} \n")
             append(">>> Body END")
@@ -123,13 +120,13 @@ open class HttpLogInterceptor(
      * [StringBuilder]的拓展函数，添加[MultipartBody]类型的body内容
      * @param body [MultipartBody]
      * */
-    protected open fun StringBuilder.appendMultipartBodyContent(body: MultipartBody){
+    protected open fun StringBuilder.appendMultipartBodyContent(body: MultipartBody) {
         for (part in body.parts) {
             val requestBody = part.body
-            if (requestBody.contentType()?.isPlainText() == true){
+            if (requestBody.contentType()?.isPlainText() == true) {
                 //只打印文本类型的body内容
                 append("${requestBody.parseBodyToString()} \n")
-            }else{
+            } else {
                 append("other-media-type")
                 append("${requestBody.contentType()}")
                 append("can not print to log \n")
@@ -138,14 +135,14 @@ open class HttpLogInterceptor(
     }
 
     /**[RequestBody]的拓展函数，解析body内容为字符串*/
-    protected open fun RequestBody.parseBodyToString() : String{
+    protected open fun RequestBody.parseBodyToString(): String {
         //不能直接取body().toString()
         val bodyBuffer = Buffer()
         this.writeTo(bodyBuffer)
         //将request body内的中文进行UTF-8转码，否则中文参数会显示乱码
         return try {
             URLDecoder.decode(bodyBuffer.readString(UTF8), "UTF-8")
-        }catch (e: UnsupportedEncodingException){
+        } catch (e: UnsupportedEncodingException) {
             bodyBuffer.readString(UTF8)
         }
     }
@@ -160,11 +157,7 @@ open class HttpLogInterceptor(
         }
         return false
     }
-
-    // </editor-fold>
-
-    // <editor-fold desc="网络响应日志">
-
+    //描述：-----------------------------------------网络相应日志--------------------------------------
     /**
      * 打印请求返回日志信息
      * @param response 请求响应返回
@@ -177,7 +170,7 @@ open class HttpLogInterceptor(
             val responseLogTop = String.format(
                 "<<< Received response %1\$s %2\$s %3\$s %4\$s",
                 response.code, response.message,
-                requestUrl,"( $useTimeMillis ms)"
+                requestUrl, "( $useTimeMillis ms)"
             )
             append("<<< ${response.code} Response\n")
             append("${responseLogTop}\n")
@@ -192,10 +185,10 @@ open class HttpLogInterceptor(
                 "<<<Continue Received response %1\$s %2\$s %3\$s %4\$s \n" +
                         " <<< Continue Body \n",
                 response.code, response.message,
-                requestUrl,"( $useTimeMillis ms)"
+                requestUrl, "( $useTimeMillis ms)"
             )
             //输出日志
-            preparePrintLongLog(Log.DEBUG,continueResponsePrefix,this.toString())
+            preparePrintLongLog(Log.DEBUG, continueResponsePrefix, this.toString())
         }
     }
 
@@ -204,8 +197,8 @@ open class HttpLogInterceptor(
      * @param body [ResponseBody]
      * @return true - 超出logcat长度，需要分段输出日志
      * */
-    protected open fun StringBuilder.appendResponseBodyContent(body : ResponseBody?){
-        body?:return
+    protected open fun StringBuilder.appendResponseBodyContent(body: ResponseBody?) {
+        body ?: return
         //不能直接取body().toString(),否则会直接结束
         val source = body.source()
         source.request(Long.MAX_VALUE)
@@ -214,16 +207,14 @@ open class HttpLogInterceptor(
         append("\n <<< Body START \n $bodyString \n <<< Body END")
     }
 
-    // </editor-fold>
-
     /**
      * [StringBuilder]的拓展函数，添加所有请求头信息
      * @param headers 请求头
      * */
-    protected open fun StringBuilder.appendAllHeaders(headers: Headers){
-        for (i in 0 until headers.size){
+    protected open fun StringBuilder.appendAllHeaders(headers: Headers) {
+        for (i in 0 until headers.size) {
             this.append("${headers.name(i)}  :  ${headers.value(i)}")
-            if (i < headers.size-1) this.append("\n")
+            if (i < headers.size - 1) this.append("\n")
         }
     }
 
@@ -231,8 +222,8 @@ open class HttpLogInterceptor(
      * 字符串长度是否超出限制
      * @param content 日志内容
      * */
-    protected open fun isLogContentTooLong(content: String) : Boolean
-            = content.length > MAX_LOGCAT_STRING_LENGTH
+    protected open fun isLogContentTooLong(content: String): Boolean =
+        content.length > MAX_LOGCAT_STRING_LENGTH
 
     /**
      * 解码网络请求url
@@ -241,16 +232,14 @@ open class HttpLogInterceptor(
      * @param decodeFormat 解码格式，默认为UTF-8
      * @return 解码后的网络请求地址，仅用于日志输出
      */
-    protected open fun decodeHttpRequestUrl(url : String,decodeFormat : String = "UTF-8") : String{
+    protected open fun decodeHttpRequestUrl(url: String, decodeFormat: String = "UTF-8"): String {
         return try {
             URLDecoder.decode(url, "UTF-8")
-        }catch (e: UnsupportedEncodingException){
+        } catch (e: UnsupportedEncodingException) {
             url
         }
     }
-
-    // <editor-fold desc="输出日志">
-
+    //描述：-----------------------------------------输出日志--------------------------------------
     /**
      * 准备输出长日志
      * * 支持打印长日志（Logcat有最大单次输出长度限制）
@@ -260,11 +249,11 @@ open class HttpLogInterceptor(
      */
     @Suppress("SameParameterValue")
     protected open fun preparePrintLongLog(
-        logLevel : Int,
-        continuePrefix : String = "",
+        logLevel: Int,
+        continuePrefix: String = "",
         content: String
     ) {
-        if (!isLogContentTooLong(content)){
+        if (!isLogContentTooLong(content)) {
             printHttpLog(logLevel, content)
             return
         }
@@ -272,10 +261,10 @@ open class HttpLogInterceptor(
         var length = 0
         while (length < logLength) {
             if (length + MAX_LOGCAT_STRING_LENGTH < content.length) {
-                if (length==0) {
+                if (length == 0) {
                     //第一段日志
                     val printContent = content.substring(length, length + MAX_LOGCAT_STRING_LENGTH)
-                    printHttpLog(logLevel,printContent)
+                    printHttpLog(logLevel, printContent)
                 } else {
                     //接续的分段日志
                     val subString = content.substring(length, length + MAX_LOGCAT_STRING_LENGTH)
@@ -296,14 +285,14 @@ open class HttpLogInterceptor(
      * @param logLevel 日志等级
      * @param content 日志内容
      */
-    protected open fun printHttpLog(logLevel: Int, content: String){
-        if(!logPrinter.isPrintLog) return
+    protected open fun printHttpLog(logLevel: Int, content: String) {
+        if (!logPrinter.isPrintLog) return
 
-        when(logLevel) {
+        when (logLevel) {
             Log.ERROR -> logPrinter.printErrorLog(DEBUG_HTTP_LOG_TAG, content)
-            Log.WARN  -> logPrinter.printWarningLog(DEBUG_HTTP_LOG_TAG, content)
-            Log.INFO  -> logPrinter.printInfoLog(DEBUG_HTTP_LOG_TAG,content)
-            else -> logPrinter.printDebugLog(DEBUG_HTTP_LOG_TAG,content)
+            Log.WARN -> logPrinter.printWarningLog(DEBUG_HTTP_LOG_TAG, content)
+            Log.INFO -> logPrinter.printInfoLog(DEBUG_HTTP_LOG_TAG, content)
+            else -> logPrinter.printDebugLog(DEBUG_HTTP_LOG_TAG, content)
         }
     }
 

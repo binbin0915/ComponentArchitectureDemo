@@ -4,13 +4,13 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 /**
- * 网络上传进度监听实体
- * @author yuPFeG
- * @date 2021/10/14
+ * 描述：网络上传进度监听实体
+ * @author 王凯
+ * @date 2022/07/04
  */
 @Parcelize
 data class UploadProgressBean(
-    /**唯一标识符，用于识别上传文件*/
+    /**唯一标识符，用于识别上传的文件*/
     val id : String,
     /**已写入（已上传）字节数，单位bytes*/
     val writtenBytes : Long,

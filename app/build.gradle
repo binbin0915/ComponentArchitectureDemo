@@ -75,5 +75,6 @@ dependencies {
         implementation project(":model:model-login")
         implementation project(":model:model-kotlin")
         implementation project(":model:model-airpods")
+        implementation project(":model:model-center")
     }
 }

@@ -22,6 +22,8 @@ object ModelApplicationManage {
         applications.add("com.model.mykotlin.application.MyKotlinModelApplication")
         //airpods模块
         applications.add("com.model.airpods.application.AirpodsModelApplication")
+        //个人中心模块
+        applications.add("com.model.center.application.CenterModelApplication")
     }
 
 }

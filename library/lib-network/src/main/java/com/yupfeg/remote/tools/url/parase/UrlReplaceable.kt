@@ -4,8 +4,8 @@ import okhttp3.HttpUrl
 
 /**
  * 可重定向的Url替换策略功能接口声明
- * @author yuPFeG
- * @date 2021/03/10
+ * @author 王凯
+ * @date 2022/07/04
  */
 interface UrlReplaceable {
 

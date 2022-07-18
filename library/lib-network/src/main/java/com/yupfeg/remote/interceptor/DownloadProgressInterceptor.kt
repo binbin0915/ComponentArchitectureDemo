@@ -5,12 +5,11 @@ import com.yupfeg.remote.download.entity.DownloadProgressBean
 import com.yupfeg.remote.log.HttpLogPrinter
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.lang.StringBuilder
 
 /**
- * 监听下载网络文件进度的okHttp拦截器
- * @author yuPFeG
- * @date 2020/04/23
+ * 描述：监听下载网络文件进度的okHttp拦截器
+ * @author 王凯
+ * @date 2020/07/04
  */
 class DownloadProgressInterceptor(
     private val logPrinter : HttpLogPrinter?,

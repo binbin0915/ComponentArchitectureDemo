@@ -11,40 +11,23 @@ data class ViewModelEventData(
     val toastType: ToastType = ToastType.INFO
 )
 
+/**
+ * 事件类型
+ * 1.显示Toast
+ * 2.显示弹窗
+ * 3.显示加载弹窗
+ * 4.关闭弹窗
+ * 5.关闭当前页面
+ * 6.改变页面状态
+ * 7.默认状态，不做任何事
+ */
 
 enum class EventType {
-    /**
-     * 事件类型：显示Toast
-     */
     EVENT_TOAST,
-
-    /**
-     * 事件类型：显示弹窗
-     */
     EVENT_DIALOG,
-
-    /**
-     * 事件类型：显示加载弹窗
-     */
     EVENT_SHOW_LOADING_DIALOG,
-
-    /**
-     * 事件类型：关闭弹窗
-     */
     EVENT_DISMISS_LOADING_DIALOG,
-
-    /**
-     * 事件类型：关闭当前页面
-     */
     EVENT_FINISH_PAGE,
-
-    /**
-     * 事件类型：改变页面状态
-     */
     EVENT_CHANGE_PAGE_STATUS,
-
-    /**
-     * 事件类型：无 不处理该事件类型
-     */
     EVENT_NONE
 }

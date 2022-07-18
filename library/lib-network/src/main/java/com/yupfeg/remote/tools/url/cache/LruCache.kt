@@ -6,8 +6,8 @@ import kotlin.math.roundToLong
  * LRU 即 Least Recently Used, 最近最少使用。
  * 当缓存满了, 会优先淘汰那些最近最不常访问的数据
  * * 修改自 Glide的LruCache
- * @author yuPFeG
- * @date 2021/03/10
+ * @author 王凯
+ * @date 2022/07/04
  */
 @Suppress("unused")
 open class LruCache<K,V> private constructor(
@@ -134,8 +134,6 @@ open class LruCache<K,V> private constructor(
         return value
     }
 
-    //<editor-fold desc="清理缓存">
-
 
     /**
      * 当缓存中有被驱逐的条目时,会回调此方法,默认空实现,子类可以重写这个方法
@@ -186,7 +184,4 @@ open class LruCache<K,V> private constructor(
     private fun evict() {
         trimToSize(maxSize)
     }
-
-    //</editor-fold desc="清理缓存">
-
 }

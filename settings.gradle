@@ -36,3 +36,4 @@ include ':model:model-home'//首页
 include ':model:model-login'//登录页
 include ':model:model-kotlin'//kotlin示例
 include ':model:model-airpods'//airpods弹窗模块
+include ':model:model-center'

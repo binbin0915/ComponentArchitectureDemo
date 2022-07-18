@@ -1,11 +1,9 @@
-package com.library.base.utils
+package com.library.base.application
 
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
 import android.util.Log
-import com.library.base.application.BaseModelApplication
-import com.library.base.application.ModelApplicationManage
 
 /**
  * 作用描述：模块application初始化的工具类

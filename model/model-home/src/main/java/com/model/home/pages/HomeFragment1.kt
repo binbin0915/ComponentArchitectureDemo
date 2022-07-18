@@ -1,6 +1,7 @@
 package com.model.home.pages
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -9,12 +10,12 @@ import com.bumptech.glide.Glide
 import com.library.base.expand.ToastType
 import com.library.base.view.fragment.BaseFragment
 import com.library.base.viewmodel.BaseViewModel
+import com.library.widget.banner.transformer.ZoomPageTransformer
 import com.library.widget.status.PageStatus
-import com.model.home.viewmodel.HomeMainActivityShareViewModel
 import com.model.home.R
 import com.model.home.bean.BannerInfo
 import com.model.home.databinding.HomeFragmentPage1Binding
-import com.library.widget.banner.transformer.ZoomPageTransformer
+import com.model.home.viewmodel.HomeMainActivityShareViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -28,6 +29,7 @@ import kotlinx.coroutines.launch
 class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
     View.OnClickListener {
 
+    //activity和fragment的共享viewmodel
     private val sharedViewModel by activityViewModels<HomeMainActivityShareViewModel>()
 
 
@@ -73,6 +75,7 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
             dataList3.map { it.displayText }) { itemBinding, data ->
             Glide.with(this).load(data.imageUrl).into(itemBinding.root)
             itemBinding.root.setOnClickListener {
+                Log.e("AAAAAAAAAAAAXXS", "111111111")
                 Toast.makeText(context, "${data.displayText}: 被点击了！", Toast.LENGTH_SHORT).show()
             }
         }

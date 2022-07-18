@@ -2,9 +2,13 @@ package com.wangkai.myapplication
 
 import ando.file.core.FileOperator
 import android.content.Context
+import com.drake.statelayout.StateConfig
 import com.efs.sdk.launch.LaunchManager
 import com.library.base.application.BaseApplication
 import com.library.common.netconfig.GlobalResponseHandler
+import com.scwang.smart.refresh.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.QbSdk.PreInitCallback
@@ -78,5 +82,26 @@ class MainApplication : BaseApplication() {
 
         // 设置全局http响应
         GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())
+        /**
+         *  推荐在Application中进行全局配置缺省页, 当然同样每个页面可以单独指定缺省页.
+         *  具体查看 https://github.com/liangjingkanji/StateLayout
+         */
+        StateConfig.apply {
+            emptyLayout = com.library.widget.R.layout.mult_state_empty_retry
+            errorLayout = com.library.widget.R.layout.mult_network_state_error
+            loadingLayout = com.library.widget.R.layout.mult_state_loading
+            setRetryIds(com.library.widget.R.id.retryBtn)
+            onLoading {
+                // 此生命周期可以拿到LoadingLayout创建的视图对象, 可以进行动画设置或点击事件.
+            }
+        }
+
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+            MaterialHeader(context)
+        }
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+            ClassicsFooter(context)
+        }
+
     }
 }

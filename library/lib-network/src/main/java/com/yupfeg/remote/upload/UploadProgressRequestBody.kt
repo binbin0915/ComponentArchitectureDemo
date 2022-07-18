@@ -3,10 +3,13 @@ package com.yupfeg.remote.upload
 import com.yupfeg.remote.log.HttpLogPrinter
 import okhttp3.MediaType
 import okhttp3.RequestBody
-import okio.*
+import okio.Buffer
+import okio.BufferedSink
+import okio.ForwardingSink
+import okio.buffer
 
 /**
- * 网络上传进度监听
+ * 描述：网络上传进度监听
  * */
 interface OnUploadProgressListener{
     /**
@@ -18,10 +21,10 @@ interface OnUploadProgressListener{
 }
 
 /**
- * 监听上传进度的[RequestBody]代理类
+ * 描述：监听上传进度的[RequestBody]代理类
  * maybe since v1.0.6
- * @author yuPFeG
- * @date 2021/10/14
+ * @author 王凯
+ * @date 2022/07/04
  */
 @Suppress("unused")
 class UploadProgressMultipartBody(

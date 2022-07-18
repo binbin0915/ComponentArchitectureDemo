@@ -3,7 +3,6 @@ package com.library.base.application
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
-import com.library.base.utils.ApplicationInitUtils
 import kotlin.properties.Delegates
 
 /**

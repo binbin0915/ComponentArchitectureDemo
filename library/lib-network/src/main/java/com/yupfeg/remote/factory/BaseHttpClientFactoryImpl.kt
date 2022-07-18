@@ -5,7 +5,6 @@ import okhttp3.*
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
-import java.lang.NullPointerException
 import java.net.Proxy
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.TimeUnit
@@ -20,86 +19,89 @@ import javax.net.ssl.X509TrustManager
 @Suppress("MemberVisibilityCanBePrivate")
 abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
 
-    // <editor-fold desc="网络请求配置变量">
     /**api的url域名*/
-    protected var mBaseUrl : String = ""
+    protected var mBaseUrl: String = ""
 
     /**链接超时时间，单位s*/
-    protected var mConnectTimeout : Long = 10
+    protected var mConnectTimeout: Long = 10
+
     /**读取超时时间，单位s*/
-    protected var mReadTimeout : Long = 15
+    protected var mReadTimeout: Long = 15
+
     /**写入超时时间，单位s*/
-    protected var mWriteTimeout : Long = 15
+    protected var mWriteTimeout: Long = 15
 
     /**是否允许使用代理访问*/
-    protected var mAllowProxy : Boolean = true
+    protected var mAllowProxy: Boolean = true
+
     /**是否允许自动重试，默认为false*/
-    protected var isRetryOnConnectionFailure : Boolean = false
+    protected var isRetryOnConnectionFailure: Boolean = false
+
     /**是否允许自动重定向，默认为true*/
-    protected var isFollowRedirects : Boolean = true
+    protected var isFollowRedirects: Boolean = true
 
     /**应用层拦截器(先接收到请求，后接收到响应)集合，按顺序添加*/
-    protected val mInterceptors : MutableList<Interceptor> = mutableListOf()
+    protected val mInterceptors: MutableList<Interceptor> = mutableListOf()
+
     /**网络层拦截器(先接收到响应，后接收到请求)集合，按顺序添加*/
-    protected val mNetworkInterceptors : MutableList<Interceptor> = mutableListOf()
+    protected val mNetworkInterceptors: MutableList<Interceptor> = mutableListOf()
 
     /**retrofit解析器的集合*/
-    protected val mConverterFactories : MutableList<Converter.Factory> = mutableListOf()
-    /**retrofit回调支持类的集合*/
-    protected var mCallAdapterFactories : MutableList<CallAdapter.Factory> = mutableListOf()
+    protected val mConverterFactories: MutableList<Converter.Factory> = mutableListOf()
 
-    protected var mSSLSocketFactory : SSLSocketFactory ?= null
-    protected var mX509TrustManager : X509TrustManager ?= null
+    /**retrofit回调支持类的集合*/
+    protected var mCallAdapterFactories: MutableList<CallAdapter.Factory> = mutableListOf()
+
+    protected var mSSLSocketFactory: SSLSocketFactory? = null
+    protected var mX509TrustManager: X509TrustManager? = null
 
     /**网络响应的本地缓存*/
-    protected var mResponseFileCache : Cache?= null
+    protected var mResponseFileCache: Cache? = null
 
     /**持久化cookies*/
-    protected var mCookieJar : CookieJar? = null
+    protected var mCookieJar: CookieJar? = null
 
     /**
      * 外部设置的调度器
      * */
-    protected var mDispatcher : Dispatcher? = null
+    protected var mDispatcher: Dispatcher? = null
 
     /**
      * okhttp的默认配置类
      * * 默认优先级最高，会直接使用这个builder进行配置，忽略所有其他快捷方式
      * */
-    protected var mOkHttpClientBuilder : OkHttpClient.Builder? = null
-
-    // </editor-fold>
+    protected var mOkHttpClientBuilder: OkHttpClient.Builder? = null
 
     /**retrofit实例*/
     @Volatile
-    protected var mRetrofit : Retrofit ?= null
+    protected var mRetrofit: Retrofit? = null
 
     /**okHttp实例*/
     @Volatile
-    protected var mOkHttpClient : OkHttpClient ?= null
+    protected var mOkHttpClient: OkHttpClient? = null
 
     /**
-     * 执行配置网络请求工厂类属性操作
+     * 描述：执行配置网络请求工厂类属性操作
      * * 便于使用kotlin DSL方式配置
      * @param config [HttpRequestConfig]
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
-    protected open fun performRetrofitConfig(config: HttpRequestConfig) : BaseHttpClientFactoryImpl {
-        if (config.baseUrl.isNullOrEmpty()){
+    protected open fun performRetrofitConfig(config: HttpRequestConfig): BaseHttpClientFactoryImpl {
+        if (config.baseUrl.isNullOrEmpty()) {
             throw NullPointerException("you must set baseUrl to HttpClientFactory")
         }
 
         //设置Retrofit常用配置
-        val impl = this.setBaseUrl(config.baseUrl?:"")
+        val impl = this.setBaseUrl(config.baseUrl ?: "")
             .addConverterFactories(config.converterFactories)
             .addCallAdapterFactories(config.callAdapterFactories)
 
         //配置OkHttpClient
-        return if (config.okhttpClientBuilder != null){ //以okhttp build类配置优先
+        return if (config.okhttpClientBuilder != null) { //以okhttp build类配置优先
             impl.setOkHttpBuilder(config.okhttpClientBuilder)
-        }else {
+        } else {
             config.executorService?.let {
-                impl.setDispatcher(it,config.maxRequestsPerHost,config.maxRequestSize)
+                impl.setDispatcher(it, config.maxRequestsPerHost, config.maxRequestSize)
             }
 
             impl.setResponseFileCache(config.responseCache)
@@ -118,9 +120,9 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
     }
 
     /**
-     * 创建[OkHttpClient]实例对象
+     * 描述：创建[OkHttpClient]实例对象
      */
-    protected open fun buildOkHttpClientInstance() : OkHttpClient{
+    protected open fun buildOkHttpClientInstance(): OkHttpClient {
         mOkHttpClientBuilder?.also {
             return it.build() //存在配置类，直接使用外部完整配置
         }
@@ -129,30 +131,27 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
         //缓存
         mResponseFileCache?.also { builder.cache(it) }
         //应用层拦截器
-        mInterceptors.takeUnless { it.isNullOrEmpty() }?.forEach { interceptor->
+        mInterceptors.takeUnless { it.isNullOrEmpty() }?.forEach { interceptor ->
             builder.addInterceptor(interceptor)
         }
         //网络层拦截器
-        mNetworkInterceptors.takeUnless { it.isNullOrEmpty() }?.forEach{ interceptor ->
+        mNetworkInterceptors.takeUnless { it.isNullOrEmpty() }?.forEach { interceptor ->
             builder.addNetworkInterceptor(interceptor)
         }
-        // <editor-fold desc="超时时间配置">
-        //设置连接时间
+        //描述：设置连接时间（超时时间配置）
         builder.connectTimeout(mConnectTimeout, TimeUnit.SECONDS)
             //设置读取数据时间
             .readTimeout(mReadTimeout, TimeUnit.SECONDS)
             //设置写入（上传）时间
             .writeTimeout(mWriteTimeout, TimeUnit.SECONDS)
 
-        // </editor-fold>
-
-        // <editor-fold desc="其他杂项">
+        // 描述：其他杂项
         //代理访问权限
         takeIf { !mAllowProxy }?.run { builder.proxy(Proxy.NO_PROXY) }
 
         //ssl证书校验
-        if (mSSLSocketFactory != null && mX509TrustManager != null){
-            builder.sslSocketFactory(mSSLSocketFactory!!,mX509TrustManager!!)
+        if (mSSLSocketFactory != null && mX509TrustManager != null) {
+            builder.sslSocketFactory(mSSLSocketFactory!!, mX509TrustManager!!)
         }
         //自动断线重连（默认为false）
         builder.retryOnConnectionFailure(isRetryOnConnectionFailure)
@@ -179,11 +178,11 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
         val builder = Retrofit.Builder()
         builder.baseUrl(mBaseUrl)
         //------添加解析器(按添加顺序尝试解析)---------
-        mConverterFactories.takeUnless { it.isNullOrEmpty() }?.forEach { converter->
+        mConverterFactories.takeUnless { it.isNullOrEmpty() }?.forEach { converter ->
             builder.addConverterFactory(converter)
         }
         //------添加响应回调支持----------
-        mCallAdapterFactories.takeIf { it.size > 0 }?.forEach { callAdapter->
+        mCallAdapterFactories.takeIf { it.size > 0 }?.forEach { callAdapter ->
             builder.addCallAdapterFactory(callAdapter)
         }
         //okhttp实例
@@ -198,7 +197,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param url 网络请求域名
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
-    fun setBaseUrl(url : String) : BaseHttpClientFactoryImpl {
+    fun setBaseUrl(url: String): BaseHttpClientFactoryImpl {
         this.mBaseUrl = url
         return this
     }
@@ -208,7 +207,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param timeout 超时时间，单位s
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      * */
-    fun setConnectTimeout(timeout : Long) : BaseHttpClientFactoryImpl {
+    fun setConnectTimeout(timeout: Long): BaseHttpClientFactoryImpl {
         this.mConnectTimeout = timeout
         return this
     }
@@ -218,7 +217,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param timeout 超时时间，单位s
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
-    fun setReadTimeout(timeout: Long) : BaseHttpClientFactoryImpl {
+    fun setReadTimeout(timeout: Long): BaseHttpClientFactoryImpl {
         this.mReadTimeout = timeout
         return this
     }
@@ -228,7 +227,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param timeout 超时时间，单位s
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
-    fun setWriteTimeout(timeout: Long) : BaseHttpClientFactoryImpl {
+    fun setWriteTimeout(timeout: Long): BaseHttpClientFactoryImpl {
         this.mWriteTimeout = timeout
         return this
     }
@@ -238,7 +237,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param isAllow 是否允许代理访问
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      * */
-    fun setAllowProxy(isAllow : Boolean) : BaseHttpClientFactoryImpl {
+    fun setAllowProxy(isAllow: Boolean): BaseHttpClientFactoryImpl {
         this.mAllowProxy = isAllow
         return this
     }
@@ -248,7 +247,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param interceptors okhttp拦截器[Interceptor]的集合，按顺序添加
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
-    fun addInterceptors(interceptors : List<Interceptor>?) : BaseHttpClientFactoryImpl {
+    fun addInterceptors(interceptors: List<Interceptor>?): BaseHttpClientFactoryImpl {
         interceptors?.also { this.mInterceptors.addAll(it) }
         return this
     }
@@ -259,7 +258,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
     @Suppress("unused")
-    fun addInterceptor(interceptor: Interceptor?) : BaseHttpClientFactoryImpl {
+    fun addInterceptor(interceptor: Interceptor?): BaseHttpClientFactoryImpl {
         interceptor?.also { this.mInterceptors.add(it) }
         return this
     }
@@ -270,7 +269,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
 
-    fun addNetworkInterceptors(interceptors : List<Interceptor>?) : BaseHttpClientFactoryImpl {
+    fun addNetworkInterceptors(interceptors: List<Interceptor>?): BaseHttpClientFactoryImpl {
         interceptors?.also { this.mNetworkInterceptors.addAll(it) }
         return this
     }
@@ -281,7 +280,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
     @Suppress("unused")
-    fun addNetworkInterceptor(interceptor: Interceptor?) : BaseHttpClientFactoryImpl {
+    fun addNetworkInterceptor(interceptor: Interceptor?): BaseHttpClientFactoryImpl {
         interceptor?.also { this.mNetworkInterceptors.add(it) }
         return this
     }
@@ -292,8 +291,8 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
     fun addConverterFactories(
-        converterFactories : List<Converter.Factory>?
-    ) : BaseHttpClientFactoryImpl {
+        converterFactories: List<Converter.Factory>?
+    ): BaseHttpClientFactoryImpl {
         converterFactories ?: return this
         this.mConverterFactories.addAll(converterFactories)
         return this
@@ -306,8 +305,8 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
     fun addCallAdapterFactories(
-        callAdapterFactories : List<CallAdapter.Factory>?
-    ) : BaseHttpClientFactoryImpl {
+        callAdapterFactories: List<CallAdapter.Factory>?
+    ): BaseHttpClientFactoryImpl {
         callAdapterFactories ?: return this
         this.mCallAdapterFactories.addAll(callAdapterFactories)
         return this
@@ -318,7 +317,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param autoRetry
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      * */
-    fun setRetryOnConnectionFailure(autoRetry : Boolean) : BaseHttpClientFactoryImpl {
+    fun setRetryOnConnectionFailure(autoRetry: Boolean): BaseHttpClientFactoryImpl {
         this.isRetryOnConnectionFailure = autoRetry
         return this
     }
@@ -328,7 +327,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param isRedirect 自动重定向
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      * */
-    fun setFollowRedirects(isRedirect : Boolean) : BaseHttpClientFactoryImpl{
+    fun setFollowRedirects(isRedirect: Boolean): BaseHttpClientFactoryImpl {
         this.isFollowRedirects = isRedirect
         return this
     }
@@ -339,7 +338,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param factory
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      * */
-    fun setSSLSocketFactory(factory : SSLSocketFactory?) : BaseHttpClientFactoryImpl {
+    fun setSSLSocketFactory(factory: SSLSocketFactory?): BaseHttpClientFactoryImpl {
         factory ?: return this
         this.mSSLSocketFactory = factory
         return this
@@ -351,7 +350,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param manager
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      * */
-    fun setX509TrustManager(manager: X509TrustManager?) : BaseHttpClientFactoryImpl {
+    fun setX509TrustManager(manager: X509TrustManager?): BaseHttpClientFactoryImpl {
         manager ?: return this
         this.mX509TrustManager = manager
         return this
@@ -362,7 +361,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param cache
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      * */
-    fun setResponseFileCache(cache: Cache?) : BaseHttpClientFactoryImpl {
+    fun setResponseFileCache(cache: Cache?): BaseHttpClientFactoryImpl {
         cache ?: return this
         this.mResponseFileCache = cache
         return this
@@ -373,7 +372,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param cookieJar
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      * */
-    fun setCookieJar(cookieJar: CookieJar?) : BaseHttpClientFactoryImpl{
+    fun setCookieJar(cookieJar: CookieJar?): BaseHttpClientFactoryImpl {
         cookieJar ?: return this
         this.mCookieJar = cookieJar
         return this
@@ -388,10 +387,10 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * */
     fun setDispatcher(
         executorService: ExecutorService?,
-        maxRequestsPerHost : Int,
-        maxRequestSize : Int
-    ) : BaseHttpClientFactoryImpl{
-        executorService?:return this
+        maxRequestsPerHost: Int,
+        maxRequestSize: Int
+    ): BaseHttpClientFactoryImpl {
+        executorService ?: return this
         this.mDispatcher = Dispatcher(executorService).apply {
             this.maxRequests = maxRequestSize
             this.maxRequestsPerHost = maxRequestsPerHost
@@ -404,11 +403,9 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param builder
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      * */
-    fun setOkHttpBuilder(builder : OkHttpClient.Builder?) : BaseHttpClientFactoryImpl{
+    fun setOkHttpBuilder(builder: OkHttpClient.Builder?): BaseHttpClientFactoryImpl {
         builder ?: return this
         this.mOkHttpClientBuilder = builder
         return this
     }
-
-    //</editor-fold>
 }

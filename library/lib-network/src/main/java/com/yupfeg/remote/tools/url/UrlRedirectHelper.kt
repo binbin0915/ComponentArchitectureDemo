@@ -1,23 +1,21 @@
 package com.yupfeg.remote.tools.url
 
+import com.yupfeg.remote.tools.url.UrlRedirectHelper.globalReplaceSegmentSize
 import com.yupfeg.remote.tools.url.parase.DefaultUrlReplacer
 import com.yupfeg.remote.tools.url.parase.UrlReplaceable
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Request
-import java.lang.NullPointerException
 
 /**
  * 网络请求Url重定向管理的核心类
  * * 依附于`OkHttp`与`Retrofit`
  *
- * 如需要重定向Url :
+ * 用途:一、如需要重定向Url :
  * 1. 需要通过[UrlRedirectHelper.putRedirectUrl]添加对应重定向url键值对，
- *
  * 2. 在网络请求API声明处，添加`@Headers("${REDIRECT_HOST_HEAD_PREFIX}${URL_KEY}")`请求头
  *
- * * 默认情况下，重定向Url替换规则：将重定向baseUrl，完整按位替换，原始请求的url
- *
+ * * 描述：默认情况下，重定向Url替换规则：将重定向baseUrl，完整按位替换，原始请求的url
  * example ：
  *
  * 原始请求url为：`https://www.github.com/testSegment1/segment2/`,
@@ -26,9 +24,8 @@ import java.lang.NullPointerException
  *
  * * 如需管理segment替换的数量，可以设置[globalReplaceSegmentSize],重置全局替换规则
  *
- * 对于单独请求应用的替换规则，可在网络请求API声明处，
- * 添加`@Headers("${REDIRECT_SEGMENT_SIZE_HEAD_PREFIX}${SIZE}")`请求头
- *
+ * 用途:二、对于单独请求应用的替换规则，可在网络请求API声明处，
+ * * 添加`@Headers("${REDIRECT_SEGMENT_SIZE_HEAD_PREFIX}${SIZE}")`请求头
  * example：
  *
  * size = 0，表示只替换域名，新文段拼接在原始请求文段之前
@@ -39,11 +36,11 @@ import java.lang.NullPointerException
  * size = 1，只替换域名后的第一个文段。
  * 原始请求url：`https://www.baidu.com/user/sss?user_id=111`,
  * 重定向baseUrl：`https://www.google.com/test1/list/`,
- * 新url：`https://www.google.com/test1/list/sss?user_id=111`,
+ * 新url：`https://www.google.com/test1/list/sssuser_id=111`,
  *
  * 以此类推...
- * @author yuPFeG
- * @date 2021/03/10
+ * @author 王凯
+ * @date 2022/07/04
  */
 @Suppress("unused")
 object UrlRedirectHelper {
@@ -51,6 +48,7 @@ object UrlRedirectHelper {
     /**网络请求的请求头key，标识需要重定向的url域名*/
     private const val REDIRECT_HOST_HEAD_KEY = "Url-Redirect"
     private const val PATH_SEGMENT_SIZE_HEAD_KEY = "Url-PathSegmentsSize"
+
     /**
      * 标识为 `该请求需要重定向url` 的请求头前缀
      * * 在请求API，添加`@Headers("${REDIRECT_HOST_HEAD_PREFIX}${URL_NAME}")`
@@ -66,12 +64,12 @@ object UrlRedirectHelper {
     const val REDIRECT_SEGMENT_SIZE_HEAD_PREFIX = "$PATH_SEGMENT_SIZE_HEAD_KEY: "
 
     /**重定向url集合*/
-    private val mRedirectUrlMap : MutableMap<String,HttpUrl> = mutableMapOf()
+    private val mRedirectUrlMap: MutableMap<String, HttpUrl> = mutableMapOf()
 
     /**负责请求url重定向替换的策略类*/
-    private var mUrlReplacer : UrlReplaceable = DefaultUrlReplacer()
+    private var mUrlReplacer: UrlReplaceable = DefaultUrlReplacer()
 
-    private var mGlobalReplaceSegmentSize : Int = 0
+    private var mGlobalReplaceSegmentSize: Int = 0
 
     /**
      * 全局配置的重定向替换url文段长度
@@ -81,7 +79,7 @@ object UrlRedirectHelper {
      */
     @JvmStatic
     @Suppress("MemberVisibilityCanBePrivate")
-    var globalReplaceSegmentSize : Int
+    var globalReplaceSegmentSize: Int
         get() = mGlobalReplaceSegmentSize
         set(value) {
             if (value < 0) return
@@ -93,14 +91,14 @@ object UrlRedirectHelper {
      * * 如果为true-使用全局规则，false-按重定向BaseUrl文段长度替换规则
      * */
     @Suppress("MemberVisibilityCanBePrivate")
-    var isUseGlobalReplaceRule : Boolean = true
+    var isUseGlobalReplaceRule: Boolean = true
 
     /**
      * 设置url重定向策略类
      * @param urlReplacer url替换策略类
      * */
     @Suppress("unused")
-    fun setUrlReplacer(urlReplacer : UrlReplaceable) : UrlRedirectHelper {
+    fun setUrlReplacer(urlReplacer: UrlReplaceable): UrlRedirectHelper {
         mUrlReplacer = urlReplacer
         return this
     }
@@ -112,7 +110,7 @@ object UrlRedirectHelper {
      * @return 返回自身，便于链式调用
      */
     @Suppress("unused")
-    fun putRedirectUrl(name : String, url : String) : UrlRedirectHelper {
+    fun putRedirectUrl(name: String, url: String): UrlRedirectHelper {
         val baseUrl = url.toHttpUrlOrNull()
             ?: throw NullPointerException(
                 "host cant parse to httpUrl，you configured invalid url"
@@ -127,7 +125,7 @@ object UrlRedirectHelper {
      * @return 返回自身，便于链式调用
      * */
     @Suppress("unused")
-    fun removeRedirectUrlName(name : String) : UrlRedirectHelper {
+    fun removeRedirectUrlName(name: String): UrlRedirectHelper {
         takeIf { mRedirectUrlMap.containsKey(name) }?.run {
             mRedirectUrlMap.remove(name)
         }
@@ -139,7 +137,7 @@ object UrlRedirectHelper {
      * @return 返回自身，便于链式调用
      * */
     @Suppress("unused")
-    fun clearRedirectUrlMap() : UrlRedirectHelper {
+    fun clearRedirectUrlMap(): UrlRedirectHelper {
         mRedirectUrlMap.clear()
         return this
     }
@@ -152,7 +150,7 @@ object UrlRedirectHelper {
      * @return 如果能够重定向，则返回重定向后的请求，否则返回原始请求
      */
     @Suppress("unused", "MemberVisibilityCanBePrivate")
-    fun obtainRedirectedUrlRequest(request: Request) : Request{
+    fun obtainRedirectedUrlRequest(request: Request): Request {
         val newBuilder = request.newBuilder()
 
         val urlName = request.fetchRedirectUrlNameFromHeader()
@@ -160,7 +158,7 @@ object UrlRedirectHelper {
             ?.also {
                 //移除重定向域名映射标识的请求头
                 newBuilder.removeRedirectUrlHeader()
-            }?: return newBuilder.build()
+            } ?: return newBuilder.build()
         //目标重定向url
         val redirectUrl = fetchedBaseUrl(urlName)
             ?: run {
@@ -173,11 +171,11 @@ object UrlRedirectHelper {
             ?.also {
                 //移除表示文段大小标识的请求头
                 newBuilder.removeSegmentSizeHeader()
-            }?: run {
-                mGlobalReplaceSegmentSize
-            }
+            } ?: run {
+            mGlobalReplaceSegmentSize
+        }
 
-        val newUrl = mUrlReplacer.redirectedUrl(request.url,redirectUrl,ignoreSegmentsSize)
+        val newUrl = mUrlReplacer.redirectedUrl(request.url, redirectUrl, ignoreSegmentsSize)
 
         return newBuilder
             .url(newUrl)
@@ -188,7 +186,7 @@ object UrlRedirectHelper {
      * 根据映射名key取出对应的`baseUrl`
      * @param name
      */
-    private fun fetchedBaseUrl(name  : String) : HttpUrl?{
+    private fun fetchedBaseUrl(name: String): HttpUrl? {
         return mRedirectUrlMap[name]
     }
 
@@ -197,9 +195,9 @@ object UrlRedirectHelper {
      * @return 如果请求内添加了重定向域名映射，返回
      * */
     @Throws(IllegalAccessException::class)
-    private fun Request.fetchRedirectUrlNameFromHeader() : String?{
+    private fun Request.fetchRedirectUrlNameFromHeader(): String? {
         val hostHeaders = this.headers(REDIRECT_HOST_HEAD_KEY)
-        if(hostHeaders.isNullOrEmpty()) return ""
+        if (hostHeaders.isNullOrEmpty()) return ""
         takeIf { hostHeaders.size > 1 }?.run {
             throw IllegalArgumentException("Only one host name tag in the headers")
         }
@@ -209,7 +207,7 @@ object UrlRedirectHelper {
     /**
      * [Request.Builder]的拓展函数，移除标识需要重定向的请求头
      * */
-    private fun Request.Builder.removeRedirectUrlHeader(){
+    private fun Request.Builder.removeRedirectUrlHeader() {
         this.removeHeader(REDIRECT_HOST_HEAD_KEY)
     }
 
@@ -218,7 +216,7 @@ object UrlRedirectHelper {
      * @return 如果请求头存在替换文段数的标识，则返回int值的字符串，否则默认返回null，即只替换域名部分
      */
     @Throws(IllegalAccessException::class)
-    private fun Request.obtainRedirectSegmentSize() : String?{
+    private fun Request.obtainRedirectSegmentSize(): String? {
         val hostHeaders = this.headers(PATH_SEGMENT_SIZE_HEAD_KEY)
         takeIf { hostHeaders.isNullOrEmpty() } ?: return ""
         takeIf { hostHeaders.size > 1 }?.run {
@@ -230,7 +228,7 @@ object UrlRedirectHelper {
     /**
      * [Request.Builder]的拓展函数，移除标识重定向替换文段个数的请求头
      * */
-    private fun Request.Builder.removeSegmentSizeHeader(){
+    private fun Request.Builder.removeSegmentSizeHeader() {
         this.removeHeader(PATH_SEGMENT_SIZE_HEAD_KEY)
     }
 

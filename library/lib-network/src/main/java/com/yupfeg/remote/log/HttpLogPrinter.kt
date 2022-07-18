@@ -1,9 +1,9 @@
 package com.yupfeg.remote.log
 
 /**
- * 网络请求日志输出接口声明
- * @author yuPFeG
- * @date 2021/03/31
+ * 描述：网络请求日志输出接口声明
+ * @author wangkai
+ * @date 2022/07/02
  */
 interface HttpLogPrinter {
     /**是否开启输出日志操作*/

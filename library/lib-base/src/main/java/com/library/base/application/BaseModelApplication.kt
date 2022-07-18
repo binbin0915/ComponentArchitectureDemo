@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 
 /**
- * 作用描述：模块初始化的基类
+ * 作用描述：模块初始化的基类，通过ApplicationInitUtils在BaseApplication中加载
  *
  * 创建时间：2022/03/18
  * @author：WangKai

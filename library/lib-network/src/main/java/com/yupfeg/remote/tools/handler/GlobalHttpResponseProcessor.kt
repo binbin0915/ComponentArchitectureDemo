@@ -2,7 +2,6 @@ package com.yupfeg.remote.tools.handler
 
 import com.yupfeg.remote.data.HttpResponseParsable
 import okhttp3.ResponseBody
-import java.lang.Exception
 import java.nio.charset.Charset
 
 /**

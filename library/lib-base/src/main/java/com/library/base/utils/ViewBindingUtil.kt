@@ -3,18 +3,21 @@ package com.library.base.utils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.ComponentActivity
-import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import java.lang.ClassCastException
 import java.lang.reflect.ParameterizedType
 
+/**
+ * Activity在onCreate中使用
+ */
 @JvmName("inflateWithGeneric")
 fun <VB : ViewBinding> Any.inflateBindingWithGeneric(layoutInflater: LayoutInflater): VB =
     withGenericBindingClass<VB>(this) { clazz ->
         clazz.getMethod("inflate", LayoutInflater::class.java).invoke(null, layoutInflater) as VB
     }
 
+/**
+ * Fragment在onCreateView使用
+ */
 @JvmName("inflateWithGeneric")
 fun <VB : ViewBinding> Any.inflateBindingWithGeneric(
     layoutInflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean

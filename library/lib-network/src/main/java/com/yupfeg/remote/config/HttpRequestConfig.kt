@@ -1,7 +1,10 @@
 package com.yupfeg.remote.config
 
 import com.yupfeg.remote.interceptor.MultipleHostInterceptor
-import okhttp3.*
+import okhttp3.Cache
+import okhttp3.CookieJar
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import java.util.concurrent.ExecutorService
@@ -9,7 +12,7 @@ import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager
 
 /**
- * 网络请求相关配置拓展类
+ * 描述：网络请求相关配置拓展类
  * * 用于kotlin dsl方式配置
  * @author yuPFeG
  * @date 2021/01/25
@@ -18,7 +21,6 @@ import javax.net.ssl.X509TrustManager
 @Suppress("unused")
 class HttpRequestConfig constructor(){
 
-    // <editor-fold desc="retrofit配置">
     /**api域名*/
     @JvmField
     var baseUrl : String ?= null
@@ -30,9 +32,6 @@ class HttpRequestConfig constructor(){
     @JvmField
     var callAdapterFactories : MutableList<CallAdapter.Factory> = mutableListOf()
 
-    // </editor-fold>
-
-    // <editor-fold desc="okhttp配置">
     /**链接超时时间，单位s*/
     @JvmField
     var connectTimeout : Long = 10
@@ -109,8 +108,6 @@ class HttpRequestConfig constructor(){
      * */
     @JvmField
     var okhttpClientBuilder : OkHttpClient.Builder?= null
-
-    // </editor-fold>
 
     constructor(okhttpBuilder : OkHttpClient.Builder) : this(){
         okhttpClientBuilder = okhttpBuilder
