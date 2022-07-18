@@ -16,4 +16,4 @@
 
 package com.model.home.model
 
-class MultiModel2
+class MultiModel2(var type: String = "类型2", var url: String)

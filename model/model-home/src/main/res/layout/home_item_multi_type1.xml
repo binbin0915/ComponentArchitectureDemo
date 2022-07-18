@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rv_parent"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_margin="16dp"
-    android:id="@+id/ll_parent"
     android:background="@color/white">
 
+    <ImageView
+        android:id="@+id/iv_multi1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop" />
+
     <TextView
-        android:id="@+id/tv_type"
+        android:id="@+id/tv_multi1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="类型1" />
-
-
-</LinearLayout>
+</RelativeLayout>

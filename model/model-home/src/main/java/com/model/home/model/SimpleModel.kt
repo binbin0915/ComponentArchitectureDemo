@@ -16,18 +16,22 @@
 
 package com.model.home.model
 
+import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind
+import com.model.home.R
+import com.model.home.databinding.HomeItemSimpleBinding
 
 data class SimpleModel(var name: String, var url: String) : ItemBind {
-
+    /**
+     * 不推荐这种方式, 因为Model只应该存在数据和逻辑, 如果包含UI绑定会导致视图耦合不例如项目迭代 (例如BRVAH)
+     */
     override fun onBind(holder: BindingAdapter.BindingViewHolder) {
-        // 不推荐这种方式, 因为Model只应该存在数据和逻辑, 如果包含UI绑定会导致视图耦合不例如项目迭代 (例如BRVAH)
-        // val appName = holder.context.getString(R.string.app_name)
-
         // 使用不同的方法来获取视图控件
-        // holder.findView<TextView>(R.id.tv_simple).text = appName // 使用findById
-        // val viewBinding = ItemSimpleBinding.bind(holder.itemView) // 使用ViewBinding
+        holder.findView<TextView>(R.id.tv_simple).text = name // 使用findById
+        val viewBinding = HomeItemSimpleBinding.bind(holder.itemView) // 使用ViewBinding
+        Glide.with(holder.context).load(url).into(viewBinding.ivSimple)
         // val dataBinding = holder.getBinding<ItemMultiTypeOneBinding>() // 使用DataBinding
     }
 }

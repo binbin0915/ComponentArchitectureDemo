@@ -16,6 +16,4 @@
 
 package com.model.home.model
 
-import com.drake.brv.item.ItemPosition
-
-class MultiModel1(override var itemPosition: Int = 0) : ItemPosition
+class MultiModel1(var type: String = "类型1", var url: String)

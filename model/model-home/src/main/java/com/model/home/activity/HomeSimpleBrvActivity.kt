@@ -1,8 +1,6 @@
 package com.model.home.activity
 
-import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.bumptech.glide.Glide
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.library.base.expand.ToastType
@@ -21,11 +19,11 @@ class HomeSimpleBrvActivity :
     override fun initData() {
         viewBinding.rv1.linear().setup {
             addType<SimpleModel>(R.layout.home_item_simple)
-            onBind {
-                val simpleModel: SimpleModel = getModel()
-                findView<TextView>(R.id.tv_simple).text = simpleModel.name
-                Glide.with(context).load(simpleModel.url).into(findView(R.id.iv_simple))
-            }
+//            onBind {
+//                val simpleModel: SimpleModel = getModel()
+//                findView<TextView>(R.id.tv_simple).text = simpleModel.name
+//                Glide.with(context).load(simpleModel.url).into(findView(R.id.iv_simple))
+//            }
             R.id.tv_simple.onClick {
                 showToast(
                     ToastType.INFO,
