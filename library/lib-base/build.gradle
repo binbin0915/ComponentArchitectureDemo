@@ -50,12 +50,12 @@ dependencies {
 //    implementation  'androidx.datastore:datastore-core:1.0.0'
 //    implementation  'com.google.protobuf:protobuf-javalite:3.10.0'
     //MVVM主体框架 -- 依赖不对外开放
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.10'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     //协程支持
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     //相关 ktx 拓展
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'    //Lifecycle 扩展库
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'    //livedata扩展库
@@ -69,7 +69,7 @@ dependencies {
     //toast
     implementation 'com.github.yinshuai0324:ToastX:1.0.2'
     //用于启动分析
-    api 'com.umeng.umsdk:apm:1.5.2'
+    api 'com.umeng.umsdk:apm:1.7.0'
     //路由
     implementation('com.alibaba:arouter-api:1.5.2') {
         //过滤掉v4包里面的东西 防止和AndroidX冲突

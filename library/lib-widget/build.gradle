@@ -38,9 +38,9 @@ android {
 
 dependencies {
     //kotlin基础库
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.10"
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.10'
     //kotlin协程
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     //基础KTX拓展
     implementation 'androidx.core:core-ktx:1.7.0'
     //AndroidJetpack基础组件
