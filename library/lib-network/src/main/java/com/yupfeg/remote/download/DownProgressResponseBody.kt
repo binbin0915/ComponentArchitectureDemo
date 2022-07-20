@@ -8,8 +8,8 @@ import okio.*
 
 /**
  * 监听文件下载进度的 ResponseBody
- * @author yuPFeG
- * @date 2020/04/23
+ * @author 王凯
+ * @date 2020/07/19
  */
 class DownProgressResponseBody(
     /**文件下载地址*/

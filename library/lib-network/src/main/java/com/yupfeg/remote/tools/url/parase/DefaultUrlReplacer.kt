@@ -5,8 +5,8 @@ import okhttp3.HttpUrl
 
 /**
  * url重定向的默认实现类
- * @author yuPFeG
- * @date 2021/03/10
+ * @author 王凯
+ * @date 2022/07/04
  */
 internal class DefaultUrlReplacer : UrlReplaceable {
 

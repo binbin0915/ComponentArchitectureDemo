@@ -7,8 +7,8 @@ import java.lang.reflect.Type
 
 /**
  * json解析的工具类
- * @author yuPFeG
- * @date 2020/01/04
+ * @author 王凯
+ * @date 2022/07/19
  */
 object JsonUtils {
     private val gson: Gson by lazy(LazyThreadSafetyMode.SYNCHRONIZED){

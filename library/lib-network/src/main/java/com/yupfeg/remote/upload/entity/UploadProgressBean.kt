@@ -1,4 +1,4 @@
-package com.yupfeg.remote.upload
+package com.yupfeg.remote.upload.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

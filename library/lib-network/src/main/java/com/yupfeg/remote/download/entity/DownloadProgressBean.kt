@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 /**
  * 文件下载进度信息的数据传递bean类
- * @author yuPFeG
- * @date 2020/04/24
+ * @author 王凯
+ * @date 2020/07/19
  */
 @Parcelize
 data class DownloadProgressBean(

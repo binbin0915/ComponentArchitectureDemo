@@ -16,12 +16,22 @@ import com.yupfeg.remote.log.HttpLogPrinter
 
 /**
  * 描述：网络连接状态
- * 1.网络连接状态变化监听
- * 2.判断网络是否可用（wifi、蜂窝）
- * 3.获取当前网络连接状态
  *
+ * * 网络连接状态变化监听
+ * * 判断网络是否可用（wifi、蜂窝）
+ * * 获取当前网络连接状态
  *
+ * 提供的外部使用的方法：
+ * * setLogPrinter
+ * * isNetworkConnect
+ * * isWifiConnected
+ * * isMobileConnected
+ * * getCurrNetworkStatus
+ * * registerNetWorkStatusChange
+ * * unRegisterNetworkStatusChange
  *
+ * 提供的外部接口
+ * * NetworkStatusChangeListener
  *
  * @author 王凯
  * @date 2022/07/03
@@ -66,16 +76,16 @@ object NetWorkStatusHelper {
     private var mCurrStatus = NetWorkStatus.NONE
 
     /**Android6.0以下，监听网络状态变化的广播接收*/
-    private val oldVersionNetworkReceiver: BroadcastReceiver
-            by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
-                createOldVersionNetworkStatusReceiver()
-            }
+    private val oldVersionNetworkReceiver: BroadcastReceiver by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        createOldVersionNetworkStatusReceiver()
+    }
 
     /**android 6.0以上的网络状态变化监听*/
-    private val netWorkStatusCallBack: ConnectivityManager.NetworkCallback
-            by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
-                createNetworkStatusCallBack()
-            }
+    private val netWorkStatusCallBack: ConnectivityManager.NetworkCallback by lazy(
+        LazyThreadSafetyMode.SYNCHRONIZED
+    ) {
+        createNetworkStatusCallBack()
+    }
 
 
     /**
@@ -99,15 +109,13 @@ object NetWorkStatusHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val networkCapabilities = manager.getNetworkCapabilities(manager.activeNetwork)
             if (networkCapabilities != null) {
-                return (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                        || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                        || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))
+                return (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || networkCapabilities.hasTransport(
+                    NetworkCapabilities.TRANSPORT_CELLULAR
+                ) || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))
             }
         } else {
-            @Suppress("DEPRECATION")
-            val networkInfo = manager.activeNetworkInfo
-            @Suppress("DEPRECATION")
-            return networkInfo != null && networkInfo.isConnected
+            @Suppress("DEPRECATION") val networkInfo = manager.activeNetworkInfo
+            @Suppress("DEPRECATION") return networkInfo != null && networkInfo.isConnected
         }
         return false
     }
@@ -127,11 +135,8 @@ object NetWorkStatusHelper {
                 return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
             }
         } else {
-            @Suppress("DEPRECATION")
-            val networkInfo = manager.activeNetworkInfo
-            @Suppress("DEPRECATION")
-            return networkInfo != null && networkInfo.isConnected
-                    && networkInfo.type == ConnectivityManager.TYPE_WIFI
+            @Suppress("DEPRECATION") val networkInfo = manager.activeNetworkInfo
+            @Suppress("DEPRECATION") return networkInfo != null && networkInfo.isConnected && networkInfo.type == ConnectivityManager.TYPE_WIFI
         }
         return false
     }
@@ -151,11 +156,8 @@ object NetWorkStatusHelper {
                 return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
             }
         } else {
-            @Suppress("DEPRECATION")
-            val networkInfo = manager.activeNetworkInfo
-            @Suppress("DEPRECATION")
-            return networkInfo != null && networkInfo.isConnected
-                    && networkInfo.type == ConnectivityManager.TYPE_MOBILE
+            @Suppress("DEPRECATION") val networkInfo = manager.activeNetworkInfo
+            @Suppress("DEPRECATION") return networkInfo != null && networkInfo.isConnected && networkInfo.type == ConnectivityManager.TYPE_MOBILE
         }
         return false
     }
@@ -175,14 +177,12 @@ object NetWorkStatusHelper {
                 Context.CONNECTIVITY_SERVICE
             ) as ConnectivityManager
             connectivityManager.registerNetworkCallback(
-                NetworkRequest.Builder().build(),
-                netWorkStatusCallBack
+                NetworkRequest.Builder().build(), netWorkStatusCallBack
             )
         } else {
             //6.0以下注册广播监听
             val filter = IntentFilter()
-            @Suppress("DEPRECATION")
-            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+            @Suppress("DEPRECATION") filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
             context.registerReceiver(oldVersionNetworkReceiver, filter)
         }
     }
@@ -208,8 +208,7 @@ object NetWorkStatusHelper {
     private fun createOldVersionNetworkStatusReceiver(): BroadcastReceiver =
         object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                @Suppress("DEPRECATION")
-                if (intent?.action != ConnectivityManager.CONNECTIVITY_ACTION) return
+                @Suppress("DEPRECATION") if (intent?.action != ConnectivityManager.CONNECTIVITY_ACTION) return
                 val manager = context?.getSystemService(
                     Context.CONNECTIVITY_SERVICE
                 ) as ConnectivityManager
@@ -270,8 +269,7 @@ object NetWorkStatusHelper {
 
             /**当网络状态修改但仍旧是可用状态时回调*/
             override fun onCapabilitiesChanged(
-                network: Network,
-                networkCapabilities: NetworkCapabilities
+                network: Network, networkCapabilities: NetworkCapabilities
             ) {
                 super.onCapabilitiesChanged(network, networkCapabilities)
                 if (!networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {

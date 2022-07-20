@@ -197,7 +197,7 @@ object UrlRedirectHelper {
     @Throws(IllegalAccessException::class)
     private fun Request.fetchRedirectUrlNameFromHeader(): String? {
         val hostHeaders = this.headers(REDIRECT_HOST_HEAD_KEY)
-        if (hostHeaders.isNullOrEmpty()) return ""
+        if (hostHeaders.isEmpty()) return ""
         takeIf { hostHeaders.size > 1 }?.run {
             throw IllegalArgumentException("Only one host name tag in the headers")
         }
@@ -218,7 +218,7 @@ object UrlRedirectHelper {
     @Throws(IllegalAccessException::class)
     private fun Request.obtainRedirectSegmentSize(): String? {
         val hostHeaders = this.headers(PATH_SEGMENT_SIZE_HEAD_KEY)
-        takeIf { hostHeaders.isNullOrEmpty() } ?: return ""
+        takeIf { hostHeaders.isEmpty() } ?: return ""
         takeIf { hostHeaders.size > 1 }?.run {
             throw IllegalArgumentException("Only one segment size tag in the headers")
         }

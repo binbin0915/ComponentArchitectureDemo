@@ -14,8 +14,8 @@ import javax.net.ssl.X509TrustManager
 /**
  * 描述：网络请求相关配置拓展类
  * * 用于kotlin dsl方式配置
- * @author yuPFeG
- * @date 2021/01/25
+ * @author 王凯
+ * @date 2022/07/19
  */
 
 @Suppress("unused")
@@ -25,7 +25,7 @@ class HttpRequestConfig constructor(){
     @JvmField
     var baseUrl : String ?= null
 
-    /**retrofit解析器的集合*/
+    /**retrofit解析器的集合（gson）*/
     @JvmField
     var converterFactories : MutableList<Converter.Factory> = mutableListOf()
     /**retrofit回调支持类的集合*/

@@ -5,8 +5,8 @@ import com.yupfeg.remote.data.HttpResponseParsable
 /**
  * 网络请求的响应内容处理器接口声明
  * * 由业务层实现具体逻辑，统一处理全局的网络响应，如判断接口执行状态，出现异常的处理
- * @author yuPFeG
- * @date 2021/09/16
+ * @author 王凯
+ * @date 2021/07/18
  */
 interface HttpResponseHandler {
 

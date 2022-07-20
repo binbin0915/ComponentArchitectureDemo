@@ -13,8 +13,8 @@ import javax.net.ssl.X509TrustManager
 
 /**
  * 创建网络请求对象的工厂基础实现类
- * @author yuPFeG
- * @date 2021/02/09
+ * @author 王凯
+ * @date 2021/07/19
  */
 @Suppress("MemberVisibilityCanBePrivate")
 abstract class BaseHttpClientFactoryImpl : HttpClientFactory {

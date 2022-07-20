@@ -1,6 +1,7 @@
 package com.yupfeg.remote.upload
 
 import com.yupfeg.remote.log.HttpLogPrinter
+import com.yupfeg.remote.upload.entity.UploadProgressBean
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okio.Buffer
@@ -24,7 +25,7 @@ interface OnUploadProgressListener{
  * 描述：监听上传进度的[RequestBody]代理类
  * maybe since v1.0.6
  * @author 王凯
- * @date 2022/07/04
+ * @date 2022/07/19
  */
 @Suppress("unused")
 class UploadProgressMultipartBody(

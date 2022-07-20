@@ -1,8 +1,10 @@
 package com.model.mykotlin.data.remote
 
+import android.content.Context
 import com.library.base.application.BaseApplication
+import com.library.common.netconfig.tools.download.Bean
 import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
-import com.library.common.netconfig.tools.download.ApkFileDownloadProducer
+import com.library.common.netconfig.tools.download.FileDownloadProducer
 import com.library.common.netconfig.tools.rxjava3.preHandlerRxJava3Response
 import com.model.mykotlin.data.entity.JueJinHttpResultBean
 import com.model.mykotlin.data.entity.WanAndroidArticleListResponseEntity
@@ -14,19 +16,21 @@ import com.yupfeg.remote.tools.handler.RestApiException
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newFixedThreadPoolContext
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import java.io.File
+import kotlin.coroutines.CoroutineContext
 
 /**
  * 远程网络数据源
  *
  * 基本使用
- * *
- *
- *
- *
- *
- *
+ * * 接口请求
+ * * 上传
+ * * 下载
  * @author WangKai
  * @date 2022/04/03
  */
@@ -84,11 +88,17 @@ object RemoteDataSource {
 
     private const val TEST_DOWNLOAD_APK_NAME = "testDownload.apk"
 
-    private val mApkDownloadProducer: ApkFileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
-        ApkFileDownloadProducer(
+    private val mApkDownloadProducer: FileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        FileDownloadProducer(
             requestTag = HttpRequestMediator.DEFAULT_DOWNLOAD_CLIENT_KEY,
             requestConfig = createApkDownloadHttpRequestConfig()
         )
+    }
+
+    fun download(context: Context, bean: Bean) {
+        mApkDownloadProducer.jobList.add(MainScope().launch {
+            mApkDownloadProducer.load(context, bean, newFixedThreadPoolContext(1, "DownloadContext"))
+        })
     }
 
     private fun createApkDownloadHttpRequestConfig(): HttpRequestConfig {

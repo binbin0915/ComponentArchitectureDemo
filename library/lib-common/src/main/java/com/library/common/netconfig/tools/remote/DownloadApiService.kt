@@ -20,5 +20,12 @@ interface DownloadApiService {
      */
     @Streaming
     @GET
-    fun downloadFileFromUrl(@Url fileUrl : String) : Maybe<ResponseBody>
+    fun downloadFileFromUrl(@Url fileUrl: String): Maybe<ResponseBody>
+
+
+    @Streaming
+    @GET
+    suspend fun download(@Url url: String): ResponseBody
+
+
 }

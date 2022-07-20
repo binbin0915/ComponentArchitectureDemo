@@ -6,8 +6,8 @@ import retrofit2.Retrofit
 
 /**
  * 默认实现的网络请求实例工厂类
- * @author yuPFeG
- * @date 2021/02/10
+ * @author 王凯
+ * @date 2021/07/19
  */
 class DefaultHttpClientFactoryImpl private constructor() : BaseHttpClientFactoryImpl(){
 

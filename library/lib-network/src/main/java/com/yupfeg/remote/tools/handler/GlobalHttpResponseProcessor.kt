@@ -9,8 +9,8 @@ import java.nio.charset.Charset
  *
  * 通常用于设置一些全局网络请求的统一判断
  * * 通过`setResultHandler`方法设置处理类
- * @author yuPFeG
- * @date 2021/09/22
+ * @author 王凯
+ * @date 2022/07/18
  */
 object GlobalHttpResponseProcessor {
 
