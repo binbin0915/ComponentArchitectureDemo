@@ -3,7 +3,6 @@ package com.library.common.netconfig.tools.download
 import android.content.Context
 import android.util.Log
 import java.io.File
-import com.jakewharton.rxrelay3.PublishRelay
 import com.library.common.commonutils.SPUtils
 import com.library.common.netconfig.LoggerHttpLogPrinterImpl
 import com.library.common.netconfig.constant.AppConstant
@@ -50,7 +49,6 @@ class FileDownloadProducer(
     /*一、添加网络请求的工厂*/
     init {
         HttpRequestMediator.addDefaultHttpClientFactory(requestTag) {
-            baseUrl = requestConfig.baseUrl
             connectTimeout = requestConfig.connectTimeout
             readTimeout = requestConfig.readTimeout
             writeTimeout = requestConfig.writeTimeout
@@ -97,14 +95,14 @@ class FileDownloadProducer(
 
     suspend fun <T> Flow<T>.next(bloc: suspend T.(T) -> Unit): Unit = collect { bloc(it, it) }
 
-    suspend fun load(context: Context, bean: Bean, coroutine: CoroutineContext) {
+    suspend fun load(context: Context, fileDownloadBean: FileDownloadBean, coroutine: CoroutineContext) {
         withContext(coroutine) {
             val listener = object : DownloadListener {
                 var indexProgress = 0
                 var total = 0L
                 var isPauseState = false
                 var isCancelState = false
-                var isResumeState = bean.isResume
+                var isResumeState = fileDownloadBean.isResume
                 var filePointerLength = 0L
                 var mFileTotalSize = 0L
                 override var isPause: Boolean
@@ -135,12 +133,12 @@ class FileDownloadProducer(
 
                 override fun onStartDownload() {
                     filePointerLength =
-                        SPUtils[context, AppConstant.FILE_POINTER + bean.url, 0L] as Long
-                    mFileTotalSize = SPUtils[context, AppConstant.FILE_TOTAL + bean.url, 0L] as Long
+                        SPUtils[context, AppConstant.FILE_POINTER + fileDownloadBean.url, 0L] as Long
+                    mFileTotalSize = SPUtils[context, AppConstant.FILE_TOTAL + fileDownloadBean.url, 0L] as Long
                 }
 
                 override fun onProgress(progress: Int, totalLength: Long) {
-                    bean.progress = progress
+                    fileDownloadBean.progress = progress
                     indexProgress = progress
                     total = totalLength
                     Log.d(TAG, "progress:$progress")
@@ -150,14 +148,14 @@ class FileDownloadProducer(
                 }
 
                 override fun onFinishDownload() {
-                    bean.downloadState = 3
+                    fileDownloadBean.downloadState = 3
 //                    GlobalScope.launch(Dispatchers.Main) {
 ////                        adapter.notifyItemChanged(position)
 //                    }
-                    bean.isResume = false
+                    fileDownloadBean.isResume = false
                     Log.d(TAG, "完成下载")
-                    listenerMap.remove(bean.url)
-                    remove(context, bean.url)
+                    listenerMap.remove(fileDownloadBean.url)
+                    remove(context, fileDownloadBean.url)
                 }
 
                 override fun onFail(errorInfo: String?) {
@@ -165,7 +163,7 @@ class FileDownloadProducer(
                     //暂时全部取消,根据具体需求更改
                     cancel()
                     Log.d(TAG, "下载失败:$errorInfo")
-                    remove(context, bean.url)
+                    remove(context, fileDownloadBean.url)
                 }
 
                 override fun onKeepOn() {
@@ -173,17 +171,17 @@ class FileDownloadProducer(
                 }
 
                 override fun onPause(path: String) {
-                    save(context, bean.url, path, indexProgress, total, filePointerLength)
+                    save(context, fileDownloadBean.url, path, indexProgress, total, filePointerLength)
                 }
 
                 override fun onCancel(path: String) {
-                    remove(context, bean.url)
+                    remove(context, fileDownloadBean.url)
                     File(path).delete()
                 }
             }
             Log.d(TAG, "listener = $listener")
-            listenerMap[bean.url] = listener
-            val flow = downloadFile(bean.url, listener)
+            listenerMap[fileDownloadBean.url] = listener
+            val flow = downloadFile(fileDownloadBean.url, listener)
             flow.flowOn(Dispatchers.IO).cancellable().map {
                 it
             }.onCompletion {

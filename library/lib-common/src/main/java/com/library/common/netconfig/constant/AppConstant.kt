@@ -1,15 +1,11 @@
 package com.library.common.netconfig.constant
 
 /**
- *
- * @author yuPFeG
- * @date
+ * 项目的全局常量配置
+ * @author 王凯
+ * @date 2022/07/20
  */
 object AppConstant {
-
-    const val JUE_JIN_URL_TAG = "jueJin"
-    const val BAI_DU_URL_TAG = "baidu"
-
     /*下载的相关配置*/
     const val FILE_POINTER = "filePointer_"
     const val FILE_TOTAL = "total_"

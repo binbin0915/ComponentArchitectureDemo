@@ -3,7 +3,6 @@ package com.model.mykotlin.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.library.base.viewmodel.BaseViewModel
-import com.library.common.netconfig.tools.download.Bean
 import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 import com.model.mykotlin.data.remote.RemoteDataSource
 import kotlinx.coroutines.launch

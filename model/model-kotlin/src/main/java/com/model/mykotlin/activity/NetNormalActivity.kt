@@ -3,7 +3,7 @@ package com.model.mykotlin.activity
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.view.activity.BaseActivity
-import com.library.common.netconfig.tools.download.Bean
+import com.library.common.netconfig.tools.download.FileDownloadBean
 import com.library.router.RouterPath
 import com.model.mykotlin.data.remote.RemoteDataSource
 import com.model.mykotlin.databinding.MykotlinActivityNetNormalBinding
@@ -25,7 +25,7 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
             MainScope().launch {
                 RemoteDataSource.download(
                     context = applicationContext,
-                    Bean("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk")
+                    FileDownloadBean("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk")
                 )
             }
         }

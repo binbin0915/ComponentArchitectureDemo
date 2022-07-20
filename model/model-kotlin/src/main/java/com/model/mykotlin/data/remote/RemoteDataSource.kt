@@ -2,7 +2,7 @@ package com.model.mykotlin.data.remote
 
 import android.content.Context
 import com.library.base.application.BaseApplication
-import com.library.common.netconfig.tools.download.Bean
+import com.library.common.netconfig.tools.download.FileDownloadBean
 import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
 import com.library.common.netconfig.tools.download.FileDownloadProducer
 import com.model.mykotlin.data.entity.WanAndroidArticleListResponseEntity
@@ -61,18 +61,17 @@ object RemoteDataSource {
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun download(context: Context, bean: Bean) {
+    fun download(context: Context, fileDownloadBean: FileDownloadBean) {
         mApkDownloadProducer.jobList.add(MainScope().launch {
             mApkDownloadProducer.filePath = getApkDownloadFilePath()
             mApkDownloadProducer.load(
-                context, bean, newFixedThreadPoolContext(1, "DownloadContext")
+                context, fileDownloadBean, newFixedThreadPoolContext(1, "DownloadContext")
             )
         })
     }
 
     private fun createApkDownloadHttpRequestConfig(): HttpRequestConfig {
         return HttpRequestConfig().apply {
-            baseUrl = "http://baidu.com"
             connectTimeout = 15
             readTimeout = 15
             writeTimeout = 20
