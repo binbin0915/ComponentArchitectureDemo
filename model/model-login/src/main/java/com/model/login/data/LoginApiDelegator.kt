@@ -7,7 +7,6 @@ import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.ext.addDslRemoteConfig
 import com.yupfeg.remote.tools.delegator.BaseRequestApiDelegator
 import com.yupfeg.remote.interceptor.HttpLogInterceptor
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 
@@ -36,15 +35,6 @@ class LoginApiDelegator<T>(clazz: Class<T>) :
             networkInterceptors.add(HttpLogInterceptor(LoggerHttpLogPrinterImpl()))
             //添加gson解析支持
             converterFactories.add(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-            //设置返回对象处理(kotlin协程在新版本原生支持)
-//            callAdapterFactories.apply {
-//                //支持RxJava3(create()方法创建的是采用okHttp内置的线程池，下游数据流使用subscribeOn无效
-//                // createSynchronous()则使用下游subscribeOn提供的线程池)
-////                add(RxJava3CallAdapterFactory.createSynchronous())
-//                //支持RxJava2(create()方法创建的工厂类，采用外部下游subscribeOn提供的线程池，
-//                // 而createAsync()则使用okHttp内置的线程池)
-////                add(RxJava2CallAdapterFactory.create())
-//            }
         }
     }
 }

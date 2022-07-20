@@ -15,8 +15,8 @@ import java.util.concurrent.TimeoutException
 
 /**
  * 业务层的全局http响应处理类
- * @author yuPFeG
- * @date 2021/10/07
+ * @author 王凯
+ * @date 2022/07/20
  */
 class GlobalResponseHandler : HttpResponseHandler{
     companion object{

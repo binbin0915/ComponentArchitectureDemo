@@ -1,11 +1,13 @@
 package com.yupfeg.remote.download
 
-import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import kotlin.jvm.Throws
 
 /**
  * Http文件下载的基类
@@ -23,30 +25,37 @@ abstract class BaseFileDownloadProducer {
      * */
     @Throws(IOException::class)
     protected open suspend fun writeResponseBodyToDiskFile(
-        fileUrl: String,
-        fileBody : ResponseBody,
-        filePath : String,
-        listener: DownloadListener?=null
-    ){
+        fileBody: ResponseBody,
+        filePath: String,
+        listener: DownloadListener? = null
+    ) {
         val downloadFile = File(filePath)
-        if (downloadFile.exists()){
+        /*文件存在的话，先删除*/
+        if (downloadFile.exists()) {
             downloadFile.delete()
         }
         val inputStream = fileBody.byteStream()
-        var fos : FileOutputStream ?= null
+        var fos: FileOutputStream? = null
         try {
-            downloadFile.createNewFile()
+            withContext(Dispatchers.IO) {
+                downloadFile.createNewFile()
+            }
             val buffer = ByteArray(2048)
             var len: Int
-            fos = FileOutputStream(downloadFile,listener != null && listener.isResume)
+            fos = withContext(Dispatchers.IO) {
+                FileOutputStream(downloadFile, listener != null && listener.isResume)
+            }
             do {
-                len = inputStream.read(buffer)
+                len = withContext(Dispatchers.IO) {
+                    inputStream.read(buffer)
+                }
                 //没有更多数据则跳出循环
                 if (len == -1) break
-                fos.write(buffer, 0, len)
+                withContext(Dispatchers.IO) {
+                    fos.write(buffer, 0, len)
+                }
                 listener?.run {
                     filePointer += len
-                    Log.d("FILE_DOWNLOAD_TAG", "filePointer:$filePointer")
                     if (isCancel) {
                         onCancel(downloadFile.path)
                         return
@@ -55,17 +64,24 @@ abstract class BaseFileDownloadProducer {
                         onPause(downloadFile.path)
                     }
                     while (isPause) {
-//                        delay(100)
+                        delay(100)
                     }
                 }
 
-            }while (true)
-        }catch (e : IOException){
-            throw e
-        }finally {
-            fos?.flush()
-            fos?.close()
-            inputStream.close()
+            } while (true)
+            listener?.onFinishDownload()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            listener?.onFail("IOException")
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            listener?.onFail("FileNotFoundException")
+        } finally {
+            withContext(Dispatchers.IO) {
+                fos?.flush()
+                fos?.close()
+                inputStream.close()
+            }
         }
     }
 }

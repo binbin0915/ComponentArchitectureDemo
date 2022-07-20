@@ -1,9 +1,9 @@
 package com.yupfeg.remote.download
 
 /**
- *    Author : wxz
- *    Time   : 2020/11/06
- *    Desc   :
+ * 下载监听
+ * @author 王凯
+ * @date 2020/07/19
  */
 interface DownloadListener {
     /**

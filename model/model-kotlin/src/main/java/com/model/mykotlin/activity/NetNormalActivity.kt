@@ -1,7 +1,6 @@
 package com.model.mykotlin.activity
 
 import android.os.Bundle
-import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.view.activity.BaseActivity
 import com.library.common.netconfig.tools.download.Bean
@@ -18,22 +17,16 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
         super.onCreate(savedInstanceState)
 
         viewBinding.btnNormalUseRxjava3.setOnClickListener {
-            viewModel.queryWanAndroidArticlesByRxJava3()
+            viewModel.queryWanAndroidArticleByCoroutine()
         }
 
         viewBinding.btnNormalUseCoroutine.setOnClickListener {
-//            viewModel.queryWanAndroidArticleByCoroutine()
-            MainScope().launch{
-                RemoteDataSource.download(context = applicationContext, Bean("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk"))
 
-//            //TODO 仅作测试，后续使用flow优化
-//            try {
-//                val responseEntity = RemoteDataSource.queryWanAndroidArticleByCoroutine(0)
-//                articleJsonStringLiveData.value = "query WanAndroid Article from Coroutine \n $responseEntity"
-//            }catch (e : Exception){
-//                GlobalHttpResponseProcessor.handleHttpError(e)
-//                articleJsonStringLiveData.value = "query WanAndroid Article from Coroutine $e"
-//            }
+            MainScope().launch {
+                RemoteDataSource.download(
+                    context = applicationContext,
+                    Bean("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk")
+                )
             }
         }
 

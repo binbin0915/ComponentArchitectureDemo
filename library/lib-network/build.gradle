@@ -42,6 +42,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'//权限判断用
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //协程支持
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     //gson解析的支持
     implementation("com.squareup.retrofit2:converter-gson:2.9.0") {
         exclude group: 'com.google.code.gson', module: "gson"

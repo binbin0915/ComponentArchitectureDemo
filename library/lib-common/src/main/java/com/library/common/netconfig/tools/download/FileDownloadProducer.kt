@@ -2,38 +2,29 @@ package com.library.common.netconfig.tools.download
 
 import android.content.Context
 import android.util.Log
+import java.io.File
 import com.jakewharton.rxrelay3.PublishRelay
 import com.library.common.commonutils.SPUtils
 import com.library.common.netconfig.LoggerHttpLogPrinterImpl
 import com.library.common.netconfig.constant.AppConstant
-import com.yupfeg.executor.ExecutorProvider
 import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.config.HttpRequestConfig
 import com.yupfeg.remote.download.BaseFileDownloadProducer
-import com.yupfeg.remote.download.entity.DownloadProgressBean
 import com.yupfeg.remote.interceptor.DownloadProgressInterceptor
 import com.yupfeg.remote.log.HttpLogPrinter
 import com.library.common.netconfig.tools.remote.DownloadApiService
 import com.yupfeg.remote.download.DownloadListener
-/*coroutines*/
+
 import okhttp3.Interceptor
 import okhttp3.ResponseBody
-/*rxjava*/
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+
+/*coroutines*/
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
-import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 /**
- * 基于RxJava3+Retrofit实现下载文件功能的数据源提供类
- * 使用[BehaviorSubject]向外部发送下载进度变化，fileUrl作为文件唯一标识符，用于区分下载进度所属文件
+ * * 基于协程flow+Retrofit实现下载文件功能的数据源提供类
  * @author 王凯
  * @date 2022/07/20
  */
@@ -50,7 +41,7 @@ class FileDownloadProducer(
     }
 
     /*下载路径*/
-    var path = ""
+    var filePath = ""
     var listenerMap: MutableMap<String, DownloadListener> = mutableMapOf()
 
     /*协程job集合*/
@@ -59,7 +50,7 @@ class FileDownloadProducer(
     /*一、添加网络请求的工厂*/
     init {
         HttpRequestMediator.addDefaultHttpClientFactory(requestTag) {
-            this.baseUrl = requestConfig.baseUrl
+            baseUrl = requestConfig.baseUrl
             connectTimeout = requestConfig.connectTimeout
             readTimeout = requestConfig.readTimeout
             writeTimeout = requestConfig.writeTimeout
@@ -67,12 +58,9 @@ class FileDownloadProducer(
             applicationInterceptors = requestConfig.applicationInterceptors
             networkInterceptors = mutableListOf<Interceptor>().apply {
                 addAll(requestConfig.networkInterceptors)
-                //添加下载进度监听的拦截器
+                //添加下载进度监听的拦截器，用于日志打印
                 add(createDownloadInterceptor(LoggerHttpLogPrinterImpl()))
             }
-            //支持RxJava3(create()方法创建的是采用okHttp内置的线程池，下游数据流使用subscribeOn无效
-            // createSynchronous()则使用下游subscribeOn提供的线程池)
-            callAdapterFactories = mutableListOf(RxJava3CallAdapterFactory.createSynchronous())
         }
     }
 
@@ -81,7 +69,7 @@ class FileDownloadProducer(
             logPrinter = logPrinter,
         ) { progressBean ->
             //此时处于子线程，不能直接回调执行UI操作
-            sendDownloadProgressChange(progressBean)
+//            sendDownloadProgressChange(progressBean)
         }
     }
 
@@ -97,17 +85,11 @@ class FileDownloadProducer(
     //TODO:--------------------------------------协程方式下载-----------------------------------------
 
     /**
-     * 下载监听器
-     */
-    private var downloadListener: DownloadListener? = null
-
-    /**
      * 开始下载方法
      */
     private fun downloadFile(fileUrl: String, listener: DownloadListener): Flow<ResponseBody> =
         flow {
             delay(500)
-            downloadListener = listener
             listener.onStartDownload()
             val download = mDownloadApiService.download(fileUrl)
             emit(download)
@@ -153,9 +135,8 @@ class FileDownloadProducer(
 
                 override fun onStartDownload() {
                     filePointerLength =
-                        SPUtils[context, AppConstant.FILE_POINTER + bean.path, 0L] as Long
-                    mFileTotalSize =
-                        SPUtils[context, AppConstant.FILE_TOTAL + bean.path, 0L] as Long
+                        SPUtils[context, AppConstant.FILE_POINTER + bean.url, 0L] as Long
+                    mFileTotalSize = SPUtils[context, AppConstant.FILE_TOTAL + bean.url, 0L] as Long
                 }
 
                 override fun onProgress(progress: Int, totalLength: Long) {
@@ -175,8 +156,8 @@ class FileDownloadProducer(
 //                    }
                     bean.isResume = false
                     Log.d(TAG, "完成下载")
-                    listenerMap.remove(bean.path)
-                    remove(context, bean.path)
+                    listenerMap.remove(bean.url)
+                    remove(context, bean.url)
                 }
 
                 override fun onFail(errorInfo: String?) {
@@ -184,7 +165,7 @@ class FileDownloadProducer(
                     //暂时全部取消,根据具体需求更改
                     cancel()
                     Log.d(TAG, "下载失败:$errorInfo")
-                    remove(context, bean.path)
+                    remove(context, bean.url)
                 }
 
                 override fun onKeepOn() {
@@ -192,33 +173,25 @@ class FileDownloadProducer(
                 }
 
                 override fun onPause(path: String) {
-                    save(context, bean.path, path, indexProgress, total, filePointerLength)
+                    save(context, bean.url, path, indexProgress, total, filePointerLength)
                 }
 
                 override fun onCancel(path: String) {
-                    remove(context, bean.path)
+                    remove(context, bean.url)
                     File(path).delete()
                 }
             }
             Log.d(TAG, "listener = $listener")
-            listenerMap.put(bean.path, listener)
-            val flow = downloadFile(bean.path, listener)
+            listenerMap[bean.url] = listener
+            val flow = downloadFile(bean.url, listener)
             flow.flowOn(Dispatchers.IO).cancellable().map {
-                Log.d("*******", "map-----------------------------")
-                //转换成字节流
-//                    it.byteStream()
                 it
-            }.onCompletion { cause ->
+            }.onCompletion {
 
-            }.next { input ->
-                Log.d("*******", "collect+++++++++++++++++")
+            }.next { responseBody ->
                 writeResponseBodyToDiskFile(
-                    fileUrl = bean.path,
-                    fileBody = input,
-                    filePath = context.getExternalFilesDir("download")?.path.toString(),
-                    listener = listener
+                    fileBody = responseBody, filePath = filePath, listener = listener
                 )
-//                    writeFile(input, bean.path, path, listener = listener)
             }
         }
     }
@@ -234,56 +207,6 @@ class FileDownloadProducer(
             map.value.isCancel = true
         }
         listenerMap.clear()
-    }
-
-    //TODO:--------------------------------------协程方式下载-----------------------------------------
-
-
-    //TODO:--------------------------------------rxjava方式下载--------------------------------------
-    /**
-     * 下载网络文件
-     * @param fileUrl 文件下载地址
-     * @param saveFilePath 文件保存路径
-     * */
-    fun downloadApk(
-        fileUrl: String, saveFilePath: String
-    ): Maybe<Unit> {
-        //TODO 后续可使用flow替代
-        return mDownloadApiService.downloadFileFromUrl(fileUrl)
-            //step 下载文件响应，将byte字节数组保存到本地文件
-            .map { responseBody ->
-//                writeResponseBodyToDiskFile(
-//                    fileUrl = fileUrl, fileBody = responseBody, filePath = saveFilePath
-//                )
-            }
-            //step 下载出现异常
-            .doOnError {
-                sendDownloadProgressChange(DownloadProgressBean.createDownloadFailure(fileUrl))
-            }
-            //上游执行在子线程，下游执行在主线程
-            .subscribeOn(Schedulers.from(ExecutorProvider.ioExecutor))
-            .observeOn(AndroidSchedulers.mainThread())
-    }
-
-    /**
-     * 文件下载进度百分比的可观察对象，
-     * [PublishRelay]只有onNext的subject，不会因为OnError中断信息
-     * */
-    private val mDownloadProgressSubject = PublishRelay.create<DownloadProgressBean>()
-
-    /**
-     * 订阅指定地址的下载进度变化
-     * @param fileUrl 文件下载地址
-     * */
-    fun observeDownloadProgressChange(fileUrl: String): Flowable<DownloadProgressBean> {
-        return mDownloadProgressSubject.toFlowable(BackpressureStrategy.LATEST)
-            //仅允许指定下载地址的进度继续向下游进行
-            .filter { it.fileTag == fileUrl }
-    }
-
-    //TODO:--------------------------------------rxjava方式下载--------------------------------------
-    private fun sendDownloadProgressChange(progressBean: DownloadProgressBean) {
-        mDownloadProgressSubject.accept(progressBean)
     }
 
 

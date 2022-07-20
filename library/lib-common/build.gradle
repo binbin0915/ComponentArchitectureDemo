@@ -63,14 +63,6 @@ dependencies {
     api("com.uber.autodispose2:autodispose-androidx-lifecycle:2.1.1")
     //协程支持
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
-    //RxJava3
-    api('io.reactivex.rxjava3:rxjava:3.1.5')
-    api("io.reactivex.rxjava3:rxandroid:3.0.0")
-    api("io.reactivex.rxjava3:rxkotlin:3.0.1")
-    //不中断事件流的RxJava3热流拓展
-    api('com.jakewharton.rxrelay3:rxrelay:3.0.1')
-    //retrofit对于RxJava3返回对象的支持
-    api("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
     //动画库
     api 'com.airbnb.android:lottie:5.2.0'
     //腾讯tbs
