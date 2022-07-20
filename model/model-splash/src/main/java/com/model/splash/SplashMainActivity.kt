@@ -1,8 +1,6 @@
 package com.model.splash
 
 import android.animation.Animator
-import android.os.Bundle
-import com.efs.sdk.launch.LaunchManager
 import com.library.base.expand.StatusBarStyle
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
@@ -13,34 +11,6 @@ import com.model.splash.databinding.SplashActivityMainBinding
 class SplashMainActivity : BaseActivity<BaseViewModel, SplashActivityMainBinding>(),
     Animator.AnimatorListener {
     /**
-     * 窗口获得焦点
-     */
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        LaunchManager.onTracePage(this, LaunchManager.PAGE_ON_CREATE, true)
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        LaunchManager.onTracePage(this, LaunchManager.PAGE_ON_RE_START, true)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        LaunchManager.onTracePage(this, LaunchManager.PAGE_ON_START, true)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        LaunchManager.onTracePage(this, LaunchManager.PAGE_ON_STOP, true)
-        viewBinding.animView.cancelAnimation()
-    }
-
-    /**
      * 全屏显示
      */
     override fun statusBarStyle(): StatusBarStyle {
@@ -48,24 +18,20 @@ class SplashMainActivity : BaseActivity<BaseViewModel, SplashActivityMainBinding
     }
 
     override fun initData() {
-        viewBinding.animView.addAnimatorListener(this)
-        viewBinding.animView.playAnimation()
-    }
 
-    override fun onResume() {
-        super.onResume()
-        LaunchManager.onTracePage(this, LaunchManager.PAGE_ON_RESUME, false)
-        viewBinding.animView.resumeAnimation()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewBinding.animView.pauseAnimation()
     }
 
     override fun createdObserve() {
-
+        viewBinding.animView.addAnimatorListener(this)
+        viewBinding.animView.playAnimation()
     }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        if (!isFinishing) {
+//            viewBinding.animView.pauseAnimation()
+//        }
+//    }
 
     /**
      * 动画开始

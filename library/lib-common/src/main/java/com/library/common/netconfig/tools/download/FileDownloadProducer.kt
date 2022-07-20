@@ -1,25 +1,23 @@
 package com.library.common.netconfig.tools.download
 
+/*coroutines*/
 import android.content.Context
 import android.util.Log
-import java.io.File
 import com.library.common.commonutils.SPUtils
 import com.library.common.netconfig.LoggerHttpLogPrinterImpl
 import com.library.common.netconfig.constant.AppConstant
+import com.library.common.netconfig.tools.remote.DownloadApiService
 import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.config.HttpRequestConfig
 import com.yupfeg.remote.download.BaseFileDownloadProducer
+import com.yupfeg.remote.download.DownloadListener
 import com.yupfeg.remote.interceptor.DownloadProgressInterceptor
 import com.yupfeg.remote.log.HttpLogPrinter
-import com.library.common.netconfig.tools.remote.DownloadApiService
-import com.yupfeg.remote.download.DownloadListener
-
-import okhttp3.Interceptor
-import okhttp3.ResponseBody
-
-/*coroutines*/
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import okhttp3.Interceptor
+import okhttp3.ResponseBody
+import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -67,6 +65,7 @@ class FileDownloadProducer(
             logPrinter = logPrinter,
         ) { progressBean ->
             //此时处于子线程，不能直接回调执行UI操作
+            Log.e(TAG, "progressBean:" + progressBean.progress)
 //            sendDownloadProgressChange(progressBean)
         }
     }
@@ -95,7 +94,11 @@ class FileDownloadProducer(
 
     suspend fun <T> Flow<T>.next(bloc: suspend T.(T) -> Unit): Unit = collect { bloc(it, it) }
 
-    suspend fun load(context: Context, fileDownloadBean: FileDownloadBean, coroutine: CoroutineContext) {
+    suspend fun load(
+        context: Context,
+        fileDownloadBean: FileDownloadBean,
+        coroutine: CoroutineContext
+    ) {
         withContext(coroutine) {
             val listener = object : DownloadListener {
                 var indexProgress = 0
@@ -134,7 +137,8 @@ class FileDownloadProducer(
                 override fun onStartDownload() {
                     filePointerLength =
                         SPUtils[context, AppConstant.FILE_POINTER + fileDownloadBean.url, 0L] as Long
-                    mFileTotalSize = SPUtils[context, AppConstant.FILE_TOTAL + fileDownloadBean.url, 0L] as Long
+                    mFileTotalSize =
+                        SPUtils[context, AppConstant.FILE_TOTAL + fileDownloadBean.url, 0L] as Long
                 }
 
                 override fun onProgress(progress: Int, totalLength: Long) {
@@ -142,16 +146,10 @@ class FileDownloadProducer(
                     indexProgress = progress
                     total = totalLength
                     Log.d(TAG, "progress:$progress")
-//                    GlobalScope.launch(Dispatchers.Main) {
-////                        adapter.notifyItemChanged(position)
-//                    }
                 }
 
                 override fun onFinishDownload() {
                     fileDownloadBean.downloadState = 3
-//                    GlobalScope.launch(Dispatchers.Main) {
-////                        adapter.notifyItemChanged(position)
-//                    }
                     fileDownloadBean.isResume = false
                     Log.d(TAG, "完成下载")
                     listenerMap.remove(fileDownloadBean.url)
@@ -171,7 +169,14 @@ class FileDownloadProducer(
                 }
 
                 override fun onPause(path: String) {
-                    save(context, fileDownloadBean.url, path, indexProgress, total, filePointerLength)
+                    save(
+                        context,
+                        fileDownloadBean.url,
+                        path,
+                        indexProgress,
+                        total,
+                        filePointerLength
+                    )
                 }
 
                 override fun onCancel(path: String) {
