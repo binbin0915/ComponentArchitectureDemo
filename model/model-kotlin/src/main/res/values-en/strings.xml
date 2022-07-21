@@ -1,6 +1,6 @@
 <resources>
     <string name="mykotlin_app_name" translatable="false">kotlin学习模块</string>
-    <string name="mykotlin_rxjava3">使用RxJava3</string>
+    <string name="mykotlin_download">下载</string>
     <string name="mykotlin_select_single_img">选择单张图片</string>
     <string name="mykotlin_arcore_bt">开启ARCore</string>
 </resources>

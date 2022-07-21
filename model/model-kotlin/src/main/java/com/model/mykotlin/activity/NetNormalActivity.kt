@@ -16,7 +16,7 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewBinding.btnNormalUseRxjava3.setOnClickListener {
+        viewBinding.btnNormalUseDownload.setOnClickListener {
             viewModel.queryWanAndroidArticleByCoroutine()
         }
 

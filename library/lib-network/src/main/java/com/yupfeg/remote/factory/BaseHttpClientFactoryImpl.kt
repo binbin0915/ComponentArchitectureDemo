@@ -300,7 +300,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
 
     /**
      * 添加请求响应回调支持
-     * * 默认已添加了RxJava3的支持，不需要重复添加
+     *
      * @param callAdapterFactories 响应回调支持类[CallAdapter.Factory]的集合
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
