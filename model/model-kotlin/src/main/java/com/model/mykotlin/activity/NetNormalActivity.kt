@@ -16,16 +16,18 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /*协程请求接口*/
         viewBinding.btnNormalUseDownload.setOnClickListener {
             viewModel.queryWanAndroidArticleByCoroutine()
         }
 
+        /*下载文件*/
         viewBinding.btnNormalUseCoroutine.setOnClickListener {
 
             MainScope().launch {
                 RemoteDataSource.download(
                     context = applicationContext,
-                    FileDownloadBean("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk")
+                    fileDownloadBean = FileDownloadBean("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk")
                 )
             }
         }

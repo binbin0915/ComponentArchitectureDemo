@@ -170,12 +170,7 @@ class FileDownloadProducer(
 
                 override fun onPause(path: String) {
                     save(
-                        context,
-                        fileDownloadBean.url,
-                        path,
-                        indexProgress,
-                        total,
-                        filePointerLength
+                        context, fileDownloadBean.url, path, indexProgress, total, filePointerLength
                     )
                 }
 
