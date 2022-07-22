@@ -16,7 +16,6 @@ import com.model.home.adapter.HomeViewPagerAdapter
 import com.model.home.databinding.HomeActivityMainBinding
 import com.model.home.viewmodel.HomeMainActivityShareViewModel
 import com.model.home.viewmodel.HomeMainActivityViewModel
-import com.umeng.analytics.MobclickAgent
 
 @Route(path = RouterPath.PAGE_HOME_MAIN_ACTIVITY, group = RouterPath.GROUP_HOME)
 class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMainBinding>() {
@@ -51,12 +50,6 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        //点击back退出时调用，用来保存友盟统计数据
-        MobclickAgent.onKillProcess(applicationContext)
-    }
-
     override fun initData() {
 
         /**
@@ -76,7 +69,7 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
         /**
          * layoutDrawer监听
          */
-        val drawerListener = object : DrawerLayout.DrawerListener {
+        viewBinding.layoutDrawer.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 viewBinding.motionLayout.progress = slideOffset
                 viewBinding.cardView1.radius = slideOffset * 18.dp.toInt()
@@ -92,12 +85,11 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
 
             override fun onDrawerStateChanged(newState: Int) {
             }
-        }
-        viewBinding.layoutDrawer.addDrawerListener(drawerListener)
+        })
 
 
         //获取网络数据
-        viewModel.getPageData()
+        //viewModel.getPageData()
 
 
         //1.注册viewpager页面滑动回调 -- 抽象类的使用

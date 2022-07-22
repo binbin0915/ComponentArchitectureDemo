@@ -108,7 +108,7 @@ public class ViewDragHelper {
     private static final int EDGE_SIZE = 20; // dp
 
     private static final int BASE_SETTLE_DURATION = 256; // ms
-    private static final int MAX_SETTLE_DURATION = 3000; // ms
+    private static final int MAX_SETTLE_DURATION = 360; // ms
 
     // Current drag state; idle, dragging or settling
     private int mDragState;
@@ -636,7 +636,7 @@ public class ViewDragHelper {
             return false;
         }
 
-        int duration = 1000;
+        int duration = 360;
         mScroller.startScroll(startLeft, startTop, dx, dy, duration);
 
         setDragState(STATE_SETTLING);
@@ -698,8 +698,12 @@ public class ViewDragHelper {
      */
     private int clampMag(int value, int absMin, int absMax) {
         final int absValue = Math.abs(value);
-        if (absValue < absMin) return 0;
-        if (absValue > absMax) return value > 0 ? absMax : -absMax;
+        if (absValue < absMin) {
+            return 0;
+        }
+        if (absValue > absMax) {
+            return value > 0 ? absMax : -absMax;
+        }
         return value;
     }
 
@@ -715,8 +719,12 @@ public class ViewDragHelper {
      */
     private float clampMag(float value, float absMin, float absMax) {
         final float absValue = Math.abs(value);
-        if (absValue < absMin) return 0;
-        if (absValue > absMax) return value > 0 ? absMax : -absMax;
+        if (absValue < absMin) {
+            return 0;
+        }
+        if (absValue > absMax) {
+            return value > 0 ? absMax : -absMax;
+        }
         return value;
     }
 
@@ -1049,7 +1057,9 @@ public class ViewDragHelper {
             }
 
             case MotionEvent.ACTION_MOVE: {
-                if (mInitialMotionX == null || mInitialMotionY == null) break;
+                if (mInitialMotionX == null || mInitialMotionY == null) {
+                    break;
+                }
 
                 // First to cross a touch slop over a draggable view wins. Also report edge drags.
                 final int pointerCount = ev.getPointerCount();
@@ -1057,7 +1067,9 @@ public class ViewDragHelper {
                     final int pointerId = ev.getPointerId(i);
 
                     // If pointer is invalid then skip the ACTION_MOVE.
-                    if (!isValidPointerForActionMove(pointerId)) continue;
+                    if (!isValidPointerForActionMove(pointerId)) {
+                        continue;
+                    }
 
                     final float x = ev.getX(i);
                     final float y = ev.getY(i);
@@ -1190,7 +1202,9 @@ public class ViewDragHelper {
             case MotionEvent.ACTION_MOVE: {
                 if (mDragState == STATE_DRAGGING) {
                     // If pointer is invalid then skip the ACTION_MOVE.
-                    if (!isValidPointerForActionMove(mActivePointerId)) break;
+                    if (!isValidPointerForActionMove(mActivePointerId)) {
+                        break;
+                    }
 
                     final int index = ev.findPointerIndex(mActivePointerId);
                     final float x = ev.getX(index);
@@ -1208,7 +1222,9 @@ public class ViewDragHelper {
                         final int pointerId = ev.getPointerId(i);
 
                         // If pointer is invalid then skip the ACTION_MOVE.
-                        if (!isValidPointerForActionMove(pointerId)) continue;
+                        if (!isValidPointerForActionMove(pointerId)) {
+                            continue;
+                        }
 
                         final float x = ev.getX(i);
                         final float y = ev.getY(i);
@@ -1528,10 +1544,18 @@ public class ViewDragHelper {
     private int getEdgesTouched(int x, int y) {
         int result = 0;
 
-        if (x < mParentView.getLeft() + mEdgeSize) result |= EDGE_LEFT;
-        if (y < mParentView.getTop() + mEdgeSize) result |= EDGE_TOP;
-        if (x > mParentView.getRight() - mEdgeSize) result |= EDGE_RIGHT;
-        if (y > mParentView.getBottom() - mEdgeSize) result |= EDGE_BOTTOM;
+        if (x < mParentView.getLeft() + mEdgeSize) {
+            result |= EDGE_LEFT;
+        }
+        if (y < mParentView.getTop() + mEdgeSize) {
+            result |= EDGE_TOP;
+        }
+        if (x > mParentView.getRight() - mEdgeSize) {
+            result |= EDGE_RIGHT;
+        }
+        if (y > mParentView.getBottom() - mEdgeSize) {
+            result |= EDGE_BOTTOM;
+        }
 
         return result;
     }
