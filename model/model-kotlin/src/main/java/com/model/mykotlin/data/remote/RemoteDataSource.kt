@@ -1,16 +1,20 @@
 package com.model.mykotlin.data.remote
 
 import android.content.Context
+import android.util.Log
 import com.library.base.application.BaseApplication
 import com.library.common.netconfig.tools.download.FileDownloadBean
-import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
 import com.library.common.netconfig.tools.download.FileDownloadProducer
+import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
 import com.model.mykotlin.data.entity.WanAndroidArticleListResponseEntity
 import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.config.HttpRequestConfig
 import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 import com.yupfeg.remote.tools.handler.RestApiException
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newFixedThreadPoolContext
 import java.io.File
 
 /**
@@ -63,7 +67,9 @@ object RemoteDataSource {
     @OptIn(DelicateCoroutinesApi::class)
     fun download(context: Context, fileDownloadBean: FileDownloadBean) {
         mApkDownloadProducer.jobList.add(MainScope().launch {
+            Log.d(FileDownloadProducer.TAG, "开始设置文件路径")
             mApkDownloadProducer.filePath = getApkDownloadFilePath()
+            Log.d(FileDownloadProducer.TAG, "位置:" + mApkDownloadProducer.filePath)
             mApkDownloadProducer.load(
                 context, fileDownloadBean, newFixedThreadPoolContext(1, "DownloadContext")
             )
@@ -72,6 +78,7 @@ object RemoteDataSource {
 
     private fun createApkDownloadHttpRequestConfig(): HttpRequestConfig {
         return HttpRequestConfig().apply {
+            baseUrl = "http://baidu.com"
             connectTimeout = 15
             readTimeout = 15
             writeTimeout = 20

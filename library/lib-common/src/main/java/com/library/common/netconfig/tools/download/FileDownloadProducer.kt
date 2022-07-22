@@ -47,6 +47,7 @@ class FileDownloadProducer(
     /*一、添加网络请求的工厂*/
     init {
         HttpRequestMediator.addDefaultHttpClientFactory(requestTag) {
+            baseUrl = requestConfig.baseUrl
             connectTimeout = requestConfig.connectTimeout
             readTimeout = requestConfig.readTimeout
             writeTimeout = requestConfig.writeTimeout
@@ -66,7 +67,6 @@ class FileDownloadProducer(
         ) { progressBean ->
             //此时处于子线程，不能直接回调执行UI操作
             Log.e(TAG, "progressBean:" + progressBean.progress)
-//            sendDownloadProgressChange(progressBean)
         }
     }
 

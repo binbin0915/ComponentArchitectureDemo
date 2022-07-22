@@ -19,9 +19,9 @@ abstract class BaseFileDownloadProducer {
 
     /**
      * 保存网络返回body内容到本地路径文件
-     * @param fileUrl 文件下载路径url,作为文件唯一表示符
      * @param fileBody 网络返回body
      * @param filePath 文件本地保存路径
+     * @param listener 下载监听
      * */
     @Throws(IOException::class)
     protected open suspend fun writeResponseBodyToDiskFile(
