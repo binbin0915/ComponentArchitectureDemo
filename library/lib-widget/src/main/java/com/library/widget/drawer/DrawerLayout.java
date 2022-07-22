@@ -1466,10 +1466,14 @@ public class DrawerLayout extends ViewGroup implements Openable {
 
                 if (checkDrawerViewAbsoluteGravity(v, Gravity.LEFT)) {
                     final int vright = v.getRight();
-                    if (vright > clipLeft) clipLeft = vright;
+                    if (vright > clipLeft) {
+                        clipLeft = vright;
+                    }
                 } else {
                     final int vleft = v.getLeft();
-                    if (vleft < clipRight) clipRight = vleft;
+                    if (vleft < clipRight) {
+                        clipRight = vleft;
+                    }
                 }
             }
             canvas.clipRect(clipLeft, 0, clipRight, getHeight());
