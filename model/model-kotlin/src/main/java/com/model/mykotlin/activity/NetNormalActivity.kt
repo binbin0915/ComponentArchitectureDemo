@@ -3,13 +3,14 @@ package com.model.mykotlin.activity
 import android.os.Bundle
 import android.util.Log
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.library.base.application.BaseApplication
 import com.library.base.view.activity.BaseActivity
-import com.library.common.netconfig.tools.download.FileDownloadBean
 import com.library.common.netconfig.tools.download.FileDownloadProducer
 import com.library.router.RouterPath
 import com.model.mykotlin.data.remote.RemoteDataSource
 import com.model.mykotlin.databinding.MykotlinActivityNetNormalBinding
 import com.model.mykotlin.viewmodel.NetNormalViewModel
+import java.io.File
 
 @Route(path = RouterPath.PAGE_NET_NORMAL_ACTIVITY, group = RouterPath.GROUP_KOTLIN)
 class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNormalBinding>() {
@@ -20,7 +21,8 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
             Log.d(FileDownloadProducer.TAG, "点击下载按钮")
             RemoteDataSource.download(
                 context = applicationContext,
-                fileDownloadBean = FileDownloadBean("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk")
+                downloadUrl = "https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk",
+                savePath = getApkDownloadFilePath()
             )
         }
         /*协程请求接口*/
@@ -32,6 +34,13 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
             viewBinding.tvNormalUseResultContent.text = jsonString
         }
 
+    }
+
+    private val testDownloadApkName = "testDownload.apk"
+    private fun getApkDownloadFilePath(): String {
+        val appFileDirPath = BaseApplication.instance.applicationContext.filesDir.absolutePath
+        val apkDirPath = appFileDirPath + File.separator + ".apk"
+        return "$apkDirPath$testDownloadApkName"
     }
 
     override fun initData() {

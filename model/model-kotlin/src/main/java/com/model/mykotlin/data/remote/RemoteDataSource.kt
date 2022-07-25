@@ -1,8 +1,6 @@
 package com.model.mykotlin.data.remote
 
 import android.content.Context
-import android.util.Log
-import com.library.base.application.BaseApplication
 import com.library.common.netconfig.tools.download.FileDownloadBean
 import com.library.common.netconfig.tools.download.FileDownloadProducer
 import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
@@ -15,7 +13,6 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newFixedThreadPoolContext
-import java.io.File
 
 /**
  * 远程网络数据源
@@ -51,11 +48,6 @@ object RemoteDataSource {
     }
 
 
-    /**
-     * 下载的配置
-     */
-
-    private const val TEST_DOWNLOAD_APK_NAME = "testDownload.apk"
 
     private val mApkDownloadProducer: FileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         FileDownloadProducer(
@@ -65,13 +57,13 @@ object RemoteDataSource {
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun download(context: Context, fileDownloadBean: FileDownloadBean) {
+    fun download(context: Context, downloadUrl: String, savePath: String) {
         mApkDownloadProducer.jobList.add(MainScope().launch {
-            Log.d(FileDownloadProducer.TAG, "开始设置文件路径")
-            mApkDownloadProducer.filePath = getApkDownloadFilePath()
-            Log.d(FileDownloadProducer.TAG, "位置:" + mApkDownloadProducer.filePath)
+            mApkDownloadProducer.filePath = savePath
             mApkDownloadProducer.load(
-                context, fileDownloadBean, newFixedThreadPoolContext(1, "DownloadContext")
+                context,
+                FileDownloadBean(downloadUrl),
+                newFixedThreadPoolContext(1, "DownloadContext")
             )
         })
     }
@@ -85,11 +77,5 @@ object RemoteDataSource {
             isAllowProxy = true
 //            callAdapterFactories.add()
         }
-    }
-
-    private fun getApkDownloadFilePath(): String {
-        val appFileDirPath = BaseApplication.instance.applicationContext.filesDir.absolutePath
-        val apkDirPath = appFileDirPath + File.separator + ".apk"
-        return "$apkDirPath$TEST_DOWNLOAD_APK_NAME"
     }
 }
