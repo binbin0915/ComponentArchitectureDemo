@@ -2,6 +2,7 @@ package com.library.common.commonutils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.library.base.application.BaseApplication
 
 /**
  * SharedPreferences工具类
@@ -35,8 +36,8 @@ class SPUtils {
          * @param key
          * @param any
          */
-        fun putApply(context: Context, key: String, any: Any) {
-            val sp = context.getSharedPreferences(
+        fun putApply(key: String, any: Any) {
+            val sp = BaseApplication.appContext.getSharedPreferences(
                 FILE_NAME, MODE
             )
             val editor = sp.edit()
@@ -51,8 +52,8 @@ class SPUtils {
          * @param any
          * @return
          */
-        fun putCommit(context: Context, key: String, any: Any): Boolean {
-            val sp = context.getSharedPreferences(
+        fun putCommit(key: String, any: Any): Boolean {
+            val sp = BaseApplication.appContext.getSharedPreferences(
                 FILE_NAME, MODE
             )
             val editor = sp.edit()
@@ -104,8 +105,8 @@ class SPUtils {
          * @param defaultAny
          * @return
          */
-        operator fun get(context: Context, key: String?, defaultAny: Any?): Any? {
-            val sp = context.getSharedPreferences(
+        operator fun get(key: String?, defaultAny: Any?): Any? {
+            val sp = BaseApplication.appContext.getSharedPreferences(
                 FILE_NAME, MODE
             )
             return when (defaultAny) {
@@ -137,8 +138,8 @@ class SPUtils {
          * @param context
          * @param key
          */
-        fun remove(context: Context, key: String?) {
-            val sp = context.getSharedPreferences(
+        fun remove(key: String?) {
+            val sp = BaseApplication.appContext.getSharedPreferences(
                 FILE_NAME, MODE
             )
             val editor = sp.edit()
@@ -167,8 +168,8 @@ class SPUtils {
          * @param key
          * @return
          */
-        fun contains(context: Context, key: String?): Boolean {
-            val sp = context.getSharedPreferences(
+        fun contains(key: String?): Boolean {
+            val sp = BaseApplication.appContext.getSharedPreferences(
                 FILE_NAME, MODE
             )
             return sp.contains(key)
@@ -186,10 +187,5 @@ class SPUtils {
             )
             return sp.all
         }
-    }
-
-    init {
-        /* cannot be instantiated */
-        throw UnsupportedOperationException("cannot be instantiated")
     }
 }

@@ -1,9 +1,7 @@
 package com.wangkai.myapplication
 
 import ando.file.core.FileOperator
-import android.content.Context
 import com.drake.statelayout.StateConfig
-import com.efs.sdk.launch.LaunchManager
 import com.library.base.application.BaseApplication
 import com.library.common.netconfig.GlobalResponseHandler
 import com.scwang.smart.refresh.footer.ClassicsFooter
@@ -23,17 +21,6 @@ import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
  * @author：WangKai
  */
 class MainApplication : BaseApplication() {
-
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
-        LaunchManager.onTraceApp(this, LaunchManager.APP_ATTACH_BASE_CONTEXT, true)
-        LaunchManager.onTraceApp(this, LaunchManager.APP_ATTACH_BASE_CONTEXT, false);
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        LaunchManager.onTraceApp(this, LaunchManager.APP_ON_CREATE, false);
-    }
 
     override fun appInit() {
         /*文件系统初始化*/

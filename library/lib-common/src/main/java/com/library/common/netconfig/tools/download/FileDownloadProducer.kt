@@ -1,13 +1,13 @@
 package com.library.common.netconfig.tools.download
 
 /*coroutines*/
-import android.content.Context
 import android.util.Log
 import com.library.common.commonutils.SPUtils
 import com.library.common.netconfig.LoggerHttpLogPrinterImpl
 import com.library.common.netconfig.constant.AppConstant
 import com.library.common.netconfig.tools.remote.DownloadApiService
 import com.yupfeg.remote.HttpRequestMediator
+import com.yupfeg.remote.HttpRequestMediator.createRequestApi
 import com.yupfeg.remote.config.HttpRequestConfig
 import com.yupfeg.remote.download.BaseFileDownloadProducer
 import com.yupfeg.remote.download.DownloadListener
@@ -44,7 +44,9 @@ class FileDownloadProducer(
     /*协程job集合*/
     var jobList: MutableList<Job> = mutableListOf()
 
-    /*一、添加网络请求的工厂*/
+    /**
+     * 一、添加网络请求的工厂
+     */
     init {
         HttpRequestMediator.addDefaultHttpClientFactory(requestTag) {
             baseUrl = requestConfig.baseUrl
@@ -53,11 +55,7 @@ class FileDownloadProducer(
             writeTimeout = requestConfig.writeTimeout
             isAllowProxy = requestConfig.isAllowProxy
             applicationInterceptors = requestConfig.applicationInterceptors
-            networkInterceptors = mutableListOf<Interceptor>().apply {
-                addAll(requestConfig.networkInterceptors)
-                //添加下载进度监听的拦截器，用于日志打印
-                add(createDownloadInterceptor(LoggerHttpLogPrinterImpl()))
-            }
+            networkInterceptors.add(createDownloadInterceptor(LoggerHttpLogPrinterImpl()))
         }
     }
 
@@ -71,10 +69,10 @@ class FileDownloadProducer(
     }
 
     /**
-     * 二、从工厂中获取下载的Retrofit实例创建
+     * 二、直接调用[createRequestApi]创建请求api对象
      */
     private val mDownloadApiService: DownloadApiService by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
-        HttpRequestMediator.createRequestApi(
+        createRequestApi(
             requestTag, DownloadApiService::class.java
         )
     }
@@ -95,7 +93,6 @@ class FileDownloadProducer(
     suspend fun <T> Flow<T>.next(bloc: suspend T.(T) -> Unit): Unit = collect { bloc(it, it) }
 
     suspend fun load(
-        context: Context,
         fileDownloadBean: FileDownloadBean,
         coroutine: CoroutineContext
     ) {
@@ -136,9 +133,9 @@ class FileDownloadProducer(
 
                 override fun onStartDownload() {
                     filePointerLength =
-                        SPUtils[context, AppConstant.FILE_POINTER + fileDownloadBean.url, 0L] as Long
+                        SPUtils[AppConstant.FILE_POINTER + fileDownloadBean.url, 0L] as Long
                     mFileTotalSize =
-                        SPUtils[context, AppConstant.FILE_TOTAL + fileDownloadBean.url, 0L] as Long
+                        SPUtils[AppConstant.FILE_TOTAL + fileDownloadBean.url, 0L] as Long
                 }
 
                 override fun onProgress(progress: Int, totalLength: Long) {
@@ -153,7 +150,7 @@ class FileDownloadProducer(
                     fileDownloadBean.isResume = false
                     Log.d(TAG, "完成下载")
                     listenerMap.remove(fileDownloadBean.url)
-                    remove(context, fileDownloadBean.url)
+                    remove(fileDownloadBean.url)
                 }
 
                 override fun onFail(errorInfo: String?) {
@@ -161,7 +158,7 @@ class FileDownloadProducer(
                     //暂时全部取消,根据具体需求更改
                     cancel()
                     Log.d(TAG, "下载失败:$errorInfo")
-                    remove(context, fileDownloadBean.url)
+                    SPUtils.remove(fileDownloadBean.url)
                 }
 
                 override fun onKeepOn() {
@@ -169,13 +166,11 @@ class FileDownloadProducer(
                 }
 
                 override fun onPause(path: String) {
-                    save(
-                        context, fileDownloadBean.url, path, indexProgress, total, filePointerLength
-                    )
+                    save(fileDownloadBean.url, path, indexProgress, total, filePointerLength)
                 }
 
                 override fun onCancel(path: String) {
-                    remove(context, fileDownloadBean.url)
+                    remove(fileDownloadBean.url)
                     File(path).delete()
                 }
             }
@@ -208,19 +203,17 @@ class FileDownloadProducer(
     }
 
 
-    fun save(
-        context: Context, url: String, path: String, progress: Int, total: Long, filePointer: Long
-    ) {
-        SPUtils.putApply(context, AppConstant.FILE_PATH + url, path)
-        SPUtils.putApply(context, AppConstant.FILE_PROGRESS + url, progress)
-        SPUtils.putApply(context, AppConstant.FILE_TOTAL + url, total)
-        SPUtils.putApply(context, AppConstant.FILE_POINTER + url, filePointer)
+    fun save(url: String, path: String, progress: Int, total: Long, filePointer: Long) {
+        SPUtils.putApply(AppConstant.FILE_PATH + url, path)
+        SPUtils.putApply(AppConstant.FILE_PROGRESS + url, progress)
+        SPUtils.putApply(AppConstant.FILE_TOTAL + url, total)
+        SPUtils.putApply(AppConstant.FILE_POINTER + url, filePointer)
     }
 
-    fun remove(context: Context, url: String) {
-        SPUtils.remove(context, AppConstant.FILE_PATH + url)
-        SPUtils.remove(context, AppConstant.FILE_PROGRESS + url)
-        SPUtils.remove(context, AppConstant.FILE_TOTAL + url)
-        SPUtils.remove(context, AppConstant.FILE_POINTER + url)
+    fun remove(url: String) {
+        SPUtils.remove(AppConstant.FILE_PATH + url)
+        SPUtils.remove(AppConstant.FILE_PROGRESS + url)
+        SPUtils.remove(AppConstant.FILE_TOTAL + url)
+        SPUtils.remove(AppConstant.FILE_POINTER + url)
     }
 }

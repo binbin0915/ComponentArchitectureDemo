@@ -1,6 +1,6 @@
 package com.model.mykotlin.data.remote
 
-import android.content.Context
+import android.util.Log
 import com.library.common.netconfig.tools.download.FileDownloadBean
 import com.library.common.netconfig.tools.download.FileDownloadProducer
 import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
@@ -9,8 +9,8 @@ import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.config.HttpRequestConfig
 import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 import com.yupfeg.remote.tools.handler.RestApiException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newFixedThreadPoolContext
 
@@ -57,11 +57,11 @@ object RemoteDataSource {
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun download(context: Context, downloadUrl: String, savePath: String) {
-        mApkDownloadProducer.jobList.add(MainScope().launch {
+    fun download(downloadUrl: String, savePath: String,coroutineScope: CoroutineScope) {
+        Log.d("AAAAAAAAAAXXXXXSW", "savePath:$savePath")
+        mApkDownloadProducer.jobList.add(coroutineScope.launch {
             mApkDownloadProducer.filePath = savePath
             mApkDownloadProducer.load(
-                context,
                 FileDownloadBean(downloadUrl),
                 newFixedThreadPoolContext(1, "DownloadContext")
             )
