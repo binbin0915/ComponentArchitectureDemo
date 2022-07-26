@@ -38,7 +38,6 @@ class FileDownloadProducer(
     }
 
     /*下载路径*/
-    var filePath = ""
     var listenerMap: MutableMap<String, DownloadListener> = mutableMapOf()
 
     /*协程job集合*/
@@ -49,7 +48,7 @@ class FileDownloadProducer(
      */
     init {
         HttpRequestMediator.addDefaultHttpClientFactory(requestTag) {
-            baseUrl = requestConfig.baseUrl
+            baseUrl = "http://baidu.com"
             connectTimeout = requestConfig.connectTimeout
             readTimeout = requestConfig.readTimeout
             writeTimeout = requestConfig.writeTimeout
@@ -94,6 +93,7 @@ class FileDownloadProducer(
 
     suspend fun load(
         fileDownloadBean: FileDownloadBean,
+        savePath: String,
         coroutine: CoroutineContext
     ) {
         withContext(coroutine) {
@@ -183,7 +183,7 @@ class FileDownloadProducer(
 
             }.next { responseBody ->
                 writeResponseBodyToDiskFile(
-                    fileBody = responseBody, filePath = filePath, listener = listener
+                    fileBody = responseBody, filePath = savePath, listener = listener
                 )
             }
         }

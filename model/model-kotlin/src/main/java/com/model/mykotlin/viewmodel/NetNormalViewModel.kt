@@ -29,15 +29,15 @@ class NetNormalViewModel : BaseViewModel() {
 
 
     fun downLoad(appFileDirPath: String) {
-        val apkDirPath = appFileDirPath + File.separator + ".apk"
+        val apkDirPath = appFileDirPath + File.separator
         val urlArrayList: ArrayList<String> = ArrayList()
+        urlArrayList.add("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk")
         urlArrayList.add("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk")
         for (item in urlArrayList.indices) {
             val testDownloadApkName = "testDownload_$item.apk"
             RemoteDataSource.download(
                 downloadUrl = urlArrayList[item],
                 savePath = apkDirPath + testDownloadApkName,
-                coroutineScope = viewModelScope
             )
         }
     }

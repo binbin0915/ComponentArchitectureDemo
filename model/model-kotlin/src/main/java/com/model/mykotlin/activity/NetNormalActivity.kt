@@ -1,5 +1,6 @@
 package com.model.mykotlin.activity
 
+import ando.file.core.FileDirectory
 import android.os.Bundle
 import android.util.Log
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -17,7 +18,9 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
         /*下载文件*/
         viewBinding.btnNormalUseDownload.setOnClickListener {
             Log.d(FileDownloadProducer.TAG, "点击下载按钮")
-            viewModel.downLoad(BaseApplication.instance.applicationContext.filesDir.absolutePath)
+
+            FileDirectory.getExternalFilesDirDOWNLOADS()
+                ?.let { it1 -> viewModel.downLoad(it1.path) }
         }
         /*协程请求接口*/
         viewBinding.btnNormalUseCoroutine.setOnClickListener {

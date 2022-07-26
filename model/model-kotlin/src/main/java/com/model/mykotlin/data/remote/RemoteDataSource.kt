@@ -9,10 +9,7 @@ import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.config.HttpRequestConfig
 import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 import com.yupfeg.remote.tools.handler.RestApiException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newFixedThreadPoolContext
+import kotlinx.coroutines.*
 
 /**
  * 远程网络数据源
@@ -27,7 +24,7 @@ import kotlinx.coroutines.newFixedThreadPoolContext
 object RemoteDataSource {
 
     /**
-     * wanAndroid的网络请求retrofit api接口的委托
+     * 网络请求retrofit api接口的委托
      * * 通过by关键字委托创建api接口实例
      * */
     private val mApiService: TestApiService by wanAndroidApiDelegate()
@@ -48,7 +45,6 @@ object RemoteDataSource {
     }
 
 
-
     private val mApkDownloadProducer: FileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         FileDownloadProducer(
             requestTag = HttpRequestMediator.DEFAULT_DOWNLOAD_CLIENT_KEY,
@@ -57,12 +53,11 @@ object RemoteDataSource {
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun download(downloadUrl: String, savePath: String,coroutineScope: CoroutineScope) {
-        Log.d("AAAAAAAAAAXXXXXSW", "savePath:$savePath")
-        mApkDownloadProducer.jobList.add(coroutineScope.launch {
-            mApkDownloadProducer.filePath = savePath
+    fun download(downloadUrl: String, savePath: String) {
+        mApkDownloadProducer.jobList.add(GlobalScope.launch {
             mApkDownloadProducer.load(
                 FileDownloadBean(downloadUrl),
+                savePath,
                 newFixedThreadPoolContext(1, "DownloadContext")
             )
         })
@@ -70,12 +65,10 @@ object RemoteDataSource {
 
     private fun createApkDownloadHttpRequestConfig(): HttpRequestConfig {
         return HttpRequestConfig().apply {
-            baseUrl = "http://baidu.com"
             connectTimeout = 15
             readTimeout = 15
             writeTimeout = 20
             isAllowProxy = true
-//            callAdapterFactories.add()
         }
     }
 }
