@@ -1,7 +1,6 @@
 package com.model.mykotlin.data.remote
 
-import android.util.Log
-import com.library.common.netconfig.tools.download.FileDownloadBean
+import com.yupfeg.remote.download.entity.FileDownloadBean
 import com.library.common.netconfig.tools.download.FileDownloadProducer
 import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
 import com.model.mykotlin.data.entity.WanAndroidArticleListResponseEntity
@@ -9,7 +8,10 @@ import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.config.HttpRequestConfig
 import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 import com.yupfeg.remote.tools.handler.RestApiException
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newFixedThreadPoolContext
 
 /**
  * 远程网络数据源
@@ -56,12 +58,12 @@ object RemoteDataSource {
      * 下载的方法
      */
     @OptIn(DelicateCoroutinesApi::class)
-    fun download(downloadUrl: String, savePath: String) {
+    fun download(item: Int, downloadUrl: String, savePath: String) {
         downloadProducer.jobList.add(GlobalScope.launch {
             downloadProducer.load(
-                FileDownloadBean(downloadUrl),
+                FileDownloadBean(item, downloadUrl),
                 savePath,
-                newFixedThreadPoolContext(1, "DownloadContext")
+                newFixedThreadPoolContext(3, "DownloadContext")
             )
         })
     }

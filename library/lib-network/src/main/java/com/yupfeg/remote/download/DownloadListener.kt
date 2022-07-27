@@ -24,16 +24,16 @@ interface DownloadListener {
     /**
      * 用于恢复下载的起始位置
      */
-    var filePointer:Long
+    var filePointer: Long
 
     /**
      * 用于恢复下载的文件总长度
      */
-    var fileTotalSize:Long
+    var fileTotalSize: Long
 
     fun onStartDownload()
 
-    fun onProgress(progress: Int,totalLength: Long)
+    fun onProgress(progress: Int, totalLength: Long)
 
     fun onFinishDownload()
 

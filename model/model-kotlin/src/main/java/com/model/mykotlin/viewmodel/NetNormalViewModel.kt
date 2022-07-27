@@ -37,6 +37,7 @@ class NetNormalViewModel : BaseViewModel() {
             /*文件名*/
             val downloadFileName = appFileDirPath + File.separator + "testDownload_$item.apk"
             RemoteDataSource.download(
+                item = item,
                 downloadUrl = urlArrayList[item],
                 savePath = downloadFileName,
             )

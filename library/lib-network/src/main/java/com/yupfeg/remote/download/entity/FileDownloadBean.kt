@@ -1,9 +1,10 @@
-package com.library.common.netconfig.tools.download
+package com.yupfeg.remote.download.entity
 
 /**
  * 创建bean用于下载文件
  */
 data class FileDownloadBean(
+    val item: Int,
     /**
      * 文件下载链接
      */

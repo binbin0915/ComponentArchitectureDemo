@@ -3,7 +3,6 @@ package com.library.common.netconfig.tools.download
 /*coroutines*/
 import android.util.Log
 import com.library.common.commonutils.SPUtils
-import com.library.common.netconfig.LoggerHttpLogPrinterImpl
 import com.library.common.netconfig.constant.AppConstant
 import com.library.common.netconfig.tools.remote.DownloadApiService
 import com.yupfeg.remote.HttpRequestMediator
@@ -11,11 +10,9 @@ import com.yupfeg.remote.HttpRequestMediator.createRequestApi
 import com.yupfeg.remote.config.HttpRequestConfig
 import com.yupfeg.remote.download.BaseFileDownloadProducer
 import com.yupfeg.remote.download.DownloadListener
-import com.yupfeg.remote.interceptor.DownloadProgressInterceptor
-import com.yupfeg.remote.log.HttpLogPrinter
+import com.yupfeg.remote.download.entity.FileDownloadBean
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import okhttp3.Interceptor
 import okhttp3.ResponseBody
 import java.io.File
 import kotlin.coroutines.CoroutineContext
@@ -37,7 +34,7 @@ class FileDownloadProducer(
         const val TAG = "FILE_DOWNLOAD_TAG"
     }
 
-    /*下载路径*/
+    /*监听的集合*/
     var listenerMap: MutableMap<String, DownloadListener> = mutableMapOf()
 
     /*协程job集合*/
@@ -54,16 +51,6 @@ class FileDownloadProducer(
             writeTimeout = requestConfig.writeTimeout
             isAllowProxy = requestConfig.isAllowProxy
             applicationInterceptors = requestConfig.applicationInterceptors
-            networkInterceptors.add(createDownloadInterceptor(LoggerHttpLogPrinterImpl()))
-        }
-    }
-
-    private fun createDownloadInterceptor(logPrinter: HttpLogPrinter? = null): Interceptor {
-        return DownloadProgressInterceptor(
-            logPrinter = logPrinter,
-        ) { progressBean ->
-            //此时处于子线程，不能直接回调执行UI操作
-            Log.e(TAG, "progressBean:" + progressBean.progress)
         }
     }
 
@@ -81,7 +68,10 @@ class FileDownloadProducer(
     /**
      * 开始下载方法
      */
-    private fun downloadFile(fileUrl: String, listener: DownloadListener): Flow<ResponseBody> =
+    private fun downloadFile(
+        fileUrl: String,
+        listener: DownloadListener
+    ): Flow<ResponseBody> =
         flow {
             delay(500)
             listener.onStartDownload()
@@ -142,7 +132,7 @@ class FileDownloadProducer(
                     fileDownloadBean.progress = progress
                     indexProgress = progress
                     total = totalLength
-                    Log.d(TAG, "progress:$progress")
+                    Log.d(TAG, "item:" + fileDownloadBean.item + "  progress:$progress")
                 }
 
                 override fun onFinishDownload() {
@@ -154,7 +144,6 @@ class FileDownloadProducer(
                 }
 
                 override fun onFail(errorInfo: String?) {
-                    Log.e(TAG, errorInfo.toString())
                     //暂时全部取消,根据具体需求更改
                     cancel()
                     Log.d(TAG, "下载失败:$errorInfo")
@@ -174,7 +163,6 @@ class FileDownloadProducer(
                     File(path).delete()
                 }
             }
-            Log.d(TAG, "listener = $listener")
             listenerMap[fileDownloadBean.url] = listener
             val flow = downloadFile(fileDownloadBean.url, listener)
             flow.flowOn(Dispatchers.IO).cancellable().map {
@@ -183,7 +171,9 @@ class FileDownloadProducer(
 
             }.next { responseBody ->
                 writeResponseBodyToDiskFile(
-                    fileBody = responseBody, filePath = savePath, listener = listener
+                    responseBody = responseBody,
+                    filePath = savePath,
+                    listener = listener
                 )
             }
         }

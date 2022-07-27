@@ -1,6 +1,5 @@
 package com.yupfeg.remote.download
 
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -20,13 +19,13 @@ abstract class BaseFileDownloadProducer {
 
     /**
      * 保存网络返回body内容到本地路径文件
-     * @param fileBody 网络返回body
+     * @param responseBody 网络返回body
      * @param filePath 文件本地保存路径
      * @param listener 下载监听
      * */
     @Throws(IOException::class)
     protected open suspend fun writeResponseBodyToDiskFile(
-        fileBody: ResponseBody,
+        responseBody: ResponseBody,
         filePath: String,
         listener: DownloadListener? = null
     ) {
@@ -35,7 +34,7 @@ abstract class BaseFileDownloadProducer {
         if (downloadFile.exists()) {
             downloadFile.delete()
         }
-        val inputStream = fileBody.byteStream()
+        val inputStream = responseBody.byteStream()
         var fos: FileOutputStream? = null
         try {
             withContext(Dispatchers.IO) {
@@ -67,6 +66,10 @@ abstract class BaseFileDownloadProducer {
                     while (isPause) {
                         delay(100)
                     }
+                    onProgress(
+                        progress = (filePointer).toInt(),
+                        totalLength = responseBody.contentLength()
+                    )
                 }
 
             } while (true)
