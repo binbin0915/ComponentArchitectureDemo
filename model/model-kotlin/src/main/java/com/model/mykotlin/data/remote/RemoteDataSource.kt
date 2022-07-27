@@ -45,17 +45,20 @@ object RemoteDataSource {
     }
 
 
-    private val mApkDownloadProducer: FileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+    private val downloadProducer: FileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         FileDownloadProducer(
             requestTag = HttpRequestMediator.DEFAULT_DOWNLOAD_CLIENT_KEY,
-            requestConfig = createApkDownloadHttpRequestConfig()
+            requestConfig = createDownloadHttpRequestConfig()
         )
     }
 
+    /**
+     * 下载的方法
+     */
     @OptIn(DelicateCoroutinesApi::class)
     fun download(downloadUrl: String, savePath: String) {
-        mApkDownloadProducer.jobList.add(GlobalScope.launch {
-            mApkDownloadProducer.load(
+        downloadProducer.jobList.add(GlobalScope.launch {
+            downloadProducer.load(
                 FileDownloadBean(downloadUrl),
                 savePath,
                 newFixedThreadPoolContext(1, "DownloadContext")
@@ -63,7 +66,17 @@ object RemoteDataSource {
         })
     }
 
-    private fun createApkDownloadHttpRequestConfig(): HttpRequestConfig {
+    /**
+     * 取消下载的方法
+     */
+    fun cancel() {
+        downloadProducer.cancel()
+    }
+
+    /**
+     * 下载的配置
+     */
+    private fun createDownloadHttpRequestConfig(): HttpRequestConfig {
         return HttpRequestConfig().apply {
             connectTimeout = 15
             readTimeout = 15
