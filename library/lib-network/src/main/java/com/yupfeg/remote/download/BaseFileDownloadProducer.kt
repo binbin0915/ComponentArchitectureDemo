@@ -20,16 +20,14 @@ abstract class BaseFileDownloadProducer {
     /**
      * 保存网络返回body内容到本地路径文件
      * @param responseBody 网络返回body
-     * @param filePath 文件本地保存路径
      * @param listener 下载监听
      * */
     @Throws(IOException::class)
     protected open suspend fun writeResponseBodyToDiskFile(
         responseBody: ResponseBody,
-        filePath: String,
-        listener: DownloadListener? = null
+        listener: DownloadListener
     ) {
-        val downloadFile = File(filePath)
+        val downloadFile = File(listener.fileDownloadBean.savePath)
         /*文件存在的话，先删除*/
         if (downloadFile.exists()) {
             downloadFile.delete()
@@ -41,11 +39,22 @@ abstract class BaseFileDownloadProducer {
                 downloadFile.createNewFile()
             }
             val buffer = ByteArray(2048)
+
+            /**
+             * 已下载长度
+             */
             var len: Int
             fos = withContext(Dispatchers.IO) {
-                FileOutputStream(downloadFile, listener != null && listener.isResume)
+                //开始下载
+                listener.fileDownloadBean.downloadState = 0
+                listener.onStartDownload()
+                //获取要下载文件总长度
+                listener.fileDownloadBean.totalLength = responseBody.contentLength()
+                delay(500)
+                FileOutputStream(downloadFile, listener.fileDownloadBean.canSuspend)
             }
             do {
+                listener.fileDownloadBean.downloadState = 0
                 len = withContext(Dispatchers.IO) {
                     inputStream.read(buffer)
                 }
@@ -54,32 +63,35 @@ abstract class BaseFileDownloadProducer {
                 withContext(Dispatchers.IO) {
                     fos.write(buffer, 0, len)
                 }
-                listener?.run {
-                    filePointer += len
-                    if (isCancel) {
+                listener.run {
+                    fileDownloadBean.filePointer += len
+                    if (fileDownloadBean.downloadState == 5) {
                         onCancel(downloadFile.path)
                         return
                     }
-                    if (isPause) {
+                    if (fileDownloadBean.downloadState == 1) {
                         onPause(downloadFile.path)
                     }
-                    while (isPause) {
+                    while (fileDownloadBean.downloadState == 1) {
                         delay(100)
                     }
+                    fileDownloadBean.progress =
+                        100 - (fileDownloadBean.totalLength / fileDownloadBean.filePointer.toLong()).toInt()
                     onProgress(
-                        progress = (filePointer).toInt(),
-                        totalLength = responseBody.contentLength()
+                        progress = fileDownloadBean.progress
                     )
                 }
 
             } while (true)
-            listener?.onFinishDownload()
+            listener.fileDownloadBean.progress = 100
+            listener.fileDownloadBean.downloadState = 3
+            listener.onFinishDownload()
         } catch (e: IOException) {
-            e.printStackTrace()
-            listener?.onFail("IOException")
+            listener.fileDownloadBean.downloadState = 5
+            listener.onFail("IOException")
         } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-            listener?.onFail("FileNotFoundException")
+            listener.fileDownloadBean.downloadState = 5
+            listener.onFail("FileNotFoundException")
         } finally {
             withContext(Dispatchers.IO) {
                 fos?.flush()

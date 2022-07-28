@@ -1,11 +1,11 @@
 package com.model.mykotlin.data.remote
 
-import com.yupfeg.remote.download.entity.FileDownloadBean
 import com.library.common.netconfig.tools.download.FileDownloadProducer
 import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
 import com.model.mykotlin.data.entity.WanAndroidArticleListResponseEntity
 import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.config.HttpRequestConfig
+import com.yupfeg.remote.download.DownloadListener
 import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 import com.yupfeg.remote.tools.handler.RestApiException
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -32,21 +32,8 @@ object RemoteDataSource {
     private val mApiService: TestApiService by wanAndroidApiDelegate()
 
     /**
-     * 基于kotlin 协程获取wanAndroid的文章列表数据
-     * @param pageIndex 分页页数
-     * */
-    suspend fun queryWanAndroidArticleByCoroutine(pageIndex: Int): WanAndroidArticleListResponseEntity {
-        val result = mApiService.queryWanAndroidArticleByCoroutine(pageIndex)
-        val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(result)
-        if (!isSuccess) {
-            //业务执行异常
-            throw RestApiException(result.code, result.message)
-        }
-        //业务执行成功
-        return result
-    }
-
-
+     * 下载文件功能的数据源配置
+     */
     private val downloadProducer: FileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         FileDownloadProducer(
             requestTag = HttpRequestMediator.DEFAULT_DOWNLOAD_CLIENT_KEY,
@@ -55,14 +42,25 @@ object RemoteDataSource {
     }
 
     /**
+     * retrofit的配置
+     */
+    private fun createDownloadHttpRequestConfig(): HttpRequestConfig {
+        return HttpRequestConfig().apply {
+            connectTimeout = 15
+            readTimeout = 15
+            writeTimeout = 20
+            isAllowProxy = true
+        }
+    }
+
+    /**
      * 下载的方法
      */
     @OptIn(DelicateCoroutinesApi::class)
-    fun download(item: Int, downloadUrl: String, savePath: String) {
+    fun download(listener: DownloadListener) {
         downloadProducer.jobList.add(GlobalScope.launch {
             downloadProducer.load(
-                FileDownloadBean(item, downloadUrl),
-                savePath,
+                listener,
                 newFixedThreadPoolContext(3, "DownloadContext")
             )
         })
@@ -75,15 +73,19 @@ object RemoteDataSource {
         downloadProducer.cancel()
     }
 
+
     /**
-     * 下载的配置
-     */
-    private fun createDownloadHttpRequestConfig(): HttpRequestConfig {
-        return HttpRequestConfig().apply {
-            connectTimeout = 15
-            readTimeout = 15
-            writeTimeout = 20
-            isAllowProxy = true
+     * 基于kotlin 协程获取wanAndroid的文章列表数据
+     * @param pageIndex 分页页数
+     * */
+    suspend fun queryWanAndroidArticleByCoroutine(pageIndex: Int): WanAndroidArticleListResponseEntity {
+        val result = mApiService.queryWanAndroidArticleByCoroutine(pageIndex)
+        val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(result)
+        if (!isSuccess) {
+            //业务执行异常
+            throw RestApiException(result.code, result.message)
         }
+        //业务执行成功
+        return result
     }
 }

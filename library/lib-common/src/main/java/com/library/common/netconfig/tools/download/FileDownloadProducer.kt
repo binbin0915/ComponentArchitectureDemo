@@ -1,7 +1,6 @@
 package com.library.common.netconfig.tools.download
 
 /*coroutines*/
-import android.util.Log
 import com.library.common.commonutils.SPUtils
 import com.library.common.netconfig.constant.AppConstant
 import com.library.common.netconfig.tools.remote.DownloadApiService
@@ -10,11 +9,11 @@ import com.yupfeg.remote.HttpRequestMediator.createRequestApi
 import com.yupfeg.remote.config.HttpRequestConfig
 import com.yupfeg.remote.download.BaseFileDownloadProducer
 import com.yupfeg.remote.download.DownloadListener
-import com.yupfeg.remote.download.entity.FileDownloadBean
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
-import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -70,109 +69,41 @@ class FileDownloadProducer(
      */
     private fun downloadFile(
         fileUrl: String,
-        listener: DownloadListener
     ): Flow<ResponseBody> =
         flow {
-            delay(500)
-            listener.onStartDownload()
             val download = mDownloadApiService.download(fileUrl)
             emit(download)
         }
 
+    /**
+     * 给Flow拓展next方法
+     *
+     * Flow本身是一个接口，在这个接口里面定义了一个挂起函数collect函数，它接收的是一个FlowCollector对象。
+     * FlowCollector接口中有一个挂起函数emit。
+     *
+     * 通过collect函数来收集flow这些数据。但是因为collect是挂起函数。
+     * 挂起函数的调用又必须在另一个挂起函数或者协程作用域中。此时就需要我们使用协程来执行。
+     *
+     * bloc: suspend T.(T) -> Unit ：FlowCollector<ResponseBody>
+     * it指T，即ResponseBody
+     * bloc(it, it)：传入ResponseBody返回ResponseBody
+     */
     suspend fun <T> Flow<T>.next(bloc: suspend T.(T) -> Unit): Unit = collect { bloc(it, it) }
 
     suspend fun load(
-        fileDownloadBean: FileDownloadBean,
-        savePath: String,
+        listener: DownloadListener,
         coroutine: CoroutineContext
     ) {
         withContext(coroutine) {
-            val listener = object : DownloadListener {
-                var indexProgress = 0
-                var total = 0L
-                var isPauseState = false
-                var isCancelState = false
-                var isResumeState = fileDownloadBean.isResume
-                var filePointerLength = 0L
-                var mFileTotalSize = 0L
-                override var isPause: Boolean
-                    get() = isPauseState
-                    set(value) {
-                        isPauseState = value
-                    }
-                override var isCancel: Boolean
-                    get() = isCancelState
-                    set(value) {
-                        isCancelState = value
-                    }
-                override var isResume: Boolean
-                    get() = isResumeState
-                    set(value) {
-                        isResumeState = value
-                    }
-                override var filePointer: Long
-                    get() = filePointerLength
-                    set(value) {
-                        filePointerLength = value
-                    }
-                override var fileTotalSize: Long
-                    get() = mFileTotalSize
-                    set(value) {
-                        mFileTotalSize = value
-                    }
-
-                override fun onStartDownload() {
-                    filePointerLength =
-                        SPUtils[AppConstant.FILE_POINTER + fileDownloadBean.url, 0L] as Long
-                    mFileTotalSize =
-                        SPUtils[AppConstant.FILE_TOTAL + fileDownloadBean.url, 0L] as Long
-                }
-
-                override fun onProgress(progress: Int, totalLength: Long) {
-                    fileDownloadBean.progress = progress
-                    indexProgress = progress
-                    total = totalLength
-                    Log.d(TAG, "item:" + fileDownloadBean.item + "  progress:$progress")
-                }
-
-                override fun onFinishDownload() {
-                    fileDownloadBean.downloadState = 3
-                    fileDownloadBean.isResume = false
-                    Log.d(TAG, "完成下载")
-                    listenerMap.remove(fileDownloadBean.url)
-                    remove(fileDownloadBean.url)
-                }
-
-                override fun onFail(errorInfo: String?) {
-                    //暂时全部取消,根据具体需求更改
-                    cancel()
-                    Log.d(TAG, "下载失败:$errorInfo")
-                    SPUtils.remove(fileDownloadBean.url)
-                }
-
-                override fun onKeepOn() {
-                    isPauseState = false
-                }
-
-                override fun onPause(path: String) {
-                    save(fileDownloadBean.url, path, indexProgress, total, filePointerLength)
-                }
-
-                override fun onCancel(path: String) {
-                    remove(fileDownloadBean.url)
-                    File(path).delete()
-                }
-            }
-            listenerMap[fileDownloadBean.url] = listener
-            val flow = downloadFile(fileDownloadBean.url, listener)
+            listenerMap[listener.fileDownloadBean.url] = listener
+            val flow = downloadFile(listener.fileDownloadBean.url)
             flow.flowOn(Dispatchers.IO).cancellable().map {
                 it
             }.onCompletion {
 
-            }.next { responseBody ->
+            }.collect { responseBody ->
                 writeResponseBodyToDiskFile(
                     responseBody = responseBody,
-                    filePath = savePath,
                     listener = listener
                 )
             }
@@ -185,10 +116,6 @@ class FileDownloadProducer(
             job.cancel()
         }
         jobList.clear()
-
-        for (map in listenerMap) {
-            map.value.isCancel = true
-        }
         listenerMap.clear()
     }
 
