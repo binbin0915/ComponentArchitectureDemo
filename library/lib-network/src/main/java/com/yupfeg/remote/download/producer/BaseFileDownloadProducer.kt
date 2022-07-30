@@ -1,5 +1,6 @@
-package com.yupfeg.remote.download
+package com.yupfeg.remote.download.producer
 
+import com.yupfeg.remote.download.DownloadListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -76,7 +77,7 @@ abstract class BaseFileDownloadProducer {
                         delay(100)
                     }
                     val progress =
-                        100 - (fileDownloadBean.totalLength / fileDownloadBean.filePointer.toLong()).toInt()
+                        ((fileDownloadBean.filePointer.toFloat() / fileDownloadBean.totalLength.toFloat()) * 100).toInt()
                     if (progress != fileDownloadBean.progress) {
                         fileDownloadBean.progress = progress
                         onProgress(

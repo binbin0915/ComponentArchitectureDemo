@@ -4,10 +4,11 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.library.base.viewmodel.BaseViewModel
-import com.library.common.netconfig.tools.download.FileDownloadProducer
 import com.model.mykotlin.data.remote.RemoteDataSource
+import com.yupfeg.remote.download.DownLoadUtil
 import com.yupfeg.remote.download.DownloadListener
 import com.yupfeg.remote.download.entity.FileDownloadBean
+import com.yupfeg.remote.download.producer.FileDownloadProducer
 import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -40,11 +41,7 @@ class NetNormalViewModel : BaseViewModel() {
         urlArrayList.add("https://ceshiaidiandu.oss-cn-beijing.aliyuncs.com//storage/ceshi_uploads/androidapk/202108/beisuketang_202207200851.apk")
         for (item in urlArrayList.indices) {
             viewModelScope.launch {
-                /*文件名*/
                 val listener = object : DownloadListener {
-                    /**
-                     * 文件bean
-                     */
                     override var fileDownloadBean = FileDownloadBean(
                         item = item,
                         url = urlArrayList[item],
@@ -59,7 +56,7 @@ class NetNormalViewModel : BaseViewModel() {
                     override fun onStartDownload() {
                         Log.d(
                             FileDownloadProducer.TAG,
-                            "开始下载status:" + fileDownloadBean.downloadState
+                            "开始下载item:" + fileDownloadBean.item
                         )
                     }
 
@@ -74,7 +71,7 @@ class NetNormalViewModel : BaseViewModel() {
                     override fun onFinishDownload() {
                         Log.d(
                             FileDownloadProducer.TAG,
-                            "完成下载status:" + fileDownloadBean.downloadState
+                            "完成下载item:" + fileDownloadBean.item
                         )
                     }
 
@@ -95,10 +92,7 @@ class NetNormalViewModel : BaseViewModel() {
 
                     }
                 }
-
-                RemoteDataSource.download(
-                    listener = listener,
-                )
+                DownLoadUtil.download(listener)
             }
 
         }

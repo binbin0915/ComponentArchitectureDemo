@@ -1,13 +1,10 @@
-package com.library.common.netconfig.tools.download
+package com.yupfeg.remote.download.producer
 
 /*coroutines*/
-import com.library.common.commonutils.SPUtils
-import com.library.common.netconfig.constant.AppConstant
-import com.library.common.netconfig.tools.remote.DownloadApiService
 import com.yupfeg.remote.HttpRequestMediator
 import com.yupfeg.remote.HttpRequestMediator.createRequestApi
 import com.yupfeg.remote.config.HttpRequestConfig
-import com.yupfeg.remote.download.BaseFileDownloadProducer
+import com.yupfeg.remote.download.DownloadApiService
 import com.yupfeg.remote.download.DownloadListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -117,20 +114,5 @@ class FileDownloadProducer(
         }
         jobList.clear()
         listenerMap.clear()
-    }
-
-
-    fun save(url: String, path: String, progress: Int, total: Long, filePointer: Long) {
-        SPUtils.putApply(AppConstant.FILE_PATH + url, path)
-        SPUtils.putApply(AppConstant.FILE_PROGRESS + url, progress)
-        SPUtils.putApply(AppConstant.FILE_TOTAL + url, total)
-        SPUtils.putApply(AppConstant.FILE_POINTER + url, filePointer)
-    }
-
-    fun remove(url: String) {
-        SPUtils.remove(AppConstant.FILE_PATH + url)
-        SPUtils.remove(AppConstant.FILE_PROGRESS + url)
-        SPUtils.remove(AppConstant.FILE_TOTAL + url)
-        SPUtils.remove(AppConstant.FILE_POINTER + url)
     }
 }

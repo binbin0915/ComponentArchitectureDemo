@@ -4,9 +4,8 @@ import ando.file.core.FileDirectory
 import android.os.Bundle
 import android.util.Log
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.library.base.application.BaseApplication
 import com.library.base.view.activity.BaseActivity
-import com.library.common.netconfig.tools.download.FileDownloadProducer
+import com.yupfeg.remote.download.producer.FileDownloadProducer
 import com.library.router.RouterPath
 import com.model.mykotlin.databinding.MykotlinActivityNetNormalBinding
 import com.model.mykotlin.viewmodel.NetNormalViewModel

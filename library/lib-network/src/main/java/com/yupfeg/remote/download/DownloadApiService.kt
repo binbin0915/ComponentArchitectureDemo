@@ -1,4 +1,4 @@
-package com.library.common.netconfig.tools.remote
+package com.yupfeg.remote.download
 
 import okhttp3.ResponseBody
 import retrofit2.http.GET
