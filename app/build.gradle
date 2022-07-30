@@ -6,7 +6,7 @@ plugins {
 android {
     namespace 'com.wangkai.myapplication'
     compileSdk 32
-
+    /*默认配置*/
     defaultConfig {
         applicationId "com.wangkai.myapplication"
         minSdk 21
@@ -20,14 +20,7 @@ android {
         //统一资源前缀，规范资源引用
         resourcePrefix "app_"
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
+    /*多渠道配置*/
     productFlavors {
         app {
             applicationId "com.wangkai.myapplication"
@@ -40,11 +33,36 @@ android {
             manifestPlaceholders = [app_name: "@string/app_name",]
         }
     }
-
+    /*签名配置*/
+    signingConfigs {
+        app {
+            storeFile file("./appkey_1.jks")
+            storePassword '123456'
+            keyAlias 'appkey_1'
+            keyPassword '123456'
+        }
+        app_2 {
+            storeFile file("./appkey_1.jks")
+            storePassword '123456'
+            keyAlias 'appkey_1'
+            keyPassword '123456'
+        }
+    }
+    /*构建类型*/
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            productFlavors.app.signingConfig signingConfigs.app
+            productFlavors.app_2.signingConfig signingConfigs.app_2
+        }
+    }
+    /*编译选项*/
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    /*kotlin选项*/
     kotlinOptions {
         jvmTarget = '1.8'
     }

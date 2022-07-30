@@ -12,25 +12,15 @@ String getModelType() {
 
 android {
     compileSdk 32
-
     defaultConfig {
-        if (isRunModel.toBoolean()) {
-            applicationId "com.model.splash"
-        }
         minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
     }
-
-
+    /*构建类型*/
     buildTypes {
-        prod {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'boolean', 'IS_RUN_MODEL', "${isRunModel.toBoolean()}"
-        }
-        beta {
+        release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'boolean', 'IS_RUN_MODEL', "${isRunModel.toBoolean()}"
