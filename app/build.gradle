@@ -58,14 +58,11 @@ dependencies {
     implementation 'com.umeng.umsdk:asms:1.6.3'// 必选
     implementation 'com.umeng.umsdk:apm:1.7.0' // U-APM包依赖(必选)
     implementation 'com.umeng.umsdk:abtest:1.0.1'//使用U-App中ABTest能力，可选
-    //
-
-
     //主题包
     implementation 'com.google.android.material:material:1.5.0'
     //公共基础包
     implementation project(":library:lib-common")
-    implementation project(":library:lib-logcat")
+    implementation project(":library:lib-base")
     //用于设置主题
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation project(path: ':library:lib-file')

@@ -42,13 +42,6 @@ kapt {
 }
 
 dependencies {
-
-    //Preferences DataStore
-    implementation 'androidx.datastore:datastore-preferences:1.0.0'
-    implementation 'androidx.datastore:datastore-preferences-core:1.0.0'
-//    //Proto DataStore
-//    implementation  'androidx.datastore:datastore-core:1.0.0'
-//    implementation  'com.google.protobuf:protobuf-javalite:3.10.0'
     //MVVM主体框架 -- 依赖不对外开放
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.10'
     implementation 'androidx.core:core-ktx:1.7.0'

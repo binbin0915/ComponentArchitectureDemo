@@ -2,9 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
 }
-/**
- * 一些公共库，公共utils
- * */
+/*一些公共库，公共utils*/
 android {
     compileSdk 32
 
@@ -67,10 +65,10 @@ dependencies {
     api 'com.airbnb.android:lottie:5.2.0'
     //腾讯tbs
     api 'com.tencent.tbs:tbssdk:44199'
-    //基础组件库
-    api project(":library:lib-base")
     //网络
     api project(":library:lib-network")
     //路由
     api project(":library:lib-router")
+    //日志
+    api project(":library:lib-logcat")
 }

@@ -3,8 +3,6 @@ package com.model.home.pages
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.library.base.datastore.Constrains
-import com.library.base.datastore.EasyDataStore
 import com.library.base.observermanager.ObserverListener
 import com.library.base.observermanager.ObserverManager
 import com.library.base.view.fragment.BaseFragment
@@ -34,11 +32,6 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
     }
 
     override fun initData() {
-        val userInfo = EasyDataStore.getData(Constrains.LOGIN_NICKNAME, "")
-        if (userInfo.isNotEmpty()) {
-            viewBinding.userInfo.text = userInfo
-        }
-
         viewBinding.loginBtn.setOnClickListener {
             JumpActivity.jump(RouterPath.GROUP_LOGIN, RouterPath.PAGE_LOGIN_ACTIVITY)
         }
