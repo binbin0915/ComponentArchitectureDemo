@@ -75,11 +75,14 @@ abstract class BaseFileDownloadProducer {
                     while (fileDownloadBean.downloadState == 1) {
                         delay(100)
                     }
-                    fileDownloadBean.progress =
+                    val progress =
                         100 - (fileDownloadBean.totalLength / fileDownloadBean.filePointer.toLong()).toInt()
-                    onProgress(
-                        progress = fileDownloadBean.progress
-                    )
+                    if (progress != fileDownloadBean.progress) {
+                        fileDownloadBean.progress = progress
+                        onProgress(
+                            progress = fileDownloadBean.progress
+                        )
+                    }
                 }
 
             } while (true)
