@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.model.home">
+    package="com.model.mykotlin">
 
     <application
         android:name="com.library.base.application.DebugApplication"
@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/mykotlin_Theme.BaseApplication">
-        <activity android:name="com.model.mykotlin.activity.KotlinBaseActivity">
+        <activity android:name=".activity.KotlinBaseActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

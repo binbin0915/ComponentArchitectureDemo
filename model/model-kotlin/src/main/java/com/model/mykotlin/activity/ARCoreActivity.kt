@@ -4,14 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.view.KeyCharacterMap
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
 import com.google.ar.core.Session
-import com.kongzue.dialogx.dialogs.MessageDialog
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
 import com.library.launcher.permission.PermissionLauncher

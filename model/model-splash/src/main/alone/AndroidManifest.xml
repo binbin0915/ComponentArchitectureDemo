@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:name="com.library.base.application.DebugApplication"
         android:theme="@style/SplashTheme.BaseApplication">
-        <activity android:name=".SplashMainActivity">
+        <activity android:name=".SplashMainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
