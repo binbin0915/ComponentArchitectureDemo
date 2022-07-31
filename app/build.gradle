@@ -14,12 +14,13 @@ android {
         versionCode 1
         versionName "1.0"
 
-        flavorDimensions "default"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //统一资源前缀，规范资源引用
         resourcePrefix "app_"
     }
+    /*风味维度*/
+    flavorDimensions "default"
     /*多渠道配置*/
     productFlavors {
         app {
