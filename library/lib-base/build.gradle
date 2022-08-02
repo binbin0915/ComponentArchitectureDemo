@@ -1,9 +1,7 @@
 apply plugin: "com.android.library"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-/**
- * 基础的MVVM架构封装
- * */
+
 android {
     compileSdk 32
 
@@ -41,6 +39,9 @@ kapt {
     }
 }
 
+/**
+ * 基础的MVVM架构封装
+ */
 dependencies {
     //MVVM主体框架 -- 依赖不对外开放
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.10'
