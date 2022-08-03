@@ -6,17 +6,15 @@ plugins {
 
 android {
     namespace 'com.wangkai.myapplication'
-    compileSdk 32
+    compileSdk BuildConfig.compileSdk
     /*默认配置*/
     defaultConfig {
         applicationId "com.wangkai.myapplication"
-        minSdk 21
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
-
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdk BuildConfig.minSdk
+        targetSdk BuildConfig.targetSdk
+        versionCode BuildConfig.versionCode
+        versionName BuildConfig.versionName
+        testInstrumentationRunner BuildConfig.testInstrumentationRunner
         //统一资源前缀，规范资源引用
         resourcePrefix "app_"
     }
