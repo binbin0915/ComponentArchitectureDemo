@@ -6,6 +6,9 @@ import android.content.Intent
 import android.util.Log
 import com.model.airpods.service.AnPodsService
 
+/**
+ * 自启动广播
+ */
 class AutoStarter : BroadcastReceiver() {
     private val TAG = "AutoStarterTAG"
     override fun onReceive(context: Context, intent: Intent) {

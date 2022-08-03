@@ -1,6 +1,6 @@
 package com.model.airpods.util
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
@@ -9,22 +9,28 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import androidx.annotation.CheckResult
+import androidx.annotation.RequiresApi
+import androidx.annotation.RequiresPermission
 import androidx.lifecycle.MutableLiveData
+import com.model.airpods.model.ConnectionState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.suspendCancellableCoroutine
-import com.model.airpods.model.ConnectionState
 import kotlin.coroutines.resume
 
 val airPodsConnectionState = MutableLiveData<ConnectionState>()
 
+/**
+ * 注册蓝牙监听
+ */
 @CheckResult
 @ExperimentalCoroutinesApi
-fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow<ConnectionState> {
+fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow {
     checkMainThread()
     val filter: IntentFilter = IntentFilter().apply {
         addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
@@ -44,8 +50,9 @@ fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow<ConnectionStat
     awaitClose { unregisterReceiver(receiver) }
 }.conflate()
 
-@SuppressLint("MissingPermission")
-suspend fun Context.getConnected() = suspendCancellableCoroutine<ConnectionState> { continuation ->
+@RequiresApi(Build.VERSION_CODES.S)
+@RequiresPermission(value = Manifest.permission.BLUETOOTH_CONNECT)
+suspend fun Context.getConnected() = suspendCancellableCoroutine { continuation ->
     checkMainThread()
     val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
     val headset: Int = manager.adapter.getProfileConnectionState(BluetoothProfile.HEADSET)

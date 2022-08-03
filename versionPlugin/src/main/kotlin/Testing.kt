@@ -1,7 +1,7 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 /**
- * @author haizhuo
+ * @author wangkai
  */
 object Testing {
     private const val testImplementation = "testImplementation"

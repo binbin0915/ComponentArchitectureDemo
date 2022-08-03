@@ -12,7 +12,7 @@ import com.library.base.view.activity.BaseActivity
 import com.library.router.RouterPath
 import com.library.widget.banner.ext.dp
 import com.library.widget.drawer.DrawerLayout
-import com.model.home.adapter.HomeViewPagerAdapter
+import com.model.home.pages.adapter.HomeViewPagerAdapter
 import com.model.home.databinding.HomeActivityMainBinding
 import com.model.home.viewmodel.HomeMainActivityShareViewModel
 import com.model.home.viewmodel.HomeMainActivityViewModel

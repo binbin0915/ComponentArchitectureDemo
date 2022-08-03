@@ -3,11 +3,13 @@ package com.model.airpods.service
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import com.library.logcat.AppLog
+import com.library.logcat.LogcatLevel
 import com.model.airpods.util.airPodsConnectionState
 import com.model.airpods.util.getConnected
 import kotlinx.coroutines.CoroutineScope
@@ -35,14 +37,22 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     private fun checkConnection() {
         connectionJob = lifecycleScope.launch {
             //检查权限
+            AppLog.log(LogcatLevel.INFO, "bluetoothTAG", "开启检测蓝牙连接")
             if (ActivityCompat.checkSelfPermission(
                     applicationContext, Manifest.permission.BLUETOOTH_CONNECT
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                val state = getConnected()
+                val state = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    getConnected()
+                } else {
+                    TODO("VERSION.SDK_INT < S")
+                }
+                AppLog.log(LogcatLevel.INFO, "bluetoothTAG", "有权限获取状态：$state")
                 if (state.isConnected) {
                     airPodsConnectionState.value = state
                 }
+            } else {
+                AppLog.log(LogcatLevel.INFO, "bluetoothTAG", "没权限获取状态")
             }
         }
     }

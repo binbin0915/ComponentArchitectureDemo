@@ -1,4 +1,4 @@
-package com.model.home.adapter
+package com.model.home.pages.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
