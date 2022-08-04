@@ -47,6 +47,7 @@ fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow {
             safeOffer(event)
         }
     }
+    AppLog.log(LogcatLevel.INFO, "bluetoothTAG", "注册广播")
     registerReceiver(receiver, filter)
     //关闭时注销广播
     awaitClose {
