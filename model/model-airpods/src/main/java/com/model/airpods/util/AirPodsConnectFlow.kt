@@ -40,13 +40,13 @@ fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow {
         //addAction(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED)//和ACL状态重复,接受消息:连接时更慢一点,断开时快一点
     }
     val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            intent ?: return
+        override fun onReceive(context: Context, intent: Intent) {
             val event = intent.parseIntent()
             safeOffer(event)
         }
     }
     registerReceiver(receiver, filter)
+    //关闭时注销广播
     awaitClose { unregisterReceiver(receiver) }
 }.conflate()
 
@@ -87,15 +87,18 @@ suspend fun Context.getConnected() = suspendCancellableCoroutine { continuation 
     }
 }
 
-fun Intent.parseIntent(): ConnectionState {
+private fun Intent.parseIntent(): ConnectionState {
     when (action) {
         BluetoothAdapter.ACTION_STATE_CHANGED -> {
             val state = getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
-            if (state == BluetoothAdapter.STATE_OFF || state == BluetoothAdapter.STATE_TURNING_OFF) { //bluetooth turned off, stop scanner and remove notification
-                return ConnectionState(isConnected = false)
+            if (state == BluetoothAdapter.STATE_OFF || state == BluetoothAdapter.STATE_TURNING_OFF) {
+                //bluetooth turned off, stop scanner and remove notification
+                return ConnectionState(isConnected = false, deviceName = "❎")
             }
         }
-        BluetoothDevice.ACTION_ACL_CONNECTED, BluetoothDevice.ACTION_ACL_DISCONNECTED, BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED -> {
+        BluetoothDevice.ACTION_ACL_CONNECTED,
+        BluetoothDevice.ACTION_ACL_DISCONNECTED,
+        BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED -> {
             val device = getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
             if (device != null && device.checkUUID()) {
                 if (action == BluetoothDevice.ACTION_ACL_CONNECTED) {

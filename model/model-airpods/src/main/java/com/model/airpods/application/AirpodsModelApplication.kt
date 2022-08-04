@@ -3,7 +3,6 @@ package com.model.airpods.application
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
-import android.util.Log
 import com.alibaba.android.arouter.launcher.ARouter
 import com.library.base.application.BaseModelApplication
 import com.library.common.netconfig.GlobalResponseHandler

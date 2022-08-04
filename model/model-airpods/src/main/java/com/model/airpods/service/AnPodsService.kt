@@ -33,7 +33,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         checkConnection()
     }
 
-    private var connectionJob: Job? = null
+    private lateinit var connectionJob: Job
     private fun checkConnection() {
         connectionJob = lifecycleScope.launch {
             //检查权限
@@ -63,5 +63,10 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
             checkConnection()
         }
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        connectionJob.cancel()
     }
 }
