@@ -14,6 +14,8 @@ import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
 import androidx.lifecycle.MutableLiveData
+import com.library.logcat.AppLog
+import com.library.logcat.LogcatLevel
 import com.model.airpods.model.ConnectionState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -47,7 +49,9 @@ fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow {
     }
     registerReceiver(receiver, filter)
     //关闭时注销广播
-    awaitClose { unregisterReceiver(receiver) }
+    awaitClose {
+        AppLog.log(LogcatLevel.INFO, "bluetoothTAG", "注销广播")
+        unregisterReceiver(receiver) }
 }.conflate()
 
 @RequiresApi(Build.VERSION_CODES.S)

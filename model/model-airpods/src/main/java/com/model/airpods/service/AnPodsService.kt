@@ -10,12 +10,11 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.library.logcat.AppLog
 import com.library.logcat.LogcatLevel
+import com.model.airpods.model.ConnectionState
 import com.model.airpods.util.airPodsConnectionState
+import com.model.airpods.util.fromBroadCast
 import com.model.airpods.util.getConnected
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
 
@@ -24,6 +23,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         throw UnsupportedOperationException("AnPodsService do not support bind!")
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
         //1. 创建通知栏
@@ -31,13 +31,24 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
 
         //2. 检查连接状态
         checkConnection()
+
+
+        //3.注册广播
+        val flow = fromBroadCast()
+        lifecycleScope.launch(Dispatchers.Main) {
+            flow.collect {
+                airPodsConnectionState.value =
+                    ConnectionState(isConnected = it.isConnected, deviceName = it.deviceName)
+            }
+        }
+
+
     }
 
     private lateinit var connectionJob: Job
     private fun checkConnection() {
         connectionJob = lifecycleScope.launch {
             //检查权限
-            AppLog.log(LogcatLevel.INFO, "bluetoothTAG", "开启检测蓝牙连接")
             if (ActivityCompat.checkSelfPermission(
                     applicationContext, Manifest.permission.BLUETOOTH_CONNECT
                 ) == PackageManager.PERMISSION_GRANTED
@@ -47,7 +58,6 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
                 } else {
                     TODO("VERSION.SDK_INT < S")
                 }
-                AppLog.log(LogcatLevel.INFO, "bluetoothTAG", "有权限获取状态：$state")
                 if (state.isConnected) {
                     airPodsConnectionState.value = state
                 }
