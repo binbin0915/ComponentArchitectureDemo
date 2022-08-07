@@ -11,7 +11,7 @@ object AppLog {
     /**
      * 日志的Tag
      */
-    var logTag = "===>>>"
+    var logTag = "AppLog"
 
     /**
      * 是否开启日志打印
@@ -27,22 +27,26 @@ object AppLog {
     /**
      * 普通的日志打印
      */
-    fun log(msg: String?) {
+    fun log(msg: String) {
         logcatImpl.logI(msg = msg)
+    }
+
+    fun log(tag: String, msg: String) {
+        logcatImpl.logI(tag = tag, msg = msg)
     }
 
 
     /**
      * log打印 带等级
      */
-    fun log(level: LogcatLevel, msg: String?) {
+    fun log(level: LogcatLevel, msg: String) {
         logcatImpl.log(level = level, msg = msg)
     }
 
     /**
      * log打印 带等级 带tag
      */
-    fun log(level: LogcatLevel, tag: String?, msg: String?) {
+    fun log(level: LogcatLevel, tag: String, msg: String) {
         logcatImpl.log(level = level, tag = tag, msg = msg)
     }
 

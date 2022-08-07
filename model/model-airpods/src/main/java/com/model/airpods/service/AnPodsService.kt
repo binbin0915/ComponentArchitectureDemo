@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import com.library.logcat.AppLog
 import com.model.airpods.R
 import com.model.airpods.model.BatteryState
 import com.model.airpods.model.ConnectionState
@@ -18,8 +19,6 @@ import com.model.airpods.ui.widget.AnPodsDialog
 import com.model.airpods.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  *
@@ -31,32 +30,15 @@ import java.util.*
  * ```kotlin
  * flow.onEach {}.launchIn(lifecycleScope)
  * ```
- *
- * 步骤：
- * 1. 创建通知渠道
- * 2. 检查连接状态并更新
- * 3. 创建蓝牙连接状态变化的广播
- * 4. 监听livedata变化
- * 5.
  */
 class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
-    private val simpleDateFormat by lazy { SimpleDateFormat("HH:mm:ss", Locale.CANADA) }
-
-    /**
-     * 耳机弹窗
-     */
-    private val anPodsDialog by lazy { AnPodsDialog(this) }
-
-    /**
-     * 通知管理
-     */
+    private val anPodsDialog by lazy {
+        AppLog.log(TAG, "anPodsDialog被延迟初始化了.....")
+        AnPodsDialog(applicationContext)
+    }
     private val notifyManager: NotificationManager by lazy {
         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
-
-    /**
-     * 创建通知
-     */
     private val notification: NotificationCompat.Builder by lazy {
         NotificationCompat.Builder(this, CHANNEL_ID).apply {
             setOngoing(true)
@@ -78,27 +60,6 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     }
 
     /**
-     * 创建通知
-     */
-    private fun createNotification() {
-        //设置渠道
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel =
-                NotificationChannel(
-                    CHANNEL_ID,
-                    CHANNEL_ID,
-                    NotificationManager.IMPORTANCE_HIGH
-                ).apply {
-                    enableVibration(false)
-                    enableLights(false)
-                    setShowBadge(true)
-                    lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-                }
-            notifyManager.createNotificationChannel(channel)
-        }
-    }
-
-    /**
      * 检查蓝牙连接状态获取设备名称
      */
     private lateinit var connectionJob: Job
@@ -112,7 +73,10 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         connectionJob = lifecycleScope.launch {
             getConnected().also {
                 if (it.isConnected) {
+                    AppLog.log(TAG, "已经连接了.....")
                     airPodsConnectionState.value = it
+                } else {
+                    AppLog.log(TAG, "还没有连接.....")
                 }
             }
         }
@@ -155,8 +119,10 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
                 airPodsConnectionState.value = it
                 //蓝牙连接时弹窗，断开时取消弹窗
                 if (it.isConnected) {
+                    Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "蓝牙连接时弹窗")
                     anPodsDialog.show()
                 } else {
+                    Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "断开时取消弹窗")
                     anPodsDialog.onBackPressed()
                 }
             }
@@ -168,10 +134,11 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         airPodsConnectionState.observe({ lifecycle }) {
             connectionJob.cancel()
             anPodsDialog.updateConnectedDevice(it)
-            Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "连接状态变化：" + it.isConnected)
+            AppLog.log(TAG, "收到了连接状态变化的livedata.....")
             updateWidgetUI(notification, it)
             //已连接--获取设备电量信息
             if (it.isConnected) {
+                AppLog.log(TAG, "已连接,获取设备电量信息.....")
                 detectBattery()
             }
         }
@@ -180,6 +147,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         airPodsBatteryState.observe({ lifecycle }) {
             val state = airPodsConnectionState.value
             if (state == null || !state.isConnected) return@observe
+            AppLog.log(TAG, "收到了耳机电量信息变化的livedata.....")
             updateWidgetUI(notification, state)
             anPodsDialog.updateUI(it)
         }
@@ -225,6 +193,28 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         notifyManager.notify(NOTIFICATION_ID, notification.build().apply {
             `when` = System.currentTimeMillis()
         })
+    }
+
+
+    /**
+     * 创建通知
+     */
+    private fun createNotification() {
+        //设置渠道
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel =
+                NotificationChannel(
+                    CHANNEL_ID,
+                    CHANNEL_ID,
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    enableVibration(false)
+                    enableLights(false)
+                    setShowBadge(true)
+                    lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                }
+            notifyManager.createNotificationChannel(channel)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

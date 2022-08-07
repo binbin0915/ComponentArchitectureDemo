@@ -7,7 +7,6 @@ import android.bluetooth.le.ScanFilter
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
-import android.util.Log
 import androidx.annotation.CheckResult
 import androidx.lifecycle.MutableLiveData
 import com.model.airpods.model.BatteryState
@@ -41,12 +40,10 @@ val airPodsBatteryState = MutableLiveData<BatteryState>()
 @ExperimentalCoroutinesApi
 fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
     checkMainThread()
-    Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "开启扫描11111")
     val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
     val scanCallback = object : ScanCallback() {
         override fun onBatchScanResults(results: MutableList<ScanResult>) {
             super.onBatchScanResults(results)
-            Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "onBatchScanResults")
             results.forEach {
                 onScanResult(-1, it)
             }
@@ -54,13 +51,11 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
 
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             super.onScanResult(callbackType, result)
-            Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "onScanResult")
             safeOffer(result)
         }
 
         override fun onScanFailed(errorCode: Int) {
             //扫描失败
-            Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "onScanFailed-----errorCode:$errorCode")
             super.onScanFailed(errorCode)
         }
     }
@@ -87,12 +82,10 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
 //            break
 //        }
 //    }
-    Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "开启扫描22222")
     manager.adapter.bluetoothLeScanner.startScan(filters, settings, scanCallback)
 //    manager.adapter.bluetoothLeScanner.startScan(scanCallback)
     //等待关闭
     awaitClose {
-        Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "关闭了扫描")
         manager.adapter.bluetoothLeScanner.stopScan(scanCallback)
     }
 }.conflate()

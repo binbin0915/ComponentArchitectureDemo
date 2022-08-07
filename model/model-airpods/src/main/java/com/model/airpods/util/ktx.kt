@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.conflate
 
+const val TAG = "AIRPODS_TAG"
+
 
 const val NOTIFICATION_ID = 9083150
 
