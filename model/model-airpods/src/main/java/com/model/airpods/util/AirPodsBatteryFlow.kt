@@ -1,25 +1,169 @@
 package com.model.airpods.util
 
 import android.annotation.SuppressLint
-import android.bluetooth.BluetoothDevice
-import android.os.ParcelUuid
+import android.bluetooth.BluetoothManager
+import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanFilter
+import android.bluetooth.le.ScanResult
+import android.bluetooth.le.ScanSettings
+import android.content.Context
+import android.util.Log
+import androidx.annotation.CheckResult
+import androidx.lifecycle.MutableLiveData
+import com.model.airpods.model.BatteryState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.conflate
+import kotlinx.coroutines.flow.filter
+
+val airPodsBatteryState = MutableLiveData<BatteryState>()
 
 /**
- * 蓝牙硬件驱动id集合
- */
-private val AIR_PODS_UUID_ARRAY = arrayOf(
-    ParcelUuid.fromString("74ec2172-0bad-4d01-8f77-997b2be0722a"),
-    ParcelUuid.fromString("2a72e02b-7b99-778f-014d-ad0b7221ec74")
-)
+ *
+ * 蓝牙扫描
+ *
+ * 要查找 BLE 设备，请使用 startScan（） 方法。此方法将 ScanCallback 作为参数。您必须实现此回调，因为这就是返回扫描结果的方式。由于扫描需要大量使用电池，因此应遵守以下准则：
+ * * 找到所需设备后，立即停止扫描。
+ * * 切勿循环扫描，并始终为扫描设置时间限制。以前可用的设备可能已移出范围，继续扫描会耗尽电池电量。
+ *
+ * 若要仅扫描特定类型的外围设备，可以改为调用 startScan（List<ScanFilter>、ScanSettings、ScanCallback），提供限制扫描查找的设备的 ScanFilter 对象列表和指定扫描参数的 ScanSettings 对象。
 
-/**
- * 拓展函数：检查getUuids的值是否在集合中
+ * Ble发现设备api：(扫描会在屏幕关闭时停止以节省电量。 再次打开屏幕时，将恢复扫描。 为避免这种情况，请使用下面两个)
+ * * [BluetoothAdapter.getBluetoothLeScanner()]
+ * * BluetoothLeScanner.startScan(ScanCallback callback)
+ * * BluetoothLeScanner.startScan(List<ScanFilter> filters, ScanSettings settings, ScanCallback callback)
+ * * BluetoothLeScanner.startScan(List<ScanFilter> filters, ScanSettings settings, PendingIntent callbackIntent)
  */
 @SuppressLint("MissingPermission")
-fun BluetoothDevice.checkUUID(): Boolean {
-    val uuidArray = uuids ?: return false
-    for (u in uuidArray) {
-        if (AIR_PODS_UUID_ARRAY.contains(u)) return true
+@CheckResult
+@ExperimentalCoroutinesApi
+fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
+    checkMainThread()
+    Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "开启扫描11111")
+    val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+    val scanCallback = object : ScanCallback() {
+        override fun onBatchScanResults(results: MutableList<ScanResult>) {
+            super.onBatchScanResults(results)
+            Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "onBatchScanResults")
+            results.forEach {
+                onScanResult(-1, it)
+            }
+        }
+
+        override fun onScanResult(callbackType: Int, result: ScanResult) {
+            super.onScanResult(callbackType, result)
+            Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "onScanResult")
+            safeOffer(result)
+        }
+
+        override fun onScanFailed(errorCode: Int) {
+            //扫描失败
+            Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "onScanFailed-----errorCode:$errorCode")
+            super.onScanFailed(errorCode)
+        }
     }
-    return false
+    val manufacturerData = ByteArray(27).apply {
+        this[0] = 7
+        this[1] = 25
+    }
+    val manufacturerDataMask = ByteArray(27).apply {
+        this[0] = -1
+        this[1] = -1
+    }
+    val scanFilter = ScanFilter.Builder()
+//        .setManufacturerData(76, manufacturerData, manufacturerDataMask)
+        .build()
+    val filters: List<ScanFilter> = listOf(scanFilter)
+    val settings = ScanSettings.Builder()
+        .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER)
+        .setReportDelay(2)
+        .build()
+//    val flushJob = launch {
+//        while (isActive) {
+//            // Can undercut the minimum setReportDelay(), e.g. 5000ms on a Pixel5@12
+//            manager.adapter.bluetoothLeScanner.flushPendingScanResults(scanCallback)
+//            break
+//        }
+//    }
+    Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "开启扫描22222")
+    manager.adapter.bluetoothLeScanner.startScan(filters, settings, scanCallback)
+//    manager.adapter.bluetoothLeScanner.startScan(scanCallback)
+    //等待关闭
+    awaitClose {
+        Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "关闭了扫描")
+        manager.adapter.bluetoothLeScanner.stopScan(scanCallback)
+    }
+}.conflate()
+    .filter {
+        it.rssi > -60
+    }
+    .filter {
+        val data = it.scanRecord?.getManufacturerSpecificData(76)
+        data != null && data.size == 27 && data.decodeHex().isNotEmpty()
+    }
+
+
+fun ScanResult.parse(overrideModel: String): BatteryState {
+    val signal = scanRecord!!.getManufacturerSpecificData(76)!!.decodeHex()
+    //left and right airpod (0-10 batt; 15=disconnected)
+    val leftBattery =
+        if (signal.isFlipped()) signal[12].toString().toInt(16) else signal[13].toString().toInt(
+            16
+        )
+
+    val rightBattery =
+        if (signal.isFlipped()) signal[13].toString().toInt(16) else signal[12].toString().toInt(
+            16
+        )
+    //case (0-10 batt; 15=disconnected)
+    val caseBattery = signal[15].toString().toInt(16)
+
+    //charge status (bit 0=left; bit 1=right; bit 2=case)
+    val chargeStatus = signal[14].toString().toInt(16)
+
+    val isLeftCharge = chargeStatus and 1 != 0
+    val isRightCharge = chargeStatus and 2 != 0
+    val isCaseCharge = chargeStatus and 4 != 0
+
+    val model = if (overrideModel == "auto") {
+        //detect if these are AirPods pro or regular ones
+        if (signal[7] == 'E') MODEL_AIR_PODS_PRO else MODEL_AIR_PODS_NORMAL
+    } else {
+        overrideModel
+    }
+    return BatteryState(
+        System.currentTimeMillis(),
+        leftBattery,
+        rightBattery,
+        caseBattery,
+        isLeftCharge,
+        isRightCharge,
+        isCaseCharge,
+        model
+    )
+}
+
+const val MODEL_AIR_PODS_NORMAL = "airpods12"
+const val MODEL_AIR_PODS_1 = "airpods1"
+const val MODEL_AIR_PODS_2 = "airpods2"
+const val MODEL_AIR_PODS_PRO = "airpodspro"
+
+
+private val hexCharset =
+    charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F')
+
+fun ByteArray.decodeHex(): String {
+    val ret = CharArray(size * 2)
+    for (i in indices) {
+        val b: Int = this[i].toInt() and 0xFF
+        ret[i * 2] = hexCharset[b ushr 4]
+        ret[i * 2 + 1] = hexCharset[b and 0x0F]
+    }
+    return String(ret)
+}
+
+fun String.isFlipped(): Boolean {
+    return (this[10].toString().toInt(16) + 0x10).toString(2)[3] == '0'
 }

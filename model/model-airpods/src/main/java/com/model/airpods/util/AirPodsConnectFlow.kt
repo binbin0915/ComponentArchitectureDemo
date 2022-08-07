@@ -1,6 +1,6 @@
 package com.model.airpods.util
 
-import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
@@ -9,13 +9,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
 import androidx.annotation.CheckResult
-import androidx.annotation.RequiresApi
-import androidx.annotation.RequiresPermission
 import androidx.lifecycle.MutableLiveData
-import com.library.logcat.AppLog
-import com.library.logcat.LogcatLevel
 import com.model.airpods.model.ConnectionState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -27,9 +22,6 @@ import kotlin.coroutines.resume
 
 val airPodsConnectionState = MutableLiveData<ConnectionState>()
 
-/**
- * 注册蓝牙监听
- */
 @CheckResult
 @ExperimentalCoroutinesApi
 fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow {
@@ -47,71 +39,62 @@ fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow {
             safeOffer(event)
         }
     }
-    AppLog.log(LogcatLevel.INFO, "bluetoothTAG", "注册广播")
     registerReceiver(receiver, filter)
-    //关闭时注销广播
-    awaitClose {
-        AppLog.log(LogcatLevel.INFO, "bluetoothTAG", "注销广播")
-        unregisterReceiver(receiver) }
+    awaitClose { unregisterReceiver(receiver) }
 }.conflate()
 
-@RequiresApi(Build.VERSION_CODES.S)
-@RequiresPermission(value = Manifest.permission.BLUETOOTH_CONNECT)
-suspend fun Context.getConnected() = suspendCancellableCoroutine { continuation ->
-    checkMainThread()
-    val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-    val headset: Int = manager.adapter.getProfileConnectionState(BluetoothProfile.HEADSET)
-    if (headset != BluetoothProfile.STATE_CONNECTED) {
-        continuation.resume(ConnectionState(isConnected = false))
-        return@suspendCancellableCoroutine
-    }
-    val listener = object : BluetoothProfile.ServiceListener {
-        override fun onServiceConnected(profile: Int, proxy: BluetoothProfile?) {
-            if (profile != BluetoothProfile.HEADSET) return
-            proxy?.connectedDevices ?: return
-            for (device in proxy.connectedDevices) {
-                if (device.checkUUID()) {
-                    try {
+@SuppressLint("MissingPermission")
+suspend fun Context.getConnected() =
+    suspendCancellableCoroutine { continuation ->
+        checkMainThread()
+        val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        val headset: Int = manager.adapter.getProfileConnectionState(BluetoothProfile.HEADSET)
+        if (headset != BluetoothProfile.STATE_CONNECTED) {
+            continuation.resume(ConnectionState(isConnected = false))
+            return@suspendCancellableCoroutine
+        }
+        val listener = object : BluetoothProfile.ServiceListener {
+            override fun onServiceConnected(profile: Int, proxy: BluetoothProfile?) {
+                if (profile != BluetoothProfile.HEADSET) return
+                proxy?.connectedDevices ?: return
+                for (device in proxy.connectedDevices) {
+                    if (device.checkUUID()) {
                         continuation.resume(ConnectionState(deviceName = device.name))
-                    } catch (e: SecurityException) {
-                        e.printStackTrace()
+                        break
                     }
-                    break
                 }
             }
-        }
 
-        override fun onServiceDisconnected(profile: Int) {
-        }
-    }
-    manager.adapter.getProfileProxy(this, listener, BluetoothProfile.HEADSET)
-    continuation.invokeOnCancellation {
-        manager.adapter.getProfileProxy(
-            this, null, BluetoothProfile.HEADSET
-        )
-    }
-}
-
-private fun Intent.parseIntent(): ConnectionState {
-    when (action) {
-        BluetoothAdapter.ACTION_STATE_CHANGED -> {
-            val state = getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
-            if (state == BluetoothAdapter.STATE_OFF || state == BluetoothAdapter.STATE_TURNING_OFF) {
-                //bluetooth turned off, stop scanner and remove notification
-                return ConnectionState(isConnected = false, deviceName = "❎")
+            override fun onServiceDisconnected(profile: Int) {
             }
         }
-        BluetoothDevice.ACTION_ACL_CONNECTED,
-        BluetoothDevice.ACTION_ACL_DISCONNECTED,
-        BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED -> {
-            val device = getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
+        manager.adapter.getProfileProxy(this, listener, BluetoothProfile.HEADSET)
+        continuation.invokeOnCancellation {
+            manager.adapter.getProfileProxy(
+                this,
+                null,
+                BluetoothProfile.HEADSET
+            )
+        }
+    }
+
+
+@SuppressLint("MissingPermission")
+fun Intent.parseIntent(): ConnectionState {
+    when (action) {
+        BluetoothAdapter.ACTION_STATE_CHANGED -> {
+            val state =
+                getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)
+            if (state == BluetoothAdapter.STATE_OFF || state == BluetoothAdapter.STATE_TURNING_OFF) { //bluetooth turned off, stop scanner and remove notification
+                return ConnectionState(isConnected = false)
+            }
+        }
+        BluetoothDevice.ACTION_ACL_CONNECTED, BluetoothDevice.ACTION_ACL_DISCONNECTED, BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED -> {
+            val device =
+                getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
             if (device != null && device.checkUUID()) {
                 if (action == BluetoothDevice.ACTION_ACL_CONNECTED) {
-                    try {
-                        return ConnectionState(deviceName = device.name)
-                    } catch (e: SecurityException) {
-                        e.printStackTrace()
-                    }
+                    return ConnectionState(deviceName = device.name)
                 } else if (action == BluetoothDevice.ACTION_ACL_DISCONNECTED) {
                     return ConnectionState(isConnected = false)
                 }

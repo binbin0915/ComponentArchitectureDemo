@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/anpods_panel"
+    android:layout_width="340dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:background="@drawable/airpods_bg_main"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="312dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:text="未连接airpods"
+        android:textColor="@color/airpods_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="未连接airpods" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_left_pod"
+        android:layout_width="80dp"
+        android:layout_height="160dp"
+        app:layout_constraintEnd_toStartOf="@id/iv_case"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:lottie_rawRes="@raw/airpod_left" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_case_left"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        app:layout_constraintEnd_toStartOf="@id/iv_right_pod"
+        app:layout_constraintStart_toEndOf="@id/iv_left_pod"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:lottie_rawRes="@raw/case_left" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_case_right"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        app:layout_constraintEnd_toStartOf="@id/iv_right_pod"
+        app:layout_constraintStart_toEndOf="@id/iv_left_pod"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:lottie_rawRes="@raw/case_right" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_case"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        app:layout_constraintEnd_toStartOf="@id/iv_right_pod"
+        app:layout_constraintStart_toEndOf="@id/iv_left_pod"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:lottie_rawRes="@raw/empty_case" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_right_pod"
+        android:layout_width="80dp"
+        android:layout_height="160dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_case"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:lottie_rawRes="@raw/airpod_right" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_pods_loading"
+        android:layout_width="96dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="160dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading_data_3" />
+
+    <TextView
+        android:id="@+id/tv_left_pod"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="-"
+        android:textColor="@color/airpods_black"
+        app:layout_constraintEnd_toEndOf="@id/iv_left_pod"
+        app:layout_constraintStart_toStartOf="@id/iv_left_pod"
+        app:layout_constraintTop_toBottomOf="@id/iv_left_pod"
+        tools:text="-" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_left_pod_battery"
+        android:layout_width="64dp"
+        android:layout_height="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tv_left_pod"
+        app:layout_constraintStart_toStartOf="@id/tv_left_pod"
+        app:layout_constraintTop_toBottomOf="@id/tv_left_pod"
+        app:lottie_rawRes="@raw/battery" />
+
+    <TextView
+        android:id="@+id/tv_right_pod"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="-"
+        android:textColor="@color/airpods_black"
+        app:layout_constraintEnd_toEndOf="@id/iv_right_pod"
+        app:layout_constraintStart_toStartOf="@id/iv_right_pod"
+        app:layout_constraintTop_toBottomOf="@id/iv_right_pod"
+        tools:text="-" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_right_pod_battery"
+        android:layout_width="64dp"
+        android:layout_height="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tv_right_pod"
+        app:layout_constraintStart_toStartOf="@id/tv_right_pod"
+        app:layout_constraintTop_toBottomOf="@id/tv_right_pod"
+        app:lottie_rawRes="@raw/battery" />
+
+    <TextView
+        android:id="@+id/tv_case"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="-"
+        android:textColor="@color/airpods_black"
+        app:layout_constraintEnd_toEndOf="@id/iv_case"
+        app:layout_constraintStart_toStartOf="@id/iv_case"
+        app:layout_constraintTop_toBottomOf="@id/iv_case"
+        tools:text="-" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_case_battery"
+        android:layout_width="64dp"
+        android:layout_height="16dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tv_case"
+        app:layout_constraintStart_toStartOf="@id/tv_case"
+        app:layout_constraintTop_toBottomOf="@id/tv_case"
+        app:lottie_rawRes="@raw/battery" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

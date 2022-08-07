@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.model.airpods">
-    <!-- 蓝牙权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-
+    <!-- Android12以前的蓝牙权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!--为适配安卓6.0以及以上版本BLE的扫描需要开启位置信息相关的权限，否则将会无法扫描到BLE设备。-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <!-- BEL支持检查：true 表示手机必须支持BLE，否则无法安装！-->
+    <!-- 设置为false则需要在activity中检查-->
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+    <!-- Android12以后的蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <!--后台电量优化-->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <!--开机自启动权限-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -32,6 +43,30 @@
             android:name=".service.AnPodsService"
             android:enabled="true"
             android:exported="false" />
+
+
+        <receiver
+            android:name=".AnPodsWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/airpods_an_pods_widget_info" />
+        </receiver>
+        <service
+            android:name=".service.AnPodsTileService"
+            android:exported="true"
+            android:icon="@drawable/airpods_ic_airpods"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <!--开机广播-->
         <receiver
             android:name=".AutoStarter"
@@ -43,6 +78,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
             </intent-filter>
         </receiver>
     </application>

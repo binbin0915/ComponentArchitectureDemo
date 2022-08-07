@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="13.612976dip"
+    android:height="29.266998dip"
+    android:viewportWidth="13.613"
+    android:viewportHeight="29.267">
+    <path
+        android:pathData="M8.978,26.255v-15L8.924,11.255S5.042,13.559 0.84,8.895C0.765,3.782 0.754,3.78 0.754,3.78S3.354,0.183 7.19,0.861s5.65,7.546 5.663,8.566c0.008,0.617 0.006,1.157 0,1.486h0.006L12.859,26.902c0,0.894 -0.377,1.615 -1.843,1.615C8.831,28.518 8.978,27.506 8.978,26.255Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="@color/airpods_black" />
+    <path
+        android:fillColor="@color/airpods_black"
+        android:pathData="M3.852,6.304m-0.7,0a0.7,0.7 0,1 1,1.4 0a0.7,0.7 0,1 1,-1.4 0"
+        android:strokeWidth="1.5"
+        android:strokeColor="#00000000" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M3.852,6.304m-0.05,0a0.05,0.05 0,1 1,0.1 0a0.05,0.05 0,1 1,-0.1 0"
+        android:strokeWidth="1.5"
+        android:strokeColor="@color/airpods_black" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M8.592,2.406a15.149,15.149 0,0 0,1.171 1.474c0.155,0.07 0.88,0.1 0.782,0s-1.628,-2.074 -1.827,-1.8S8.592,2.406 8.592,2.406Z"
+        android:strokeWidth="1.5"
+        android:strokeColor="@color/airpods_black" />
+    <path
+        android:fillColor="@color/airpods_black"
+        android:pathData="M8.754,27.275L12.754,27.275A0,0 0,0 1,12.754 27.275L12.754,27.275A1,1 0,0 1,11.754 28.275L9.754,28.275A1,1 0,0 1,8.754 27.275L8.754,27.275A0,0 0,0 1,8.754 27.275Z" />
+</vector>

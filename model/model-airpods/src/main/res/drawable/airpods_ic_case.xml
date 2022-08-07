@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="25.77597dip"
+    android:height="29.640991dip"
+    android:viewportWidth="25.776"
+    android:viewportHeight="29.641">
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M7.6,0.75L18.176,0.75A6.85,6.85 0,0 1,25.026 7.6L25.026,22.041A6.85,6.85 0,0 1,18.176 28.891L7.6,28.891A6.85,6.85 0,0 1,0.75 22.041L0.75,7.6A6.85,6.85 0,0 1,7.6 0.75z"
+        android:strokeWidth="1.5"
+        android:strokeColor="@color/airpods_black" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0.253,8.266L7.5,8.266"
+        android:strokeWidth="1.5"
+        android:strokeColor="@color/airpods_black" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M8.501,7.331L17.501,7.331A0.75,0.75 0,0 1,18.251 8.081L18.251,8.081A0.75,0.75 0,0 1,17.501 8.831L8.501,8.831A0.75,0.75 0,0 1,7.751 8.081L7.751,8.081A0.75,0.75 0,0 1,8.501 7.331z"
+        android:strokeWidth="1.5"
+        android:strokeColor="@color/airpods_black" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M18.5,8.266L25.107,8.266"
+        android:strokeWidth="1.5"
+        android:strokeColor="@color/airpods_black" />
+</vector>

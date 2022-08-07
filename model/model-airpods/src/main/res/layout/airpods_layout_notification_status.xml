@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/airpods_bg_main"
+    android:gravity="center_vertical"
+    android:minHeight="48dp">
+
+    <RelativeLayout
+        android:id="@+id/leftPod"
+        android:layout_width="56dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/leftPodImg"
+            android:layout_width="18dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/airpods_ic_pod_left" />
+
+        <ImageView
+            android:id="@+id/leftPodBatImg"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/leftPodText"
+            android:layout_alignStart="@id/leftPodText"
+            android:layout_alignEnd="@id/leftPodText" />
+
+        <TextView
+            android:id="@+id/leftPodText"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@id/leftPodImg"
+            android:gravity="center|bottom"
+            android:text="-"
+            android:textColor="@color/airpods_black"
+            tools:text="100%" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rightPod"
+        android:layout_width="56dp"
+        android:layout_height="32dp"
+        android:layout_toEndOf="@id/leftPod">
+
+        <ImageView
+            android:id="@+id/rightPodImg"
+            android:layout_width="18dp"
+            android:layout_height="32dp"
+            android:src="@drawable/airpods_ic_pod_right" />
+
+        <ImageView
+            android:id="@+id/rightPodBatImg"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rightPodText"
+            android:layout_alignStart="@id/rightPodText"
+            android:layout_alignEnd="@id/rightPodText"
+            android:layout_toEndOf="@id/rightPodImg" />
+
+        <TextView
+            android:id="@+id/rightPodText"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/rightPodImg"
+            android:gravity="center|bottom"
+            android:text="-"
+            android:textColor="@color/airpods_black"
+            tools:text="100%" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/podCase"
+        android:layout_width="72dp"
+        android:layout_height="32dp"
+        android:layout_toEndOf="@id/rightPod">
+
+        <ImageView
+            android:id="@+id/podCaseImg"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/airpods_ic_case" />
+
+        <ImageView
+            android:id="@+id/podCaseBatImg"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/podCaseText"
+            android:layout_alignStart="@id/podCaseText"
+            android:layout_alignEnd="@id/podCaseText"
+            android:layout_toEndOf="@id/podCaseImg" />
+
+        <TextView
+            android:id="@+id/podCaseText"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/podCaseImg"
+            android:gravity="center|bottom"
+            android:text="-"
+            android:textColor="@color/airpods_black"
+            tools:text="100%" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/podNameText"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:maxLines="2"
+        android:textColor="@color/airpods_black"
+        android:textSize="12sp"
+        tools:text="Broncho's AirPods" />
+
+</RelativeLayout>

@@ -1,3 +1,4 @@
 <resources>
     <string name="airpods_app_name">model-airpods</string>
+    <string name="airpods_tile_disconnected_title">未连接</string>
 </resources>
