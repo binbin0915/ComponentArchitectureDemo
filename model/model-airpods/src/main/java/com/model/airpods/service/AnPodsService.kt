@@ -243,6 +243,5 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     override fun onDestroy() {
         super.onDestroy()
         connectionJob.cancel()
-        detectJob.cancel()
     }
 }
