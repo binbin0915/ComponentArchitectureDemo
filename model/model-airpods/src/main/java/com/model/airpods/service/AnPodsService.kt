@@ -32,6 +32,10 @@ import kotlinx.coroutines.flow.*
  * ```
  */
 class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
+
+    private lateinit var connectionJob: Job
+    private lateinit var detectJob: Job
+
     private val anPodsDialog by lazy {
         AppLog.log(TAG, "anPodsDialog被延迟初始化了.....")
         AnPodsDialog(applicationContext)
@@ -62,7 +66,6 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     /**
      * 检查蓝牙连接状态获取设备名称
      */
-    private lateinit var connectionJob: Job
     private fun checkConnection() {
         if (::connectionJob.isInitialized) {
             if (connectionJob.isActive) {
@@ -85,7 +88,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     /**
      * 获取设备电量
      */
-    private lateinit var detectJob: Job
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun detectBattery() {
         if (::detectJob.isInitialized) {
             if (detectJob.isActive) {
@@ -93,18 +96,17 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
             }
             detectJob.cancel()
         }
-        @OptIn(ExperimentalCoroutinesApi::class)
         detectJob = batteryState().map {
             it.parse("auto")
         }.catch {
-//            warn { "detectBattery: onError=${it.message}" }
+            AppLog.log(TAG, "获取设备电量: onError=${it.message}")
         }.onEach {
-//            info { "detectBattery: result=$it" }
+            AppLog.log(TAG, "获取设备电量: result:$it")
             airPodsBatteryState.value = it
         }.onStart {
-//            info { "detectBattery: onStart..." }
+            AppLog.log(TAG, "获取设备电量: onStart")
         }.onCompletion {
-//            info { "detectBattery: onCompletion..." }
+            AppLog.log(TAG, "获取设备电量: onCompletion")
         }.launchIn(lifecycleScope)
     }
 
@@ -112,17 +114,16 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
      * 蓝牙连接状态变化广播
      */
     private fun blueToothBroadcastFlow() {
-        @OptIn(ExperimentalCoroutinesApi::class)
-        val flow = fromBroadCast()
+        @OptIn(ExperimentalCoroutinesApi::class) val flow = fromBroadCast()
         lifecycleScope.launch(Dispatchers.Main) {
             flow.collect {
                 airPodsConnectionState.value = it
                 //蓝牙连接时弹窗，断开时取消弹窗
                 if (it.isConnected) {
-                    Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "蓝牙连接时弹窗")
+                    Log.d(TAG, "蓝牙连接时弹窗.....")
                     anPodsDialog.show()
                 } else {
-                    Log.d("AAAAAAAAAAAAAAAAAAAAAAA", "断开时取消弹窗")
+                    Log.d(TAG, "断开时取消弹窗.....")
                     anPodsDialog.onBackPressed()
                 }
             }
@@ -173,22 +174,21 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         }
         batteryState ?: return
         notification.setContentTitle(connectionState.deviceName)
-        val content =
-            if (batteryState.caseBattery <= 10) "L:${
+        val content = if (batteryState.caseBattery <= 10) {
+            "L:${
                 getTitle(
-                    batteryState.leftBattery,
-                    batteryState.isLeftCharge
+                    batteryState.leftBattery, batteryState.isLeftCharge
                 )
             }  R:${
                 getTitle(
                     batteryState.rightBattery, batteryState.isLeftCharge
                 )
             }  Case:${getTitle(batteryState.caseBattery, batteryState.isLeftCharge)}"
-            else "L:${getTitle(batteryState.leftBattery, batteryState.isLeftCharge)}  R:${
-                getTitle(
-                    batteryState.rightBattery, batteryState.isLeftCharge
-                )
-            }"
+        } else "L:${getTitle(batteryState.leftBattery, batteryState.isLeftCharge)}  R:${
+            getTitle(
+                batteryState.rightBattery, batteryState.isLeftCharge
+            )
+        }"
         notification.setContentText(content)
         notifyManager.notify(NOTIFICATION_ID, notification.build().apply {
             `when` = System.currentTimeMillis()
@@ -202,17 +202,14 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     private fun createNotification() {
         //设置渠道
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel =
-                NotificationChannel(
-                    CHANNEL_ID,
-                    CHANNEL_ID,
-                    NotificationManager.IMPORTANCE_HIGH
-                ).apply {
-                    enableVibration(false)
-                    enableLights(false)
-                    setShowBadge(true)
-                    lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-                }
+            val channel = NotificationChannel(
+                CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                enableVibration(false)
+                enableLights(false)
+                setShowBadge(true)
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            }
             notifyManager.createNotificationChannel(channel)
             //后台
             notification.setContentTitle("搜素中.....")
