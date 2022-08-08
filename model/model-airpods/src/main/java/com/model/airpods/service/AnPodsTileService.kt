@@ -15,25 +15,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ServiceLifecycleDispatcher
 import com.model.airpods.R
-import com.model.airpods.util.ACTION_POPUP
-import com.model.airpods.util.airPodsBatteryState
-import com.model.airpods.util.airPodsConnectionState
-import com.model.airpods.util.dp
-
-/**
- * 磁贴
- */
-
+import com.model.airpods.util.*
 
 fun getTitle(level: Int, charge: Boolean = false): String {
     return (if (level == 10) "100%" else if (level < 10) (level * 10 + 5).toString() + "%" else "-") + if (charge && level < 10) "+" else ""
 }
 
 fun Context.getTitleBitmap(
-    leftBattery: Int,
-    leftCharge: Boolean,
-    rightBattery: Int,
-    rightCharge: Boolean
+    leftBattery: Int, leftCharge: Boolean, rightBattery: Int, rightCharge: Boolean
 ): Bitmap {
     val strokeSize = 2.dp.toFloat()
     val batteryWidth = 26.dp.toFloat()
@@ -43,10 +32,7 @@ fun Context.getTitleBitmap(
 
     //L battery rectf
     val leftBatteryRectF = RectF(
-        2.dp.toFloat(),
-        batteryCapHeight,
-        batteryWidth + 2.dp,
-        batteryCapHeight + batteryHeight
+        2.dp.toFloat(), batteryCapHeight, batteryWidth + 2.dp, batteryCapHeight + batteryHeight
     )
     //L battery cap rectf
     val leftBatteryCapRectF = RectF(
@@ -146,10 +132,7 @@ fun Context.getDefaultPaint(textSize: Float): TextPaint {
 
         isFakeBoldText = true
         setShadowLayer(
-            0.1f,
-            0f,
-            WATER_MARK_SHADOW_Y,
-            WATER_MARK_SHADOW_Y_COLOR
+            0.1f, 0f, WATER_MARK_SHADOW_Y, WATER_MARK_SHADOW_Y_COLOR
         )
         strokeWidth = 2f
         style = Paint.Style.FILL_AND_STROKE
@@ -162,7 +145,7 @@ class AnPodsTileService : TileService(), LifecycleOwner {
     private val mDispatcher = ServiceLifecycleDispatcher(this)
     override fun onCreate() {
         super.onCreate()
-        Log.d("AAAAAAAAAAAAAAAAAAA", "AnPodsTileService创建")
+        Log.d(TAG, "AnPodsTileService创建")
         mDispatcher.onServicePreSuperOnCreate()
         airPodsBatteryState.observe({ lifecycle }) {
             val state = airPodsConnectionState.value
@@ -177,8 +160,7 @@ class AnPodsTileService : TileService(), LifecycleOwner {
             updateTile(
                 if (!it.isConnected) getString(R.string.airpods_tile_disconnected_title) else it.deviceName,
                 if (!it.isConnected) Icon.createWithResource(
-                    applicationContext,
-                    R.drawable.airpods_ic_airpods
+                    applicationContext, R.drawable.airpods_ic_airpods
                 ) else null,
                 if (!it.isConnected) Tile.STATE_INACTIVE else Tile.STATE_ACTIVE
             )
@@ -201,6 +183,11 @@ class AnPodsTileService : TileService(), LifecycleOwner {
         mDispatcher.onServicePreSuperOnDestroy()
     }
 
+
+    /**
+     * * 打开下拉菜单的时候调用,当快速设置按钮并没有在编辑栏拖到设置栏中不会调用
+     * * 在TleAdded之后会调用一次
+     */
     override fun onStartListening() {
         super.onStartListening()
         val state = airPodsConnectionState.value
@@ -213,6 +200,10 @@ class AnPodsTileService : TileService(), LifecycleOwner {
         }
     }
 
+    /**
+     * * 关闭下拉菜单的时候调用,当快速设置按钮并没有在编辑栏拖到设置栏中不会调用
+     * * 在onTileRemoved移除之前也会调用移除
+     */
     override fun onStopListening() {
         super.onStopListening()
         val state = airPodsConnectionState.value
@@ -234,6 +225,9 @@ class AnPodsTileService : TileService(), LifecycleOwner {
         qsTile.updateTile()
     }
 
+    /**
+     * 点击磁贴的时候调用，启动service
+     */
     override fun onClick() {
         super.onClick()
         startService(Intent(this, AnPodsService::class.java).apply { action = ACTION_POPUP })
