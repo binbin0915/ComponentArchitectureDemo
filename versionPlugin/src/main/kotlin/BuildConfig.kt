@@ -10,5 +10,5 @@ object BuildConfig {
     const val applicationId ="com.wangkai.myapplication"
     const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     const val versionName = "1.0"
-    const val versionCode = 1
+    const val versionCode = 2
 }
