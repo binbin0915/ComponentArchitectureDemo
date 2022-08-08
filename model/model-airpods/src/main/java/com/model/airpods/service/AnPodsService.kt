@@ -135,7 +135,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
             connectionJob.cancel()
             anPodsDialog.updateConnectedDevice(it)
             AppLog.log(TAG, "收到了连接状态变化的livedata.....")
-            updateWidgetUI(notification, it)
+            updateWidgetUI(notification, connectionState = it)
             //已连接--获取设备电量信息
             if (it.isConnected) {
                 AppLog.log(TAG, "已连接,获取设备电量信息.....")
@@ -148,7 +148,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
             val state = airPodsConnectionState.value
             if (state == null || !state.isConnected) return@observe
             AppLog.log(TAG, "收到了耳机电量信息变化的livedata.....")
-            updateWidgetUI(notification, state)
+            updateWidgetUI(notification, connectionState = state)
             anPodsDialog.updateUI(it)
         }
     }
@@ -214,6 +214,12 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
                     lockscreenVisibility = Notification.VISIBILITY_PUBLIC
                 }
             notifyManager.createNotificationChannel(channel)
+            //后台
+            notification.setContentTitle("搜素中.....")
+            notification.setContentText("")
+            startForeground(NOTIFICATION_ID, notification.build().apply {
+                `when` = System.currentTimeMillis()
+            })
         }
     }
 

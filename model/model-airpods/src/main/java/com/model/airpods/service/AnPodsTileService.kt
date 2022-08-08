@@ -230,7 +230,16 @@ class AnPodsTileService : TileService(), LifecycleOwner {
      */
     override fun onClick() {
         super.onClick()
-        startService(Intent(this, AnPodsService::class.java).apply { action = ACTION_POPUP })
+        /*Android 8.0 不再允许后台进程直接通过startService方式去启动服务，改为startForegroundService方式启动*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(Intent(this, AnPodsService::class.java).apply {
+                action = ACTION_POPUP
+            })
+        } else {
+            startService(Intent(this, AnPodsService::class.java).apply { action = ACTION_POPUP })
+        }
+
+
     }
 
     override fun getLifecycle(): Lifecycle {
