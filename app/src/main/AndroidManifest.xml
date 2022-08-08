@@ -16,7 +16,10 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 获取用户设备的IMEI，通过IMEI对用户进行唯一标识，以便提供统计分析服务。 （友盟统计的）-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
+    <!--SD卡写入权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--允许安装来自未知来源-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".MainApplication"
@@ -50,20 +53,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-<!--            &lt;!&ndash;友盟统计的集成测试配置&ndash;&gt;-->
-<!--            &lt;!&ndash;1.唤起码默认为“um.该app对应的appkey”，不可改变&ndash;&gt;-->
-<!--            &lt;!&ndash;2.请使用单独intent-filter,和其他intent-filter并列，不要将上述代码填入其他intent-filter里；&ndash;&gt;-->
-<!--            &lt;!&ndash;3.该功能仅9.4.0及以上版本的SDK支持&ndash;&gt;-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-
-<!--                <data android:scheme="um.624aef686adb343c47f143a4" />-->
-<!--            </intent-filter>-->
         </activity>
+        <!--腾讯更新-->
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
 
         <!--x5内核首次加载时优化的Service声明。-->
         <!--该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。-->

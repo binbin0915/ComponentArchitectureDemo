@@ -28,3 +28,9 @@
 -keep class com.uc.** { *; }
 -keep class com.efs.** { *; }
 # -------------------------友盟统计相关-----------------------
+
+# -------------------------腾讯bugly相关-----------------------
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+-keep class android.support.**{*;}
+# -------------------------腾讯bugly相关-----------------------

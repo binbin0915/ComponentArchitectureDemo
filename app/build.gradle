@@ -17,6 +17,12 @@ android {
         testInstrumentationRunner BuildConfig.testInstrumentationRunner
         //统一资源前缀，规范资源引用
         resourcePrefix "app_"
+
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     /*风味维度*/
     flavorDimensions "default"
@@ -81,6 +87,14 @@ dependencies {
     //公共基础包
     implementation project(":library:lib-common")
     implementation project(":library:lib-base")
+
+
+    // SDK（2.1.5及以上版本）已经将Java Crash和Native Crash捕获功能分开，如果想使用NDK库，需要配置： implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+    implementation 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
+
     //用于设置主题
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation project(path: ':library:lib-file')
