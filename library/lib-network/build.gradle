@@ -16,7 +16,7 @@ android {
 
 dependencies {
     //阿里云oss
-    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.11'
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.12'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.10'
     implementation 'androidx.appcompat:appcompat:1.4.1'//权限判断用
@@ -28,5 +28,5 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0") {
         exclude group: 'com.google.code.gson', module: "gson"
     }
-    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.code.gson:gson:2.9.1'
 }
