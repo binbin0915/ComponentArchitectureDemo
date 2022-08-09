@@ -3,13 +3,10 @@ package com.model.airpods.service
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
@@ -240,6 +237,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
 
     override fun onDestroy() {
         super.onDestroy()
+        AppLog.log(TAG, "AnPodsService被销毁....")
         if (::connectionJob.isInitialized) {
             if (connectionJob.isActive) {
                 connectionJob.cancel()
