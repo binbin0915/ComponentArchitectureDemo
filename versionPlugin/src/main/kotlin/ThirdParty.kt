@@ -1,4 +1,3 @@
-
 /**
  * @author wangkai
  * @desciption 第三方依赖包
@@ -8,7 +7,7 @@ object ThirdPart {
     const val  topSnackBar="com.github.PengHaiZhuo:TSnackBar:1.1.1"
 
     //网路请求库retrofit
-    val retrofit=Retrofit
+    val retrofit= Retrofit
     object Retrofit{
         private const val retrofit_version = "2.8.1"
         const val retrofit = "com.squareup.retrofit2:retrofit:$retrofit_version"
