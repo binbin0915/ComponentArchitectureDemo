@@ -3,8 +3,10 @@ package com.model.airpods.service
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
@@ -19,6 +21,7 @@ import com.model.airpods.ui.widget.AnPodsDialog
 import com.model.airpods.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+
 
 /**
  *
@@ -52,6 +55,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     }
 
     override fun onCreate() {
+        AppLog.log(TAG, "创建了AnPodsService....")
         super.onCreate()
         //创建通知渠道
         createNotification()
@@ -69,9 +73,8 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     private fun checkConnection() {
         if (::connectionJob.isInitialized) {
             if (connectionJob.isActive) {
-                return
+                connectionJob.cancel()
             }
-            connectionJob.cancel()
         }
         connectionJob = lifecycleScope.launch {
             getConnected().also {
@@ -90,12 +93,13 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
      */
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun detectBattery() {
+        AppLog.log(TAG, "获取设备电量信息111111.....")
         if (::detectJob.isInitialized) {
             if (detectJob.isActive) {
-                return
+                detectJob.cancel()
             }
-            detectJob.cancel()
         }
+        AppLog.log(TAG, "获取设备电量信息222222.....")
         detectJob = batteryState().map {
             it.parse("auto")
         }.catch {
@@ -120,10 +124,10 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
                 airPodsConnectionState.value = it
                 //蓝牙连接时弹窗，断开时取消弹窗
                 if (it.isConnected) {
-                    Log.d(TAG, "蓝牙连接时弹窗.....")
+                    AppLog.log(TAG, "蓝牙连接时弹窗.....")
                     anPodsDialog.show()
                 } else {
-                    Log.d(TAG, "断开时取消弹窗.....")
+                    AppLog.log(TAG, "断开时取消弹窗.....")
                     anPodsDialog.onBackPressed()
                 }
             }
@@ -221,6 +225,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        AppLog.log(TAG, "AnPodsService onStartCommand....")
         if (intent?.action == ACTION_POPUP) {
             anPodsDialog.show()
             checkConnection()
@@ -235,6 +240,15 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
 
     override fun onDestroy() {
         super.onDestroy()
-        connectionJob.cancel()
+        if (::connectionJob.isInitialized) {
+            if (connectionJob.isActive) {
+                connectionJob.cancel()
+            }
+        }
+        if (::detectJob.isInitialized) {
+            if (detectJob.isActive) {
+                detectJob.cancel()
+            }
+        }
     }
 }

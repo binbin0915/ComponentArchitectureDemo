@@ -9,6 +9,7 @@ import android.bluetooth.le.ScanSettings
 import android.content.Context
 import androidx.annotation.CheckResult
 import androidx.lifecycle.MutableLiveData
+import com.library.logcat.AppLog
 import com.model.airpods.model.BatteryState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -39,7 +40,9 @@ val airPodsBatteryState = MutableLiveData<BatteryState>()
 @CheckResult
 @ExperimentalCoroutinesApi
 fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
+    AppLog.log(TAG, "获取设备电量信息333333.....")
     checkMainThread()
+    AppLog.log(TAG, "获取设备电量信息444444.....")
     val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
     val scanCallback = object : ScanCallback() {
         override fun onBatchScanResults(results: MutableList<ScanResult>) {
@@ -56,6 +59,7 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
 
         override fun onScanFailed(errorCode: Int) {
             //扫描失败
+            AppLog.log(TAG, "扫描失败.....errorCode:$errorCode")
             super.onScanFailed(errorCode)
         }
     }
@@ -68,11 +72,17 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
         this[1] = -1
     }
     val scanFilter = ScanFilter.Builder()
-//        .setManufacturerData(76, manufacturerData, manufacturerDataMask)
+        .setManufacturerData(76, manufacturerData, manufacturerDataMask)
         .build()
     val filters: List<ScanFilter> = listOf(scanFilter)
     val settings = ScanSettings.Builder()
+        //设置蓝牙LE扫描的扫描模式。
+        //使用最高占空比进行扫描。建议只在应用程序处于此模式时使用此模式在前台运行
         .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER)
+        //设置蓝牙LE扫描滤波器硬件匹配的匹配模式
+        //在主动模式下，即使信号强度较弱，hw也会更快地确定匹配.在一段时间内很少有目击/匹配。
+//        .setMatchMode(ScanSettings.MATCH_MODE_AGGRESSIVE)
+//        .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
         .setReportDelay(2)
         .build()
 //    val flushJob = launch {
