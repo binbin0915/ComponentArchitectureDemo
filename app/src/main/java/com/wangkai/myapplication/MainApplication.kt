@@ -61,9 +61,8 @@ class MainApplication : BaseApplication() {
         }
         QbSdk.initX5Environment(appContext, cb)
 
-        // 设置全局http响应
+        /*------------------------------------设置全局http响应-----------------------------------*/
         GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())
-
         /*-------------------------------------BRV相关------------------------------------------*/
         /**
          *  推荐在Application中进行全局配置缺省页, 当然同样每个页面可以单独指定缺省页.
