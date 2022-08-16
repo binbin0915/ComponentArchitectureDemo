@@ -7,13 +7,6 @@ android {
             applicationId "com.model.airpods"
         }
     }
-
-    dexOptions {
-        preDexLibraries false
-    }
     //统一资源前缀，规范资源引用
     resourcePrefix "airpods_"
-}
-dependencies {
-
 }

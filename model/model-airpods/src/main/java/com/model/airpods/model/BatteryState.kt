@@ -9,17 +9,25 @@ import androidx.annotation.Keep
  */
 @Keep
 data class BatteryState(
-    //当前时间戳
+    /**
+     * 当前时间戳
+     */
     val timestamp: Long,
-    //当前电量
+    /**
+     * 当前电量
+     */
     val leftBattery: Int,
     val rightBattery: Int,
     val caseBattery: Int,
-    //是否在充电
+    /**
+     * 是否在充电
+     */
     val isLeftCharge: Boolean,
     val isRightCharge: Boolean,
     val isCaseCharge: Boolean,
-    //模式
+    /**
+     * 模式
+     */
     val model: String
 )
 

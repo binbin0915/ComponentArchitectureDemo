@@ -58,21 +58,16 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         createNotification()
         //检查连接状态
         checkConnection()
-        //蓝牙连接广播
-        blueToothBroadcastFlow()
         //livedata状态变化
         livedataObserve()
+        //蓝牙连接广播
+        blueToothBroadcastFlow()
     }
 
     /**
      * 检查蓝牙连接状态获取设备名称
      */
     private fun checkConnection() {
-        if (::connectionJob.isInitialized) {
-            if (connectionJob.isActive) {
-                connectionJob.cancel()
-            }
-        }
         connectionJob = lifecycleScope.launch {
             getConnected().also {
                 if (it.isConnected) {
@@ -93,8 +88,9 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         AppLog.log(TAG, "获取设备电量信息111111.....")
         if (::detectJob.isInitialized) {
             if (detectJob.isActive) {
-                detectJob.cancel()
+                return
             }
+            detectJob.cancel()
         }
         AppLog.log(TAG, "获取设备电量信息222222.....")
         detectJob = batteryState().map {
@@ -124,7 +120,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
                     AppLog.log(TAG, "蓝牙连接时弹窗.....")
                     anPodsDialog.show()
                 } else {
-                    AppLog.log(TAG, "断开时取消弹窗.....")
+                    AppLog.log(TAG, "没有连接不显示弹窗.....")
                     anPodsDialog.onBackPressed()
                 }
             }
@@ -137,10 +133,10 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
             connectionJob.cancel()
             anPodsDialog.updateConnectedDevice(it)
             AppLog.log(TAG, "收到了连接状态变化的livedata.....")
-            updateWidgetUI(notification, connectionState = it)
             //已连接--获取设备电量信息
             if (it.isConnected) {
                 AppLog.log(TAG, "已连接,获取设备电量信息.....")
+                updateWidgetUI(notification, connectionState = it)
                 detectBattery()
             }
         }
@@ -238,11 +234,6 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     override fun onDestroy() {
         super.onDestroy()
         AppLog.log(TAG, "AnPodsService被销毁....")
-        if (::connectionJob.isInitialized) {
-            if (connectionJob.isActive) {
-                connectionJob.cancel()
-            }
-        }
         if (::detectJob.isInitialized) {
             if (detectJob.isActive) {
                 detectJob.cancel()

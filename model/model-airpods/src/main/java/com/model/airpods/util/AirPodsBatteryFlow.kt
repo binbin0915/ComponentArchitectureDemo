@@ -71,9 +71,8 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
         this[0] = -1
         this[1] = -1
     }
-    val scanFilter = ScanFilter.Builder()
-        .setManufacturerData(76, manufacturerData, manufacturerDataMask)
-        .build()
+    val scanFilter =
+        ScanFilter.Builder().setManufacturerData(76, manufacturerData, manufacturerDataMask).build()
     val filters: List<ScanFilter> = listOf(scanFilter)
     val settings = ScanSettings.Builder()
         //设置蓝牙LE扫描的扫描模式。
@@ -83,8 +82,7 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
         //在主动模式下，即使信号强度较弱，hw也会更快地确定匹配.在一段时间内很少有目击/匹配。
 //        .setMatchMode(ScanSettings.MATCH_MODE_AGGRESSIVE)
 //        .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
-        .setReportDelay(2)
-        .build()
+        .setReportDelay(2).build()
 //    val flushJob = launch {
 //        while (isActive) {
 //            // Can undercut the minimum setReportDelay(), e.g. 5000ms on a Pixel5@12
@@ -98,14 +96,12 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
     awaitClose {
         manager.adapter.bluetoothLeScanner.stopScan(scanCallback)
     }
-}.conflate()
-    .filter {
-        it.rssi > -60
-    }
-    .filter {
-        val data = it.scanRecord?.getManufacturerSpecificData(76)
-        data != null && data.size == 27 && data.decodeHex().isNotEmpty()
-    }
+}.conflate().filter {
+    it.rssi > -60
+}.filter {
+    val data = it.scanRecord?.getManufacturerSpecificData(76)
+    data != null && data.size == 27 && data.decodeHex().isNotEmpty()
+}
 
 
 fun ScanResult.parse(overrideModel: String): BatteryState {
