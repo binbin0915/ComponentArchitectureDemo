@@ -60,3 +60,11 @@ kapt {
         arg("AROUTER_MODULE_NAME", project.getName())
     }
 }
+dependencies {
+    //路由
+    implementation('com.alibaba:arouter-api:1.5.2') {
+        //过滤掉v4包里面的东西 防止和AndroidX冲突
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    kapt 'com.alibaba:arouter-compiler:1.5.2'    //ARouter路由compiler
+}
