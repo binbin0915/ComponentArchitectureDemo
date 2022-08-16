@@ -1,6 +1,16 @@
-apply from: "../../app-model-build.gradle"
+plugins {
+    id 'com.wangkai.version'
+}
+apply from: rootProject.file('app-model-build.gradle')
 
 android {
+    compileSdk BuildConfig.compileSdk
+    defaultConfig {
+        minSdk BuildConfig.minSdk
+        targetSdk BuildConfig.targetSdk
+        versionCode BuildConfig.versionCode
+        versionName BuildConfig.versionName
+    }
     defaultConfig {
         if (isRunModel.toBoolean()) {
             applicationId "com.model.splash"
@@ -9,7 +19,27 @@ android {
     //统一资源前缀，规范资源引用
     resourcePrefix "splash_"
 }
-
 dependencies {
-
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    //KTX
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-service:2.4.1'
+    //基础组件库
+    implementation project(":library:lib-base")
+    //组件包
+    implementation project(":library:lib-widget")
+    //公共基础包
+    implementation project(":library:lib-common")
+    //路由
+    implementation('com.alibaba:arouter-api:1.5.2') {
+        //过滤掉v4包里面的东西 防止和AndroidX冲突
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
+    kapt 'com.alibaba:arouter-compiler:1.5.2'    //ARouter路由compiler
 }

@@ -4,6 +4,19 @@ pluginManagement {
         google()
         mavenCentral()
         maven { url 'https://repo1.maven.org/maven2/' }
+        // 1. 配置插件路径
+        maven {
+            url = uri('./local-plugin-repository')
+        }
+    }
+
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.namespace == 'com.wangkai.version1') {
+                // 2. 增加插件依赖
+                useModule("com.wangkai.version1:version1:1.0.0")
+            }
+        }
     }
 }
 dependencyResolutionManagement {

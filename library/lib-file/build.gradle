@@ -2,7 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
-    id("com.wangkai.version") apply false
+    id 'com.wangkai.version'
 }
 /**
  * 文件系统

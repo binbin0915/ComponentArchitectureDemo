@@ -4,7 +4,7 @@ plugins {
     id "kotlin-parcelize"
     //kotlin替代注解
     id "kotlin-kapt"
-    id("com.wangkai.version") apply false
+    id 'com.wangkai.version'
 }
 
 /**
