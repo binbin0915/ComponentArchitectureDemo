@@ -88,7 +88,7 @@ dependencies {
     //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
 
     //用于设置主题
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation AndroidX.appcompat
     implementation project(path: ':library:lib-file')
     if (!isRunModel.toBoolean()) {
         implementation project(":model:model-splash")

@@ -12,8 +12,7 @@ android {
 }
 
 dependencies {
-
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation AndroidX.coreKtx
+    implementation AndroidX.appcompat
     implementation "androidx.fragment:fragment-ktx:1.5.0-alpha04"
 }

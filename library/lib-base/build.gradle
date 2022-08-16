@@ -33,8 +33,8 @@ kapt {
  * 基础的MVVM架构封装*/
 dependencies {
     //MVVM主体框架 -- 依赖不对外开放
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation AndroidX.coreKtx
+    implementation AndroidX.appcompat
     implementation 'com.google.android.material:material:1.5.0'
     //协程支持
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'

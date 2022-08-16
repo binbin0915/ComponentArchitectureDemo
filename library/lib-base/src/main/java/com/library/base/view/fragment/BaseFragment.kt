@@ -150,7 +150,7 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
      * 创建viewModel
      */
     private fun createViewModel(): VM {
-        return ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(getVmClazz(this))
+        return ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[getVmClazz(this)]
     }
 
 

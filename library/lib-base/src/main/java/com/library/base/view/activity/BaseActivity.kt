@@ -107,7 +107,7 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
      * 创建viewModel
      */
     private fun createViewModel(): VM {
-        return ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(getVmClazz(this))
+        return ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[getVmClazz(this)]
     }
 
     /**

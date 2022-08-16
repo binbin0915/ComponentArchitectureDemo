@@ -17,7 +17,7 @@ android {
 dependencies {
     //阿里云oss
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.12'
-    implementation 'androidx.appcompat:appcompat:1.4.1'//权限判断用
+    implementation AndroidX.appcompat//权限判断用
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     //协程支持
