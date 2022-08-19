@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.res.Configuration
 import com.alibaba.android.arouter.launcher.ARouter
 import com.library.base.application.BaseModelApplication
-import com.library.common.netconfig.GlobalResponseHandler
+import com.library.common.net.GlobalResponseHandler
 import com.model.center.BuildConfig
-import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
+import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 
 class CenterModelApplication : BaseModelApplication(){
     override fun attachBaseContext(context: Context) {

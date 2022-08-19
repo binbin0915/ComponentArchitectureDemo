@@ -1,7 +1,7 @@
 package com.model.login.data
 
-import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
-import com.yupfeg.remote.tools.handler.RestApiException
+import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
+import com.wangkai.remote.tools.handler.RestApiException
 
 /**
  * 远程网络数据源

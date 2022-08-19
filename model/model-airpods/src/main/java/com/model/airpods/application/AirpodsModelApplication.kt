@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.res.Configuration
 import com.alibaba.android.arouter.launcher.ARouter
 import com.library.base.application.BaseModelApplication
-import com.library.common.netconfig.GlobalResponseHandler
+import com.library.common.net.GlobalResponseHandler
 import com.model.airpods.BuildConfig
-import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
+import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 
 /**
  * 作用描述：模块独有的初始化

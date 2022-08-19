@@ -1,12 +1,11 @@
 package com.model.mykotlin.data.delegate
 
 import com.google.gson.GsonBuilder
-import com.library.common.netconfig.LoggerHttpLogPrinterImpl
+import com.library.common.net.LoggerHttpLogPrinterImpl
 import com.yupfeg.executor.ExecutorProvider
-import com.yupfeg.remote.HttpRequestMediator
-import com.yupfeg.remote.ext.addDslRemoteConfig
-import com.yupfeg.remote.tools.delegator.BaseRequestApiDelegator
-import com.yupfeg.remote.interceptor.HttpLogInterceptor
+import com.wangkai.remote.ext.addDslRemoteConfig
+import com.wangkai.remote.tools.delegator.BaseRequestApiDelegator
+import com.wangkai.remote.interceptor.HttpLogInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
 
 
@@ -22,7 +21,7 @@ inline fun <reified T> wanAndroidApiDelegate() = WanAndroidApiDelegator(clazz = 
  * @author WangKai
  */
 class WanAndroidApiDelegator<T>(clazz: Class<T>) :
-    BaseRequestApiDelegator<T>(clazz, HttpRequestMediator.DEFAULT_CLIENT_KEY) {
+    BaseRequestApiDelegator<T>(clazz, com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY) {
     override fun addHttpRequestConfig(configKey: String) {
         addDslRemoteConfig(configKey) {
             baseUrl = "https://www.wanandroid.com/"

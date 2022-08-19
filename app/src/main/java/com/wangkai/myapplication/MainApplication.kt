@@ -1,24 +1,17 @@
 package com.wangkai.myapplication
 
 import ando.file.core.FileOperator
-import android.content.Context
-import android.os.Environment
-import android.view.View
 import com.drake.statelayout.StateConfig
 import com.library.base.application.BaseApplication
-import com.library.common.netconfig.GlobalResponseHandler
-import com.model.home.HomeMainActivity
+import com.library.common.net.GlobalResponseHandler
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.bugly.Bugly
-import com.tencent.bugly.beta.Beta
-import com.tencent.bugly.beta.UpgradeInfo
-import com.tencent.bugly.beta.ui.UILifecycleListener
 import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.QbSdk.PreInitCallback
-import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
+import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 
 
 /**

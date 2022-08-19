@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.library.base.viewmodel.BaseViewModel
 import com.model.mykotlin.data.remote.RemoteDataSource
-import com.yupfeg.remote.download.DownLoadUtil
-import com.yupfeg.remote.download.DownloadListener
-import com.yupfeg.remote.download.entity.FileDownloadBean
-import com.yupfeg.remote.download.producer.FileDownloadProducer
-import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
+import com.wangkai.remote.download.DownLoadUtil
+import com.wangkai.remote.download.DownloadListener
+import com.wangkai.remote.download.entity.FileDownloadBean
+import com.wangkai.remote.download.producer.FileDownloadProducer
+import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.io.File

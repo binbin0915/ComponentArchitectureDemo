@@ -8,9 +8,9 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.kongzue.dialogx.DialogX
 import com.kongzue.dialogx.style.MaterialStyle
 import com.library.base.application.BaseModelApplication
-import com.library.common.netconfig.GlobalResponseHandler
+import com.library.common.net.GlobalResponseHandler
 import com.model.home.BuildConfig
-import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
+import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 
 /**
  * 作用描述：首页Application

@@ -1,12 +1,12 @@
 package com.model.login.data
 
 import com.google.gson.GsonBuilder
-import com.library.common.netconfig.LoggerHttpLogPrinterImpl
+import com.library.common.net.CommParamsInterceptor
+import com.library.common.net.LoggerHttpLogPrinterImpl
+import com.wangkai.remote.ext.addDslRemoteConfig
+import com.wangkai.remote.interceptor.HttpLogInterceptor
+import com.wangkai.remote.tools.delegator.BaseRequestApiDelegator
 import com.yupfeg.executor.ExecutorProvider
-import com.yupfeg.remote.HttpRequestMediator
-import com.yupfeg.remote.ext.addDslRemoteConfig
-import com.yupfeg.remote.tools.delegator.BaseRequestApiDelegator
-import com.yupfeg.remote.interceptor.HttpLogInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
 
 
@@ -22,8 +22,12 @@ inline fun <reified T> loginApiDelegate() = LoginApiDelegator(clazz = T::class.j
  * @author WangKai
  */
 class LoginApiDelegator<T>(clazz: Class<T>) :
-    BaseRequestApiDelegator<T>(clazz, HttpRequestMediator.DEFAULT_CLIENT_KEY) {
+    BaseRequestApiDelegator<T>(clazz, com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY) {
     override fun addHttpRequestConfig(configKey: String) {
+        val commHeaders = mutableMapOf<String, String>()
+        commHeaders[""] = ""
+        val commBodyParams = mutableMapOf<String, String>()
+        commHeaders[""] = ""
         addDslRemoteConfig(configKey) {
             baseUrl = "http://39.106.144.234/"
             connectTimeout = 5
@@ -33,6 +37,7 @@ class LoginApiDelegator<T>(clazz: Class<T>) :
             //设置使用外部线程调度器
             executorService = ExecutorProvider.ioExecutor
             networkInterceptors.add(HttpLogInterceptor(LoggerHttpLogPrinterImpl()))
+            networkInterceptors.add(CommParamsInterceptor(commHeaders, commBodyParams))
             //添加gson解析支持
             converterFactories.add(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
         }

@@ -7,7 +7,7 @@ import com.library.base.view.activity.BaseActivity
 import com.library.router.RouterPath
 import com.model.mykotlin.databinding.MykotlinActivityNetNormalBinding
 import com.model.mykotlin.viewmodel.NetNormalViewModel
-import com.yupfeg.remote.download.producer.FileDownloadProducer
+import com.wangkai.remote.download.producer.FileDownloadProducer
 
 @Route(path = RouterPath.PAGE_NET_NORMAL_ACTIVITY, group = RouterPath.GROUP_KOTLIN)
 class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNormalBinding>() {

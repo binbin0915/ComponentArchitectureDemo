@@ -2,8 +2,8 @@ package com.model.mykotlin.data.remote
 
 import com.model.mykotlin.data.delegate.wanAndroidApiDelegate
 import com.model.mykotlin.data.entity.WanAndroidArticleListResponseEntity
-import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
-import com.yupfeg.remote.tools.handler.RestApiException
+import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
+import com.wangkai.remote.tools.handler.RestApiException
 
 /**
  * 远程网络数据源

@@ -1,12 +1,12 @@
 package com.model.mykotlin.data.entity
 
-import com.yupfeg.remote.data.HttpResponseParsable
+import com.wangkai.remote.data.HttpResponseParsable
 import java.io.Serializable
 
 /**
  * WanAndroid的api接口最外层的返回实体
  * * 避免在使用泛型时，由于接口返回格式不规范导致出现异常
- * @author yuPFeG
+ * @author wangkai
  * @date 2021/09/24
  */
 open class WanAndroidHttpResponseEntity : HttpResponseParsable,Serializable{

@@ -1,12 +1,12 @@
 package com.model.mykotlin.data.entity
 
 import com.google.gson.annotations.SerializedName
-import com.yupfeg.remote.data.HttpResponseParsable
+import com.wangkai.remote.data.HttpResponseParsable
 
 /**
  * 掘金PC端接口返回实体
  * * 仅用于测试切换baseUrl
- * @author yuPFeG
+ * @author wangkai
  * @date 2021/03/30
  */
 data class JueJinHttpResultBean(

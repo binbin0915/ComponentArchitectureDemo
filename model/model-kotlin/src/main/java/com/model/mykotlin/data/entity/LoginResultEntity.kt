@@ -3,7 +3,7 @@ package com.model.mykotlin.data.entity
 
 /**
  * wanAndroid的登录接口返回实体
- * @author yuPFeG
+ * @author wangkai
  * @date 2021/09/24
  */
 data class LoginResultEntity(

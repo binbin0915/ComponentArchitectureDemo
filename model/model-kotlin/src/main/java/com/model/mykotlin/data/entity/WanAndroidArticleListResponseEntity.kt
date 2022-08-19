@@ -5,7 +5,7 @@ import java.io.Serializable
 
 /**
  * 玩Android的首页文章列表返回实体类
- * @author yuPFeG
+ * @author wangkai
  * @date 2021/09/25
  */
 data class WanAndroidArticleListResponseEntity (
