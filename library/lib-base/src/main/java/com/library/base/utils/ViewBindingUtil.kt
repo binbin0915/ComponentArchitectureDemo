@@ -27,10 +27,16 @@ fun <VB : ViewBinding> Any.inflateBindingWithGeneric(
     ).invoke(null, layoutInflater, parent, attachToParent) as VB
 }
 
+/**
+ * 在自定义ViewGroup（包括Recyclerview）中使用
+ */
 @JvmName("inflateWithGeneric")
 fun <VB : ViewBinding> Any.inflateBindingWithGeneric(parent: ViewGroup): VB =
     inflateBindingWithGeneric(LayoutInflater.from(parent.context), parent, false)
 
+/**
+ * 在自定义View中使用
+ */
 fun <VB : ViewBinding> Any.bindViewWithGeneric(view: View): VB =
     withGenericBindingClass<VB>(this) { clazz ->
         clazz.getMethod("bind", View::class.java).invoke(null, view) as VB

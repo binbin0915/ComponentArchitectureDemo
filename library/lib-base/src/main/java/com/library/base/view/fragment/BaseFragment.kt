@@ -12,7 +12,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.library.base.expand.ToastType
 import com.library.base.expand.*
 import com.library.base.expand.toast
-import com.library.base.utils.inflateBindingWithGeneric
+import com.library.base.utils.*
 import com.library.base.viewmodel.BaseViewModel
 import com.library.base.viewmodel.EventType
 import com.library.widget.status.MultiStateContainer
