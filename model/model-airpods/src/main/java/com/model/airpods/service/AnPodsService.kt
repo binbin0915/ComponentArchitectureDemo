@@ -236,7 +236,8 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         AppLog.log(TAG, "AnPodsService被销毁....")
         if (::detectJob.isInitialized) {
             if (detectJob.isActive) {
-                detectJob.cancel()
+                AppLog.log(TAG, "已经有获取电量的扫描.....")
+                return
             }
         }
     }

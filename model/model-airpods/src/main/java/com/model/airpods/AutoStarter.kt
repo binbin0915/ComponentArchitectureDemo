@@ -8,6 +8,7 @@ import android.util.Log
 import com.model.airpods.service.AnPodsService
 import com.model.airpods.util.ACTION_POPUP
 
+
 /**
  * 自启动广播，启动后打开蓝牙service
  */

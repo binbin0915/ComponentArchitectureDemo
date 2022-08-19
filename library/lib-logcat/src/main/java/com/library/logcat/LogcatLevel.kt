@@ -13,5 +13,6 @@ enum class LogcatLevel {
     JSON,
     OBJECT,
     VERBOSE,
-    DATA
+    DATA,
+    WARN
 }

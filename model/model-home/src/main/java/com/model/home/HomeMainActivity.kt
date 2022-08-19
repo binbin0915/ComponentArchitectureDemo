@@ -9,11 +9,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.expand.StatusBarStyle
 import com.library.base.view.activity.BaseActivity
+import com.library.router.JumpActivity
 import com.library.router.RouterPath
 import com.library.widget.banner.ext.dp
 import com.library.widget.drawer.DrawerLayout
-import com.model.home.pages.adapter.HomeViewPagerAdapter
 import com.model.home.databinding.HomeActivityMainBinding
+import com.model.home.pages.adapter.HomeViewPagerAdapter
 import com.model.home.viewmodel.HomeMainActivityShareViewModel
 import com.model.home.viewmodel.HomeMainActivityViewModel
 
@@ -29,6 +30,14 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
 
     override fun createdObserve() {
         viewModel.pageData.observe(this) {}
+
+
+        viewBinding.tvPersonalCenter.setOnClickListener {
+            //关闭侧边
+            viewBinding.layoutDrawer.closeDrawer(GravityCompat.START)
+            //跳转到登录页
+            JumpActivity.jump(RouterPath.GROUP_LOGIN, RouterPath.PAGE_LOGIN_ACTIVITY)
+        }
     }
 
     /**

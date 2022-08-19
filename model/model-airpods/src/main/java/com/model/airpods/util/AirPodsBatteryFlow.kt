@@ -42,7 +42,6 @@ val airPodsBatteryState = MutableLiveData<BatteryState>()
 fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
     AppLog.log(TAG, "获取设备电量信息333333.....")
     checkMainThread()
-    AppLog.log(TAG, "获取设备电量信息444444.....")
     val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
     val scanCallback = object : ScanCallback() {
         override fun onBatchScanResults(results: MutableList<ScanResult>) {
@@ -94,6 +93,7 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
 //    manager.adapter.bluetoothLeScanner.startScan(scanCallback)
     //等待关闭
     awaitClose {
+        AppLog.log(TAG, "关闭扫描......")
         manager.adapter.bluetoothLeScanner.stopScan(scanCallback)
     }
 }.conflate().filter {

@@ -67,15 +67,15 @@ open class HttpLogInterceptor(
                 "Sending request %1\$s %2\$s , %3\$s",
                 newRequest.method, requestUrl, protocol.name
             )
-            append(">>> START  ")
-            append(newRequest.method)
-            append("Http Request \n")
-            append("$requestLogTop \n")
+//            append("$requestLogTop \n")
+            append(">>>-----------------------------发送请求-----------------------------\n")
+            append("requestUrl:$requestUrl\n")
+            append("method:" + newRequest.method + "\n")
             //请求头
             appendAllHeaders(newRequest.headers)
             //添加请求的body
             appendRequestBodyContent(newRequest.body)
-            append("\n>>> END ${newRequest.method} Request")
+            append(">>>-----------------------------请求成功-----------------------------\n")
 
             //日志输出长度超出限制时的日志接续前缀，仅用于区分接续日志所在的请求地址
             val continueRequestPrefix = String.format(
@@ -105,13 +105,13 @@ open class HttpLogInterceptor(
         }
         (body as? MultipartBody)?.also {
             //字节流body
-            append(">>> MultipartBody START \n ")
+            append("MultipartBody START \n ")
             appendMultipartBodyContent(it)
-            append(">>> MultipartBody END \n ")
+            append("MultipartBody END \n ")
         } ?: run {
-            append(">>> Body START \n ")
+            append("Body START \n ")
             append("${body.parseBodyToString()} \n")
-            append(">>> Body END")
+            append("Body END\n")
         }
         return isLogContentTooLong(this.toString())
     }
@@ -150,7 +150,7 @@ open class HttpLogInterceptor(
     /**body内容是否为文本类型*/
     protected open fun MediaType.isPlainText(): Boolean {
         this.toString().takeIf { it.isNotEmpty() }?.also {
-            val strType = it.toLowerCase(Locale.getDefault())
+            val strType = it.lowercase(Locale.getDefault())
             if (strType.contains("text") || strType.contains("application/json")) {
                 return true
             }
@@ -167,18 +167,14 @@ open class HttpLogInterceptor(
     protected open fun printResponseDebugLog(response: Response, useTimeMillis: Long) {
         StringBuilder().apply {
             val requestUrl = decodeHttpRequestUrl(url = response.request.url.toString())
-            val responseLogTop = String.format(
-                "<<< Received response %1\$s %2\$s %3\$s %4\$s",
-                response.code, response.message,
-                requestUrl, "( $useTimeMillis ms)"
-            )
-            append("<<< ${response.code} Response\n")
-            append("${responseLogTop}\n")
+            append("<<<-----------------------------收到响应-----------------------------\n")
+            append("响应码： ${response.code}\n")
+            append("相应时间：( $useTimeMillis ms)\n")
             //请求响应header
             appendAllHeaders(response.headers)
             //请求响应body
             appendResponseBodyContent(response.body)
-            append("\n <<<END HTTP")
+            append("<<<-----------------------------响应结束-----------------------------")
 
             //日志输出长度超出限制时的日志接续前缀，仅用于区分接续日志的请求地址
             val continueResponsePrefix = String.format(
@@ -204,7 +200,7 @@ open class HttpLogInterceptor(
         source.request(Long.MAX_VALUE)
         // Buffer the entire body.
         val bodyString = source.buffer.clone().readString(UTF8)
-        append("\n <<< Body START \n $bodyString \n <<< Body END")
+        append("\nBody START \n $bodyString \nBody END\n")
     }
 
     /**

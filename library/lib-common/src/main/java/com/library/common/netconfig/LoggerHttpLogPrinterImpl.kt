@@ -1,9 +1,7 @@
 package com.library.common.netconfig
 
-import com.yupfeg.logger.ext.logd
-import com.yupfeg.logger.ext.loge
-import com.yupfeg.logger.ext.logi
-import com.yupfeg.logger.ext.logw
+import com.library.logcat.AppLog
+import com.library.logcat.LogcatLevel
 import com.yupfeg.remote.log.HttpLogPrinter
 
 /**
@@ -14,18 +12,18 @@ class LoggerHttpLogPrinterImpl : HttpLogPrinter {
         get() = true
 
     override fun printDebugLog(tag: String, content: Any) {
-        logd(tag, content)
+        AppLog.log(LogcatLevel.DEBUG, tag, content.toString())
     }
 
     override fun printInfoLog(tag: String, content: Any) {
-        logi(tag, content)
+        AppLog.log(LogcatLevel.INFO, tag, content.toString())
     }
 
     override fun printWarningLog(tag: String, content: Any) {
-        logw(tag, content)
+        AppLog.log(LogcatLevel.WARN, tag, content.toString())
     }
 
     override fun printErrorLog(tag: String, content: Any) {
-        loge(tag, content)
+        AppLog.log(LogcatLevel.ERROR, tag, content.toString())
     }
 }

@@ -20,6 +20,7 @@ class LogcatImpl : LogcatService {
             LogcatLevel.OBJECT -> logObj(tag = tag, msg = msg)
             LogcatLevel.VERBOSE -> logV(tag = tag, msg = msg)
             LogcatLevel.DATA -> logData(tag = tag, msg = msg)
+            LogcatLevel.WARN -> logW(tag = tag, msg = msg)
         }
     }
 

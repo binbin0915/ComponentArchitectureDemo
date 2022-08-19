@@ -237,8 +237,10 @@ class AnPodsTileService : TileService(), LifecycleOwner {
             action = ACTION_POPUP
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            AppLog.log(TAG, "通过磁贴启动服务8.0以上....")
             startForegroundService(intent)
         } else {
+            AppLog.log(TAG, "通过磁贴启动服务8.0以下....")
             startService(intent)
         }
 
