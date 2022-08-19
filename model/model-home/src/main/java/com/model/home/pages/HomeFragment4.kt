@@ -26,7 +26,7 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
         lifecycleScope.launch(Dispatchers.IO) {
             delay(500)
             lifecycleScope.launch(Dispatchers.Main) {
-                changePageStatus(PageStatus.STATUS_SUCCEED)
+                viewModel.changePageStatus(PageStatus.STATUS_SUCCEED)
             }
         }
     }

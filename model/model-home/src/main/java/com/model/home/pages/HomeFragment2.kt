@@ -23,7 +23,7 @@ class HomeFragment2 : BaseFragment<BaseViewModel, HomeFragmentPage2Binding>(),
         lifecycleScope.launch(Dispatchers.IO) {
             delay(500)
             lifecycleScope.launch(Dispatchers.Main) {
-                changePageStatus(PageStatus.STATUS_SUCCEED)
+                viewModel.changePageStatus(PageStatus.STATUS_SUCCEED)
             }
         }
     }

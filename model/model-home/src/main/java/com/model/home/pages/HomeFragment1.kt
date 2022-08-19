@@ -38,7 +38,7 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
         lifecycleScope.launch(Dispatchers.IO) {
             delay(500)
             lifecycleScope.launch(Dispatchers.Main) {
-                changePageStatus(PageStatus.STATUS_SUCCEED)
+                viewModel.changePageStatus(PageStatus.STATUS_SUCCEED)
             }
         }
     }
@@ -101,13 +101,13 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.emptyBtn -> changePageStatus(PageStatus.STATUS_EMPTY)
-            R.id.emptyRetryBtn -> changePageStatus(PageStatus.STATUS_EMPTY_RETRY)
-            R.id.errorBtn -> changePageStatus(PageStatus.STATUS_ERROR)
-            R.id.errorRetryBtn -> changePageStatus(PageStatus.STATUS_ERROR_RETRY)
-            R.id.networkBtn -> changePageStatus(PageStatus.STATUS_NET_ERROR)
-            R.id.networkRetryBtn -> changePageStatus(PageStatus.STATUS_NET_ERROR_RETRY)
-            R.id.loadingBtn -> changePageStatus(PageStatus.STATUS_LOADING)
+            R.id.emptyBtn -> viewModel.changePageStatus(PageStatus.STATUS_EMPTY)
+            R.id.emptyRetryBtn -> viewModel.changePageStatus(PageStatus.STATUS_EMPTY_RETRY)
+            R.id.errorBtn -> viewModel.changePageStatus(PageStatus.STATUS_ERROR)
+            R.id.errorRetryBtn -> viewModel.changePageStatus(PageStatus.STATUS_ERROR_RETRY)
+            R.id.networkBtn -> viewModel.changePageStatus(PageStatus.STATUS_NET_ERROR)
+            R.id.networkRetryBtn -> viewModel.changePageStatus(PageStatus.STATUS_NET_ERROR_RETRY)
+            R.id.loadingBtn -> viewModel.changePageStatus(PageStatus.STATUS_LOADING)
             R.id.home_imageview -> sharedViewModel.isClick.value = true
         }
         showSucceedStatus()
@@ -124,7 +124,7 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
         lifecycleScope.launch(Dispatchers.IO) {
             delay(2000)
             lifecycleScope.launch(Dispatchers.Main) {
-                changePageStatus(PageStatus.STATUS_SUCCEED)
+                viewModel.changePageStatus(PageStatus.STATUS_SUCCEED)
             }
         }
     }

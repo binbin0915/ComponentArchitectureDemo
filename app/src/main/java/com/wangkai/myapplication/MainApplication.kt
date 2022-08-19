@@ -30,14 +30,14 @@ import com.yupfeg.remote.tools.handler.GlobalHttpResponseProcessor
 class MainApplication : BaseApplication() {
 
     override fun appInit() {
-        /*文件系统初始化*/
+        /*---------------------------------------文件系统初始化--------------------------------------*/
         FileOperator.init(instance, BuildConfig.DEBUG)
 
-        /*---------------------------------------tbs相关---------------------------------------*/
-        // 在调用TBS初始化、创建WebView之前进行如下配置
+        /*----------------------------------------tbs相关------------------------------------------*/
         val map = HashMap<String, Any>()
         map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
         map[TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE] = true
+        // 在调用TBS初始化、创建WebView之前进行如下配置
         QbSdk.initTbsSettings(map)
         //（可选）为了提高内核占比，在初始化前可配置允许移动网络下载内核（大小 40-50 MB）。默认移动网络不下载
         QbSdk.setDownloadWithoutWifi(true)

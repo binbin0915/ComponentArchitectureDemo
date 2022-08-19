@@ -135,13 +135,6 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
     }
 
     /**
-     * 改变页面状态
-     */
-    fun changePageStatus(status: PageStatus) {
-        pageStatus.changePageStatus(status)
-    }
-
-    /**
      * 获取协程作用范围
      */
     fun getLifecycleScope() = viewLifecycleOwner.lifecycleScope
@@ -168,13 +161,13 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
                         }
                     }
                     EventType.EVENT_DIALOG -> {
-                        //TODO 显示弹窗
+                        showDialog()
                     }
                     EventType.EVENT_SHOW_LOADING_DIALOG -> {
-                        //TODO 显示加载框
+                        showLoading()
                     }
                     EventType.EVENT_DISMISS_LOADING_DIALOG -> {
-                        //TODO 关闭加载框
+                        dismissLoading()
                     }
                     EventType.EVENT_CHANGE_PAGE_STATUS -> {
                         //改变页面状态
@@ -189,10 +182,38 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
     }
 
     /**
+     * 改变页面状态
+     */
+    private fun changePageStatus(status: PageStatus) {
+        pageStatus.changePageStatus(status)
+    }
+
+    /**
      * 显示Toast
      */
-    fun showToast(type: ToastType = ToastType.INFO, msg: String) {
+    private fun showToast(type: ToastType = ToastType.INFO, msg: String) {
         requireActivity().toast(type, msg)
+    }
+
+    /**
+     * 显示加载框
+     */
+    private fun showLoading() {
+
+    }
+
+    /**
+     * 关闭加载框
+     */
+    private fun dismissLoading() {
+
+    }
+
+    /**
+     * 显示dialog
+     */
+    private fun showDialog() {
+
     }
 
 

@@ -97,13 +97,6 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     }
 
     /**
-     * 改变页面状态
-     */
-    fun changePageStatus(status: PageStatus) {
-        pageStatus.changePageStatus(status)
-    }
-
-    /**
      * 创建viewModel
      */
     private fun createViewModel(): VM {
@@ -122,13 +115,16 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
                         toast(it.toastType, it.desc)
                     }
                     EventType.EVENT_DIALOG -> {
-                        //TODO 显示弹窗
+                        //显示弹窗
+                        showDialog()
                     }
                     EventType.EVENT_SHOW_LOADING_DIALOG -> {
-                        //TODO 显示加载框
+                        //显示加载框
+                        showLoading()
                     }
                     EventType.EVENT_DISMISS_LOADING_DIALOG -> {
-                        //TODO 关闭加载框
+                        //关闭加载框
+                        dismissLoading()
                     }
                     EventType.EVENT_CHANGE_PAGE_STATUS -> {
                         //改变页面状态
@@ -144,6 +140,34 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
                 }
             }
         }
+    }
+
+    /**
+     * 改变页面状态
+     */
+    private fun changePageStatus(status: PageStatus) {
+        pageStatus.changePageStatus(status)
+    }
+
+    /**
+     * 显示加载框
+     */
+    private fun showLoading() {
+
+    }
+
+    /**
+     * 关闭加载框
+     */
+    private fun dismissLoading() {
+
+    }
+
+    /**
+     * 显示dialog
+     */
+    private fun showDialog() {
+
     }
 
     /**
