@@ -1,7 +1,6 @@
 package com.library.widget.status
 
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import com.library.widget.status.state.*
  * 创建时间：2022/03/18
  * @author：WangKai
  */
-@SuppressLint("ViewConstructor")
 class MultiStateContainer : FrameLayout {
 
     var onRetryEventListener: OnRetryEventListener? = null

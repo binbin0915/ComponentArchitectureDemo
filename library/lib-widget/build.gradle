@@ -8,6 +8,10 @@ plugins {
  * */
 android {
     compileSdk BuildConfig.compileSdk
+    defaultConfig {
+        minSdk BuildConfig.minSdk
+        targetSdk BuildConfig.targetSdk
+    }
     buildFeatures {
         viewBinding true
     }

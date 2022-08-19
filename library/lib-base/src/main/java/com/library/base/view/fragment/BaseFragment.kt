@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.alibaba.android.arouter.launcher.ARouter
 import com.library.base.expand.ToastType
-import com.library.base.expand.getVmClazz
+import com.library.base.expand.*
 import com.library.base.expand.toast
 import com.library.base.utils.inflateBindingWithGeneric
 import com.library.base.viewmodel.BaseViewModel
@@ -161,10 +161,10 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
                         }
                     }
                     EventType.EVENT_DIALOG -> {
-                        showDialog()
+                        showDialog(it.title, it.desc)
                     }
                     EventType.EVENT_SHOW_LOADING_DIALOG -> {
-                        showLoading()
+                        showLoading(it.desc)
                     }
                     EventType.EVENT_DISMISS_LOADING_DIALOG -> {
                         dismissLoading()
@@ -198,7 +198,7 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
     /**
      * 显示加载框
      */
-    private fun showLoading() {
+    private fun showLoading(msg: String) {
 
     }
 
@@ -212,7 +212,7 @@ abstract class BaseFragment<VM : BaseViewModel, VB : ViewBinding> : Fragment() {
     /**
      * 显示dialog
      */
-    private fun showDialog() {
+    private fun showDialog(title: String = "", msg: String = "") {
 
     }
 
