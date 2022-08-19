@@ -63,13 +63,10 @@ open class HttpLogInterceptor(
         StringBuilder().apply {
             val protocol = connection?.protocol() ?: Protocol.HTTP_1_1
             val requestUrl = decodeHttpRequestUrl(url = newRequest.url.toString())
-            val requestLogTop = String.format(
-                "Sending request %1\$s %2\$s , %3\$s",
-                newRequest.method, requestUrl, protocol.name
-            )
 //            append("$requestLogTop \n")
             append(">>>-----------------------------发送请求-----------------------------\n")
             append("requestUrl:$requestUrl\n")
+            append("protocol:${protocol.name}\n")
             append("method:" + newRequest.method + "\n")
             //请求头
             appendAllHeaders(newRequest.headers)
@@ -94,8 +91,8 @@ open class HttpLogInterceptor(
      * @return true - body内容长度过多，输出到logcat需要
      * */
     protected open fun StringBuilder.appendRequestBodyContent(body: RequestBody?): Boolean {
+        append("\n")
         body ?: return false
-
         append("\n")
         body.contentType()?.also { contentType ->
             append("Content-Type : $contentType \n")

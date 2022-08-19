@@ -40,10 +40,10 @@ abstract class BaseCommParamsInterceptor : Interceptor {
             }
         }
         //-------------添加公用的参数------------------
-        addPostBasicParamsToBuilder(request, builder)
-
-        request.body?.contentType()?.charset(UTF8)
-
+        if (request.body != null) {
+            addPostBasicParamsToBuilder(request, builder)
+            request.body?.contentType()?.charset(UTF8)
+        }
         return chain.proceed(builder.build())
     }
 
@@ -56,19 +56,19 @@ abstract class BaseCommParamsInterceptor : Interceptor {
     protected open fun addPostBasicParamsToBuilder(oldRequest: Request, builder: Request.Builder) {
         //POST请求表单提交(判断非空)
         val oldFormBody = oldRequest.body as? FormBody
-        oldFormBody ?: return
         //获取公共固定参数
         commBodyParams?.takeIf { map ->
             //如果没有固定参数，则直接发出原始请求
             map.isNotEmpty()
-        }?.also { params ->
-            val bodySize = oldFormBody.size
-            val paramsMap = HashMap<String, String>(bodySize + 1)
-            //原始请求body参数
-            for (i in 0 until bodySize) {
-                paramsMap[oldFormBody.name(i)] = oldFormBody.value(i)
+        }?.also {
+            val paramsMap = HashMap<String, String>()
+            if (oldFormBody != null) {
+                //原始请求body参数
+                for (i in 0 until oldFormBody.size) {
+                    paramsMap[oldFormBody.name(i)] = oldFormBody.value(i)
+                }
             }
-            paramsMap.putAll(params)
+            paramsMap.putAll(it)
             val bodyBuilder = FormBody.Builder()
             for ((key, value) in paramsMap) {
                 //重新添加所有参数到body中
