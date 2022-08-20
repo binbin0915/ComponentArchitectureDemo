@@ -34,7 +34,7 @@ class LoginApiDelegator<T>(clazz: Class<T>) :
             //设置使用外部线程调度器
             executorService = ExecutorProvider.ioExecutor
             networkInterceptors.add(CommParamsInterceptor())
-            networkInterceptors.add(HttpLogInterceptor(LoggerHttpLogPrinterImpl()))
+            networkInterceptors.add(HttpLogInterceptor(LoggerHttpLogPrinterImpl(),"LOGIN_TAG"))
             //添加gson解析支持
             converterFactories.add(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
         }

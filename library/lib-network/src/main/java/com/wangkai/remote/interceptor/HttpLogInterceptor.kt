@@ -19,11 +19,11 @@ import java.util.concurrent.TimeUnit
  * @date 2022/07/04
  */
 open class HttpLogInterceptor(
-    private val logPrinter: HttpLogPrinter
+    private val logPrinter: HttpLogPrinter,
+    private val DEBUG_HTTP_LOG_TAG: String = "okHttpTag"
 ) : Interceptor {
     companion object {
         private val UTF8 = Charset.forName("UTF-8")
-        private const val DEBUG_HTTP_LOG_TAG = "okHttpTag"
 
         /**
          * 默认Logcat输出日志的最大长度
@@ -69,10 +69,12 @@ open class HttpLogInterceptor(
             append("protocol:${protocol.name}\n")
             append("method:" + newRequest.method + "\n")
             //请求头
+            append("请求头:\n")
             appendAllHeaders(newRequest.headers)
             //添加请求的body
+            append("请求体：\n")
             appendRequestBodyContent(newRequest.body)
-            append(">>>-----------------------------请求成功-----------------------------\n")
+            append(">>>-----------------------------发送完成-----------------------------\n")
 
             //日志输出长度超出限制时的日志接续前缀，仅用于区分接续日志所在的请求地址
             val continueRequestPrefix = String.format(
@@ -91,9 +93,7 @@ open class HttpLogInterceptor(
      * @return true - body内容长度过多，输出到logcat需要
      * */
     protected open fun StringBuilder.appendRequestBodyContent(body: RequestBody?): Boolean {
-        append("\n")
         body ?: return false
-        append("\n")
         body.contentType()?.also { contentType ->
             append("Content-Type : $contentType \n")
         }
@@ -192,12 +192,13 @@ open class HttpLogInterceptor(
      * */
     protected open fun StringBuilder.appendResponseBodyContent(body: ResponseBody?) {
         body ?: return
+        append("响应体：\n")
         //不能直接取body().toString(),否则会直接结束
         val source = body.source()
         source.request(Long.MAX_VALUE)
         // Buffer the entire body.
         val bodyString = source.buffer.clone().readString(UTF8)
-        append("\nBody START \n $bodyString \nBody END\n")
+        append("Body START \n $bodyString \nBody END\n")
     }
 
     /**
@@ -207,7 +208,7 @@ open class HttpLogInterceptor(
     protected open fun StringBuilder.appendAllHeaders(headers: Headers) {
         for (i in 0 until headers.size) {
             this.append("${headers.name(i)}  :  ${headers.value(i)}")
-            if (i < headers.size - 1) this.append("\n")
+            this.append("\n")
         }
     }
 
