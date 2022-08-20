@@ -1,7 +1,6 @@
 package com.model.login.data
 
-import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
-import com.wangkai.remote.tools.handler.RestApiException
+import kotlinx.coroutines.flow.Flow
 
 /**
  * 远程网络数据源
@@ -20,14 +19,13 @@ object LoginDataSource {
 
     private val mApiService: LoginApiService by loginApiDelegate()
 
-    suspend fun queryLoginByCoroutine(username: String, password: String): LoginData {
-        val result = mApiService.queryLoginByCoroutine(username, password)
-        val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(result)
-        if (!isSuccess) {
-            //业务执行异常
-            throw RestApiException(result.code, result.message)
-        }
+    suspend fun queryLoginByCoroutine(username: String, password: String): LoginData{
         //业务执行成功
-        return result
+        return mApiService.queryLoginByCoroutine(username, password)
+    }
+
+    fun queryLoginByCoroutineFlow(username: String, password: String): Flow<LoginData> {
+        //业务执行成功
+        return mApiService.queryLoginByCoroutineFlow(username, password)
     }
 }
