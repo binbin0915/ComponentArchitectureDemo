@@ -19,7 +19,7 @@ class NetNormalActivity : BaseActivity<NetNormalViewModel, MykotlinActivityNetNo
                 ?.let { it1 -> viewModel.downLoad(it1.path) }
         }
         viewBinding.btnNormalUseCoroutine.setOnClickListener {
-            viewModel.queryWanAndroidArticleByCoroutine()
+
         }
     }
 

@@ -4,12 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.library.base.viewmodel.BaseViewModel
-import com.model.mykotlin.data.remote.RemoteDataSource
 import com.wangkai.remote.download.DownLoadUtil
 import com.wangkai.remote.download.DownloadListener
 import com.wangkai.remote.download.entity.FileDownloadBean
 import com.wangkai.remote.download.producer.FileDownloadProducer
-import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -17,23 +15,6 @@ import java.io.File
 class NetNormalViewModel : BaseViewModel() {
     //livedata
     val articleJsonStringLiveData = MutableLiveData<String>()
-
-
-    fun queryWanAndroidArticleByCoroutine() {
-        viewModelScope.launch {
-            //TODO 仅作测试，后续使用flow优化
-            try {
-                val responseEntity = RemoteDataSource.queryWanAndroidArticleByCoroutine(0)
-                articleJsonStringLiveData.value =
-                    "query WanAndroid Article from Coroutine \n $responseEntity"
-            } catch (e: Exception) {
-                GlobalHttpResponseProcessor.handleHttpError(e)
-                articleJsonStringLiveData.value = "query WanAndroid Article from Coroutine $e"
-            }
-        }
-    }
-
-
     fun downLoad(appFileDirPath: String) {
         /*下载链接的集合*/
         val urlArrayList: ArrayList<String> = ArrayList()

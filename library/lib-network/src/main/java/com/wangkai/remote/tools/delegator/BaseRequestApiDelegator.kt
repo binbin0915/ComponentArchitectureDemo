@@ -1,5 +1,6 @@
 package com.wangkai.remote.tools.delegator
 
+import com.wangkai.remote.HttpRequestMediator
 import retrofit2.Retrofit
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
@@ -13,10 +14,9 @@ import kotlin.reflect.KProperty
  * @author wangkai
  * @date 2021/03/24
  */
-@Suppress("unused")
 abstract class BaseRequestApiDelegator<out T>(
     private val clazz: Class<T>,
-    private val clientKey : String = com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY
+    private val clientKey : String = HttpRequestMediator.DEFAULT_CLIENT_KEY
 ) : ReadOnlyProperty<Any,T>{
     @Volatile
     private var mApiService : T? = null
@@ -31,12 +31,12 @@ abstract class BaseRequestApiDelegator<out T>(
      * 尝试获取对应配置的网络请求client
      * */
     protected open fun obtainRetrofitInstance() : Retrofit {
-        takeUnless { com.wangkai.remote.HttpRequestMediator.containsRequestKey(clientKey) }
+        takeUnless { HttpRequestMediator.containsRequestKey(clientKey) }
             ?.also {
                 //未添加过指定请求配置，需要先添加该配置
                 addHttpRequestConfig(clientKey)
             }
-        return com.wangkai.remote.HttpRequestMediator.getRetrofitInstance()
+        return HttpRequestMediator.getRetrofitInstance()
     }
 
     /**

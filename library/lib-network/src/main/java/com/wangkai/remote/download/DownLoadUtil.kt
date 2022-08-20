@@ -1,5 +1,7 @@
 package com.wangkai.remote.download
 
+import com.wangkai.remote.HttpRequestMediator
+import com.wangkai.remote.config.HttpRequestConfig
 import com.wangkai.remote.download.producer.FileDownloadProducer
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -12,7 +14,7 @@ object DownLoadUtil {
      */
     private val downloadProducer: FileDownloadProducer by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         FileDownloadProducer(
-            requestTag = com.wangkai.remote.HttpRequestMediator.DEFAULT_DOWNLOAD_CLIENT_KEY,
+            requestTag = HttpRequestMediator.DEFAULT_DOWNLOAD_CLIENT_KEY,
             requestConfig = createDownloadHttpRequestConfig()
         )
     }
@@ -20,8 +22,8 @@ object DownLoadUtil {
     /**
      * retrofit的配置
      */
-    private fun createDownloadHttpRequestConfig(): com.wangkai.remote.config.HttpRequestConfig {
-        return com.wangkai.remote.config.HttpRequestConfig().apply {
+    private fun createDownloadHttpRequestConfig(): HttpRequestConfig {
+        return HttpRequestConfig().apply {
             connectTimeout = 15
             readTimeout = 15
             writeTimeout = 20

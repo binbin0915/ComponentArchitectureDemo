@@ -50,7 +50,7 @@ class OssUtil(
      */
     val ossClient: OSS
         get() {
-            if (com.wangkai.remote.BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG) {
                 OSSLog.enableLog()
             }
             //这个初始化安全性没有Sts安全

@@ -86,7 +86,7 @@ abstract class BaseHttpClientFactoryImpl : HttpClientFactory {
      * @param config [HttpRequestConfig]
      * @return [BaseHttpClientFactoryImpl]类本身，便于链式调用
      */
-    protected open fun performRetrofitConfig(config: com.wangkai.remote.config.HttpRequestConfig): BaseHttpClientFactoryImpl {
+    protected open fun performRetrofitConfig(config: HttpRequestConfig): BaseHttpClientFactoryImpl {
         if (config.baseUrl.isNullOrEmpty()) {
             throw NullPointerException("you must set baseUrl to HttpClientFactory")
         }

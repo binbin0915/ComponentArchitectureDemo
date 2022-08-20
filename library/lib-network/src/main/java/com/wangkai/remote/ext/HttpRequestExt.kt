@@ -10,7 +10,7 @@ import com.wangkai.remote.config.HttpRequestConfig
  * @param init 以[HttpRequestConfig]为接收对象的函数，初始化网络参数配置
  */
 @Suppress("unused")
-fun addDslRemoteConfig(tag : String = com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY,
-                       init : com.wangkai.remote.config.HttpRequestConfig.()->Unit) : com.wangkai.remote.HttpRequestMediator {
-    return com.wangkai.remote.HttpRequestMediator.addDefaultHttpClientFactory(tag, init)
+fun addDslRemoteConfig(tag : String = HttpRequestMediator.DEFAULT_CLIENT_KEY,
+                       init : HttpRequestConfig.()->Unit) : HttpRequestMediator {
+    return HttpRequestMediator.addDefaultHttpClientFactory(tag, init)
 }

@@ -5,8 +5,8 @@ import com.wangkai.remote.HttpRequestMediator.addHttpClientFactory
 import com.wangkai.remote.HttpRequestMediator.createRequestApi
 import com.wangkai.remote.HttpRequestMediator.getRetrofitInstance
 import com.wangkai.remote.config.HttpRequestConfig
-import com.wangkai.remote.factory.HttpClientFactory
 import com.wangkai.remote.factory.DefaultHttpClientFactoryImpl
+import com.wangkai.remote.factory.HttpClientFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
@@ -44,8 +44,8 @@ object HttpRequestMediator {
      * */
     @JvmStatic
     @Throws(NullPointerException::class, IllegalAccessException::class)
-    fun getOkHttpInstance(configKey: String = com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY): OkHttpClient {
-        return com.wangkai.remote.HttpRequestMediator.fetchHttpClientFactory(configKey)
+    fun getOkHttpInstance(configKey: String = DEFAULT_CLIENT_KEY): OkHttpClient {
+        return fetchHttpClientFactory(configKey)
             .getOkHttpClientInstance()
     }
 
@@ -58,8 +58,8 @@ object HttpRequestMediator {
      * */
     @JvmStatic
     @Throws(NullPointerException::class, IllegalAccessException::class)
-    fun getRetrofitInstance(configKey: String = com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY): Retrofit {
-        return com.wangkai.remote.HttpRequestMediator.fetchHttpClientFactory(configKey)
+    fun getRetrofitInstance(configKey: String = DEFAULT_CLIENT_KEY): Retrofit {
+        return fetchHttpClientFactory(configKey)
             .getRetrofitInstance()
     }
 
@@ -70,7 +70,7 @@ object HttpRequestMediator {
      */
     @JvmStatic
     fun containsRequestKey(configKey: String): Boolean {
-        return com.wangkai.remote.HttpRequestMediator.mHttpClientFactories.containsKey(configKey)
+        return mHttpClientFactories.containsKey(configKey)
     }
 
     /**
@@ -80,10 +80,10 @@ object HttpRequestMediator {
      */
     @Throws(NullPointerException::class, IllegalAccessException::class)
     private fun fetchHttpClientFactory(
-        configKey: String = com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY
+        configKey: String = DEFAULT_CLIENT_KEY
     ): HttpClientFactory {
-        if (com.wangkai.remote.HttpRequestMediator.mHttpClientFactories.containsKey(configKey)) {
-            return com.wangkai.remote.HttpRequestMediator.mHttpClientFactories[configKey]
+        if (mHttpClientFactories.containsKey(configKey)) {
+            return mHttpClientFactories[configKey]
                 ?: throw NullPointerException(
                     "Http Client is Null,you should add clientFactory before use"
                 )
@@ -102,7 +102,7 @@ object HttpRequestMediator {
     @JvmStatic
     @Throws(NullPointerException::class, IllegalAccessException::class)
     fun <T> createRequestApi(
-        configKey: String = com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY,
+        configKey: String = DEFAULT_CLIENT_KEY,
         clazz: Class<T>
     ): T {
         return getRetrofitInstance(configKey).create(clazz)
@@ -116,10 +116,10 @@ object HttpRequestMediator {
      * */
     @JvmStatic
     fun addDefaultHttpClientFactory(
-        configKey: String = com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY,
-        init: com.wangkai.remote.config.HttpRequestConfig.() -> Unit
-    ): com.wangkai.remote.HttpRequestMediator {
-        com.wangkai.remote.HttpRequestMediator.mHttpClientFactories[configKey] =
+        configKey: String = DEFAULT_CLIENT_KEY,
+        init: HttpRequestConfig.() -> Unit
+    ): HttpRequestMediator {
+        mHttpClientFactories[configKey] =
             DefaultHttpClientFactoryImpl.create(init)
         return this
     }
@@ -132,10 +132,10 @@ object HttpRequestMediator {
      * */
     @JvmStatic
     fun addDefaultHttpClientFactory(
-        configKey: String = com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY,
-        config: com.wangkai.remote.config.HttpRequestConfig
-    ): com.wangkai.remote.HttpRequestMediator {
-        com.wangkai.remote.HttpRequestMediator.mHttpClientFactories[configKey] =
+        configKey: String = DEFAULT_CLIENT_KEY,
+        config: HttpRequestConfig
+    ): HttpRequestMediator {
+        mHttpClientFactories[configKey] =
             DefaultHttpClientFactoryImpl.create(config)
         return this
     }
@@ -148,10 +148,10 @@ object HttpRequestMediator {
      * */
     @JvmStatic
     fun addHttpClientFactory(
-        configKey: String = com.wangkai.remote.HttpRequestMediator.DEFAULT_CLIENT_KEY,
+        configKey: String = DEFAULT_CLIENT_KEY,
         factory: HttpClientFactory
-    ): com.wangkai.remote.HttpRequestMediator {
-        com.wangkai.remote.HttpRequestMediator.mHttpClientFactories[configKey] = factory
+    ): HttpRequestMediator {
+        mHttpClientFactories[configKey] = factory
         return this
     }
 }

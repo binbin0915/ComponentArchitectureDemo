@@ -18,8 +18,8 @@ class DefaultHttpClientFactoryImpl private constructor() : BaseHttpClientFactory
          * @param init 接受者为[HttpRequestConfig]的函数，可直接进行DSL配置
          * */
         @Suppress("unused")
-        fun create(init : com.wangkai.remote.config.HttpRequestConfig.()->Unit) : BaseHttpClientFactoryImpl {
-            return com.wangkai.remote.config.HttpRequestConfig().run {
+        fun create(init : HttpRequestConfig.()->Unit) : BaseHttpClientFactoryImpl {
+            return HttpRequestConfig().run {
                 this.init()
                 DefaultHttpClientFactoryImpl().performRetrofitConfig(this)
             }
@@ -30,7 +30,7 @@ class DefaultHttpClientFactoryImpl private constructor() : BaseHttpClientFactory
          * @param config 网络请求参数配置
          * */
         @Suppress("unused")
-        fun create(config : com.wangkai.remote.config.HttpRequestConfig) : BaseHttpClientFactoryImpl {
+        fun create(config : HttpRequestConfig) : BaseHttpClientFactoryImpl {
             return DefaultHttpClientFactoryImpl().performRetrofitConfig(config)
         }
 

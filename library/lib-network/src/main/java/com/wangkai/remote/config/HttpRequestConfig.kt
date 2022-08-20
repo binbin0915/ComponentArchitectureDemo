@@ -75,7 +75,7 @@ class HttpRequestConfig constructor(){
 
     /**https的ssl证书校验配置*/
     @JvmField
-    var sslSocketConfig : com.wangkai.remote.config.SSLSocketTrustConfig?= null
+    var sslSocketConfig : SSLSocketTrustConfig?= null
 
     /**
      * 持久化Cookie的工具

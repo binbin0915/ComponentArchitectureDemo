@@ -1,7 +1,9 @@
 package com.wangkai.remote.download.producer
 
 /*coroutines*/
+import com.wangkai.remote.HttpRequestMediator
 import com.wangkai.remote.HttpRequestMediator.createRequestApi
+import com.wangkai.remote.config.HttpRequestConfig
 import com.wangkai.remote.download.DownloadApiService
 import com.wangkai.remote.download.DownloadListener
 import kotlinx.coroutines.Dispatchers
@@ -18,9 +20,9 @@ import kotlin.coroutines.CoroutineContext
  */
 class FileDownloadProducer(
     /*连接池的key*/
-    private val requestTag: String = com.wangkai.remote.HttpRequestMediator.DEFAULT_DOWNLOAD_CLIENT_KEY,
+    private val requestTag: String = HttpRequestMediator.DEFAULT_DOWNLOAD_CLIENT_KEY,
     /*网络请求相关配置*/
-    private val requestConfig: com.wangkai.remote.config.HttpRequestConfig
+    private val requestConfig: HttpRequestConfig
 ) : BaseFileDownloadProducer() {
 
     companion object {
@@ -38,7 +40,7 @@ class FileDownloadProducer(
      * 一、添加网络请求的工厂
      */
     init {
-        com.wangkai.remote.HttpRequestMediator.addDefaultHttpClientFactory(requestTag) {
+        HttpRequestMediator.addDefaultHttpClientFactory(requestTag) {
             baseUrl = "http://baidu.com"
             connectTimeout = requestConfig.connectTimeout
             readTimeout = requestConfig.readTimeout
