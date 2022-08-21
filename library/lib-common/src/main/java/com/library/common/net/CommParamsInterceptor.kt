@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap
 class CommParamsInterceptor : BaseCommParamsInterceptor() {
     private var commPathParam = ConcurrentHashMap<String, String>()
     private var commBodyParam = ConcurrentHashMap<String, String>()
+    private var headersParam = ConcurrentHashMap<String, String>()
 
     /**
      * 在这添加参数
@@ -25,7 +26,7 @@ class CommParamsInterceptor : BaseCommParamsInterceptor() {
         }
         CoroutineScope(Dispatchers.Main).launch {
             flow.collect {
-
+                headersParam["Authorization"] = it
             }
         }
     }
@@ -34,6 +35,8 @@ class CommParamsInterceptor : BaseCommParamsInterceptor() {
         get() = commPathParam
     override val bodyParams: ConcurrentHashMap<String, String>
         get() = commBodyParam
+    override val headersParams: ConcurrentHashMap<String, String>
+        get() = headersParam
     override val excludeUrls: List<String>
         get() = listOf("api/login")
 }

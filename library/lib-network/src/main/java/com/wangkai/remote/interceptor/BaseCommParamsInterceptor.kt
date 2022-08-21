@@ -7,6 +7,7 @@ import okio.Buffer
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+
 /**
  * 添加公共请求参数与请求头的应用层拦截器基类
  * @author 王凯
@@ -16,6 +17,7 @@ abstract class BaseCommParamsInterceptor : Interceptor {
     //公共参数
     abstract val pathParams: ConcurrentHashMap<String, String>
     abstract val bodyParams: ConcurrentHashMap<String, String>
+    abstract val headersParams: ConcurrentHashMap<String, String>
 
     //过滤掉不添加公共参数的url
     abstract val excludeUrls: List<String>
@@ -31,8 +33,17 @@ abstract class BaseCommParamsInterceptor : Interceptor {
                 return chain.proceed(request)
             }
         }
-        val newRequest = parseRequest(request)
+        val requestHeaders = addHeader(request)
+        val newRequest = parseRequest(requestHeaders)
         return chain.proceed(newRequest)
+    }
+
+    private fun addHeader(request: Request): Request {
+        val builder = request.newBuilder()
+        for ((key, value) in headersParams.entries) {
+            builder.addHeader(key, value)
+        }
+        return builder.build()
     }
 
     /**
