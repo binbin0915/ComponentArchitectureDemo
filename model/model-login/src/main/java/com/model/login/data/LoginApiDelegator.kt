@@ -2,6 +2,7 @@ package com.model.login.data
 
 import com.google.gson.GsonBuilder
 import com.library.common.net.CommParamsInterceptor
+import com.library.common.net.HeaderParamsInterceptor
 import com.library.common.net.LoggerHttpLogPrinterImpl
 import com.wangkai.remote.HttpRequestMediator
 import com.wangkai.remote.ext.addDslRemoteConfig
@@ -38,6 +39,7 @@ class LoginApiDelegator<T>(clazz: Class<T>) :
             executorService = ExecutorProvider.ioExecutor
             networkInterceptors.add(CommParamsInterceptor())
             networkInterceptors.add(HttpLogInterceptor(LoggerHttpLogPrinterImpl(), "LOGIN_TAG"))
+            networkInterceptors.add(HeaderParamsInterceptor())
             //添加gson解析支持
             converterFactories.add(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             callAdapterFactories.add(FlowCallAdapterFactory.create(true))
