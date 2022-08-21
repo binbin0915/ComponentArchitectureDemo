@@ -19,8 +19,12 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
 
     override fun initData() {
         viewBinding.loginBtn.setOnClickListener {
-            //登录接口
-            viewModel.queryLoginByCoroutine()
+            //登录接口 -- url
+//            viewModel.queryLoginByCoroutine()
+            //登录接口 -- body
+            viewModel.queryLoginBodyByCoroutine()
+            //登录接口 -- flow
+//            viewModel.queryLoginByCoroutineFlow()
         }
         //获取到登录数据
         viewModel.loginLiveData.observe(this) { login_nickname ->

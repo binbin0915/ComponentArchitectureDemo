@@ -28,11 +28,12 @@ class LoginApiDelegator<T>(clazz: Class<T>) :
     override fun addHttpRequestConfig(configKey: String) {
 
         addDslRemoteConfig(configKey) {
-            baseUrl = "http://39.106.144.234/"
+            baseUrl = "http://39.106.144.234/api/"
             connectTimeout = 5
             readTimeout = 10
             writeTimeout = 15
             isAllowProxy = true
+            isRetryOnConnectionFailure = false
             //设置使用外部线程调度器
             executorService = ExecutorProvider.ioExecutor
             networkInterceptors.add(CommParamsInterceptor())
