@@ -25,5 +25,5 @@ class CommParamsInterceptor : BaseCommParamsInterceptor() {
     override val bodyParams: ConcurrentHashMap<String, String>
         get() = commBodyParam
     override val excludeUrls: List<String>
-        get() = listOf()
+        get() = listOf("api/login")
 }

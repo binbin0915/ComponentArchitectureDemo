@@ -52,7 +52,6 @@ abstract class BaseCommParamsInterceptor : Interceptor {
             "options" -> {
                 addGetParams(request)
             }
-
             "post" -> {
                 addPostParams(request)
             }
