@@ -10,6 +10,10 @@ plugins {
 android {
     namespace 'ando.file'
     compileSdk BuildConfig.compileSdk
+    defaultConfig {
+        minSdk BuildConfig.minSdk
+        targetSdk BuildConfig.targetSdk
+    }
 }
 
 dependencies {
