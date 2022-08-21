@@ -1,6 +1,12 @@
 package com.library.common.net
 
+import com.library.base.application.BaseApplication
+import com.library.base.datastore.DataStoreUtils
 import com.wangkai.remote.interceptor.BaseCommParamsInterceptor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -14,10 +20,14 @@ class CommParamsInterceptor : BaseCommParamsInterceptor() {
      * 在这添加参数
      */
     init {
-        commPathParam["testHeader111"] = "testHeader111"
-        commPathParam["testHeader222"] = "testHeader222"
-        commBodyParam["testBody111"] = "testBody111"
-        commBodyParam["testBody222"] = "testBody222"
+        val flow = flow<String> {
+            emit(DataStoreUtils.get(BaseApplication.appContext, "Authorization"))
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            flow.collect {
+
+            }
+        }
     }
 
     override val pathParams: ConcurrentHashMap<String, String>

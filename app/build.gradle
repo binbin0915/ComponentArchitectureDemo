@@ -78,7 +78,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     //公共基础包
     implementation project(":library:lib-common")
-    implementation project(":library:lib-base")
 
 
     // SDK（2.1.5及以上版本）已经将Java Crash和Native Crash捕获功能分开，如果想使用NDK库，需要配置： implementation 'com.tencent.bugly:nativecrashreport:latest.release'

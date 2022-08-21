@@ -38,12 +38,13 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     //协程支持
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    //DataStore
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
+    implementation 'androidx.datastore:datastore-preferences-core:1.0.0'
     //相关 ktx 拓展
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'    //Lifecycle 扩展库
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'    //livedata扩展库
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'    //viewModel扩展库
-    //网络库 -- 用于在basemodel中封装
-    implementation project(":library:lib-network")
     //UI 组件库
     implementation project(":library:lib-widget")
     //状态栏
