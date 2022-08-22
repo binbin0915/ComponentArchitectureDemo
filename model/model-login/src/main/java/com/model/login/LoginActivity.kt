@@ -22,12 +22,16 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
             //登录接口 -- url
 //            viewModel.queryLoginByCoroutine()
             //登录接口 -- body
-            viewModel.queryLoginBodyByCoroutine()
+//            viewModel.queryLoginBodyByCoroutine()
             //登录接口 -- flow
-//            viewModel.queryLoginByCoroutineFlow()
+            viewModel.queryLoginByCoroutineFlow()
+        }
+
+        viewBinding.getUser.setOnClickListener {
+            viewModel.queryUsersByCoroutine()
         }
         //获取到登录数据
-        viewModel.loginLiveData.observe(this) { login_nickname ->
+        viewModel.loginLiveData.observe(this) {
             //保存登录信息
             homeService.loginSucceed()
             finish()

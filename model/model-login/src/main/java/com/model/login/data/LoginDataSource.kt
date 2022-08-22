@@ -16,30 +16,30 @@ object LoginDataSource {
     private val mApiService: LoginApiService by loginApiDelegate()
 
     suspend fun queryLoginByCoroutine(
-        token: String, username: String, password: String
+        username: String, password: String
     ): LoginData {
         val params: MutableMap<String, String> = LinkedHashMap()
         params["username"] = username
         params["password"] = password
         val requestBody: RequestBody = JsonUtils.toJson(params)
             .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        return mApiService.queryLoginByCoroutine(token, username, password)
+        return mApiService.queryLoginByCoroutine(username, password)
     }
 
     suspend fun queryLoginBodyByCoroutine(
-        token: String, username: String, password: String
+        username: String, password: String
     ): LoginData {
         val params: MutableMap<String, String> = LinkedHashMap()
         params["username"] = username
         params["password"] = password
-        return mApiService.queryLoginBodyByCoroutine(token, username, password)
+        return mApiService.queryLoginBodyByCoroutine(username, password)
     }
 
     fun queryLoginByCoroutineFlow(username: String, password: String): Flow<LoginData> {
         return mApiService.queryLoginByCoroutineFlow(username, password)
     }
 
-    suspend fun queryUsersByCoroutine(): UsersData {
-        return mApiService.queryUsersByCoroutine()
+    suspend fun queryUsersByCoroutine(token: String): UsersData {
+        return mApiService.queryUsersByCoroutine(token)
     }
 }

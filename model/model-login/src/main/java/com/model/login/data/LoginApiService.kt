@@ -12,7 +12,6 @@ interface LoginApiService {
      * */
     @POST("login")
     suspend fun queryLoginByCoroutine(
-        @Header("Authorization") token:String,
         @Query("username") username: String, @Query("password") password: String
     ): LoginData
 
@@ -25,7 +24,6 @@ interface LoginApiService {
     @POST("login")
     @FormUrlEncoded
     suspend fun queryLoginBodyByCoroutine(
-        @Header("Authorization") token:String,
         @Field("username") username: String, @Field("password") password: String
     ): LoginData
 
@@ -43,5 +41,5 @@ interface LoginApiService {
 
 
     @GET("admin/users")
-    suspend fun queryUsersByCoroutine(): UsersData
+    suspend fun queryUsersByCoroutine(@Header("Authorization") token:String,): UsersData
 }
