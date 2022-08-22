@@ -51,7 +51,7 @@ dependencies {
     //动画库
     api 'com.airbnb.android:lottie:5.2.0'
     //腾讯tbs
-    api 'com.tencent.tbs:tbssdk:44199'
+    api 'com.tencent.tbs:tbssdk:44216'
     //基础框架封装
     api project(":library:lib-base")
     //网络框架

@@ -21,14 +21,14 @@ class CommParamsInterceptor : BaseCommParamsInterceptor() {
      * 在这添加参数
      */
     init {
-        val flow = flow<String> {
-            emit(DataStoreUtils.get(BaseApplication.appContext, "Authorization"))
-        }
-        CoroutineScope(Dispatchers.Main).launch {
-            flow.collect {
-                headersParam["Authorization"] = it
-            }
-        }
+//        val flow = flow<String> {
+//            emit(DataStoreUtils.get(BaseApplication.appContext, "Authorization"))
+//        }
+//        CoroutineScope(Dispatchers.Main).launch {
+//            flow.collect {
+//                headersParam["Authorization"] = it
+//            }
+//        }
     }
 
     override val pathParams: ConcurrentHashMap<String, String>
