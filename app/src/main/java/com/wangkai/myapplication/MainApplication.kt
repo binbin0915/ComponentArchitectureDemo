@@ -4,6 +4,7 @@ import ando.file.core.FileOperator
 import android.content.Context
 import android.content.Intent
 import android.os.Environment
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.drake.statelayout.StateConfig
@@ -17,11 +18,16 @@ import com.tencent.bugly.Bugly
 import com.tencent.bugly.beta.Beta
 import com.tencent.bugly.beta.UpgradeInfo
 import com.tencent.bugly.beta.ui.UILifecycleListener
+import com.tencent.bugly.crashreport.CrashReport
+import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.TbsListener
 import com.tencent.smtt.sdk.WebView
 import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
+import java.io.BufferedReader
+import java.io.FileReader
+import java.io.IOException
 
 
 /**
@@ -111,6 +117,9 @@ class MainApplication : BaseApplication() {
          * 参数3：是否开启debug模式，true表示打开debug模式，false表示关闭调试模式
          */
         Bugly.init(applicationContext, "eb89618c65", true)
+        /* 5.设置开发设备*/
+        CrashReport.setIsDevelopmentDevice(appContext, BuildConfig.DEBUG)
+        CrashReport.initCrashReport(appContext, "eb89618c65", true, setBuyConfig())
         /**
          * 参数1：isManual 用户手动点击检查，非用户点击操作请传false
          * 参数2：isSilence 是否显示弹窗等交互，[true:没有弹窗和toast] [false:有弹窗或toast]
@@ -211,6 +220,50 @@ class MainApplication : BaseApplication() {
     }
 
     /**
+     * 我们提供了UserStrategy类作为Bugly的初始化扩展，在这里您可以修改本次初始化Bugly数据的版本、渠道及部分初始化行为。
+     * 如果通过UserStrategy设置了版本号和渠道号，则会覆盖“AndroidManifest.xml”里面配置的版本号和渠道。
+     */
+    private fun setBuyConfig(): UserStrategy {
+        val strategy = UserStrategy(appContext)
+        /* 1.设置设备id*/
+        /*不再采集Android id(3.4.4及之后版本)，为了使得crash率统计更精准，建议设置业务自己的deviceId（业务唯一id）给bugly sdk。3.4.4版本前默认读取Android id作为设备id，App开发者可以在初始化bugly sdk的时候设置自定义的deviceId，为了避免合规问题，请务必升级到最新合规版本。*/
+        strategy.deviceID = "userdefinedId"
+        /* 2.设置设备型号*/
+        strategy.deviceModel = "userdefinedModel"
+        /* 3.设置App版本、渠道、包名*/
+        strategy.appChannel = "myChannel"  //设置渠道
+        strategy.appVersion = "1.0.1"      //App的版本
+        strategy.appPackageName = "com.tencent.xx"  //App的包名
+        /* 4.设置Bugly初始化延迟*/
+        //strategy.appReportDelay = 20000   //改为20s
+        /* 5.如果App使用了多进程且各个进程都会初始化Bugly（例如在Application类onCreate()中初始化Bugly），那么每个进程下的Bugly都会进行数据上报，造成不必要的资源浪费。因此，为了节省流量、内存等资源，建议初始化的时候对上报进程进行控制，只在主进程下上报数据：判断是否是主进程（通过进程名是否为包名来判断），并在初始化Bugly时增加一个上报进程的策略配置。*/
+        val packageName = appContext.packageName
+        val processName = getProcessName(android.os.Process.myPid())
+        strategy.isUploadProcess = processName == null || processName == packageName
+
+        /*TODO:更多的Bugly日志附加信息*/
+        /*1.该用户本次启动后的异常日志用户ID都将是9527*/
+        CrashReport.setUserId("")
+        /*2、主动上报开发者Catch的异常 您可能会关注某些重要异常的Catch情况。我们提供了上报这类异常的接口。 例：统计某个重要的数据库读写问题比例。*/
+//        try {
+//            //...
+//        } catch (thr: Throwable) {
+//            CrashReport.postCatchedException(thr) // bugly会将这个throwable上报
+//        }
+        /*3、自定义日志功能 我们提供了自定义Log的接口，用于记录一些开发者关心的调试日志，可以更全面地反应App异常时的前后文环境。使用方式与android.util.Log一致。用户传入TAG和日志内容。该日志将在Logcat输出，并在发生异常时上报。有如下*/
+//        BuglyLog.v(tag, log)
+//        BuglyLog.d(tag, log)
+//        BuglyLog.i(tag, log)
+//        BuglyLog.w(tag, log)
+//        BuglyLog.e(tag, log)
+/*注意：
+使用BuglyLog接口时，为了减少磁盘IO次数，我们会先将日志缓存在内存中。当缓存大于一定阈值（默认10K），会将它持久化至文件。您可以通过setCache(int byteSize)接口设置缓存大小，范围为0-30K。例：BuglyLog.setCache(12 * 1024) //将Cache设置为12K
+如果您没有使用BuglyLog接口，且初始化Bugly时isDebug参数设置为false，该Log功能将不会有新的资源占用；
+为了方便开发者调试，当初始化Bugly的isDebug参数为true时，异常日志同时还会记录Bugly本身的日志。请在App发布时将其设置为false；
+上报Log最大30K。*/
+        return strategy
+    }
+    /**
      * 启动X5 独立Web进程的预加载服务。优点：
      * 1、后台启动，用户无感进程切换
      * 2、启动进程服务后，有X5内核时，X5预加载内核
@@ -230,5 +283,32 @@ class MainApplication : BaseApplication() {
             return true
         }
         return false
+    }
+
+    /**
+     * 获取进程号对应的进程名
+     *
+     * @param pid 进程号
+     * @return 进程名
+     */
+    private fun getProcessName(pid: Int): String? {
+        var reader: BufferedReader? = null
+        try {
+            reader = BufferedReader(FileReader("/proc/$pid/cmdline"))
+            var processName: String = reader.readLine()
+            if (!TextUtils.isEmpty(processName)) {
+                processName = processName.trim { it <= ' ' }
+            }
+            return processName
+        } catch (throwable: Throwable) {
+            throwable.printStackTrace()
+        } finally {
+            try {
+                reader?.close()
+            } catch (exception: IOException) {
+                exception.printStackTrace()
+            }
+        }
+        return null
     }
 }
