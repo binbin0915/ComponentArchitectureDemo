@@ -2,23 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wangkai.myapplication">
-    <!--app权限在这里申请-->
-
+    <!-- app权限在这里申请 -->
     <!-- 开启网络访问权限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 允许访问网络状态的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 允许访问wifi状态的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 允许修改网络状态的权限 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <!-- 允许修改wifi状态的权限 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 获取用户设备的IMEI，通过IMEI对用户进行唯一标识，以便提供统计分析服务。 （友盟统计的）-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!--SD卡写入权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--允许安装来自未知来源-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许访问网络状态的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许访问wifi状态的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许修改网络状态的权限 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 允许修改wifi状态的权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 获取用户设备的IMEI，通过IMEI对用户进行唯一标识，以便提供统计分析服务。 （友盟统计的） -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- SD卡写入权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许安装来自未知来源 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
@@ -42,7 +34,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/ando_paths" />
         </provider>
-        <!--入口activity-->
+
+        <!-- 入口activity -->
         <activity
             android:name="com.model.splash.SplashMainActivity"
             android:configChanges="orientation|screenSize"
@@ -54,22 +47,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--腾讯更新-->
-        <activity
-            android:name="com.tencent.bugly.beta.ui.BetaActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|locale" />
 
-        <!--x5内核首次加载时优化的Service声明。-->
-        <!--该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。-->
+        <!--更新的activity-->
+        <activity
+            android:name=".UpdateActivity"
+            android:exported="false" />
+
+        <!-- x5内核首次加载时优化的Service声明。该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。 -->
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
             android:label="dexopt"
             android:process=":dexopt" />
         <service
-            android:name="X5ProcessInitService"
+            android:name=".X5ProcessInitService"
             android:exported="false"
             android:process=":web" />
-
     </application>
 
 </manifest>
