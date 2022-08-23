@@ -66,6 +66,10 @@
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
             android:label="dexopt"
             android:process=":dexopt" />
+        <service
+            android:name="X5ProcessInitService"
+            android:exported="false"
+            android:process=":web" />
 
     </application>
 

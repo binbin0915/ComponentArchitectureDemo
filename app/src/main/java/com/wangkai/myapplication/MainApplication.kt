@@ -1,6 +1,8 @@
 package com.wangkai.myapplication
 
 import ando.file.core.FileOperator
+import android.content.Intent
+import android.util.Log
 import com.drake.statelayout.StateConfig
 import com.library.base.application.BaseApplication
 import com.library.common.net.GlobalResponseHandler
@@ -10,7 +12,8 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.bugly.Bugly
 import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
-import com.tencent.smtt.sdk.QbSdk.PreInitCallback
+import com.tencent.smtt.sdk.TbsListener
+import com.tencent.smtt.sdk.WebView
 import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 
 
@@ -27,33 +30,48 @@ class MainApplication : BaseApplication() {
         FileOperator.init(instance, BuildConfig.DEBUG)
 
         /*----------------------------------------tbs相关------------------------------------------*/
-        val map = HashMap<String, Any>()
-        map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
-        map[TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE] = true
-        // 在调用TBS初始化、创建WebView之前进行如下配置
-        QbSdk.initTbsSettings(map)
-        //（可选）为了提高内核占比，在初始化前可配置允许移动网络下载内核（大小 40-50 MB）。默认移动网络不下载
-        QbSdk.setDownloadWithoutWifi(true)
-        // tbs初始化回调
-        val cb: PreInitCallback = object : PreInitCallback {
-            /**
-             * 预初始化结束
-             * 由于X5内核体积较大，需要依赖网络动态下发，所以当内核不存在的时候，默认会回调false，此时将会使用系统内核代替
-             * @param arg0 是否使用X5内核，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-             */
-            override fun onViewInitFinished(arg0: Boolean) {
+        /* [new] 独立Web进程 */
+        if (startX5WebProcessPreInitService()) {
+            val map = HashMap<String, Any>()
+            map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
+            map[TbsCoreSettings.TBS_SETTINGS_USE_DEXLOADER_SERVICE] = true
+            // 在调用TBS初始化、创建WebView之前进行如下配置
+            QbSdk.initTbsSettings(map)
+            //（可选）为了提高内核占比，在初始化前可配置允许移动网络下载内核（大小 40-50 MB）。默认移动网络不下载
+            QbSdk.setDownloadWithoutWifi(true)
+            // tbs初始化回调
+            val cb: QbSdk.PreInitCallback = object : QbSdk.PreInitCallback {
+                /**
+                 * 预初始化结束
+                 * 由于X5内核体积较大，需要依赖网络动态下发，所以当内核不存在的时候，默认会回调false，此时将会使用系统内核代替
+                 * @param arg0 是否使用X5内核，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                 */
+                override fun onViewInitFinished(arg0: Boolean) {
+                    Log.i("TBS_TAG", "腾讯X5内核 预初始化结束:$arg0")
+                }
 
+                /**
+                 * 内核初始化完成，可能为系统内核，也可能为系统内核
+                 */
+                override fun onCoreInitFinished() {
+                    Log.i("TBS_TAG", "腾讯X5内核 内核初始化完成")
+                }
             }
+            QbSdk.setTbsListener(object : TbsListener {
+                override fun onDownloadFinish(i: Int) {
+                    Log.i("TBS_TAG", "腾讯X5内核 下载结束")
+                }
 
-            /**
-             * 内核初始化完成，可能为系统内核，也可能为系统内核
-             */
-            override fun onCoreInitFinished() {
+                override fun onInstallFinish(i: Int) {
+                    Log.i("TBS_TAG", "腾讯X5内核 安装完成")
+                }
 
-            }
+                override fun onDownloadProgress(i: Int) {
+                    Log.i("TBS_TAG", "腾讯X5内核 下载进度:%$i")
+                }
+            })
+            QbSdk.initX5Environment(appContext, cb)
         }
-        QbSdk.initX5Environment(appContext, cb)
-
         /*------------------------------------设置全局http响应-----------------------------------*/
         GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())
         /*-------------------------------------BRV相关------------------------------------------*/
@@ -183,5 +201,27 @@ class MainApplication : BaseApplication() {
 //        Beta.canShowApkInfo = true
 //        // 17.关闭热更新能力（升级SDK默认是开启热更新能力的，如果你不需要使用热更新，可以将这个接口设置为false。）
 //        Beta.enableHotfix = true
+    }
+
+    /**
+     * 启动X5 独立Web进程的预加载服务。优点：
+     * 1、后台启动，用户无感进程切换
+     * 2、启动进程服务后，有X5内核时，X5预加载内核
+     * 3、Web进程Crash时，不会使得整个应用进程crash掉
+     * 4、隔离主进程的内存，降低网页导致的App OOM概率。
+     *
+     * 缺点：
+     * 进程的创建占用手机整体的内存，demo 约为 150 MB
+     */
+    private fun startX5WebProcessPreInitService(): Boolean {
+        val currentProcessName = QbSdk.getCurrentProcessName(this)
+        // 设置多进程数据目录隔离，不设置的话系统内核多个进程使用WebView会crash，X5下可能ANR
+        WebView.setDataDirectorySuffix(QbSdk.getCurrentProcessName(this))
+        Log.i("TBS_TAG", currentProcessName)
+        if (currentProcessName == this.packageName) {
+            startService(Intent(this, X5ProcessInitService::class.java))
+            return true
+        }
+        return false
     }
 }
