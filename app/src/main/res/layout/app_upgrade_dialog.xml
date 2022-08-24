@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-
         android:gravity="center"
         android:orientation="vertical">
 
@@ -20,7 +19,6 @@
             android:orientation="vertical">
             <!-- 通过id设置的控件 -->
             <ImageView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_launcher"
@@ -44,15 +42,15 @@
                 android:paddingLeft="10dp"
                 android:tag="beta_title"
                 android:text="title"
-                android:visibility="gone"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
-            <ImageView
+                android:textSize="18sp"
+                android:visibility="gone" />
 
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/app_pop_image"
                 android:layout_marginTop="8dp"
+                android:src="@drawable/app_pop_image"
                 android:visibility="visible" />
         </LinearLayout>
 
@@ -82,32 +80,34 @@
                         android:textColor="#757575"
                         android:textSize="14sp"
                         android:visibility="gone" />
+
                     <TextView
                         android:id="@+id/activity_aler_banben"
                         android:layout_width="220dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="版本更新"
                         android:layout_marginLeft="8dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
+                        android:text="版本更新"
                         android:textColor="@color/moccasin"
                         android:textSize="14sp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
-                        android:visibility="gone"
                         android:text="@string/strUpgradeDialogFeatureLabel"
                         android:textColor="#273238"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="gone" />
                     <!-- 【必设】更新属性控件tag：beta_upgrade_feature-->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginBottom="8dp"
                         android:tag="beta_upgrade_feature"
                         android:text="feature"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="8dp"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -123,8 +123,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:tag="beta_cancel_li"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:tag="beta_cancel_li">
                     <!-- 【必设】取消按钮tag：beta_cancel_button-->
                     <TextView
 
@@ -144,8 +144,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:tag="beta_cancel_confirm"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:tag="beta_cancel_confirm">
                     <!-- 【必设】确认按钮tag：beta_confirm_button-->
                     <TextView
                         android:layout_width="100dp"
@@ -157,8 +157,7 @@
                         android:tag="beta_confirm_button"
                         android:text="confirm"
                         android:textColor="@color/white"
-                        android:textSize="16sp"
-                       />
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

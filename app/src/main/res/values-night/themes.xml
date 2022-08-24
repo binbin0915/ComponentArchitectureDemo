@@ -9,10 +9,17 @@
         <item name="colorSecondary">@color/app_teal_200</item>
         <item name="colorSecondaryVariant">@color/app_teal_200</item>
         <item name="colorOnSecondary">@color/app_black</item>
+        <item name="colorError">#F44336</item>
+        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#212121</item>
+        <item name="android:colorBackground">@color/app_white</item>
+        <item name="colorOnBackground">#212121</item>
         <item name="android:windowBackground">@color/app_black</item>
-        <!--状态栏颜色-->
         <item name="android:statusBarColor">@color/app_black</item>
-        <!--导航栏颜色-->
         <item name="android:navigationBarColor">@color/app_black</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 </resources>

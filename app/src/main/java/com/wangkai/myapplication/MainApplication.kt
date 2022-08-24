@@ -71,18 +71,34 @@ class MainApplication : BaseApplication() {
                 }
             }
             QbSdk.setTbsListener(object : TbsListener {
-                override fun onDownloadFinish(i: Int) {
-                    Log.i("TBS_TAG", "腾讯X5内核 下载结束")
+                /**
+                 * @param stateCode 用户可处理错误码
+                 */
+                override fun onDownloadFinish(stateCode: Int) {
+                    Log.i("TBS_TAG", "腾讯X5内核 下载结束：$stateCode")
                 }
 
-                override fun onInstallFinish(i: Int) {
-                    Log.i("TBS_TAG", "腾讯X5内核 安装完成")
+                /**
+                 * @param stateCode
+                 */
+                override fun onInstallFinish(stateCode: Int) {
+                    Log.i("TBS_TAG", "腾讯X5内核 安装完成：$stateCode")
                 }
 
-                override fun onDownloadProgress(i: Int) {
-                    Log.i("TBS_TAG", "腾讯X5内核 下载进度:%$i")
+                /**
+                 * 首次安装应用，会触发内核下载，此时会有内核下载的进度回调。
+                 * @param progress 0 - 100
+                 */
+                override fun onDownloadProgress(progress: Int) {
+                    Log.i("TBS_TAG", "腾讯X5内核 下载进度:%$progress")
                 }
             })
+            if (!QbSdk.isTbsCoreInited()) {
+                // preInit只需要调用一次，如果已经完成了初始化，那么就直接构造view
+                Log.e("TBS_TAG", "预加载中...preInitX5WebCore")
+                QbSdk.preInit(applicationContext, cb)// 设置X5初始化完成的回调接口
+
+            }
             QbSdk.initX5Environment(appContext, cb)
         }
         /*------------------------------------设置全局http响应-----------------------------------*/
@@ -108,15 +124,14 @@ class MainApplication : BaseApplication() {
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
             ClassicsFooter(context)
         }
-
-
         /*--------------------------------------Bugly相关----------------------------------------*/
         /**
+         * 手动检查升级：
          * 参数1：isManual 用户手动点击检查，非用户点击操作请传false
          * 参数2：isSilence 是否显示弹窗等交互，[true:没有弹窗和toast] [false:有弹窗或toast]
+         * Beta.checkUpgrade()
          */
-        //Beta.checkUpgrade(false, false)
-        /*Bugly Android 应用升级 SDK 高级配置*/
+        /*===================Bugly Android 应用升级 SDK 高级配置===================*/
         // 1.true表示app启动自动初始化升级模块; false不会自动初始化; 开发者如果担心sdk初始化影响app启动速度，可以设置为false，在后面某个时刻手动调用Beta.init(getApplicationContext(),false);
         Beta.autoInit = true
         // 2.设置启动延时为1s（默认延时3s），APP启动1s后初始化SDK，避免影响APP启动速度;
@@ -137,92 +152,64 @@ class MainApplication : BaseApplication() {
         Beta.showInterruptedStrategy = true
         // 10.添加可显示弹窗的Activity(例如，只允许在MainActivity上显示更新弹窗，其他activity上不显示弹窗; 如果不设置默认所有activity都可以显示弹窗。)
         Beta.canShowUpgradeActs.add(HomeMainActivity::class.java)
-        // 11.设置自定义升级对话框UI布局
-        /**
-         * upgrade_dialog为项目的布局资源。 注意：因为要保持接口统一，需要用户在指定控件按照以下方式设置tag，否则会影响您的正常使用：
-         * 特性图片：beta_upgrade_banner，如：android:tag="beta_upgrade_banner"
-         * 标题：beta_title，如：android:tag="beta_title"
-         * 升级信息：beta_upgrade_info 如： android:tag="beta_upgrade_info"
-         * 更新属性：beta_upgrade_feature 如： android:tag="beta_upgrade_feature"
-         * 取消按钮：beta_cancel_button 如：android:tag="beta_cancel_button"
-         * 确定按钮：beta_confirm_button 如：android:tag="beta_confirm_button"
-         */
-        Beta.upgradeDialogLayoutId = R.layout.app_upgrade_dialog
-        // 12.设置自定义tip弹窗UI布局
-        /**
-         * 注意：因为要保持接口统一，需要用户在指定控件按照以下方式设置tag，否则会影响您的正常使用：
-         * 标题：beta_title，如：android:tag="beta_title"
-         * 提示信息：beta_tip_message 如： android:tag="beta_tip_message"
-         * 取消按钮：beta_cancel_button 如：android:tag="beta_cancel_button"
-         * 确定按钮：beta_confirm_button 如：android:tag="beta_confirm_button"
-         */
-//        Beta.tipsDialogLayoutId = R.layout.tips_dialog
-
-        //13.设置升级对话框生命周期回调接口
-        Beta.upgradeDialogLifecycleListener = object : UILifecycleListener<UpgradeInfo> {
-            override fun onCreate(context: Context, view: View, upgradeInfo: UpgradeInfo) {
-
-            }
-
-            override fun onStart(context: Context, view: View, upgradeInfo: UpgradeInfo) {
-
-            }
-
-            override fun onResume(context: Context, view: View, upgradeInfo: UpgradeInfo) {
-                // 注：可通过这个回调方式获取布局的控件，如果设置了id，可通过findViewById方式获取，如果设置了tag，可以通过findViewWithTag，具体参考下面例子:
-//                // 通过id方式获取控件，并更改imageview图片
-//                val imageView: ImageView = view.findViewById(R.id.icon) as ImageView
-//                imageView.setImageResource(R.mipmap.ic_launcher)
-//
-//                // 通过tag方式获取控件，并更改布局内容
-//                view.findViewWithTag("textview").text = "my custom text"
-//
-//                // 更多的操作：比如设置控件的点击事件
-//                imageView.setOnClickListener(object : OnClickListener() {
-//                    fun onClick(v: View?) {
-//                        val intent = Intent(applicationContext, OtherActivity::class.java)
-//                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                        startActivity(intent)
-//                    }
-//                })
-            }
-
-            override fun onPause(context: Context?, view: View?, upgradeInfo: UpgradeInfo?) {
-
-            }
-
-            override fun onStop(context: Context?, view: View?, upgradeInfo: UpgradeInfo?) {
-
-            }
-
-            override fun onDestroy(context: Context?, view: View?, upgradeInfo: UpgradeInfo?) {
-
-            }
-        }
-        // 14. 设置是否显示消息通知(如果你不想在通知栏显示下载进度，你可以将这个接口设置为false，默认值为true。)
-        Beta.enableNotification = true
-        // 15.设置Wifi下自动下载
-        Beta.autoDownloadOnWifi = true
-        // 16.设置是否显示弹窗中的apk信息（如果你使用我们默认弹窗是会显示apk信息的，如果你不想显示可以将这个接口设置为false。）
-        Beta.canShowApkInfo = true
-        // 17.关闭热更新能力（升级SDK默认是开启热更新能力的，如果你不需要使用热更新，可以将这个接口设置为false。）
-        Beta.enableHotfix = true
-        // 18.自定义Activity参考，通过回调接口来跳转到你自定义的Actiivty中。
+        // 11.自定义Activity参考，通过回调接口来跳转到你自定义的activity中。
         Beta.upgradeListener = UpgradeListener { p0, p1, p2, p3 ->
+            Log.e("BUGLY_TAG", "p0:$p0   pi2:$p2   p3:$p3")
             if (p1 != null) {
                 val i = Intent()
                 i.setClass(
-                    appContext,
-                    UpdateActivity::class.java
+                    appContext, UpdateActivity::class.java
                 )
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 appContext.startActivity(i)
             }
         }
+        // 12.设置自定义tip弹窗UI布局 注意：因为要保持接口统一，需要用户在指定控件按照以下方式设置tag，否则会影响您的正常使用：标题：beta_title，如：android:tag="beta_title",提示信息：beta_tip_message 如： android:tag="beta_tip_message",取消按钮：beta_cancel_button 如：android:tag="beta_cancel_button",确定按钮：beta_confirm_button 如：android:tag="beta_confirm_button"
+        // Beta.tipsDialogLayoutId = R.layout.tips_dialog
+        // 13. 设置是否显示消息通知(如果你不想在通知栏显示下载进度，你可以将这个接口设置为false，默认值为true。)
+        // Beta.enableNotification = true
+        // 14.设置Wifi下自动下载
+        // Beta.autoDownloadOnWifi = true
+        // 15.设置是否显示弹窗中的apk信息（如果你使用我们默认弹窗是会显示apk信息的，如果你不想显示可以将这个接口设置为false。）
+        // Beta.canShowApkInfo = true
+        // 16.关闭热更新能力（升级SDK默认是开启热更新能力的，如果你不需要使用热更新，可以将这个接口设置为false。）
+        // Beta.enableHotfix = true
+        // 17.设置升级对话框生命周期回调接口
+        Beta.upgradeDialogLifecycleListener = object : UILifecycleListener<UpgradeInfo> {
+            override fun onCreate(context: Context, view: View, upgradeInfo: UpgradeInfo) {
+                Log.d("BUGLY_TAG", "dialog:onCreate")
+            }
 
+            override fun onStart(context: Context, view: View, upgradeInfo: UpgradeInfo) {
+                Log.d("BUGLY_TAG", "dialog:onStart")
+            }
+
+            override fun onResume(context: Context, view: View, upgradeInfo: UpgradeInfo) {
+                Log.d("BUGLY_TAG", "dialog:onResume")
+            }
+
+            override fun onPause(context: Context?, view: View?, upgradeInfo: UpgradeInfo?) {
+                Log.d("BUGLY_TAG", "dialog:onPause")
+            }
+
+            override fun onStop(context: Context?, view: View?, upgradeInfo: UpgradeInfo?) {
+                Log.d("BUGLY_TAG", "dialog:onStop")
+            }
+
+            override fun onDestroy(context: Context?, view: View?, upgradeInfo: UpgradeInfo?) {
+                Log.d("BUGLY_TAG", "dialog:onDestroy")
+            }
+        }
+        // 18.更新状态监听
         Beta.upgradeStateListener = object : UpgradeStateListener {
-            override fun onUpgradeFailed(b: Boolean) {}
-            override fun onUpgradeSuccess(b: Boolean) {}
+            override fun onUpgradeFailed(b: Boolean) {
+                Log.d("BUGLY_TAG", "onUpgradeFailed:$b")
+            }
+
+            override fun onUpgradeSuccess(b: Boolean) {
+                Log.d("BUGLY_TAG", "onUpgradeSuccess:$b")
+            }
+
             override fun onUpgradeNoVersion(b: Boolean) {
                 Log.d("BUGLY_TAG", "onUpgradeNoVersion:$b")
             }
@@ -235,11 +222,9 @@ class MainApplication : BaseApplication() {
                 Log.d("BUGLY_TAG", "onDownloadCompleted:$b")
             }
         }
-        /* 5.设置开发设备*/
-//        CrashReport.setIsDevelopmentDevice(appContext, BuildConfig.DEBUG)
         /**
          * 参数1：上下文对象
-         * 参数2：注册时申请的APPID
+         * 参数2：注册时申请的appId
          * 参数3：是否开启debug模式，true表示打开debug模式，false表示关闭调试模式
          */
         Bugly.init(applicationContext, "eb89618c65", true)
@@ -287,6 +272,8 @@ class MainApplication : BaseApplication() {
 如果您没有使用BuglyLog接口，且初始化Bugly时isDebug参数设置为false，该Log功能将不会有新的资源占用；
 为了方便开发者调试，当初始化Bugly的isDebug参数为true时，异常日志同时还会记录Bugly本身的日志。请在App发布时将其设置为false；
 上报Log最大30K。*/
+        /* 5.设置开发设备*/
+//        CrashReport.setIsDevelopmentDevice(appContext, BuildConfig.DEBUG)
         return strategy
     }
 
