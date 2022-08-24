@@ -1,11 +1,9 @@
 package com.wangkai.myapplication
 
 import ando.file.core.FileOperator
-import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import com.drake.statelayout.StateConfig
 import com.library.base.application.BaseApplication
 import com.library.common.net.GlobalResponseHandler
@@ -15,10 +13,7 @@ import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.bugly.Bugly
 import com.tencent.bugly.beta.Beta
-import com.tencent.bugly.beta.UpgradeInfo
-import com.tencent.bugly.beta.ui.UILifecycleListener
 import com.tencent.bugly.beta.upgrade.UpgradeListener
-import com.tencent.bugly.beta.upgrade.UpgradeStateListener
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
@@ -174,54 +169,6 @@ class MainApplication : BaseApplication() {
         // Beta.canShowApkInfo = true
         // 16.关闭热更新能力（升级SDK默认是开启热更新能力的，如果你不需要使用热更新，可以将这个接口设置为false。）
         // Beta.enableHotfix = true
-        // 17.设置升级对话框生命周期回调接口
-        Beta.upgradeDialogLifecycleListener = object : UILifecycleListener<UpgradeInfo> {
-            override fun onCreate(context: Context, view: View, upgradeInfo: UpgradeInfo) {
-                Log.d("BUGLY_TAG", "dialog:onCreate")
-            }
-
-            override fun onStart(context: Context, view: View, upgradeInfo: UpgradeInfo) {
-                Log.d("BUGLY_TAG", "dialog:onStart")
-            }
-
-            override fun onResume(context: Context, view: View, upgradeInfo: UpgradeInfo) {
-                Log.d("BUGLY_TAG", "dialog:onResume")
-            }
-
-            override fun onPause(context: Context?, view: View?, upgradeInfo: UpgradeInfo?) {
-                Log.d("BUGLY_TAG", "dialog:onPause")
-            }
-
-            override fun onStop(context: Context?, view: View?, upgradeInfo: UpgradeInfo?) {
-                Log.d("BUGLY_TAG", "dialog:onStop")
-            }
-
-            override fun onDestroy(context: Context?, view: View?, upgradeInfo: UpgradeInfo?) {
-                Log.d("BUGLY_TAG", "dialog:onDestroy")
-            }
-        }
-        // 18.更新状态监听
-        Beta.upgradeStateListener = object : UpgradeStateListener {
-            override fun onUpgradeFailed(b: Boolean) {
-                Log.d("BUGLY_TAG", "onUpgradeFailed:$b")
-            }
-
-            override fun onUpgradeSuccess(b: Boolean) {
-                Log.d("BUGLY_TAG", "onUpgradeSuccess:$b")
-            }
-
-            override fun onUpgradeNoVersion(b: Boolean) {
-                Log.d("BUGLY_TAG", "onUpgradeNoVersion:$b")
-            }
-
-            override fun onUpgrading(b: Boolean) {
-                Log.d("BUGLY_TAG", "onUpgrading:$b")
-            }
-
-            override fun onDownloadCompleted(b: Boolean) {
-                Log.d("BUGLY_TAG", "onDownloadCompleted:$b")
-            }
-        }
         /**
          * 参数1：上下文对象
          * 参数2：注册时申请的appId

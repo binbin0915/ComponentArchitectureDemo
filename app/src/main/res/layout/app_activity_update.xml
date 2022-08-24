@@ -205,16 +205,6 @@
                     android:textSize="14dp"
                     android:visibility="invisible" />
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tv_uploadfun"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:textColor="@color/moccasin"
-                android:text="无法更新？点我解决"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

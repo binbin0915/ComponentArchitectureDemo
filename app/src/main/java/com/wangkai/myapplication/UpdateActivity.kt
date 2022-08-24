@@ -62,7 +62,8 @@ class UpdateActivity : BaseActivity<HomeMultiTypeBrvActivityViewModel, AppActivi
             Beta.cancelDownload()
             finish()
         }
-        viewBinding.sbEvaluationSseekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        viewBinding.sbEvaluationSseekBar.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 viewBinding.seekText2.text = "更新进度" + progress / 10 + "%"
             }
@@ -71,22 +72,21 @@ class UpdateActivity : BaseActivity<HomeMultiTypeBrvActivityViewModel, AppActivi
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
 
-        /*注册下载监听，监听下载事件*/Beta.registerDownloadListener(object : DownloadListener {
+        /*注册下载监听，监听下载事件*/
+        Beta.registerDownloadListener(object : DownloadListener {
             override fun onReceive(task: DownloadTask) {
                 updateBtn(task)
                 viewBinding.seekText2.visibility = View.VISIBLE
-                viewBinding.sbEvaluationSseekBar.progress = (task.savedLength * 1000 / Beta.getUpgradeInfo().fileSize).toInt()
+                viewBinding.sbEvaluationSseekBar.progress =
+                    (task.savedLength * 1000 / Beta.getUpgradeInfo().fileSize).toInt()
             }
 
             override fun onCompleted(task: DownloadTask) {
-//                seek_text2.setText("更新进度"+(int)(task.getSavedLength()*100/Beta.getUpgradeInfo().fileSize)+"%");
                 updateBtn(task)
-                //                tv.setText(task.getSavedLength()*100/Beta.getUpgradeInfo().fileSize + "");
             }
 
             override fun onFailed(task: DownloadTask, code: Int, extMsg: String) {
                 updateBtn(task)
-                //                tv.setText("failed");
             }
         })
     }
@@ -97,6 +97,7 @@ class UpdateActivity : BaseActivity<HomeMultiTypeBrvActivityViewModel, AppActivi
             true
         } else super.onKeyDown(keyCode, event)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         /*注销下载监听*/

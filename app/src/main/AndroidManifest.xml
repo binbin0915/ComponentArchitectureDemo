@@ -51,7 +51,8 @@
         <!--更新的activity-->
         <activity
             android:name=".UpdateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/APPUploadMyTransparent" />
 
         <!-- x5内核首次加载时优化的Service声明。该Service仅在TBS内核首次Dex加载时触发并执行dex2oat任务，任务完成后自动结束。 -->
         <service

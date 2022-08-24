@@ -38,4 +38,16 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:fitsSystemWindows">true</item>
     </style>
+
+    <!--更新自定义界面的主题样式-->
+    <style name="APPUploadMyTransparent" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">#60000000</item> <!-- 背景色透明度 -->
+        <item name="android:windowNoTitle">true</item><!-- 无标题 -->
+        <item name="android:windowIsTranslucent">true</item><!-- 半透明,设置为false无透明效果 -->
+        <item name="android:backgroundDimEnabled">true</item><!-- 模糊 -->
+        <!-- 窗口样式Dialog -->
+        <item name="android:windowAnimationStyle">@anim/app_update_fade_out</item>
+    </style>
+
+
 </resources>
