@@ -7,11 +7,12 @@ import com.library.base.application.BaseApplication
 import com.library.base.datastore.DataStoreUtils
 import com.library.base.viewmodel.BaseViewModel
 import com.model.login.data.LoginDataSource
+import com.model.login.data.UsersData
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class LoginViewModel : BaseViewModel() {
-    val loginLiveData = MutableLiveData<String>()
+    val loginLiveData = MutableLiveData<UsersData>()
     fun queryLoginByCoroutine() {
         viewModelScope.launch {
             try {
@@ -56,6 +57,7 @@ class LoginViewModel : BaseViewModel() {
                 Log.d("AAAAAAAAAAAAAAAAA", "token:$token")
                 val info = LoginDataSource.queryUsersByCoroutine(token)
                 Log.d("AAAAAAAAAAAAAAAAA", "info:$info")
+                loginLiveData.value = info
             } catch (e: Exception) {
                 Log.d("AAAAAAAAAAAAAAAAA", "error:${e.message}")
             }

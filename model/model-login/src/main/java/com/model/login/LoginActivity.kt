@@ -1,5 +1,7 @@
 package com.model.login
 
+import android.util.Log
+import androidx.appcompat.content.res.AppCompatResources
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.view.activity.BaseActivity
@@ -33,12 +35,20 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
         //获取到登录数据
         viewModel.loginLiveData.observe(this) {
             //保存登录信息
-            homeService.loginSucceed()
-            finish()
+            Log.e("AAAAAAAWAWAAAAAAAAAAAA", "获取所有用户信息:$it")
         }
     }
 
     override fun createdObserve() {
-
+        viewBinding.loginBtn.background =
+            AppCompatResources.getDrawable(
+                this,
+                com.library.common.R.drawable.shape_rectangle_solid
+            )
+        viewBinding.getUser.background =
+            AppCompatResources.getDrawable(
+                this,
+                com.library.common.R.drawable.shape_rectangle_solid
+            )
     }
 }

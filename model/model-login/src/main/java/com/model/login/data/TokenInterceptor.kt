@@ -24,7 +24,7 @@ class TokenInterceptor : Interceptor {
         if (url.isNotEmpty() && url.contains("/api/login")) {
             //登录接口获取token并保存
             Log.e("AAAAAAAWAWAAAAAAAAAAAA", "登录获取到：:${response.headers["Authorization"]}")
-            CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 response.headers["Authorization"]?.run {
                     DataStoreUtils.put(BaseApplication.appContext, "Authorization", this)
                 }
