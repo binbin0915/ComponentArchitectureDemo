@@ -85,7 +85,7 @@ class MainApplication : BaseApplication() {
                  * @param progress 0 - 100
                  */
                 override fun onDownloadProgress(progress: Int) {
-                    Log.i("TBS_TAG", "腾讯X5内核 下载进度:%$progress")
+                    Log.i("TBS_TAG", "腾讯X5内核 下载进度:$progress%")
                 }
             })
             if (!QbSdk.isTbsCoreInited()) {

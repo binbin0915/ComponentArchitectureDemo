@@ -24,6 +24,6 @@ class X5ProcessInitService : Service() {
     }
 
     companion object {
-        private const val TAG = "X5ProcessInitService"
+        private const val TAG = "TBS_TAG"
     }
 }
