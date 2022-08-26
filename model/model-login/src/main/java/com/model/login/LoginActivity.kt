@@ -1,7 +1,7 @@
 package com.model.login
 
 import android.util.Log
-import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -43,14 +43,16 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
 
     override fun createdObserve() {
         viewBinding.loginBtn.background =
-            AppCompatResources.getDrawable(
-                this,
-                com.library.common.R.drawable.shape_rectangle_solid
+            ResourcesCompat.getDrawable(
+                resources,
+                com.library.common.R.drawable.shape_rectangle_solid,
+                null
             )
         viewBinding.getUser.background =
-            AppCompatResources.getDrawable(
-                this,
-                com.library.common.R.drawable.shape_rectangle_solid
+            ResourcesCompat.getDrawable(
+                resources,
+                com.library.common.R.drawable.shape_rectangle_solid,
+                null
             )
     }
 }

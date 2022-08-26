@@ -1,23 +1,23 @@
 <resources>
     <!--APP夜间模式的主题-->
-    <style name="APPTheme.BaseApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="APPTheme.BaseApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/app_purple_200</item>
-        <item name="colorPrimaryVariant">@color/app_purple_700</item>
-        <item name="colorOnPrimary">@color/app_black</item>
+        <item name="colorPrimary">@color/color_purple_200</item>
+        <item name="colorPrimaryVariant">@color/color_purple_700</item>
+        <item name="colorOnPrimary">@color/color_black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/app_teal_200</item>
-        <item name="colorSecondaryVariant">@color/app_teal_200</item>
-        <item name="colorOnSecondary">@color/app_black</item>
+        <item name="colorSecondary">@color/color_teal_200</item>
+        <item name="colorSecondaryVariant">@color/color_teal_200</item>
+        <item name="colorOnSecondary">@color/color_black</item>
         <item name="colorError">#F44336</item>
         <item name="colorOnError">#FFFFFF</item>
         <item name="colorSurface">#FFFFFF</item>
         <item name="colorOnSurface">#212121</item>
-        <item name="android:colorBackground">@color/app_white</item>
+        <item name="android:colorBackground">@color/color_black</item>
         <item name="colorOnBackground">#212121</item>
-        <item name="android:windowBackground">@color/app_black</item>
-        <item name="android:statusBarColor">@color/app_black</item>
-        <item name="android:navigationBarColor">@color/app_black</item>
+        <item name="android:windowBackground">@color/color_black</item>
+        <item name="android:statusBarColor">@color/color_black</item>
+        <item name="android:navigationBarColor">@color/color_black</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:fitsSystemWindows">true</item>

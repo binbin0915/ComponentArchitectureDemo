@@ -8,23 +8,23 @@
         android:fillColor="#00000000"
         android:pathData="M9,0.75H24.916A8.25,8.25 0,0 1,33.166 9v7.2a8.25,8.25 0,0 1,-8.25 8.25H10A9.25,9.25 0,0 1,0.75 15.2V9A8.25,8.25 0,0 1,9 0.75Z"
         android:strokeWidth="1.5"
-        android:strokeColor="@color/airpods_black" />
+        android:strokeColor="@color/color_black" />
     <path
         android:fillColor="#00000000"
         android:pathData="M0.306,8.552L10.951,8.552"
         android:strokeWidth="1.5"
-        android:strokeColor="@color/airpods_black" />
+        android:strokeColor="@color/color_black" />
     <path
         android:fillColor="#00000000"
         android:pathData="M10.951,7.803L22.951,7.803A0.75,0.75 0,0 1,23.701 8.553L23.701,8.553A0.75,0.75 0,0 1,22.951 9.303L10.951,9.303A0.75,0.75 0,0 1,10.201 8.553L10.201,8.553A0.75,0.75 0,0 1,10.951 7.803z"
         android:strokeWidth="1.5"
-        android:strokeColor="@color/airpods_black" />
+        android:strokeColor="@color/color_black" />
     <path
         android:fillColor="#00000000"
         android:pathData="M22.951,8.552L33.105,8.552"
         android:strokeWidth="1.5"
-        android:strokeColor="@color/airpods_black" />
+        android:strokeColor="@color/color_black" />
     <path
-        android:fillColor="@color/airpods_black"
+        android:fillColor="@color/color_black"
         android:pathData="M17.201,12.803m-0.75,0a0.75,0.75 0,1 1,1.5 0a0.75,0.75 0,1 1,-1.5 0" />
 </vector>

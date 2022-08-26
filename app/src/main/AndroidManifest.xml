@@ -40,7 +40,7 @@
             android:name="com.model.splash.SplashMainActivity"
             android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:theme="@style/SplashTheme.BaseApplication">
+            android:theme="@style/CommonTheme.BaseApplication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,5 +1,6 @@
 package com.library.common.net
 
+import android.util.Log
 import com.google.gson.JsonParseException
 import com.wangkai.remote.data.HttpResponseParsable
 import com.wangkai.remote.tools.handler.HttpResponseHandler
@@ -69,30 +70,37 @@ class GlobalResponseHandler : HttpResponseHandler{
         when(throwable){
             is RestApiException ->{
                 //业务执行异常
+                Log.d("AAAAAAAAAAAAAAAAAAAAA","业务执行异常")
                 throwable.processApiError()
             }
             is SocketTimeoutException,is TimeoutException->{
                 //网络请求超时
+                Log.d("AAAAAAAAAAAAAAAAAAAAA","网络请求超时")
                 throwable.printStackTrace()
             }
             is HttpException,is ConnectException->{
                 //网路连接异常
+                Log.d("AAAAAAAAAAAAAAAAAAAAA","网路连接异常")
                 throwable.printStackTrace()
             }
             is JsonParseException,is JSONException,is ParseException ->{
                 //json解析异常
+                Log.d("AAAAAAAAAAAAAAAAAAAAA","json解析异常")
                 throwable.printStackTrace()
             }
             is UnknownHostException->{
                 //无法连接到服务器
+                Log.d("AAAAAAAAAAAAAAAAAAAAA","无法连接到服务器")
                 throwable.printStackTrace()
             }
             is IllegalArgumentException->{
                 //参数错误
+                Log.d("AAAAAAAAAAAAAAAAAAAAA","参数错误")
                 throwable.printStackTrace()
             }
             else->{
                 //其他位置错误
+                Log.d("AAAAAAAAAAAAAAAAAAAAA","其他位置错误")
                 throwable.printStackTrace()
             }
         }

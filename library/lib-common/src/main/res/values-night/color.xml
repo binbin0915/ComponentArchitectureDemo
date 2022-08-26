@@ -45,7 +45,6 @@
     <color name="color_purple_A200">#e040fb</color>
     <color name="color_purple_A400">#d500f9</color>
     <color name="color_purple_A700">#aa00ff</color>
-
     <!-- 深紫Deep Purple -->
     <color name="color_deepPurple_50">#ede7f6</color>
     <color name="color_deepPurple_100">#d1c4e9</color>
@@ -91,7 +90,6 @@
     <color name="color_blue_A200">#6889ff</color>
     <color name="color_blue_A400">#4d73ff</color>
     <color name="color_blue_A700">#4d69ff</color>
-
     <!-- 浅蓝Light Blue -->
     <color name="color_lightBlue_50">#e1f5fe</color>
     <color name="color_lightBlue_100">#b3e5fc</color>
@@ -137,7 +135,6 @@
     <color name="color_teal_A200">#64ffda</color>
     <color name="color_teal_A400">#1de9b6</color>
     <color name="color_teal_A700">#00bfa5</color>
-
     <!-- 绿Green -->
     <color name="color_green_50">#d0f8ce</color>
     <color name="color_green_100">#a3e9a4</color>
@@ -183,7 +180,6 @@
     <color name="color_Lime_A200">#eeff41</color>
     <color name="color_Lime_A400">#c6ff00</color>
     <color name="color_Lime_A700">#aeea00</color>
-
     <!-- Yellow -->
     <color name="color_yellow_50">#fffde7</color>
     <color name="color_yellow_100">#fff9c4</color>
@@ -229,7 +225,6 @@
     <color name="color_orange_A200">#ffab40</color>
     <color name="color_orange_A400">#ff9100</color>
     <color name="color_orange_A700">#ff6d00</color>
-
     <!-- Deep Orange -->
     <color name="color_deepOrange_50">#fbe9e7</color>
     <color name="color_deepOrange_100">#ffccbc</color>

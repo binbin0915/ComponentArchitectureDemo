@@ -65,7 +65,8 @@ class UpdateActivity : BaseActivity<HomeMultiTypeBrvActivityViewModel, AppActivi
         viewBinding.sbEvaluationSseekBar.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                viewBinding.seekText2.text = "更新进度" + progress / 10 + "%"
+                val text = "更新进度%f%%"
+                viewBinding.seekText2.text = String.format(text, (progress.toFloat() / 10))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}

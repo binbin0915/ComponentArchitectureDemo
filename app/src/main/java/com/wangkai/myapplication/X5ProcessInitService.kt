@@ -7,6 +7,11 @@ import android.util.Log
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.QbSdk.PreInitCallback
 
+/**
+ * x5内核预加载
+ *
+ * @author wangkai
+ */
 class X5ProcessInitService : Service() {
     override fun onCreate() {
         /* 只进行本地内核的预加载、不做版本检测及内核下载 */

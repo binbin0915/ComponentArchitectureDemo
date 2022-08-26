@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name="com.library.base.application.DebugApplication"
-        android:theme="@style/SplashTheme.BaseApplication">
+        android:theme="@style/CommonTheme.BaseApplication">
         <activity android:name=".SplashMainActivity"
             android:exported="true">
             <intent-filter>

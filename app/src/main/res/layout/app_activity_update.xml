@@ -44,7 +44,7 @@
                 android:paddingLeft="10dp"
 
                 android:text="title"
-                android:textColor="@color/white"
+                android:textColor="@color/color_white"
                 android:textSize="18sp"
                 android:visibility="gone" />
 
@@ -67,7 +67,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="@color/color_white"
                 android:padding="6dp">
 
                 <LinearLayout
@@ -93,7 +93,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="6dp"
                         android:text="版本更新"
-                        android:textColor="@color/moccasin"
+                        android:textColor="@color/color_orange_A100"
                         android:textSize="18sp" />
 
                     <TextView
@@ -112,7 +112,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginBottom="8dp"
                         android:text="feature"
-                        android:textColor="@color/black"
+                        android:textColor="@color/color_black"
                         android:textSize="14sp" />
                 </LinearLayout>
             </ScrollView>
@@ -143,7 +143,7 @@
                         android:gravity="center"
                         android:maxLines="1"
                         android:text="取消"
-                        android:textColor="@color/black"
+                        android:textColor="@color/color_black"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -165,7 +165,7 @@
                         android:gravity="center"
                         android:maxLines="1"
                         android:text="立即更新"
-                        android:textColor="@color/white"
+                        android:textColor="@color/color_white"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -190,7 +190,7 @@
                     android:progress="0"
                     android:progressDrawable="@drawable/app_evaluation_seekbar_style"
                     android:splitTrack="false"
-                    android:thumb="@color/moccasin" />
+                    android:thumb="@color/color_orange_A100" />
 
                 <TextView
                     android:id="@+id/seek_text2"
@@ -201,8 +201,8 @@
                     android:layout_marginTop="6dp"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@color/black"
-                    android:textSize="14dp"
+                    android:textColor="@color/color_black"
+                    android:textSize="14sp"
                     android:visibility="invisible" />
             </RelativeLayout>
         </LinearLayout>

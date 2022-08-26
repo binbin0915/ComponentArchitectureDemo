@@ -117,7 +117,7 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:text="个人中心"
-                android:textColor="@color/home_white" />
+                android:textColor="@color/color_white" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -128,7 +128,7 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:text="意见反馈"
-                android:textColor="@color/home_white" />
+                android:textColor="@color/color_white" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -139,7 +139,7 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:text="支持一下"
-                android:textColor="@color/home_white" />
+                android:textColor="@color/color_white" />
 
         </LinearLayout>
     </LinearLayout>
