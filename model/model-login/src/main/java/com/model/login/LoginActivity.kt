@@ -2,8 +2,10 @@ package com.model.login
 
 import android.util.Log
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.library.base.utils.debounceClick
 import com.library.base.view.activity.BaseActivity
 import com.library.router.RouterPath
 import com.library.router.service.HomeService
@@ -20,7 +22,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
     lateinit var homeService: HomeService
 
     override fun initData() {
-        viewBinding.loginBtn.setOnClickListener {
+        viewBinding.loginBtn.debounceClick(lifecycleScope) {
             //登录接口 -- url
 //            viewModel.queryLoginByCoroutine()
             //登录接口 -- body
