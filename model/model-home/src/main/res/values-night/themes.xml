@@ -11,6 +11,8 @@
         <item name="colorOnSecondary">@color/home_black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <!--导航栏颜色-->
+        <item name="android:navigationBarColor">@color/home_black</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

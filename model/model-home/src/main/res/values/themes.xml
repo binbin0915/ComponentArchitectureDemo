@@ -10,7 +10,9 @@
         <item name="colorSecondaryVariant">@color/home_teal_700</item>
         <item name="colorOnSecondary">@color/home_black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!--导航栏颜色-->
+        <item name="android:navigationBarColor">@color/home_white</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

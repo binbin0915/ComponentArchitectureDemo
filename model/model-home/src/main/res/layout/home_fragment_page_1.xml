@@ -6,7 +6,6 @@
     android:background="@color/white"
     android:overScrollMode="never"
     android:paddingStart="20dp"
-    android:paddingTop="20dp"
     android:paddingEnd="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout

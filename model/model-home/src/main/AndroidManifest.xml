@@ -15,7 +15,10 @@
         <activity
             android:name=".activity.HomeSimpleBrvActivity"
             android:exported="false" />
-        <activity android:name=".HomeMainActivity" />
+        <activity
+            android:name=".HomeMainActivity"
+            android:exported="false"
+            android:theme="@style/HomeTheme.BaseApplication" />
     </application>
 
 </manifest>

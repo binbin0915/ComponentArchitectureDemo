@@ -19,36 +19,34 @@
             android:id="@+id/cardView_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:cardBackgroundColor="#80FFFFFF"
-            app:cardElevation="0dp" />
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <!--卡片2-->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:cardBackgroundColor="#90FFFFFF"
-            app:cardElevation="0dp" />
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <!--首页-->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:cardBackgroundColor="?android:attr/windowBackground"
-            app:cardElevation="0dp">
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -92,10 +90,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_gravity="center"
             android:id="@+id/menu_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="32dp"
             android:text="Monterey"
             android:textColor="#333333"
@@ -111,35 +109,35 @@
 
             <TextView
                 android:id="@+id/tv_personal_center"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/home_draw_background"
                 android:padding="4dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:text="个人中心"
                 android:textColor="@color/home_white" />
 
             <TextView
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/home_draw_background"
                 android:padding="4dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:text="意见反馈"
                 android:textColor="@color/home_white" />
 
             <TextView
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/home_draw_background"
                 android:padding="4dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:text="支持一下"
                 android:textColor="@color/home_white" />
 
