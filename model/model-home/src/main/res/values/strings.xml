@@ -9,5 +9,13 @@
     <string name="home_bt_text_arcore">ARCore</string>
     <string name="home_title_page1">Home</string>
     <string name="home_juzi">竹竿有甘苦，我爱抱苦节</string>
+    <string name="home_navigation_name_1">首页</string>
+    <string name="home_navigation_name_2">页面2</string>
+    <string name="home_navigation_name_3">页面3</string>
+    <string name="home_navigation_name4_">页面4</string>
+
+
     <string name="home_portrait_description">头像</string>
+
+
 </resources>

@@ -27,41 +27,40 @@ private var <T : View> T.mDebounceSuspendJob: Job?
         setTag(jobUuid, value)
     }
 
-fun <T : View> T.debounceClick(
+fun <T : View> T.onClickListener(
     coroutineScope: CoroutineScope, delayMs: Long = 600L, block: suspend (T) -> Unit
 ) {
     setOnClickListener {
         mDebounceSuspendJob?.cancel()
         mDebounceSuspendJob = coroutineScope.launch {
             delay(delayMs)
-            block(this@debounceClick)
+            block(this@onClickListener)
             mDebounceSuspendJob = null
         }
-
     }
 }
 
-fun <T : View> T.debounceClick(
+fun <T : View> T.onClickListener(
     owner: LifecycleOwner, delayMs: Long = 600L, block: suspend (T) -> Unit
 ) {
-    this.debounceClick(owner.lifecycle.coroutineScope, delayMs, block)
+    this.onClickListener(owner.lifecycle.coroutineScope, delayMs, block)
 }
 
-fun <T : View> T.debounceClick(
+fun <T : View> T.onClickListener(
     coroutineScope: CoroutineScope, delayMs: Long = 600L, originBlock: View.OnClickListener?
 ) {
     originBlock ?: return
-    debounceClick(coroutineScope, delayMs) {
+    onClickListener(coroutineScope, delayMs) {
         originBlock.onClick(this)
     }
 }
 
 
-fun <T : View> T.debounceClick(
+fun <T : View> T.onClickListener(
     owner: LifecycleOwner, delayMs: Long = 600L, originBlock: View.OnClickListener?
 ) {
     originBlock ?: return
-    debounceClick(owner.lifecycle.coroutineScope, delayMs) {
+    onClickListener(owner.lifecycle.coroutineScope, delayMs) {
         originBlock.onClick(this)
     }
 }
