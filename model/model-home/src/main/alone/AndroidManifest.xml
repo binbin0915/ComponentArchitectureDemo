@@ -12,8 +12,7 @@
         android:theme="@style/CommonTheme.BaseApplication">
         <activity
             android:name=".HomeMainActivity"
-            android:exported="true"
-            android:theme="@style/CommonTheme.TransparentBar">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

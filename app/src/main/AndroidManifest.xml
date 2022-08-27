@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wangkai.myapplication">
     <!-- app权限在这里申请 -->
-    <!-- 开启网络访问权限 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许访问网络状态的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许访问wifi状态的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许修改网络状态的权限 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 允许修改wifi状态的权限 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 获取用户设备的IMEI，通过IMEI对用户进行唯一标识，以便提供统计分析服务。 （友盟统计的） -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- SD卡写入权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许安装来自未知来源 -->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 开启网络访问权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许访问网络状态的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许访问wifi状态的权限 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 允许修改网络状态的权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 允许修改wifi状态的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 获取用户设备的IMEI，通过IMEI对用户进行唯一标识，以便提供统计分析服务。 （友盟统计的） -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- SD卡写入权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!--允许安装来自未知来源-->
 
     <application
         android:name=".MainApplication"
@@ -39,8 +38,7 @@
         <activity
             android:name="com.model.splash.SplashMainActivity"
             android:configChanges="orientation|screenSize"
-            android:exported="true"
-            android:theme="@style/CommonTheme.BaseApplication">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

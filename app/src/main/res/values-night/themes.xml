@@ -16,15 +16,10 @@
         <item name="android:colorBackground">@color/color_black</item>
         <item name="colorOnBackground">#212121</item>
         <item name="android:windowBackground">@color/color_black</item>
-        <item name="android:statusBarColor">@color/color_black</item>
-        <item name="android:navigationBarColor">@color/color_black</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <!--更新自定义界面的主题样式-->
-    <style name="APPUploadMyTransparent" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="APPUploadMyTransparent" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <item name="android:windowBackground">#60000000</item> <!-- 背景色透明度 -->
         <item name="android:windowNoTitle">true</item><!-- 无标题 -->
         <item name="android:windowIsTranslucent">true</item><!-- 半透明,设置为false无透明效果 -->

@@ -25,13 +25,6 @@ class SplashMainActivity : BaseActivity<BaseViewModel, SplashActivityMainBinding
         viewBinding.animView.addAnimatorListener(this)
         viewBinding.animView.playAnimation()
     }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        if (!isFinishing) {
-//            viewBinding.animView.pauseAnimation()
-//        }
-//    }
 
     /**
      * 动画开始

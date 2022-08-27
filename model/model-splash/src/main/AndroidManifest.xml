@@ -5,8 +5,7 @@
     <application>
         <activity
             android:name=".SplashMainActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/CommonTheme.BaseApplication" />
+            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

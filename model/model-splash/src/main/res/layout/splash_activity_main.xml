@@ -14,6 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:lottie_fileName="anim/hyperloading.json" />
+        app:lottie_fileName="anim/hyper_loading.json" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

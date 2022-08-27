@@ -31,6 +31,7 @@ enum class StatusBarStyle {
 
 /**
  * 默认模式：仅状态栏透明
+ * 不侵入
  */
 fun FragmentActivity.defaultActivityBar(fontIsDark: Boolean) {
     statusBarOnly {
@@ -47,37 +48,21 @@ fun FragmentActivity.defaultActivityBar(fontIsDark: Boolean) {
 fun FragmentActivity.onlyStatusActivityBar(fontIsDark: Boolean) {
     statusBarOnly {
         //只适配状态栏的文字颜色
-        light = fontIsDark        // 沉浸式
-        fitWindow = false    // 布局侵入
+        light = fontIsDark
+        transparent()
     }
 }
 
 /**
  * 沉浸模式：状态栏和导航栏透明
  */
-fun FragmentActivity.immersionActivityBar() {
-    statusBar { transparent() }
+fun FragmentActivity.immersionActivityBar(fontIsDark: Boolean) {
+    statusBar {
+        light = fontIsDark
+        transparent()
+    }
     navigationBar { transparent() }
 }
-
-
-/**
- * 改变状态栏颜色
- * 透明状态栏
- */
-fun FragmentActivity.transparentBar() {
-
-}
-
-/**
- * 改变状态栏颜色
- * @param color 状态栏颜色
- * @param fontIsDark 状态栏字体是否是深色
- */
-fun FragmentActivity.changeStatusBarColor(color: Int, fontIsDark: Boolean) {
-
-}
-
 
 /**
  * 改变状态栏样式
@@ -85,7 +70,7 @@ fun FragmentActivity.changeStatusBarColor(color: Int, fontIsDark: Boolean) {
 fun FragmentActivity.setBarStyle(style: StatusBarStyle, fontIsDark: Boolean) {
     when (style) {
         StatusBarStyle.DEFAULT -> defaultActivityBar(fontIsDark)
-        StatusBarStyle.IMMERSION -> immersionActivityBar()
+        StatusBarStyle.IMMERSION -> immersionActivityBar(fontIsDark)
         StatusBarStyle.ONLY_STATUS -> onlyStatusActivityBar(fontIsDark)
     }
 }

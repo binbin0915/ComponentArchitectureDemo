@@ -1,6 +1,6 @@
 <resources>
     <!--APP日间模式的主题-->
-    <style name="APPTheme.BaseApplication" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+    <style name="APPTheme.BaseApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <!--您的应用的主要品牌颜色，主要用于主题-->
         <item name="colorPrimary">@color/color_purple_200</item>
@@ -29,18 +29,10 @@
         <item name="colorOnBackground">@color/color_white</item>
         <!--背景色-->
         <item name="android:windowBackground">@color/color_white</item>
-        <!--状态栏颜色-->
-        <item name="android:statusBarColor">@color/color_white</item>
-        <!--导航栏颜色-->
-        <item name="android:navigationBarColor">@color/color_white</item>
-        <!--除去title-->
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <!--更新自定义界面的主题样式-->
-    <style name="APPUploadMyTransparent" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="APPUploadMyTransparent" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <item name="android:windowBackground">#60000000</item> <!-- 背景色透明度 -->
         <item name="android:windowNoTitle">true</item><!-- 无标题 -->
         <item name="android:windowIsTranslucent">true</item><!-- 半透明,设置为false无透明效果 -->
@@ -48,6 +40,4 @@
         <!-- 窗口样式Dialog -->
         <item name="android:windowAnimationStyle">@anim/app_update_fade_out</item>
     </style>
-
-
 </resources>

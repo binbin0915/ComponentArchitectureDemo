@@ -16,33 +16,7 @@
         <item name="android:colorBackground">@color/color_black</item>
         <item name="colorOnBackground">#212121</item>
         <item name="android:windowBackground">@color/color_black</item>
-        <item name="android:statusBarColor">@color/color_black</item>
-        <item name="android:navigationBarColor">@color/color_black</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:fitsSystemWindows">true</item>
-    </style>
-
-
-    <style name="CommonTheme.TransparentBar" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
-        <item name="colorPrimary">@color/color_purple_200</item>
-        <item name="colorPrimaryVariant">@color/color_purple_700</item>
-        <item name="colorOnPrimary">@color/color_white</item>
-        <item name="colorSecondary">@color/color_teal_200</item>
-        <item name="colorSecondaryVariant">@color/color_teal_200</item>
-        <item name="colorOnSecondary">@color/color_white</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
-        <item name="colorSurface">#FFFFFF</item>
-        <item name="colorOnSurface">@color/color_white</item>
-        <item name="android:colorBackground">@color/color_white</item>
-        <item name="colorOnBackground">@color/color_white</item>
-        <item name="android:windowBackground">@color/color_white</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
-
 </resources>

@@ -17,6 +17,8 @@ import com.model.home.databinding.HomeActivityMainBinding
 import com.model.home.pages.adapter.HomeViewPagerAdapter
 import com.model.home.viewmodel.HomeMainActivityShareViewModel
 import com.model.home.viewmodel.HomeMainActivityViewModel
+import com.zackratos.ultimatebarx.ultimatebarx.addNavigationBarBottomPadding
+import com.zackratos.ultimatebarx.ultimatebarx.addStatusBarTopPadding
 
 @Route(path = RouterPath.PAGE_HOME_MAIN_ACTIVITY, group = RouterPath.GROUP_HOME)
 class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMainBinding>() {
@@ -60,7 +62,8 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
     }
 
     override fun initData() {
-
+        viewBinding.constraintLayout.addStatusBarTopPadding()
+        viewBinding.constraintLayout.addNavigationBarBottomPadding()
         /**
          * 侧边菜单动画
          */
