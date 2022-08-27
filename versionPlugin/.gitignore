@@ -124,3 +124,4 @@
 /build/pluginDescriptors/com.wangkai.version.properties
 /build/resources/main/META-INF/gradle-plugins/com.wangkai.version.properties
 /build/tmp/jar/MANIFEST.MF
+/build/kotlin/compileKotlin/

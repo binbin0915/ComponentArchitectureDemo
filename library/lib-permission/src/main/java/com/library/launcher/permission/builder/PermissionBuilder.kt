@@ -1,7 +1,7 @@
 package com.library.launcher.permission.builder
 
 /**
- * 描述：单权限申请
+ * 单权限申请
  *
  * 创建日期： 2022/04/16
  * @author WangKai

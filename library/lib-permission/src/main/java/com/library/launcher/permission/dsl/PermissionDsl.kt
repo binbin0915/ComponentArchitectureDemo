@@ -7,13 +7,13 @@ import com.library.launcher.permission.builder.PermissionBuilder
 
 
 /**
- * 描述：权限申请DSL
+ * 权限申请DSL
  *
  * 创建日期： 2022/04/16
  * @author WangKai
  */
 
-/*----------------------------------------activity----------------------------------------*/
+/*----------------------------------------activity单权限申请----------------------------------------*/
 inline fun ComponentActivity.permission(
     permission: String,//权限
     builderPermission: PermissionBuilder.() -> Unit
@@ -28,6 +28,7 @@ inline fun ComponentActivity.permission(
     )
 }
 
+/*----------------------------------------activity多权限申请----------------------------------------*/
 inline fun ComponentActivity.permissions(
     permissions: Array<String>,//权限
     builderPermission: MultiPermissionBuilder.() -> Unit
@@ -43,7 +44,7 @@ inline fun ComponentActivity.permissions(
     )
 }
 
-/*----------------------------------------fragment----------------------------------------*/
+/*----------------------------------------fragment单权限申请----------------------------------------*/
 inline fun Fragment.permission(
     permission: String,//权限
     builderPermission: PermissionBuilder.() -> Unit
@@ -58,6 +59,7 @@ inline fun Fragment.permission(
     )
 }
 
+/*----------------------------------------fragment多权限申请----------------------------------------*/
 inline fun Fragment.permissions(
     permissions: Array<String>,//权限
     builderPermission: MultiPermissionBuilder.() -> Unit
