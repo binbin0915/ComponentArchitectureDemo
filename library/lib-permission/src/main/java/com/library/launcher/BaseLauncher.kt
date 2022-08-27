@@ -10,7 +10,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 
 /**
- * 描述：
+ * 启动器基类
  *
  * 创建日期： 2022/04/16
  * @author WangKai

@@ -44,6 +44,6 @@ dependencies {
     implementation project(":library:lib-widget")
     //公共基础包
     implementation project(":library:lib-common")
-    implementation project(path: ':library:lib-launcher')
+    implementation project(path: ':library:lib-permission')
     implementation project(path: ':library:lib-file')
 }

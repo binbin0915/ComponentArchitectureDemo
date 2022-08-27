@@ -1,11 +1,11 @@
 package com.library.launcher.permission
 
 import androidx.activity.result.contract.ActivityResultContracts
-import com.library.launcher.permission.builder.PermissionBuilder
 import com.library.launcher.BaseLauncher
+import com.library.launcher.permission.builder.PermissionBuilder
 
 /**
- * 描述：使用ActivityResults单权限申请
+ * 单个权限申请
  *
  * 创建日期： 2022/04/16
  * @author WangKai

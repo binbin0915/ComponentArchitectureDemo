@@ -12,12 +12,12 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.flywith24.activityresult.ActivityResultLauncher
 import com.kongzue.dialogx.dialogs.MessageDialog
 import com.library.base.expand.toastError
 import com.library.base.expand.toastSucceed
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
+import com.library.launcher.permission.ActivityResultLauncher
 import com.library.launcher.permission.MultiPermissionLauncher
 import com.library.launcher.permission.utils.checkPermissions
 import com.library.router.RouterPath
