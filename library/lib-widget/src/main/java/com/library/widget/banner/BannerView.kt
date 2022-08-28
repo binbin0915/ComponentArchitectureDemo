@@ -2,7 +2,6 @@ package com.library.widget.banner
 
 import android.animation.Animator
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
@@ -20,7 +19,6 @@ import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
-
 import com.library.widget.R
 import com.library.widget.banner.ext.dp
 import com.library.widget.databinding.ItemBannerImageBinding
@@ -369,12 +367,15 @@ class BannerView @JvmOverloads constructor(
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun switchIndicator(position: Int) {
         if (showIndicator && adapter != null) {
             val realPosition = position % dataSize
             if (isNumberIndicator) {
-                numberTv.text = "${realPosition + 1}/$dataSize"
+                numberTv.text = String.format(
+                    context.getString(R.string.number_tv),
+                    (realPosition + 1),
+                    dataSize
+                )
             } else {
                 indicatorParent.children.forEachIndexed { index, child ->
                     child.isSelected = index == realPosition
