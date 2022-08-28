@@ -5,7 +5,7 @@
     android:id="@+id/layout_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00bfff"
+    android:background="@drawable/shape_gradual"
     tools:context=".HomeMainActivity"
     tools:openDrawer="start">
 
