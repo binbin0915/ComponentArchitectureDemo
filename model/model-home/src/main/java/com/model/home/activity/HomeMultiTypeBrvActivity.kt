@@ -3,7 +3,7 @@ package com.model.home.activity
 import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
-import com.drake.brv.utils.bindingAdapter
+import com.drake.brv.BindingAdapter
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
 import com.library.base.expand.ToastType
@@ -28,15 +28,18 @@ import com.model.home.viewmodel.HomeMultiTypeBrvActivityViewModel
 @Route(group = RouterPath.GROUP_BRV, path = RouterPath.PAGE_BRV_MULTITYPE)
 class HomeMultiTypeBrvActivity :
     BaseActivity<HomeMultiTypeBrvActivityViewModel, HomeActivityMultiTypeBrvBinding>() {
-    override fun initData() {
 
+    /*recyclerview布局适配器*/
+    private lateinit var adapter: BindingAdapter
+
+    override fun initData() {
+        adapter.models = viewModel.getData()
     }
 
     override fun createdObserve() {
-        viewBinding.rvMulti.linear().setup {
+        adapter = viewBinding.rvMulti.linear().setup {
             addType<MultiModel1>(R.layout.home_item_multi_type1)
             addType<MultiModel2>(R.layout.home_item_multi_type2)
-
             onBind {
                 when (itemViewType) {
                     R.layout.home_item_multi_type1 -> {
@@ -52,10 +55,9 @@ class HomeMultiTypeBrvActivity :
                     }
                 }
             }
-        }.models = getData()
-
+        }
         // 点击事件
-        viewBinding.rvMulti.bindingAdapter.onClick(R.id.rv_parent) {
+        adapter.onClick(R.id.rv_parent) {
             when (itemViewType) {
                 R.layout.home_item_multi_type1 -> {
                     val simpleModel1: MultiModel1 = getModel()
@@ -68,23 +70,5 @@ class HomeMultiTypeBrvActivity :
                 }
             }
         }
-    }
-
-    private fun getData(): MutableList<Any> {
-        val url1 =
-            "http://photocq.photo.store.qq.com/psc?/V14Rxniv2U0S9D/cXP39dXjFtymXNK2lOGni7w0LiIWS5IckQE9TG0t1ftC89uRDmF.vB14O6fOc2FZphzCrtsdqH6GAsbLCpfsG5wov8Ozz7TyS45UyAVf6WI!/b&bo=ngL2AZ4C9gEFFzQ!&rf=viewer_4"
-        val url2 =
-            "http://photocq.photo.store.qq.com/psc?/V14Rxniv2U0S9D/cXP39dXjFtymXNK2lOGni0YAeqnprq8Bz*2LVpYQXcbygVY1K8xi7t8fOe6KdEK6V*hj6vlsz2CJbP5obbQKYYelaUfvptiyFC83Y9SAB84!/b&bo=CQI3AQkCNwEFFzQ!&rf=viewer_4"
-
-        return mutableListOf(
-            MultiModel1(url = url1),
-            MultiModel1(url = url1),
-            MultiModel2(url = url2),
-            MultiModel2(url = url2),
-            MultiModel2(url = url2),
-            MultiModel1(url = url1),
-            MultiModel2(url = url2),
-            MultiModel1(url = url1),
-        )
     }
 }
