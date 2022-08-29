@@ -59,9 +59,6 @@ class HomeFragment2 : BaseFragment<BaseViewModel, HomeFragmentPage2Binding>(),
                 RouterPath.GROUP_BRV,
                 RouterPath.PAGE_BRV_MULTITYPE
             )
-//            R.id.errorBtn -> showToast(ToastType.ERROR, "这是errorToast")
-//            R.id.warningBtn -> showToast(ToastType.WARNING, "这是warningToast")
-//            R.id.deleteBtn -> showToast(ToastType.WARNING, "这是deleteToast")
         }
     }
 }

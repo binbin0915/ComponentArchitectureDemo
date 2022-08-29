@@ -16,6 +16,7 @@ import com.model.home.R
 import com.model.home.bean.BannerInfo
 import com.model.home.databinding.HomeFragmentPage1Binding
 import com.model.home.viewmodel.HomeMainActivityShareViewModel
+import com.zackratos.ultimatebarx.ultimatebarx.statusBarHeight
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -71,11 +72,11 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
         viewBinding.loadingBtn.setOnClickListener(this)
 
 
-        viewBinding.homeBanner.setData(dataList3,
+        viewBinding.homeBanner.setData(
+            dataList3,
             dataList3.map { it.displayText }) { itemBinding, data ->
             Glide.with(this).load(data.imageUrl).into(itemBinding.root)
             itemBinding.root.setOnClickListener {
-                Log.e("AAAAAAAAAAAAXXS", "111111111")
                 Toast.makeText(context, "${data.displayText}: 被点击了！", Toast.LENGTH_SHORT).show()
             }
         }
@@ -84,7 +85,9 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
     }
 
     override fun createdObserve() {
-
+        viewBinding.fragmentParent1.apply {
+            setPadding(paddingLeft, paddingTop + statusBarHeight, paddingRight, paddingBottom)
+        }
     }
 
     override fun defaultLoadingStatus(): Boolean = true
