@@ -12,6 +12,7 @@ import com.library.router.RouterPath
 import com.library.router.service.LoginService
 import com.library.widget.status.PageStatus
 import com.model.home.databinding.HomeFragmentPage4Binding
+import com.zackratos.ultimatebarx.ultimatebarx.statusBarHeight
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -39,6 +40,9 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
 
 
     override fun createdObserve() {
+//        viewBinding.homeToolbar.apply {
+//            setPadding(paddingLeft, paddingTop + statusBarHeight, paddingRight, paddingBottom)
+//        }
         ObserverManager.getInstance().add(this)
     }
 

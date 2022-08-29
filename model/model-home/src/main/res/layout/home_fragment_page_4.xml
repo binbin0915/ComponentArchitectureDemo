@@ -11,15 +11,16 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll"
-            app:scrimVisibleHeightTrigger="45dp">
+            app:layout_scrollFlags="scroll">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background" />
-
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/home_app_name"
+                android:scaleType="fitXY"
+                android:src="@drawable/pic_me"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
@@ -54,7 +55,7 @@
             <TextView
                 android:id="@+id/userInfo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="1000dp"
                 android:layout_marginTop="10dp"
                 android:text="当前用户信息:未登录"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -66,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:minWidth="48dp"
                 android:text="登录"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
