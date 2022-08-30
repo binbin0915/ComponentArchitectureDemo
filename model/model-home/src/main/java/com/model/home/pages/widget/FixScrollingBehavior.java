@@ -25,7 +25,7 @@ public class FixScrollingBehavior extends AppBarLayout.ScrollingViewBehavior {
     }
 
     /**
-     * child就是绑定此behavior的view，dependency是发送变化的view
+     * 在CoordinatorLayout中通过循环遍历的方式找到被依赖的View
      *
      * @param parent     parent
      * @param child      child
@@ -49,7 +49,7 @@ public class FixScrollingBehavior extends AppBarLayout.ScrollingViewBehavior {
     }
 
     /**
-     * 此处child 就是fab，dependency是被依赖的view
+     * 每次dependency的大小或位置有所变化的时候都会调用该方法
      *
      * @param parent     parent
      * @param child      child
