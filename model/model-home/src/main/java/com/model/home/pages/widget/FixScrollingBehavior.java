@@ -14,12 +14,16 @@ import com.google.android.material.appbar.AppBarLayout;
  */
 public class FixScrollingBehavior extends AppBarLayout.ScrollingViewBehavior {
 
-    private AppBarLayout appBarLayout;
-
     public FixScrollingBehavior() {
         super();
     }
 
+    /**
+     * 我们在自定义的Behavior中，带有参数的这个构造必须要重载，因为在CoordinatorLayout里利用反射去获取这个Behavior的时候就是拿的这个构造。
+     *
+     * @param context context
+     * @param attrs   attrs
+     */
     public FixScrollingBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -57,6 +61,8 @@ public class FixScrollingBehavior extends AppBarLayout.ScrollingViewBehavior {
      */
     @Override
     public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
+
+
         return super.onDependentViewChanged(parent, child, dependency);
     }
 }

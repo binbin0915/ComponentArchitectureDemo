@@ -1,6 +1,7 @@
 package com.model.home.pages
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.library.base.observermanager.ObserverListener
@@ -16,6 +17,7 @@ import com.zackratos.ultimatebarx.ultimatebarx.statusBarHeight
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), ObserverListener {
 
@@ -42,6 +44,17 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
     override fun createdObserve() {
         viewBinding.fragment4Toolbar.apply {
             setPadding(paddingLeft, statusBarHeight + paddingTop, paddingRight, paddingBottom)
+        }
+
+        viewBinding.fragment4Appbar.apply {
+            addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+                run {
+                    Log.d(
+                        "AAAAAAAAAAAAAAAA",
+                        "${1 - (abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange)}"
+                    )
+                }
+            }
         }
         ObserverManager.getInstance().add(this)
     }
