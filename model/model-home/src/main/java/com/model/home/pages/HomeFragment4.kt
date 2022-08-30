@@ -41,7 +41,7 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
 
     override fun createdObserve() {
         viewBinding.fragment4Toolbar.apply {
-            setPadding(paddingLeft, statusBarHeight, paddingRight, paddingBottom)
+            setPadding(paddingLeft, statusBarHeight + paddingTop, paddingRight, paddingBottom)
         }
         ObserverManager.getInstance().add(this)
     }

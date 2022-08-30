@@ -24,29 +24,39 @@ public class FixScrollingBehavior extends AppBarLayout.ScrollingViewBehavior {
         super(context, attrs);
     }
 
+    /**
+     * child就是绑定此behavior的view，dependency是发送变化的view
+     *
+     * @param parent     parent
+     * @param child      child
+     * @param dependency dependency
+     * @return boolean
+     */
     @Override
-    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
-
-        if (appBarLayout == null) {
-            appBarLayout = (AppBarLayout) dependency;
-        }
-
-        final boolean result = super.onDependentViewChanged(parent, child, dependency);
-        final int bottomPadding = calculateBottomPadding(appBarLayout);
-        final boolean paddingChanged = bottomPadding != child.getPaddingBottom();
-        if (paddingChanged) {
-            child.setPadding(
-                    child.getPaddingLeft(),
-                    child.getPaddingTop(),
-                    child.getPaddingRight(),
-                    bottomPadding);
-            child.requestLayout();
-        }
-        return paddingChanged || result;
+    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
+        return super.layoutDependsOn(parent, child, dependency);
     }
 
-    private int calculateBottomPadding(AppBarLayout dependency) {
-        final int totalScrollRange = dependency.getTotalScrollRange();
-        return totalScrollRange + dependency.getTop();
+
+    /**
+     * @param parent     parent
+     * @param child      child
+     * @param dependency dependency
+     */
+    @Override
+    public void onDependentViewRemoved(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
+        super.onDependentViewRemoved(parent, child, dependency);
+    }
+
+    /**
+     * 此处child 就是fab，dependency是被依赖的view
+     *
+     * @param parent     parent
+     * @param child      child
+     * @param dependency dependency
+     */
+    @Override
+    public boolean onDependentViewChanged(@NonNull CoordinatorLayout parent, @NonNull View child, @NonNull View dependency) {
+        return super.onDependentViewChanged(parent, child, dependency);
     }
 }
