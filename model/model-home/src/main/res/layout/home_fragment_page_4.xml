@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
+        app:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,8 +29,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:paddingTop="40dp">
+                android:layout_marginTop="40dp"
+                android:background="@drawable/shape_rectangle_solid_top"
+                android:orientation="vertical">
 
             </LinearLayout>
 
@@ -40,7 +42,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shape_rectangle_solid"
+        android:background="@color/color_white"
         app:layout_behavior="@string/home_fix_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
