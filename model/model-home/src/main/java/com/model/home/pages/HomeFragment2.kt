@@ -10,6 +10,7 @@ import com.library.router.RouterPath
 import com.library.widget.status.PageStatus
 import com.model.home.R
 import com.model.home.databinding.HomeFragmentPage2Binding
+import com.zackratos.ultimatebarx.ultimatebarx.statusBarHeight
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -34,7 +35,9 @@ class HomeFragment2 : BaseFragment<BaseViewModel, HomeFragmentPage2Binding>(),
     }
 
     override fun createdObserve() {
-
+        viewBinding.fragmentParent2.apply {
+            setPadding(paddingLeft, paddingTop + statusBarHeight, paddingRight, paddingBottom)
+        }
     }
 
 

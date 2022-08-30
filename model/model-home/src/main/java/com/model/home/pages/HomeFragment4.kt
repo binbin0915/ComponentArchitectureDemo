@@ -2,6 +2,7 @@ package com.model.home.pages
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.FrameLayout
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.library.base.observermanager.ObserverListener
@@ -44,11 +45,14 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
     override fun createdObserve() {
         viewBinding.fragment4Toolbar.apply {
             setPadding(paddingLeft, statusBarHeight + paddingTop, paddingRight, paddingBottom)
+            val layoutParams = layoutParams as FrameLayout.LayoutParams
+            layoutParams.topMargin = statusBarHeight
         }
 
         viewBinding.fragment4Appbar.apply {
             addOnOffsetChangedListener { appBarLayout, verticalOffset ->
                 run {
+                    /* 从1-0 */
                     Log.d(
                         "AAAAAAAAAAAAAAAA",
                         "${1 - (abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange)}"
