@@ -2,7 +2,7 @@ package com.model.home.pages
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.FrameLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.library.base.observermanager.ObserverListener
@@ -19,6 +19,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), ObserverListener {
 
@@ -43,20 +45,39 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
 
 
     override fun createdObserve() {
+//        aMap = viewBinding.mapView.map
+
+        val layoutParams = viewBinding.scrollView.layoutParams as CoordinatorLayout.LayoutParams
+        layoutParams.setMargins(30, 0, 30, 0)
+        viewBinding.scrollView.layoutParams = layoutParams
+
         viewBinding.fragment4Toolbar.apply {
             setPadding(paddingLeft, statusBarHeight + paddingTop, paddingRight, paddingBottom)
-            val layoutParams = layoutParams as FrameLayout.LayoutParams
-            layoutParams.topMargin = statusBarHeight
         }
 
         viewBinding.fragment4Appbar.apply {
-            addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            addOnOffsetChangedListener { appBarLayout, i ->
                 run {
                     /* 从1-0 */
                     Log.d(
                         "AAAAAAAAAAAAAAAA",
-                        "${1 - (abs(verticalOffset * 1.0f) / appBarLayout.totalScrollRange)}"
+                        "${1 - (abs(i * 1.0f) / appBarLayout.totalScrollRange)}"
                     )
+                    val a = 30f / appBarLayout.totalScrollRange
+                    val side = round((a * i + 30).toDouble()).toInt()
+                    layoutParams.setMargins(side, 0, side, 0)
+                    viewBinding.scrollView.layoutParams = layoutParams
+//                    if (abs(i) > 0) {
+//                        val alpha: Float = abs(i).toFloat() / appBarLayout.totalScrollRange
+//                        appBarLayout.alpha = alpha
+//                        viewBinding.scrollView.background.mutate().alpha =
+//                            (alpha * 255).roundToInt()
+//                    } else {
+//                        appBarLayout.alpha = 0f
+//                        viewBinding.scrollView.background.mutate().alpha = 0
+//                    }
+
+
                 }
             }
         }

@@ -17,6 +17,6 @@
 
     <string name="home_portrait_description">头像</string>
     <string name="home_fix_behavior">com.model.home.pages.widget.FixScrollingBehavior</string>
-
+    <string name="home_behavior">com.model.home.pages.widget.AppBarBehavior</string>
 
 </resources>
