@@ -2,6 +2,7 @@ package com.model.home.pages
 
 import android.os.Bundle
 import android.util.Log
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -45,39 +46,24 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
 
 
     override fun createdObserve() {
-//        aMap = viewBinding.mapView.map
-
-        val layoutParams = viewBinding.scrollView.layoutParams as CoordinatorLayout.LayoutParams
-        layoutParams.setMargins(30, 0, 30, 0)
-        viewBinding.scrollView.layoutParams = layoutParams
-
+        /*因为透明导航栏，所以需要在toolbar添加padding*/
         viewBinding.fragment4Toolbar.apply {
             setPadding(paddingLeft, statusBarHeight + paddingTop, paddingRight, paddingBottom)
         }
-
+        val initialPadding = 80
+        val layoutParams =
+            viewBinding.fragment4CardView.layoutParams as ConstraintLayout.LayoutParams
+        layoutParams.setMargins(initialPadding, 0, initialPadding, 0)
+        viewBinding.fragment4CardView.layoutParams = layoutParams
+        /*cardView跟随滑动改变margin*/
         viewBinding.fragment4Appbar.apply {
             addOnOffsetChangedListener { appBarLayout, i ->
                 run {
-                    /* 从1-0 */
-                    Log.d(
-                        "AAAAAAAAAAAAAAAA",
-                        "${1 - (abs(i * 1.0f) / appBarLayout.totalScrollRange)}"
-                    )
-                    val a = 30f / appBarLayout.totalScrollRange
-                    val side = round((a * i + 30).toDouble()).toInt()
+                    /* 从1-0：1 - (abs(i * 1.0f) / appBarLayout.totalScrollRange) */
+                    val a = initialPadding.toFloat() / appBarLayout.totalScrollRange
+                    val side = round((a * i + initialPadding).toDouble()).toInt()
                     layoutParams.setMargins(side, 0, side, 0)
-                    viewBinding.scrollView.layoutParams = layoutParams
-//                    if (abs(i) > 0) {
-//                        val alpha: Float = abs(i).toFloat() / appBarLayout.totalScrollRange
-//                        appBarLayout.alpha = alpha
-//                        viewBinding.scrollView.background.mutate().alpha =
-//                            (alpha * 255).roundToInt()
-//                    } else {
-//                        appBarLayout.alpha = 0f
-//                        viewBinding.scrollView.background.mutate().alpha = 0
-//                    }
-
-
+                    viewBinding.fragment4CardView.layoutParams = layoutParams
                 }
             }
         }

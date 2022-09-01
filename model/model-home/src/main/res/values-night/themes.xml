@@ -11,4 +11,11 @@
         <item name="colorOnSecondary">@color/color_black</item>
         <!-- Customize your theme here. -->
     </style>
+
+
+    <style name="Home_roundedCornerImageStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+    </style>
 </resources>
