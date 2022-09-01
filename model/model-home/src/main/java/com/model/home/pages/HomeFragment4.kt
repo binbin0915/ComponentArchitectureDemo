@@ -1,6 +1,7 @@
 package com.model.home.pages
 
 import android.os.Bundle
+import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -18,6 +19,7 @@ import com.zackratos.ultimatebarx.ultimatebarx.statusBarHeight
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 import kotlin.math.round
 
 class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), ObserverListener {
@@ -48,7 +50,7 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
             setPadding(paddingLeft, statusBarHeight + paddingTop, paddingRight, paddingBottom)
         }
         val initialPadding = 80
-        val initialElevation = SmartUtil.dp2px(1f).toFloat()
+        val initialElevation = SmartUtil.dp2px(6f).toFloat()
         val layoutParams =
             viewBinding.fragment4CardView.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.setMargins(initialPadding, 0, initialPadding, 0)
@@ -58,12 +60,13 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
         viewBinding.fragment4Appbar.apply {
             addOnOffsetChangedListener { appBarLayout, i ->
                 run {
-                    /* 从1-0：1 - (abs(i * 1.0f) / appBarLayout.totalScrollRange) */
-                    val a = initialPadding.toFloat() / appBarLayout.totalScrollRange
-                    val side = round((a * i + initialPadding).toDouble()).toInt()
-                    layoutParams.setMargins(side, 0, side, 0)
+                    /* 从1-0*/
+                    val a = 1.0f - (abs(i * 1.0f) / appBarLayout.totalScrollRange)
+                    Log.e("aaaaaaaawwaaaa", "aaa:$a")
+                    val margin = initialPadding * a
+                    layoutParams.setMargins(margin.toInt(), 0, margin.toInt(), 0)
                     viewBinding.fragment4CardView.layoutParams = layoutParams
-                    val elevation = round((initialElevation - a * i))
+                    val elevation = initialElevation * a
                     viewBinding.fragment4CardView.elevation = elevation
                 }
             }
