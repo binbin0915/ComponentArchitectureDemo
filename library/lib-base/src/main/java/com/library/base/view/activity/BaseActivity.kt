@@ -1,7 +1,9 @@
 package com.library.base.view.activity
 
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
@@ -44,6 +46,13 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = inflateBindingWithGeneric(layoutInflater)
+        /*适配刘海屏横屏状态*/
+        if (Build.VERSION.SDK_INT >= 28) {
+            val attributes = window.attributes
+            attributes.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            window.attributes = attributes
+        }
         setContentView(viewBinding.root)
 
         when (applicationContext.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
