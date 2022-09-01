@@ -15,6 +15,7 @@ import com.library.router.RouterPath
 import com.library.router.service.LoginService
 import com.library.widget.status.PageStatus
 import com.model.home.databinding.HomeFragmentPage4Binding
+import com.scwang.smart.refresh.layout.util.SmartUtil
 import com.zackratos.ultimatebarx.ultimatebarx.statusBarHeight
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -51,10 +52,12 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
             setPadding(paddingLeft, statusBarHeight + paddingTop, paddingRight, paddingBottom)
         }
         val initialPadding = 80
+        val initialElevation = SmartUtil.dp2px(1f).toFloat()
         val layoutParams =
             viewBinding.fragment4CardView.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.setMargins(initialPadding, 0, initialPadding, 0)
         viewBinding.fragment4CardView.layoutParams = layoutParams
+        viewBinding.fragment4CardView.elevation = initialElevation
         /*cardView跟随滑动改变margin*/
         viewBinding.fragment4Appbar.apply {
             addOnOffsetChangedListener { appBarLayout, i ->
@@ -64,6 +67,8 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
                     val side = round((a * i + initialPadding).toDouble()).toInt()
                     layoutParams.setMargins(side, 0, side, 0)
                     viewBinding.fragment4CardView.layoutParams = layoutParams
+                    val elevation = round((initialElevation - a * i))
+                    viewBinding.fragment4CardView.elevation = elevation
                 }
             }
         }
