@@ -12,12 +12,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class LoginViewModel : BaseViewModel() {
+    /*通过livedata暴露数据给view*/
     val loginLiveData = MutableLiveData<UsersData>()
+
+    /*当暴露 UI 的状态给视图时，应该使用 StateFlow。这是一种安全和高效的观察者，专门用于容纳 UI 状态。*/
+
+
     fun queryLoginByCoroutine() {
         viewModelScope.launch {
             try {
-                val info =
-                    LoginDataSource.queryLoginByCoroutine("admin@qq.com", "Ww30550891000.")
+                val info = LoginDataSource.queryLoginByCoroutine("admin@qq.com", "Ww30550891000.")
                 Log.d("AAAAAAAAAAAAAAAAA", "info:$info")
             } catch (e: Exception) {
                 Log.d("AAAAAAAAAAAAAAAAA", "error:${e.message}")
@@ -40,8 +44,7 @@ class LoginViewModel : BaseViewModel() {
 
     fun queryLoginByCoroutineFlow() {
         viewModelScope.launch {
-            val flow =
-                LoginDataSource.queryLoginByCoroutineFlow("admin@qq.com", "Ww30550891000.")
+            val flow = LoginDataSource.queryLoginByCoroutineFlow("admin@qq.com", "Ww30550891000.")
             flow.catch {
                 Log.d("AAAAAAAAAAAAAAAAA", "error:${it.message}")
             }.collect {
