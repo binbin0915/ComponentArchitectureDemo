@@ -47,6 +47,10 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
         return StatusBarStyle.ONLY_STATUS
     }
 
+    override fun horizontalScreen(): Boolean {
+        return false
+    }
+
     /**
      * ### bug：后台恢复后motionLayout被还原
      * fix：为了保证后台长时间驻留app被杀死导致motionLayout被还原，

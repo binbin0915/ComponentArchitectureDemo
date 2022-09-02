@@ -47,11 +47,17 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
         super.onCreate(savedInstanceState)
         viewBinding = inflateBindingWithGeneric(layoutInflater)
         /*适配刘海屏横屏状态*/
-        if (Build.VERSION.SDK_INT >= 28) {
+        if (Build.VERSION.SDK_INT >= 28 && horizontalScreen()) {
             val attributes = window.attributes
             attributes.layoutInDisplayCutoutMode =
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             window.attributes = attributes
+
+            if (horizontalPadding()) {
+                //增加padding
+
+
+            }
         }
         setContentView(viewBinding.root)
 
@@ -183,6 +189,16 @@ abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatAct
      * 是否默认处理状态栏和底部导航栏
      */
     open fun statusBarStyle(): StatusBarStyle = StatusBarStyle.DEFAULT
+
+    /**
+     * 是否默认开启横屏刘海屏适配
+     */
+    open fun horizontalScreen(): Boolean = true
+
+    /**
+     * 横屏适配是否增加padding
+     */
+    open fun horizontalPadding(): Boolean = true
 
 
     /**
