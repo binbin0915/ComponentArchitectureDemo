@@ -20,7 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
-import kotlin.math.round
 
 class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), ObserverListener {
 
