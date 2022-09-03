@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.util.Log
 import com.drake.statelayout.StateConfig
 import com.library.base.application.BaseApplication
-import com.library.common.net.GlobalResponseHandler
 import com.model.home.HomeMainActivity
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader

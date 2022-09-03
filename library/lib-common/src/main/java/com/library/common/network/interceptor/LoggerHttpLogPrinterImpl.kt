@@ -1,4 +1,4 @@
-package com.library.common.net
+package com.library.common.network.interceptor
 
 import com.library.logcat.AppLog
 import com.library.logcat.LogcatLevel

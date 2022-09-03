@@ -8,9 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.kongzue.dialogx.DialogX
 import com.kongzue.dialogx.style.MaterialStyle
 import com.library.base.application.BaseModelApplication
-import com.library.common.net.GlobalResponseHandler
 import com.model.home.BuildConfig
-import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 
 /**
  * 作用描述：首页Application
@@ -29,10 +27,6 @@ class HomeModelApplication : BaseModelApplication() {
             ARouter.openDebug()
         }
         ARouter.init(application)
-        if (BuildConfig.IS_RUN_MODEL) {
-            //已模块化运行的话 需要初始化网络请求框架
-            GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())
-        }
         //初始化
         DialogX.init(application)
         //开启调试模式，在部分情况下会使用 Log 输出日志信息
@@ -45,7 +39,6 @@ class HomeModelApplication : BaseModelApplication() {
         DialogX.globalTheme = DialogX.THEME.AUTO
         //设置 BottomDialog 导航栏背景颜色
         DialogX.bottomDialogNavbarColor = Color.TRANSPARENT
-
     }
 
     override fun onLowMemory() {

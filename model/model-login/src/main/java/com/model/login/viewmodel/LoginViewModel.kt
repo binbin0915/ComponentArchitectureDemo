@@ -57,7 +57,6 @@ class LoginViewModel : BaseViewModel() {
         viewModelScope.launch {
             try {
                 val token: String = DataStoreUtils.get(BaseApplication.appContext, "Authorization")
-                Log.d("AAAAAAAAAAAAAAAAA", "token:$token")
                 val info = LoginDataSource.queryUsersByCoroutine(token)
                 Log.d("AAAAAAAAAAAAAAAAA", "info:$info")
                 loginLiveData.value = info

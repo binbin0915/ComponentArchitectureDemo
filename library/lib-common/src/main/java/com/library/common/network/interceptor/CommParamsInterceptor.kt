@@ -1,4 +1,4 @@
-package com.library.common.net
+package com.library.common.network.interceptor
 
 import com.wangkai.remote.interceptor.BaseCommParamsInterceptor
 import java.util.concurrent.ConcurrentHashMap

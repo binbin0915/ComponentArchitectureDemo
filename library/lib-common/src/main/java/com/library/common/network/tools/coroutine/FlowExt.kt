@@ -1,4 +1,4 @@
-package com.library.common.net.tools.coroutine
+package com.library.common.network.tools.coroutine
 
 import com.wangkai.remote.data.HttpResponseParsable
 import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor

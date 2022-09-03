@@ -1,7 +1,6 @@
 package com.model.home.pages
 
 import android.os.Bundle
-import android.util.Log
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -61,7 +60,6 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
                 run {
                     /* 从1-0*/
                     val a = 1.0f - (abs(i * 1.0f) / appBarLayout.totalScrollRange)
-                    Log.e("aaaaaaaawwaaaa", "aaa:$a")
                     val margin = initialPadding * a
                     layoutParams.setMargins(margin.toInt(), 0, margin.toInt(), 0)
                     viewBinding.fragment4CardView.layoutParams = layoutParams

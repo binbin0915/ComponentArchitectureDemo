@@ -1,6 +1,6 @@
 package com.model.login.data
 
-import com.library.common.net.tools.json.JsonUtils
+import com.library.common.network.tools.json.JsonUtils
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody

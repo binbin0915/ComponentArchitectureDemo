@@ -31,7 +31,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
             viewModel.queryLoginByCoroutineFlow()
         }
 
-        viewBinding.getUser.setOnClickListener {
+        viewBinding.getUser.onClickListener(lifecycleScope) {
             viewModel.queryUsersByCoroutine()
         }
         //获取到登录数据

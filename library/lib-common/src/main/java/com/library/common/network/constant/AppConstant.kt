@@ -1,4 +1,4 @@
-package com.library.common.net.constant
+package com.library.common.network.constant
 
 /**
  * 项目的全局常量配置

@@ -1,4 +1,4 @@
-package com.library.common.net.tools.json
+package com.library.common.network.tools.json
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
