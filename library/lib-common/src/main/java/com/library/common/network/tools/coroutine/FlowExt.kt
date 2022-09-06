@@ -1,34 +1,32 @@
 package com.library.common.network.tools.coroutine
 
+import android.util.Log
 import com.wangkai.remote.data.HttpResponseParsable
 import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 import com.wangkai.remote.tools.handler.RestApiException
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 /**
  * 预处理网络请求返回
- * @param dispatcher 线程调度器
+ * @author wangkai
  */
-fun <T : HttpResponseParsable> Flow<T>.preHandleHttpResponse(
-    dispatcher: CoroutineDispatcher = Dispatchers.IO,
-    errorData : T?
-){
-    map{response->
-        val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(response)
-        if (isSuccess){
-            //业务执行成功
-            response
-        }else{
+suspend fun <T : HttpResponseParsable> Flow<T>.preHandleHttpResponse(success: suspend T.() -> Unit) {
+    map {
+        val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(it)
+        if (!isSuccess) {
             //业务执行异常
-            throw RestApiException(response.code,response.message)
+            Log.d("AAAAAAAAAAXXWDAC", "message:${it.message}")
+            throw RestApiException(it.code, it.message)
         }
+        it
+    }.catch {
+        GlobalHttpResponseProcessor.handleHttpError(it)
+        Log.d("AAAAAAAAAAXXWDAC", "请求异常：$it")
+    }.flowOn(Dispatchers.IO).collect {
+        success(it)
     }
-        .flowOn(dispatcher)
-        .catch{error->
-            GlobalHttpResponseProcessor.handleHttpError(error)
-            errorData?:return@catch
-            emit(errorData)
-        }
 }

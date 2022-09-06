@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.library.base.application.BaseApplication
 import com.library.base.datastore.DataStoreUtils
 import com.library.base.viewmodel.BaseViewModel
+import com.library.common.network.tools.coroutine.preHandleHttpResponse
 import com.model.login.data.LoginDataSource
 import com.model.login.data.UsersData
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class LoginViewModel : BaseViewModel() {
@@ -44,12 +44,10 @@ class LoginViewModel : BaseViewModel() {
 
     fun queryLoginByCoroutineFlow() {
         viewModelScope.launch {
-            val flow = LoginDataSource.queryLoginByCoroutineFlow("admin@qq.com", "Ww30550891000.")
-            flow.catch {
-                Log.d("AAAAAAAAAAAAAAAAA", "error:${it.message}")
-            }.collect {
-                Log.d("AAAAAAAAAAAAAAAAA", "info:$it")
-            }
+            LoginDataSource.queryLoginByCoroutineFlow("admin@qq.com", "Ww305508911000.")
+                .preHandleHttpResponse {
+                    Log.d("AAAAAAAAAAXXWDAC", "info:$this")
+                }
         }
     }
 
