@@ -45,9 +45,11 @@ class LoginViewModel : BaseViewModel() {
     fun queryLoginByCoroutineFlow() {
         viewModelScope.launch {
             LoginDataSource.queryLoginByCoroutineFlow("admin@qq.com", "Ww305508911000.")
-                .preHandleHttpResponse {
-                    Log.d("AAAAAAAAAAXXWDAC", "info:$this")
-                }
+                .preHandleHttpResponse({
+                    Log.d("AAAAAAAAAAXXWDAC", "success：$this")
+                }, {
+                    Log.d("AAAAAAAAAAXXWDAC", "fail：$it")
+                })
         }
     }
 

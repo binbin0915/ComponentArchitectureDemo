@@ -5,27 +5,32 @@ import com.wangkai.remote.data.HttpResponseParsable
 import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 import com.wangkai.remote.tools.handler.RestApiException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 
 /**
  * 预处理网络请求返回
+ *
+ * T.() -> Unit 和 (T) -> Unit
+ *
+ *
  * @author wangkai
  */
-suspend fun <T : HttpResponseParsable> Flow<T>.preHandleHttpResponse(success: suspend T.() -> Unit) {
+suspend fun <T : HttpResponseParsable> Flow<T>.preHandleHttpResponse(
+    success: suspend T.() -> Unit,
+    fail: (throwable: Throwable) -> Unit
+) {
     map {
         val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(it)
         if (!isSuccess) {
             //业务执行异常
-            Log.d("AAAAAAAAAAXXWDAC", "message:${it.message}")
             throw RestApiException(it.code, it.message)
         }
         it
     }.catch {
+        /*捕获异常*/
+        fail(it)
+        /*异常预处理*/
         GlobalHttpResponseProcessor.handleHttpError(it)
-        Log.d("AAAAAAAAAAXXWDAC", "请求异常：$it")
     }.flowOn(Dispatchers.IO).collect {
         success(it)
     }
