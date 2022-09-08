@@ -16,8 +16,7 @@ import kotlinx.coroutines.flow.*
  * @author wangkai
  */
 suspend fun <T : HttpResponseParsable> Flow<T>.preHandleHttpResponse(
-    success: suspend T.() -> Unit,
-    fail: (throwable: Throwable) -> Unit
+    success: suspend (T) -> Unit,
 ) {
     map {
         val isSuccess = GlobalHttpResponseProcessor.preHandleHttpResponse(it)
@@ -27,8 +26,6 @@ suspend fun <T : HttpResponseParsable> Flow<T>.preHandleHttpResponse(
         }
         it
     }.catch {
-        /*捕获异常*/
-        fail(it)
         /*异常预处理*/
         GlobalHttpResponseProcessor.handleHttpError(it)
     }.flowOn(Dispatchers.IO).collect {

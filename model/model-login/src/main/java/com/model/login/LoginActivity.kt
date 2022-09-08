@@ -11,6 +11,7 @@ import com.library.router.RouterPath
 import com.library.router.service.HomeService
 import com.model.login.databinding.LoginActivityLoginBinding
 import com.model.login.viewmodel.LoginViewModel
+import kotlinx.coroutines.launch
 
 /**
  * 登录页面
@@ -34,25 +35,30 @@ class LoginActivity : BaseActivity<LoginViewModel, LoginActivityLoginBinding>() 
         viewBinding.getUser.onClickListener(lifecycleScope) {
             viewModel.queryUsersByCoroutine()
         }
-        //获取到登录数据
-        viewModel.loginLiveData.observe(this) {
-            //保存登录信息
-            Log.e("AAAAAAAWAWAAAAAAAAAAAA", "获取所有用户信息:$it")
-        }
+
+
+        viewBinding.loginBtn.background = ResourcesCompat.getDrawable(
+            resources, com.library.common.R.drawable.shape_rectangle_solid, null
+        )
+        viewBinding.getUser.background = ResourcesCompat.getDrawable(
+            resources, com.library.common.R.drawable.shape_rectangle_solid, null
+        )
     }
 
     override fun createdObserve() {
-        viewBinding.loginBtn.background =
-            ResourcesCompat.getDrawable(
-                resources,
-                com.library.common.R.drawable.shape_rectangle_solid,
-                null
-            )
-        viewBinding.getUser.background =
-            ResourcesCompat.getDrawable(
-                resources,
-                com.library.common.R.drawable.shape_rectangle_solid,
-                null
-            )
+        //获取到登录数据
+        lifecycleScope.launch {
+            viewModel.userDataSharedFlow.collect {
+                //保存登录信息
+                Log.e("AAAAAAAWAWAAAAAAAAAAAA", "管理员获取所有用户信息:$it")
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.loginDataSharedFlow.collect {
+                //保存登录信息
+                Log.e("AAAAAAAWAWAAAAAAAAAAAA", "登录成功:$it")
+            }
+        }
     }
 }

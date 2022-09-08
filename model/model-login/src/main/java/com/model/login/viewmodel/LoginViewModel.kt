@@ -7,15 +7,16 @@ import com.library.base.application.BaseApplication
 import com.library.base.datastore.DataStoreUtils
 import com.library.base.viewmodel.BaseViewModel
 import com.library.common.network.tools.coroutine.preHandleHttpResponse
+import com.model.login.data.LoginData
 import com.model.login.data.LoginDataSource
 import com.model.login.data.UsersData
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel : BaseViewModel() {
-    /*通过livedata暴露数据给view*/
-    val loginLiveData = MutableLiveData<UsersData>()
-
     /*当暴露 UI 的状态给视图时，应该使用 StateFlow。这是一种安全和高效的观察者，专门用于容纳 UI 状态。*/
+    val userDataSharedFlow = MutableSharedFlow<UsersData>()
+    val loginDataSharedFlow = MutableSharedFlow<LoginData>()
 
 
     fun queryLoginByCoroutine() {
@@ -44,12 +45,11 @@ class LoginViewModel : BaseViewModel() {
 
     fun queryLoginByCoroutineFlow() {
         viewModelScope.launch {
-            LoginDataSource.queryLoginByCoroutineFlow("admin@qq.com", "Ww305508911000.")
-                .preHandleHttpResponse({
-                    Log.d("AAAAAAAAAAXXWDAC", "success：$this")
-                }, {
-                    Log.d("AAAAAAAAAAXXWDAC", "fail：$it")
-                })
+            LoginDataSource.queryLoginByCoroutineFlow("admin@qq.com", "Ww30550891000.")
+                .preHandleHttpResponse {
+                    Log.d("AAAAAAAAAAXXWDAC", "success：$it")
+                    loginDataSharedFlow.emit(it)
+                }
         }
     }
 
@@ -58,8 +58,7 @@ class LoginViewModel : BaseViewModel() {
             try {
                 val token: String = DataStoreUtils.get(BaseApplication.appContext, "Authorization")
                 val info = LoginDataSource.queryUsersByCoroutine(token)
-                Log.d("AAAAAAAAAAAAAAAAA", "info:$info")
-                loginLiveData.value = info
+                userDataSharedFlow.emit(info)
             } catch (e: Exception) {
                 Log.d("AAAAAAAAAAAAAAAAA", "error:${e.message}")
             }
