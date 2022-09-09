@@ -71,7 +71,7 @@ android {
     }
     /*kotlin选项*/
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 }
 

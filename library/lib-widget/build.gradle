@@ -18,7 +18,7 @@ android {
 }
 
 dependencies {
-    //kotlin基础库
+    //kotlin反射
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.10'
     //kotlin协程
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
