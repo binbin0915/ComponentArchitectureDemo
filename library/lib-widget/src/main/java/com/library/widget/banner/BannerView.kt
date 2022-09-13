@@ -308,7 +308,7 @@ class BannerView @JvmOverloads constructor(
         setData(dataList, displayTextList, ItemBannerImageBinding::class, bind)
     }
 
-    fun <VB : ViewBinding, M> setData(
+    private fun <VB : ViewBinding, M> setData(
         dataList: List<M>,
         displayTextList: List<String>? = null,
         itemBinding: KClass<VB>,
@@ -372,9 +372,7 @@ class BannerView @JvmOverloads constructor(
             val realPosition = position % dataSize
             if (isNumberIndicator) {
                 numberTv.text = String.format(
-                    context.getString(R.string.number_tv),
-                    (realPosition + 1),
-                    dataSize
+                    context.getString(R.string.number_tv), (realPosition + 1), dataSize
                 )
             } else {
                 indicatorParent.children.forEachIndexed { index, child ->
@@ -455,15 +453,12 @@ class BannerView @JvmOverloads constructor(
             return
         }
         stopAutoplay()
-        Log.e("AAAAAAAAAAAAXXS", "自动播放11111")
         autoplayJob = viewScope.launch {
             while (isActive) {
                 delay(autoplayInterval.toLong())
                 if (!loopPlay && viewPager.currentItem == dataSize - 1) {
-                    Log.e("AAAAAAAAAAAAXXS", "自动播放2222")
                     viewPager.setCurrentItem(0, false)
                 } else {
-                    Log.e("AAAAAAAAAAAAXXS", "自动播放3333")
                     viewPager.setCurrentItemWithAnim(
                         viewPager.currentItem + 1,
                         pageChangeDuration.toLong(),
@@ -544,20 +539,19 @@ class BannerView @JvmOverloads constructor(
             previousValue = currentValue
         }
         addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animator: Animator) {
                 previousValue = 0
                 viewPager.beginFakeDrag()
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
-                viewPager.endFakeDrag()
+            override fun onAnimationEnd(animator: Animator) {
             }
 
-            override fun onAnimationCancel(animation: Animator?) {
-                viewPager.endFakeDrag()
+            override fun onAnimationCancel(animator: Animator) {
             }
 
-            override fun onAnimationRepeat(animation: Animator?) {}
+            override fun onAnimationRepeat(animator: Animator) {
+            }
         })
         interpolator = AccelerateDecelerateInterpolator()
     }

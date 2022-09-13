@@ -35,7 +35,7 @@ dependencies {
     //MVVM主体框架 -- 依赖不对外开放
     implementation AndroidX.coreKtx
     implementation AndroidX.appcompat
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation Google.material
     //协程支持
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     //DataStore

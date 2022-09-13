@@ -27,7 +27,7 @@ dependencies {
     //AndroidJetpack基础组件
     implementation AndroidX.appcompat
     //material组件
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation Google.material
     //-------------------------------第三方开源库--------------------------------
     api 'com.github.yinshuai0324:GeneralAppWidget:1.0.2'
     api "com.github.kongzue.DialogX:DialogX:0.0.45"

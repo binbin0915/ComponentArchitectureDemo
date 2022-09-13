@@ -106,13 +106,12 @@ import java.util.List;
 public class DrawerLayout extends ViewGroup implements Openable {
     private static final String TAG = "DrawerLayout";
 
-    private static final int[] THEME_ATTRS = {
-            android.R.attr.colorPrimaryDark
-    };
+    private static final int[] THEME_ATTRS = {android.R.attr.colorPrimaryDark};
 
     @IntDef({STATE_IDLE, STATE_DRAGGING, STATE_SETTLING})
     @Retention(RetentionPolicy.SOURCE)
-    private @interface State {}
+    private @interface State {
+    }
 
     /**
      * Indicates that any drawers are in an idle, settled state. No animation is in progress.
@@ -129,10 +128,10 @@ public class DrawerLayout extends ViewGroup implements Openable {
      */
     public static final int STATE_SETTLING = ViewDragHelper.STATE_SETTLING;
 
-    @IntDef({LOCK_MODE_UNLOCKED, LOCK_MODE_LOCKED_CLOSED, LOCK_MODE_LOCKED_OPEN,
-            LOCK_MODE_UNDEFINED})
+    @IntDef({LOCK_MODE_UNLOCKED, LOCK_MODE_LOCKED_CLOSED, LOCK_MODE_LOCKED_OPEN, LOCK_MODE_UNDEFINED})
     @Retention(RetentionPolicy.SOURCE)
-    private @interface LockMode {}
+    private @interface LockMode {
+    }
 
     /**
      * The drawer is unlocked.
@@ -156,10 +155,10 @@ public class DrawerLayout extends ViewGroup implements Openable {
      */
     public static final int LOCK_MODE_UNDEFINED = 3;
 
-    @IntDef(value = {Gravity.LEFT, Gravity.RIGHT, GravityCompat.START, GravityCompat.END,
-            Gravity.NO_GRAVITY}, flag = true)
+    @IntDef(value = {Gravity.LEFT, Gravity.RIGHT, GravityCompat.START, GravityCompat.END, Gravity.NO_GRAVITY}, flag = true)
     @Retention(RetentionPolicy.SOURCE)
-    private @interface EdgeGravity {}
+    private @interface EdgeGravity {
+    }
 
 
     private static final int MIN_DRAWER_MARGIN = 64; // dp
@@ -185,23 +184,24 @@ public class DrawerLayout extends ViewGroup implements Openable {
 
     private static final float TOUCH_SLOP_SENSITIVITY = 1.f;
 
-    static final int[] LAYOUT_ATTRS = new int[] {
-            android.R.attr.layout_gravity
-    };
+    static final int[] LAYOUT_ATTRS = new int[]{android.R.attr.layout_gravity};
 
-    /** Whether we can use NO_HIDE_DESCENDANTS accessibility importance. */
+    /**
+     * Whether we can use NO_HIDE_DESCENDANTS accessibility importance.
+     */
     static final boolean CAN_HIDE_DESCENDANTS = Build.VERSION.SDK_INT >= 19;
 
-    /** Whether the drawer shadow comes from setting elevation on the drawer. */
-    private static final boolean SET_DRAWER_SHADOW_FROM_ELEVATION =
-            Build.VERSION.SDK_INT >= 21;
+    /**
+     * Whether the drawer shadow comes from setting elevation on the drawer.
+     */
+    private static final boolean SET_DRAWER_SHADOW_FROM_ELEVATION = Build.VERSION.SDK_INT >= 21;
 
-    /** Class name may be obfuscated by Proguard. Hardcode the string for accessibility usage. */
-    private static final String ACCESSIBILITY_CLASS_NAME =
-            "androidx.drawerlayout.widget.DrawerLayout";
+    /**
+     * Class name may be obfuscated by Proguard. Hardcode the string for accessibility usage.
+     */
+    private static final String ACCESSIBILITY_CLASS_NAME = "androidx.drawerlayout.widget.DrawerLayout";
 
-    private final ChildAccessibilityDelegate mChildAccessibilityDelegate =
-            new ChildAccessibilityDelegate();
+    private final ChildAccessibilityDelegate mChildAccessibilityDelegate = new ChildAccessibilityDelegate();
     private float mDrawerElevation;
 
     private int mMinDrawerMargin;
@@ -218,14 +218,19 @@ public class DrawerLayout extends ViewGroup implements Openable {
     private boolean mInLayout;
     private boolean mFirstLayout = true;
 
-    private @LockMode int mLockModeLeft = LOCK_MODE_UNDEFINED;
-    private @LockMode int mLockModeRight = LOCK_MODE_UNDEFINED;
-    private @LockMode int mLockModeStart = LOCK_MODE_UNDEFINED;
-    private @LockMode int mLockModeEnd = LOCK_MODE_UNDEFINED;
+    private @LockMode
+    int mLockModeLeft = LOCK_MODE_UNDEFINED;
+    private @LockMode
+    int mLockModeRight = LOCK_MODE_UNDEFINED;
+    private @LockMode
+    int mLockModeStart = LOCK_MODE_UNDEFINED;
+    private @LockMode
+    int mLockModeEnd = LOCK_MODE_UNDEFINED;
 
     private boolean mChildrenCanceledTouch;
 
-    private @Nullable DrawerListener mListener;
+    private @Nullable
+    DrawerListener mListener;
     private List<DrawerListener> mListeners;
 
     private float mInitialMotionX;
@@ -241,7 +246,9 @@ public class DrawerLayout extends ViewGroup implements Openable {
     private Object mLastInsets;
     private boolean mDrawStatusBarBackground;
 
-    /** Shadow drawables for different gravity */
+    /**
+     * Shadow drawables for different gravity
+     */
     private Drawable mShadowStart = null;
     private Drawable mShadowEnd = null;
     private Drawable mShadowLeft = null;
@@ -254,17 +261,16 @@ public class DrawerLayout extends ViewGroup implements Openable {
 
     private static boolean sEdgeSizeUsingSystemGestureInsets = Build.VERSION.SDK_INT >= 29;
 
-    private final AccessibilityViewCommand mActionDismiss =
-            new AccessibilityViewCommand() {
-                @Override
-                public boolean perform(@NonNull View view, @Nullable CommandArguments arguments) {
-                    if (isDrawerOpen(view)  && getDrawerLockMode(view) != LOCK_MODE_LOCKED_OPEN) {
-                        closeDrawer(view);
-                        return true;
-                    }
-                    return false;
-                }
-            };
+    private final AccessibilityViewCommand mActionDismiss = new AccessibilityViewCommand() {
+        @Override
+        public boolean perform(@NonNull View view, @Nullable CommandArguments arguments) {
+            if (isDrawerOpen(view) && getDrawerLockMode(view) != LOCK_MODE_LOCKED_OPEN) {
+                closeDrawer(view);
+                return true;
+            }
+            return false;
+        }
+    };
 
     /**
      * Listener for monitoring events about drawers.
@@ -272,7 +278,8 @@ public class DrawerLayout extends ViewGroup implements Openable {
     public interface DrawerListener {
         /**
          * Called when a drawer's position changes.
-         * @param drawerView The child view that was moved
+         *
+         * @param drawerView  The child view that was moved
          * @param slideOffset The new offset of this drawer within its range, from 0-1
          */
         void onDrawerSlide(@NonNull View drawerView, float slideOffset);
@@ -354,36 +361,26 @@ public class DrawerLayout extends ViewGroup implements Openable {
         // So that we can catch the back button
         setFocusableInTouchMode(true);
 
-        ViewCompat.setImportantForAccessibility(this,
-                ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        ViewCompat.setImportantForAccessibility(this, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
 
         ViewCompat.setAccessibilityDelegate(this, new AccessibilityDelegate());
         setMotionEventSplittingEnabled(false);
         if (ViewCompat.getFitsSystemWindows(this)) {
-            if (Build.VERSION.SDK_INT >= 21) {
-                setOnApplyWindowInsetsListener(new OnApplyWindowInsetsListener() {
-                    @Override
-                    public WindowInsets onApplyWindowInsets(View view, WindowInsets insets) {
-                        final DrawerLayout drawerLayout = (DrawerLayout) view;
-                        drawerLayout.setChildInsets(insets, insets.getSystemWindowInsetTop() > 0);
-                        return insets.consumeSystemWindowInsets();
-                    }
-                });
-                setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-                final TypedArray a = context.obtainStyledAttributes(THEME_ATTRS);
-                try {
-                    mStatusBarBackground = a.getDrawable(0);
-                } finally {
-                    a.recycle();
-                }
-            } else {
-                mStatusBarBackground = null;
+            setOnApplyWindowInsetsListener((view, insets) -> {
+                final DrawerLayout drawerLayout = (DrawerLayout) view;
+                drawerLayout.setChildInsets(insets, insets.getSystemWindowInsetTop() > 0);
+                return insets.consumeSystemWindowInsets();
+            });
+            setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            @SuppressLint("ResourceType") final TypedArray a = context.obtainStyledAttributes(THEME_ATTRS);
+            try {
+                mStatusBarBackground = a.getDrawable(0);
+            } finally {
+                a.recycle();
             }
         }
 
-        final TypedArray a = context
-                .obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, 0);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DrawerLayout, defStyleAttr, 0);
         try {
             if (a.hasValue(R.styleable.DrawerLayout_elevation)) {
                 mDrawerElevation = a.getDimension(R.styleable.DrawerLayout_elevation, 0);
@@ -451,7 +448,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * auto-mirrored such that the drawable will be mirrored in RTL layout.</p>
      *
      * @param shadowDrawable Shadow drawable to use at the edge of a drawer
-     * @param gravity Which drawer the shadow should apply to
+     * @param gravity        Which drawer the shadow should apply to
      */
     public void setDrawerShadow(Drawable shadowDrawable, @EdgeGravity int gravity) {
         /*
@@ -489,7 +486,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * {@link GravityCompat#START}. Alternatively, for API 23 and above, the drawable can
      * auto-mirrored such that the drawable will be mirrored in RTL layout.</p>
      *
-     * @param resId Resource id of a shadow drawable to use at the edge of a drawer
+     * @param resId   Resource id of a shadow drawable to use at the edge of a drawer
      * @param gravity Which drawer the shadow should apply to
      */
     public void setDrawerShadow(@DrawableRes int resId, @EdgeGravity int gravity) {
@@ -512,10 +509,10 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * {@link #removeDrawerListener(DrawerListener)} to remove a registered listener.
      *
      * @param listener Listener to notify when drawer events occur
-     * @deprecated Use {@link #addDrawerListener(DrawerListener)}
      * @see DrawerListener
      * @see #addDrawerListener(DrawerListener)
      * @see #removeDrawerListener(DrawerListener)
+     * @deprecated Use {@link #addDrawerListener(DrawerListener)}
      */
     @Deprecated
     public void setDrawerListener(DrawerListener listener) {
@@ -539,9 +536,6 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * @see #removeDrawerListener(DrawerListener)
      */
     public void addDrawerListener(@NonNull DrawerListener listener) {
-        if (listener == null) {
-            return;
-        }
         if (mListeners == null) {
             mListeners = new ArrayList<DrawerListener>();
         }
@@ -556,9 +550,6 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * @see #addDrawerListener(DrawerListener)
      */
     public void removeDrawerListener(@NonNull DrawerListener listener) {
-        if (listener == null) {
-            return;
-        }
         if (mListeners == null) {
             // This can happen if this method is called before the first call to addDrawerListener
             return;
@@ -594,18 +585,16 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * <p>Locking a drawer open or closed will implicitly open or close
      * that drawer as appropriate.</p>
      *
-     * @param lockMode The new lock mode for the given drawer. One of {@link #LOCK_MODE_UNLOCKED},
-     *                 {@link #LOCK_MODE_LOCKED_CLOSED} or {@link #LOCK_MODE_LOCKED_OPEN}.
+     * @param lockMode    The new lock mode for the given drawer. One of {@link #LOCK_MODE_UNLOCKED},
+     *                    {@link #LOCK_MODE_LOCKED_CLOSED} or {@link #LOCK_MODE_LOCKED_OPEN}.
      * @param edgeGravity Gravity.LEFT, RIGHT, START or END.
      *                    Expresses which drawer to change the mode for.
-     *
      * @see #LOCK_MODE_UNLOCKED
      * @see #LOCK_MODE_LOCKED_CLOSED
      * @see #LOCK_MODE_LOCKED_OPEN
      */
     public void setDrawerLockMode(@LockMode int lockMode, @EdgeGravity int edgeGravity) {
-        final int absGravity = GravityCompat.getAbsoluteGravity(edgeGravity,
-                ViewCompat.getLayoutDirection(this));
+        final int absGravity = GravityCompat.getAbsoluteGravity(edgeGravity, ViewCompat.getLayoutDirection(this));
 
         switch (edgeGravity) {
             case Gravity.LEFT:
@@ -619,6 +608,11 @@ public class DrawerLayout extends ViewGroup implements Openable {
                 break;
             case GravityCompat.END:
                 mLockModeEnd = lockMode;
+                break;
+            case Gravity.NO_GRAVITY:
+                //do nothing
+                break;
+            default:
                 break;
         }
 
@@ -640,7 +634,13 @@ public class DrawerLayout extends ViewGroup implements Openable {
                     closeDrawer(toClose);
                 }
                 break;
-            // default: do nothing
+
+            case LOCK_MODE_UNLOCKED:
+            case LOCK_MODE_UNDEFINED:
+                //do nothing
+                break;
+            default:
+                break;
         }
     }
 
@@ -654,18 +654,16 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * <p>Locking a drawer open or closed will implicitly open or close
      * that drawer as appropriate.</p>
      *
-     * @param lockMode The new lock mode for the given drawer. One of {@link #LOCK_MODE_UNLOCKED},
-     *                 {@link #LOCK_MODE_LOCKED_CLOSED} or {@link #LOCK_MODE_LOCKED_OPEN}.
+     * @param lockMode   The new lock mode for the given drawer. One of {@link #LOCK_MODE_UNLOCKED},
+     *                   {@link #LOCK_MODE_LOCKED_CLOSED} or {@link #LOCK_MODE_LOCKED_OPEN}.
      * @param drawerView The drawer view to change the lock mode for
-     *
      * @see #LOCK_MODE_UNLOCKED
      * @see #LOCK_MODE_LOCKED_CLOSED
      * @see #LOCK_MODE_LOCKED_OPEN
      */
     public void setDrawerLockMode(@LockMode int lockMode, @NonNull View drawerView) {
         if (!isDrawerView(drawerView)) {
-            throw new IllegalArgumentException("View " + drawerView + " is not a "
-                    + "drawer with appropriate layout_gravity");
+            throw new IllegalArgumentException("View " + drawerView + " is not a " + "drawer with appropriate layout_gravity");
         }
         final int gravity = ((LayoutParams) drawerView.getLayoutParams()).gravity;
         setDrawerLockMode(lockMode, gravity);
@@ -676,7 +674,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
      *
      * @param edgeGravity Gravity of the drawer to check
      * @return one of {@link #LOCK_MODE_UNLOCKED}, {@link #LOCK_MODE_LOCKED_CLOSED} or
-     *         {@link #LOCK_MODE_LOCKED_OPEN}.
+     * {@link #LOCK_MODE_LOCKED_OPEN}.
      */
     @LockMode
     public int getDrawerLockMode(@EdgeGravity int edgeGravity) {
@@ -687,8 +685,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
                 if (mLockModeLeft != LOCK_MODE_UNDEFINED) {
                     return mLockModeLeft;
                 }
-                int leftLockMode = (layoutDirection == ViewCompat.LAYOUT_DIRECTION_LTR)
-                        ? mLockModeStart : mLockModeEnd;
+                int leftLockMode = (layoutDirection == ViewCompat.LAYOUT_DIRECTION_LTR) ? mLockModeStart : mLockModeEnd;
                 if (leftLockMode != LOCK_MODE_UNDEFINED) {
                     return leftLockMode;
                 }
@@ -697,8 +694,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
                 if (mLockModeRight != LOCK_MODE_UNDEFINED) {
                     return mLockModeRight;
                 }
-                int rightLockMode = (layoutDirection == ViewCompat.LAYOUT_DIRECTION_LTR)
-                        ? mLockModeEnd : mLockModeStart;
+                int rightLockMode = (layoutDirection == ViewCompat.LAYOUT_DIRECTION_LTR) ? mLockModeEnd : mLockModeStart;
                 if (rightLockMode != LOCK_MODE_UNDEFINED) {
                     return rightLockMode;
                 }
@@ -707,8 +703,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
                 if (mLockModeStart != LOCK_MODE_UNDEFINED) {
                     return mLockModeStart;
                 }
-                int startLockMode = (layoutDirection == ViewCompat.LAYOUT_DIRECTION_LTR)
-                        ? mLockModeLeft : mLockModeRight;
+                int startLockMode = (layoutDirection == ViewCompat.LAYOUT_DIRECTION_LTR) ? mLockModeLeft : mLockModeRight;
                 if (startLockMode != LOCK_MODE_UNDEFINED) {
                     return startLockMode;
                 }
@@ -717,8 +712,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
                 if (mLockModeEnd != LOCK_MODE_UNDEFINED) {
                     return mLockModeEnd;
                 }
-                int endLockMode = (layoutDirection == ViewCompat.LAYOUT_DIRECTION_LTR)
-                        ? mLockModeRight : mLockModeLeft;
+                int endLockMode = (layoutDirection == ViewCompat.LAYOUT_DIRECTION_LTR) ? mLockModeRight : mLockModeLeft;
                 if (endLockMode != LOCK_MODE_UNDEFINED) {
                     return endLockMode;
                 }
@@ -733,7 +727,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
      *
      * @param drawerView Drawer view to check lock mode
      * @return one of {@link #LOCK_MODE_UNLOCKED}, {@link #LOCK_MODE_LOCKED_CLOSED} or
-     *         {@link #LOCK_MODE_LOCKED_OPEN}.
+     * {@link #LOCK_MODE_LOCKED_OPEN}.
      */
     @LockMode
     public int getDrawerLockMode(@NonNull View drawerView) {
@@ -751,12 +745,11 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * identify the drawer to the active accessibility service.
      *
      * @param edgeGravity Gravity.LEFT, RIGHT, START or END. Expresses which
-     *            drawer to set the title for.
-     * @param title The title for the drawer.
+     *                    drawer to set the title for.
+     * @param title       The title for the drawer.
      */
     public void setDrawerTitle(@EdgeGravity int edgeGravity, @Nullable CharSequence title) {
-        final int absGravity = GravityCompat.getAbsoluteGravity(
-                edgeGravity, ViewCompat.getLayoutDirection(this));
+        final int absGravity = GravityCompat.getAbsoluteGravity(edgeGravity, ViewCompat.getLayoutDirection(this));
         if (absGravity == Gravity.LEFT) {
             mTitleLeft = title;
         } else if (absGravity == Gravity.RIGHT) {
@@ -768,14 +761,13 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * Returns the title of the drawer with the given gravity.
      *
      * @param edgeGravity Gravity.LEFT, RIGHT, START or END. Expresses which
-     *            drawer to return the title for.
+     *                    drawer to return the title for.
      * @return The title of the drawer, or null if none set.
      * @see #setDrawerTitle(int, CharSequence)
      */
     @Nullable
     public CharSequence getDrawerTitle(@EdgeGravity int edgeGravity) {
-        final int absGravity = GravityCompat.getAbsoluteGravity(
-                edgeGravity, ViewCompat.getLayoutDirection(this));
+        final int absGravity = GravityCompat.getAbsoluteGravity(edgeGravity, ViewCompat.getLayoutDirection(this));
         if (absGravity == Gravity.LEFT) {
             return mTitleLeft;
         } else if (absGravity == Gravity.RIGHT) {
@@ -936,18 +928,16 @@ public class DrawerLayout extends ViewGroup implements Openable {
             if ((!isDrawerOpen && !isDrawerView(child)) || (isDrawerOpen && child == drawerView)) {
                 // Drawer is closed and this is a content view or this is an
                 // open drawer view, so it should be visible.
-                ViewCompat.setImportantForAccessibility(child,
-                        ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
+                ViewCompat.setImportantForAccessibility(child, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
             } else {
-                ViewCompat.setImportantForAccessibility(child,
-                        ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+                ViewCompat.setImportantForAccessibility(child, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
             }
         }
     }
 
     private void updateChildAccessibilityAction(View child) {
         ViewCompat.removeAccessibilityAction(child, ACTION_DISMISS.getId());
-        if (isDrawerOpen(child)  && getDrawerLockMode(child) != LOCK_MODE_LOCKED_OPEN) {
+        if (isDrawerOpen(child) && getDrawerLockMode(child) != LOCK_MODE_LOCKED_OPEN) {
             ViewCompat.replaceAccessibilityAction(child, ACTION_DISMISS, null, mActionDismiss);
         }
     }
@@ -979,7 +969,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
 
     /**
      * @return the absolute gravity of the child drawerView, resolved according
-     *         to the current layout direction
+     * to the current layout direction
      */
     int getDrawerViewAbsoluteGravity(View drawerView) {
         final int gravity = ((LayoutParams) drawerView.getLayoutParams()).gravity;
@@ -1010,20 +1000,18 @@ public class DrawerLayout extends ViewGroup implements Openable {
         final int newPos = (int) (width * slideOffset);
         final int dx = newPos - oldPos;
 
-        drawerView.offsetLeftAndRight(
-                checkDrawerViewAbsoluteGravity(drawerView, Gravity.LEFT) ? dx : -dx);
+        drawerView.offsetLeftAndRight(checkDrawerViewAbsoluteGravity(drawerView, Gravity.LEFT) ? dx : -dx);
         setDrawerViewOffset(drawerView, slideOffset);
     }
 
     /**
      * @param gravity the gravity of the child to return. If specified as a
-     *            relative value, it will be resolved according to the current
-     *            layout direction.
+     *                relative value, it will be resolved according to the current
+     *                layout direction.
      * @return the drawer with the specified gravity
      */
     View findDrawerWithGravity(int gravity) {
-        final int absHorizGravity = GravityCompat.getAbsoluteGravity(
-                gravity, ViewCompat.getLayoutDirection(this)) & Gravity.HORIZONTAL_GRAVITY_MASK;
+        final int absHorizGravity = GravityCompat.getAbsoluteGravity(gravity, ViewCompat.getLayoutDirection(this)) & Gravity.HORIZONTAL_GRAVITY_MASK;
         final int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             final View child = getChildAt(i);
@@ -1086,8 +1074,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
                     heightSize = 300;
                 }
             } else {
-                throw new IllegalArgumentException(
-                        "DrawerLayout must be measured with MeasureSpec.EXACTLY.");
+                throw new IllegalArgumentException("DrawerLayout must be measured with MeasureSpec.EXACTLY.");
             }
         }
 
@@ -1116,13 +1103,9 @@ public class DrawerLayout extends ViewGroup implements Openable {
                     if (Build.VERSION.SDK_INT >= 21) {
                         WindowInsets wi = (WindowInsets) mLastInsets;
                         if (cgrav == Gravity.LEFT) {
-                            wi = wi.replaceSystemWindowInsets(wi.getSystemWindowInsetLeft(),
-                                    wi.getSystemWindowInsetTop(), 0,
-                                    wi.getSystemWindowInsetBottom());
+                            wi = wi.replaceSystemWindowInsets(wi.getSystemWindowInsetLeft(), wi.getSystemWindowInsetTop(), 0, wi.getSystemWindowInsetBottom());
                         } else if (cgrav == Gravity.RIGHT) {
-                            wi = wi.replaceSystemWindowInsets(0, wi.getSystemWindowInsetTop(),
-                                    wi.getSystemWindowInsetRight(),
-                                    wi.getSystemWindowInsetBottom());
+                            wi = wi.replaceSystemWindowInsets(0, wi.getSystemWindowInsetTop(), wi.getSystemWindowInsetRight(), wi.getSystemWindowInsetBottom());
                         }
                         child.dispatchApplyWindowInsets(wi);
                     }
@@ -1130,13 +1113,9 @@ public class DrawerLayout extends ViewGroup implements Openable {
                     if (Build.VERSION.SDK_INT >= 21) {
                         WindowInsets wi = (WindowInsets) mLastInsets;
                         if (cgrav == Gravity.LEFT) {
-                            wi = wi.replaceSystemWindowInsets(wi.getSystemWindowInsetLeft(),
-                                    wi.getSystemWindowInsetTop(), 0,
-                                    wi.getSystemWindowInsetBottom());
+                            wi = wi.replaceSystemWindowInsets(wi.getSystemWindowInsetLeft(), wi.getSystemWindowInsetTop(), 0, wi.getSystemWindowInsetBottom());
                         } else if (cgrav == Gravity.RIGHT) {
-                            wi = wi.replaceSystemWindowInsets(0, wi.getSystemWindowInsetTop(),
-                                    wi.getSystemWindowInsetRight(),
-                                    wi.getSystemWindowInsetBottom());
+                            wi = wi.replaceSystemWindowInsets(0, wi.getSystemWindowInsetTop(), wi.getSystemWindowInsetRight(), wi.getSystemWindowInsetBottom());
                         }
                         lp.leftMargin = wi.getSystemWindowInsetLeft();
                         lp.topMargin = wi.getSystemWindowInsetTop();
@@ -1148,10 +1127,8 @@ public class DrawerLayout extends ViewGroup implements Openable {
 
             if (isContentView(child)) {
                 // Content views get measured at exactly the layout's size.
-                final int contentWidthSpec = MeasureSpec.makeMeasureSpec(
-                        widthSize - lp.leftMargin - lp.rightMargin, MeasureSpec.EXACTLY);
-                final int contentHeightSpec = MeasureSpec.makeMeasureSpec(
-                        heightSize - lp.topMargin - lp.bottomMargin, MeasureSpec.EXACTLY);
+                final int contentWidthSpec = MeasureSpec.makeMeasureSpec(widthSize - lp.leftMargin - lp.rightMargin, MeasureSpec.EXACTLY);
+                final int contentHeightSpec = MeasureSpec.makeMeasureSpec(heightSize - lp.topMargin - lp.bottomMargin, MeasureSpec.EXACTLY);
                 child.measure(contentWidthSpec, contentHeightSpec);
             } else if (isDrawerView(child)) {
                 if (SET_DRAWER_SHADOW_FROM_ELEVATION) {
@@ -1159,33 +1136,23 @@ public class DrawerLayout extends ViewGroup implements Openable {
                         ViewCompat.setElevation(child, mDrawerElevation);
                     }
                 }
-                final @EdgeGravity int childGravity =
-                        getDrawerViewAbsoluteGravity(child) & Gravity.HORIZONTAL_GRAVITY_MASK;
+                final @EdgeGravity int childGravity = getDrawerViewAbsoluteGravity(child) & Gravity.HORIZONTAL_GRAVITY_MASK;
                 // Note that the isDrawerView check guarantees that childGravity here is either
                 // LEFT or RIGHT
                 boolean isLeftEdgeDrawer = (childGravity == Gravity.LEFT);
-                if ((isLeftEdgeDrawer && hasDrawerOnLeftEdge)
-                        || (!isLeftEdgeDrawer && hasDrawerOnRightEdge)) {
-                    throw new IllegalStateException("Child drawer has absolute gravity "
-                            + gravityToString(childGravity) + " but this " + TAG + " already has a "
-                            + "drawer view along that edge");
+                if ((isLeftEdgeDrawer && hasDrawerOnLeftEdge) || (!isLeftEdgeDrawer && hasDrawerOnRightEdge)) {
+                    throw new IllegalStateException("Child drawer has absolute gravity " + gravityToString(childGravity) + " but this " + TAG + " already has a " + "drawer view along that edge");
                 }
                 if (isLeftEdgeDrawer) {
                     hasDrawerOnLeftEdge = true;
                 } else {
                     hasDrawerOnRightEdge = true;
                 }
-                final int drawerWidthSpec = getChildMeasureSpec(widthMeasureSpec,
-                        mMinDrawerMargin + lp.leftMargin + lp.rightMargin,
-                        lp.width);
-                final int drawerHeightSpec = getChildMeasureSpec(heightMeasureSpec,
-                        lp.topMargin + lp.bottomMargin,
-                        lp.height);
+                final int drawerWidthSpec = getChildMeasureSpec(widthMeasureSpec, mMinDrawerMargin + lp.leftMargin + lp.rightMargin, lp.width);
+                final int drawerHeightSpec = getChildMeasureSpec(heightMeasureSpec, lp.topMargin + lp.bottomMargin, lp.height);
                 child.measure(drawerWidthSpec, drawerHeightSpec);
             } else {
-                throw new IllegalStateException("Child " + child + " at index " + i
-                        + " does not have a valid layout_gravity - must be Gravity.LEFT, "
-                        + "Gravity.RIGHT or Gravity.NO_GRAVITY");
+                throw new IllegalStateException("Child " + child + " at index " + i + " does not have a valid layout_gravity - must be Gravity.LEFT, " + "Gravity.RIGHT or Gravity.NO_GRAVITY");
             }
         }
     }
@@ -1259,9 +1226,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
             final LayoutParams lp = (LayoutParams) child.getLayoutParams();
 
             if (isContentView(child)) {
-                child.layout(lp.leftMargin, lp.topMargin,
-                        lp.leftMargin + child.getMeasuredWidth(),
-                        lp.topMargin + child.getMeasuredHeight());
+                child.layout(lp.leftMargin, lp.topMargin, lp.leftMargin + child.getMeasuredWidth(), lp.topMargin + child.getMeasuredHeight());
             } else { // Drawer, if it wasn't onMeasure would have thrown an exception.
                 final int childWidth = child.getMeasuredWidth();
                 final int childHeight = child.getMeasuredHeight();
@@ -1283,17 +1248,13 @@ public class DrawerLayout extends ViewGroup implements Openable {
                 switch (vgrav) {
                     default:
                     case Gravity.TOP: {
-                        child.layout(childLeft, lp.topMargin, childLeft + childWidth,
-                                lp.topMargin + childHeight);
+                        child.layout(childLeft, lp.topMargin, childLeft + childWidth, lp.topMargin + childHeight);
                         break;
                     }
 
                     case Gravity.BOTTOM: {
                         final int height = b - t;
-                        child.layout(childLeft,
-                                height - lp.bottomMargin - child.getMeasuredHeight(),
-                                childLeft + childWidth,
-                                height - lp.bottomMargin);
+                        child.layout(childLeft, height - lp.bottomMargin - child.getMeasuredHeight(), childLeft + childWidth, height - lp.bottomMargin);
                         break;
                     }
 
@@ -1308,8 +1269,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
                         } else if (childTop + childHeight > height - lp.bottomMargin) {
                             childTop = height - lp.bottomMargin - childHeight;
                         }
-                        child.layout(childLeft, childTop, childLeft + childWidth,
-                                childTop + childHeight);
+                        child.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
                         break;
                     }
                 }
@@ -1329,16 +1289,13 @@ public class DrawerLayout extends ViewGroup implements Openable {
             // Update the ViewDragHelper edge sizes to match the gesture insets
             WindowInsets rootInsets = getRootWindowInsets();
             if (rootInsets != null) {
-                WindowInsetsCompat rootInsetsCompat = WindowInsetsCompat
-                        .toWindowInsetsCompat(rootInsets);
+                WindowInsetsCompat rootInsetsCompat = WindowInsetsCompat.toWindowInsetsCompat(rootInsets);
                 Insets gestureInsets = rootInsetsCompat.getSystemGestureInsets();
 
                 // We use Math.max() here since the gesture insets will be 0 if the device
                 // does not have gesture navigation enabled
-                mLeftDragger.setEdgeSize(
-                        Math.max(mLeftDragger.getDefaultEdgeSize(), gestureInsets.left));
-                mRightDragger.setEdgeSize(
-                        Math.max(mRightDragger.getDefaultEdgeSize(), gestureInsets.right));
+                mLeftDragger.setEdgeSize(Math.max(mLeftDragger.getDefaultEdgeSize(), gestureInsets.left));
+                mRightDragger.setEdgeSize(Math.max(mRightDragger.getDefaultEdgeSize(), gestureInsets.right));
             }
         }
 
@@ -1435,8 +1392,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         if (mDrawStatusBarBackground && mStatusBarBackground != null) {
             final int inset;
             if (Build.VERSION.SDK_INT >= 21) {
-                inset = mLastInsets != null
-                        ? ((WindowInsets) mLastInsets).getSystemWindowInsetTop() : 0;
+                inset = mLastInsets != null ? ((WindowInsets) mLastInsets).getSystemWindowInsetTop() : 0;
             } else {
                 inset = 0;
             }
@@ -1458,9 +1414,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
             final int childCount = getChildCount();
             for (int i = 0; i < childCount; i++) {
                 final View v = getChildAt(i);
-                if (v == child || v.getVisibility() != VISIBLE
-                        || !hasOpaqueBackground(v) || !isDrawerView(v)
-                        || v.getHeight() < height) {
+                if (v == child || v.getVisibility() != VISIBLE || !hasOpaqueBackground(v) || !isDrawerView(v) || v.getHeight() < height) {
                     continue;
                 }
 
@@ -1488,27 +1442,21 @@ public class DrawerLayout extends ViewGroup implements Openable {
             mScrimPaint.setColor(color);
 
             canvas.drawRect(clipLeft, 0, clipRight, getHeight(), mScrimPaint);
-        } else if (mShadowLeftResolved != null
-                &&  checkDrawerViewAbsoluteGravity(child, Gravity.LEFT)) {
+        } else if (mShadowLeftResolved != null && checkDrawerViewAbsoluteGravity(child, Gravity.LEFT)) {
             final int shadowWidth = mShadowLeftResolved.getIntrinsicWidth();
             final int childRight = child.getRight();
             final int drawerPeekDistance = mLeftDragger.getEdgeSize();
-            final float alpha =
-                    Math.max(0, Math.min((float) childRight / drawerPeekDistance, 1.f));
-            mShadowLeftResolved.setBounds(childRight, child.getTop(),
-                    childRight + shadowWidth, child.getBottom());
+            final float alpha = Math.max(0, Math.min((float) childRight / drawerPeekDistance, 1.f));
+            mShadowLeftResolved.setBounds(childRight, child.getTop(), childRight + shadowWidth, child.getBottom());
             mShadowLeftResolved.setAlpha((int) (0xff * alpha));
             mShadowLeftResolved.draw(canvas);
-        } else if (mShadowRightResolved != null
-                &&  checkDrawerViewAbsoluteGravity(child, Gravity.RIGHT)) {
+        } else if (mShadowRightResolved != null && checkDrawerViewAbsoluteGravity(child, Gravity.RIGHT)) {
             final int shadowWidth = mShadowRightResolved.getIntrinsicWidth();
             final int childLeft = child.getLeft();
             final int showing = getWidth() - childLeft;
             final int drawerPeekDistance = mRightDragger.getEdgeSize();
-            final float alpha =
-                    Math.max(0, Math.min((float) showing / drawerPeekDistance, 1.f));
-            mShadowRightResolved.setBounds(childLeft - shadowWidth, child.getTop(),
-                    childLeft, child.getBottom());
+            final float alpha = Math.max(0, Math.min((float) showing / drawerPeekDistance, 1.f));
+            mShadowRightResolved.setBounds(childLeft - shadowWidth, child.getTop(), childLeft, child.getBottom());
             mShadowRightResolved.setAlpha((int) (0xff * alpha));
             mShadowRightResolved.draw(canvas);
         }
@@ -1521,8 +1469,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
 
     boolean isDrawerView(View child) {
         final int gravity = ((LayoutParams) child.getLayoutParams()).gravity;
-        final int absGravity = GravityCompat.getAbsoluteGravity(gravity,
-                ViewCompat.getLayoutDirection(child));
+        final int absGravity = GravityCompat.getAbsoluteGravity(gravity, ViewCompat.getLayoutDirection(child));
         if ((absGravity & Gravity.LEFT) != 0) {
             // This child is a left-edge drawer
             return true;
@@ -1540,8 +1487,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         final int action = ev.getActionMasked();
 
         // "|" used deliberately here; both methods should be invoked.
-        final boolean interceptForDrag = mLeftDragger.shouldInterceptTouchEvent(ev)
-                | mRightDragger.shouldInterceptTouchEvent(ev);
+        final boolean interceptForDrag = mLeftDragger.shouldInterceptTouchEvent(ev) | mRightDragger.shouldInterceptTouchEvent(ev);
 
         boolean interceptForTap = false;
 
@@ -1586,9 +1532,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         // If this is not a pointer event, or if this is an hover exit, or we are not displaying
         // that the content view can't be interacted with, then don't override and do anything
         // special.
-        if ((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) == 0
-                || event.getAction() == MotionEvent.ACTION_HOVER_EXIT
-                || mScrimOpacity <= 0) {
+        if ((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) == 0 || event.getAction() == MotionEvent.ACTION_HOVER_EXIT || mScrimOpacity <= 0) {
             return super.dispatchGenericMotionEvent(event);
         }
 
@@ -1667,9 +1611,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
 
     @Override
     public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-        if (CHILDREN_DISALLOW_INTERCEPT
-                || (!mLeftDragger.isEdgeTouched(ViewDragHelper.EDGE_LEFT)
-                        && !mRightDragger.isEdgeTouched(ViewDragHelper.EDGE_RIGHT))) {
+        if (CHILDREN_DISALLOW_INTERCEPT || (!mLeftDragger.isEdgeTouched(ViewDragHelper.EDGE_LEFT) && !mRightDragger.isEdgeTouched(ViewDragHelper.EDGE_RIGHT))) {
             // If we have an edge touch we want to skip this and track it for later instead.
             super.requestDisallowInterceptTouchEvent(disallowIntercept);
         }
@@ -1699,11 +1641,9 @@ public class DrawerLayout extends ViewGroup implements Openable {
             final int childWidth = child.getWidth();
 
             if (checkDrawerViewAbsoluteGravity(child, Gravity.LEFT)) {
-                needsInvalidate |= mLeftDragger.smoothSlideViewTo(child,
-                        -childWidth, child.getTop());
+                needsInvalidate |= mLeftDragger.smoothSlideViewTo(child, -childWidth, child.getTop());
             } else {
-                needsInvalidate |= mRightDragger.smoothSlideViewTo(child,
-                        getWidth(), child.getTop());
+                needsInvalidate |= mRightDragger.smoothSlideViewTo(child, getWidth(), child.getTop());
             }
 
             lp.isPeeking = false;
@@ -1738,7 +1678,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * Open the specified drawer view.
      *
      * @param drawerView Drawer view to open
-     * @param animate Whether opening of the drawer should be animated.
+     * @param animate    Whether opening of the drawer should be animated.
      */
     public void openDrawer(@NonNull View drawerView, boolean animate) {
         if (!isDrawerView(drawerView)) {
@@ -1758,8 +1698,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
             if (checkDrawerViewAbsoluteGravity(drawerView, Gravity.LEFT)) {
                 mLeftDragger.smoothSlideViewTo(drawerView, 0, drawerView.getTop());
             } else {
-                mRightDragger.smoothSlideViewTo(drawerView, getWidth() - drawerView.getWidth(),
-                        drawerView.getTop());
+                mRightDragger.smoothSlideViewTo(drawerView, getWidth() - drawerView.getWidth(), drawerView.getTop());
             }
         } else {
             moveDrawerToOffset(drawerView, 1.f);
@@ -1789,8 +1728,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
     public void openDrawer(@EdgeGravity int gravity, boolean animate) {
         final View drawerView = findDrawerWithGravity(gravity);
         if (drawerView == null) {
-            throw new IllegalArgumentException("No drawer view found with gravity "
-                    + gravityToString(gravity));
+            throw new IllegalArgumentException("No drawer view found with gravity " + gravityToString(gravity));
         }
         openDrawer(drawerView, animate);
     }
@@ -1816,7 +1754,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * Close the specified drawer view.
      *
      * @param drawerView Drawer view to close
-     * @param animate Whether closing of the drawer should be animated.
+     * @param animate    Whether closing of the drawer should be animated.
      */
     public void closeDrawer(@NonNull View drawerView, boolean animate) {
         if (!isDrawerView(drawerView)) {
@@ -1831,8 +1769,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
             lp.openState |= LayoutParams.FLAG_IS_CLOSING;
 
             if (checkDrawerViewAbsoluteGravity(drawerView, Gravity.LEFT)) {
-                mLeftDragger.smoothSlideViewTo(drawerView, -drawerView.getWidth(),
-                        drawerView.getTop());
+                mLeftDragger.smoothSlideViewTo(drawerView, -drawerView.getWidth(), drawerView.getTop());
             } else {
                 mRightDragger.smoothSlideViewTo(drawerView, getWidth(), drawerView.getTop());
             }
@@ -1864,8 +1801,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
     public void closeDrawer(@EdgeGravity int gravity, boolean animate) {
         final View drawerView = findDrawerWithGravity(gravity);
         if (drawerView == null) {
-            throw new IllegalArgumentException("No drawer view found with gravity "
-                    + gravityToString(gravity));
+            throw new IllegalArgumentException("No drawer view found with gravity " + gravityToString(gravity));
         }
         closeDrawer(drawerView, animate);
     }
@@ -1874,11 +1810,11 @@ public class DrawerLayout extends ViewGroup implements Openable {
      * Check if the given drawer view is currently in an open state.
      * To be considered "open" the drawer must have settled into its fully
      * visible state. To check for partial visibility use
-     * {@link #isDrawerVisible(View)}.
+     * {@link #isDrawerVisible(android.view.View)}.
      *
      * @param drawer Drawer view to check
      * @return true if the given drawer view is in an open state
-     * @see #isDrawerVisible(View)
+     * @see #isDrawerVisible(android.view.View)
      */
     public boolean isDrawerOpen(@NonNull View drawer) {
         if (!isDrawerView(drawer)) {
@@ -1924,7 +1860,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
      *
      * @param drawer Drawer view to check
      * @return true if the given drawer is visible on-screen
-     * @see #isDrawerOpen(View)
+     * @see #isDrawerOpen(android.view.View)
      */
     public boolean isDrawerVisible(@NonNull View drawer) {
         if (!isDrawerView(drawer)) {
@@ -1967,11 +1903,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
 
     @Override
     protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-        return p instanceof LayoutParams
-                ? new LayoutParams((LayoutParams) p)
-                : p instanceof MarginLayoutParams
-                ? new LayoutParams((MarginLayoutParams) p)
-                : new LayoutParams(p);
+        return p instanceof LayoutParams ? new LayoutParams((LayoutParams) p) : p instanceof ViewGroup.MarginLayoutParams ? new LayoutParams((MarginLayoutParams) p) : new LayoutParams(p);
     }
 
     @Override
@@ -2038,8 +1970,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         // Cancel child touches
         if (!mChildrenCanceledTouch) {
             final long now = SystemClock.uptimeMillis();
-            final MotionEvent cancelEvent = MotionEvent.obtain(now, now,
-                    MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0);
+            final MotionEvent cancelEvent = MotionEvent.obtain(now, now, MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0);
             final int childCount = getChildCount();
             for (int i = 0; i < childCount; i++) {
                 getChildAt(i).dispatchTouchEvent(cancelEvent);
@@ -2138,13 +2069,11 @@ public class DrawerLayout extends ViewGroup implements Openable {
         if (openDrawer != null || isDrawerView(child)) {
             // A drawer is already open or the new view is a drawer, so the
             // new view should start out hidden.
-            ViewCompat.setImportantForAccessibility(child,
-                    ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+            ViewCompat.setImportantForAccessibility(child, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
         } else {
             // Otherwise this is a content view and no drawer is open, so the
             // new view should start out visible.
-            ViewCompat.setImportantForAccessibility(child,
-                    ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
+            ViewCompat.setImportantForAccessibility(child, ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
         }
 
         // We only need a delegate here if the framework doesn't understand
@@ -2160,10 +2089,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         // IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDATS is not
         // supported on older platforms but we want to hide the entire
         // content and not opened drawers if a drawer is opened.
-        return ViewCompat.getImportantForAccessibility(child)
-                != ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-                    && ViewCompat.getImportantForAccessibility(child)
-                != ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO;
+        return ViewCompat.getImportantForAccessibility(child) != ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS && ViewCompat.getImportantForAccessibility(child) != ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO;
     }
 
     /**
@@ -2171,10 +2097,14 @@ public class DrawerLayout extends ViewGroup implements Openable {
      */
     protected static class SavedState extends AbsSavedState {
         int openDrawerGravity = Gravity.NO_GRAVITY;
-        @LockMode int lockModeLeft;
-        @LockMode int lockModeRight;
-        @LockMode int lockModeStart;
-        @LockMode int lockModeEnd;
+        @LockMode
+        int lockModeLeft;
+        @LockMode
+        int lockModeRight;
+        @LockMode
+        int lockModeStart;
+        @LockMode
+        int lockModeEnd;
 
         public SavedState(@NonNull Parcel in, @Nullable ClassLoader loader) {
             super(in, loader);
@@ -2221,11 +2151,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         private final int mAbsGravity;
         private ViewDragHelper mDragger;
 
-        private final Runnable mPeekRunnable = new Runnable() {
-            @Override public void run() {
-                peekDrawer();
-            }
-        };
+        private final Runnable mPeekRunnable = () -> peekDrawer();
 
         ViewDragCallback(int gravity) {
             mAbsGravity = gravity;
@@ -2240,11 +2166,10 @@ public class DrawerLayout extends ViewGroup implements Openable {
         }
 
         @Override
-        public boolean tryCaptureView(View child, int pointerId) {
+        public boolean tryCaptureView(@NonNull View child, int pointerId) {
             // Only capture views where the gravity matches what we're looking for.
             // This lets us use two ViewDragHelpers, one for each side drawer.
-            return isDrawerView(child) && checkDrawerViewAbsoluteGravity(child, mAbsGravity)
-                    && getDrawerLockMode(child) == LOCK_MODE_UNLOCKED;
+            return isDrawerView(child) && checkDrawerViewAbsoluteGravity(child, mAbsGravity) && getDrawerLockMode(child) == LOCK_MODE_UNLOCKED;
         }
 
         @Override
@@ -2253,7 +2178,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         }
 
         @Override
-        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+        public void onViewPositionChanged(@NonNull View changedView, int left, int top, int dx, int dy) {
             float offset;
             final int childWidth = changedView.getWidth();
 
@@ -2286,7 +2211,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         }
 
         @Override
-        public void onViewReleased(View releasedChild, float xvel, float yvel) {
+        public void onViewReleased(@NonNull View releasedChild, float xvel, float yvel) {
             // Offset is how open the drawer is, therefore left/right values
             // are reversed from one another.
             final float offset = getDrawerViewOffset(releasedChild);
@@ -2322,9 +2247,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
                 childLeft = getWidth() - peekDistance;
             }
             // Only peek if it would mean making the drawer more visible and the drawer isn't locked
-            if (toCapture != null && ((leftEdge && toCapture.getLeft() < childLeft)
-                    || (!leftEdge && toCapture.getLeft() > childLeft))
-                    && getDrawerLockMode(toCapture) == LOCK_MODE_UNLOCKED) {
+            if (toCapture != null && ((leftEdge && toCapture.getLeft() < childLeft) || (!leftEdge && toCapture.getLeft() > childLeft)) && getDrawerLockMode(toCapture) == LOCK_MODE_UNLOCKED) {
                 final LayoutParams lp = (LayoutParams) toCapture.getLayoutParams();
                 mDragger.smoothSlideViewTo(toCapture, childLeft, toCapture.getTop());
                 lp.isPeeking = true;
@@ -2363,12 +2286,12 @@ public class DrawerLayout extends ViewGroup implements Openable {
         }
 
         @Override
-        public int getViewHorizontalDragRange(View child) {
+        public int getViewHorizontalDragRange(@NonNull View child) {
             return isDrawerView(child) ? child.getWidth() : 0;
         }
 
         @Override
-        public int clampViewPositionHorizontal(View child, int left, int dx) {
+        public int clampViewPositionHorizontal(@NonNull View child, int left, int dx) {
             if (checkDrawerViewAbsoluteGravity(child, Gravity.LEFT)) {
                 return Math.max(-child.getWidth(), Math.min(left, 0));
             } else {
@@ -2383,7 +2306,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         }
     }
 
-    public static class LayoutParams extends MarginLayoutParams {
+    public static class LayoutParams extends ViewGroup.MarginLayoutParams {
         private static final int FLAG_IS_OPENED = 0x1;
         private static final int FLAG_IS_OPENING = 0x2;
         private static final int FLAG_IS_CLOSING = 0x4;
@@ -2420,7 +2343,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
             super(source);
         }
 
-        public LayoutParams(@NonNull MarginLayoutParams source) {
+        public LayoutParams(@NonNull ViewGroup.MarginLayoutParams source) {
             super(source);
         }
     }
@@ -2429,14 +2352,13 @@ public class DrawerLayout extends ViewGroup implements Openable {
         private final Rect mTmpRect = new Rect();
 
         @Override
-        public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
+        public void onInitializeAccessibilityNodeInfo(@NonNull View host, @NonNull AccessibilityNodeInfoCompat info) {
             if (CAN_HIDE_DESCENDANTS) {
                 super.onInitializeAccessibilityNodeInfo(host, info);
             } else {
                 // Obtain a node for the host, then manually generate the list
                 // of children to only include non-obscured views.
-                final AccessibilityNodeInfoCompat superNode =
-                        AccessibilityNodeInfoCompat.obtain(info);
+                final AccessibilityNodeInfoCompat superNode = AccessibilityNodeInfoCompat.obtain(info);
                 super.onInitializeAccessibilityNodeInfo(host, superNode);
 
                 info.setSource(host);
@@ -2462,14 +2384,14 @@ public class DrawerLayout extends ViewGroup implements Openable {
         }
 
         @Override
-        public void onInitializeAccessibilityEvent(View host, AccessibilityEvent event) {
+        public void onInitializeAccessibilityEvent(@NonNull View host, @NonNull AccessibilityEvent event) {
             super.onInitializeAccessibilityEvent(host, event);
 
             event.setClassName(ACCESSIBILITY_CLASS_NAME);
         }
 
         @Override
-        public boolean dispatchPopulateAccessibilityEvent(View host, AccessibilityEvent event) {
+        public boolean dispatchPopulateAccessibilityEvent(@NonNull View host, AccessibilityEvent event) {
             // Special case to handle window state change events. As far as
             // accessibility services are concerned, state changes from
             // DrawerLayout invalidate the entire contents of the screen (like
@@ -2493,8 +2415,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
         }
 
         @Override
-        public boolean onRequestSendAccessibilityEvent(ViewGroup host, View child,
-                AccessibilityEvent event) {
+        public boolean onRequestSendAccessibilityEvent(@NonNull ViewGroup host, @NonNull View child, @NonNull AccessibilityEvent event) {
             if (CAN_HIDE_DESCENDANTS || includeChildForAccessibility(child)) {
                 return super.onRequestSendAccessibilityEvent(host, child, event);
             }
@@ -2516,8 +2437,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
          * seem to be a few elements that are not easily cloneable using the underlying API.
          * Leave it private here as it's not general-purpose useful.
          */
-        private void copyNodeInfoNoChildren(AccessibilityNodeInfoCompat dest,
-                AccessibilityNodeInfoCompat src) {
+        private void copyNodeInfoNoChildren(AccessibilityNodeInfoCompat dest, AccessibilityNodeInfoCompat src) {
             final Rect rect = mTmpRect;
 
             src.getBoundsInScreen(rect);
@@ -2539,8 +2459,7 @@ public class DrawerLayout extends ViewGroup implements Openable {
 
     static final class ChildAccessibilityDelegate extends AccessibilityDelegateCompat {
         @Override
-        public void onInitializeAccessibilityNodeInfo(View child,
-                AccessibilityNodeInfoCompat info) {
+        public void onInitializeAccessibilityNodeInfo(@NonNull View child, @NonNull AccessibilityNodeInfoCompat info) {
             super.onInitializeAccessibilityNodeInfo(child, info);
 
             if (!includeChildForAccessibility(child)) {

@@ -3,7 +3,7 @@
  * @description 编译配置信息
  */
 object BuildConfig {
-    const val compileSdk = 32
+    const val compileSdk = 33
     const val buildToolsVersion ="30.0.3"
     const val minSdk = 21
     const val targetSdk = 30
