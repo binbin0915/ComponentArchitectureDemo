@@ -1,23 +1,37 @@
 pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
-        google()
         mavenCentral()
+        google()
+        maven { url 'https://jitpack.io' }
         maven { url 'https://repo1.maven.org/maven2/' }
+        //阿里镜像源新版地址
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
+        mavenLocal()
         mavenCentral()
+        google()
         maven { url 'https://jitpack.io' }
         maven { url 'https://repo1.maven.org/maven2/' }
+        //阿里镜像源新版地址
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         flatDir {
             dirs 'libs'
         }
     }
 }
+//setting.gradle 新增 rootProject.name = “Jetpack”。如果修改这个名字会在当前的工程名下新建文件夹，把原来的文件移动到新文件夹中。
 rootProject.name = "My Application"
 //宿主App
 include ':app'
