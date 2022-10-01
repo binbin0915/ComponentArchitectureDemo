@@ -33,7 +33,7 @@ public abstract class RootActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         downloadInfo = getIntent().getParcelableExtra("info");
-        AppUpdateUtils.getInstance().addAppDownloadListener(appDownloadListener);
+        AppUpdateUtils.Companion.getInstance().addAppDownloadListener(appDownloadListener);
 //        AppUpdateUtils.getInstance().addAppUpdateInfoListener(appUpdateInfoListener);
     }
 
@@ -41,7 +41,7 @@ public abstract class RootActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         downloadInfo = getIntent().getParcelableExtra("info");
-        AppUpdateUtils.getInstance().addAppDownloadListener(appDownloadListener);
+        AppUpdateUtils.Companion.getInstance().addAppDownloadListener(appDownloadListener);
 //        AppUpdateUtils.getInstance().addAppUpdateInfoListener(appUpdateInfoListener);
     }
 
@@ -51,7 +51,7 @@ public abstract class RootActivity extends AppCompatActivity {
     private void checkDownload() {
         // 动态注册广播，8.0 静态注册收不到
         // 开启服务注册，避免直接在Activity中注册广播生命周期随Activity终止而终止
-        if (AppUpdateUtils.getInstance().getUpdateConfig().isShowNotification()) {
+        if (AppUpdateUtils.Companion.getInstance().getUpdateConfig().isShowNotification()) {
             startService(new Intent(this, UpdateService.class));
         }
         //直接下载
@@ -85,21 +85,21 @@ public abstract class RootActivity extends AppCompatActivity {
      * 暂停任务
      */
     public void pauseTask() {
-        AppUpdateUtils.getInstance().pauseTask();
+        AppUpdateUtils.Companion.getInstance().pauseTask();
     }
 
     /**
      * 取消任务
      */
     public void cancelTask() {
-        AppUpdateUtils.getInstance().cancelTask();
+        AppUpdateUtils.Companion.getInstance().cancelTask();
     }
 
     /**
      * 执行下载
      */
     private void doDownload() {
-        AppUpdateUtils.getInstance().addMd5CheckListener(md5CheckListener).download(downloadInfo);
+        AppUpdateUtils.Companion.getInstance().addMd5CheckListener(md5CheckListener).download(downloadInfo);
     }
 
     /**
@@ -151,7 +151,7 @@ public abstract class RootActivity extends AppCompatActivity {
      * 下载
      */
     public void download() {
-        if (!AppUpdateUtils.isDownloading()) {
+        if (!AppUpdateUtils.Companion.isDownloading()) {
             requestPermission();
         } else {
             pauseTask();
@@ -161,7 +161,7 @@ public abstract class RootActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AppUpdateUtils.clearAllListener();
+        AppUpdateUtils.Companion.clearAllListener();
     }
 
     /**

@@ -6,8 +6,7 @@ class UpdateConfig {
     /**
      * 设置使用sdk请求的时候的请求链接地址
      */
-    var baseUrl: String? = null
-        private set
+    lateinit var baseUrl: String
 
     /**
      * 是否是debug状态 打印log
@@ -31,39 +30,32 @@ class UpdateConfig {
      * 更新信息的数据来源方式 默认用户自己提供更新信息
      */
     var dataSourceType = TypeConfig.DATA_SOURCE_TYPE_MODEL
-        private set
 
     /**
      * 是否在通知栏显示进度 默认显示 显示的好处在于 如果因为网络原因或者其他原因导致下载失败的时候，可以点击通知栏重新下载
      */
     var isShowNotification = true
-        private set
 
     /**
      * 通知栏下载进度提醒的Icon图标 默认为0 就是app的logo
      */
     var notificationIconRes = 0
-        private set
 
     //请求头信息
-    var requestHeaders: Map<String, Any>
+    lateinit var requestHeaders: Map<String, Any>
         private set
 
     //请求参数信息
-    var requestParams: Map<String, Any>
-        private set
+    lateinit var requestParams: Map<String, Any>
 
     //自定义Bean类 此类必须实现LibraryUpdateEntity接口
-    var modelClass: Any? = null
-        private set
+    lateinit var modelClass: Any
 
     //是否需要进行文件的MD5校验
     var isNeedFileMD5Check = false
-        private set
 
     //是否静默下载
     var isAutoDownloadBackground = false
-        private set
 
     /**
      * 自定义的Activity类
@@ -92,68 +84,8 @@ class UpdateConfig {
         return this
     }
 
-    fun setShowNotification(showNotification: Boolean): UpdateConfig {
-        isShowNotification = showNotification
-        return this
-    }
-
     fun getCustomActivityClass(info: DownloadInfo?) {
         customActivityClass!!.startActivity(info)
-    }
-
-    fun setCustomActivityClass(customActivityClass: CustomActivityClass?): UpdateConfig {
-        this.customActivityClass = customActivityClass
-        return this
-    }
-
-    fun setNeedFileMD5Check(needFileMD5Check: Boolean): UpdateConfig {
-        isNeedFileMD5Check = needFileMD5Check
-        return this
-    }
-
-    fun setNotificationIconRes(notificationIconRes: Int): UpdateConfig {
-        this.notificationIconRes = notificationIconRes
-        return this
-    }
-
-    fun setDataSourceType(dataSourceType: Int): UpdateConfig {
-        this.dataSourceType = dataSourceType
-        return this
-    }
-
-    fun setRequestHeaders(requestHeaders: Map<String, Any>?): UpdateConfig {
-        this.requestHeaders = requestHeaders
-        return this
-    }
-
-    fun setRequestParams(requestParams: Map<String, Any>?): UpdateConfig {
-        this.requestParams = requestParams
-        return this
-    }
-
-    fun setModelClass(modelClass: Any?): UpdateConfig {
-        this.modelClass = modelClass
-        return this
-    }
-
-    fun setDebug(debug: Boolean): UpdateConfig {
-        isDebug = debug
-        return this
-    }
-
-    fun setBaseUrl(baseUrl: String?): UpdateConfig {
-        this.baseUrl = baseUrl
-        return this
-    }
-
-    fun setMethodType(methodType: Int): UpdateConfig {
-        this.methodType = methodType
-        return this
-    }
-
-    fun setUiThemeType(uiThemeType: Int): UpdateConfig {
-        this.uiThemeType = uiThemeType
-        return this
     }
 
     companion object {

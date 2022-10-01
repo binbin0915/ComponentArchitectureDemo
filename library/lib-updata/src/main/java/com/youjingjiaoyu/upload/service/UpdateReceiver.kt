@@ -35,7 +35,7 @@ class UpdateReceiver : BroadcastReceiver() {
             }
         } else if (context.packageName + RE_DOWNLOAD == action) {
             //重新下载
-            AppUpdateUtils.getInstance().reDownload()
+            AppUpdateUtils.instance.reDownload()
         } else if (context.packageName + CANCEL_DOWNLOAD == action) {
             //取消下载
             val systemService =
@@ -86,7 +86,7 @@ class UpdateReceiver : BroadcastReceiver() {
         }
 
         //设置图标
-        val notificationIconRes = AppUpdateUtils.getInstance().updateConfig.notificationIconRes
+        val notificationIconRes = AppUpdateUtils.instance.getUpdateConfig().notificationIconRes
         if (notificationIconRes != 0) {
             builder.setSmallIcon(notificationIconRes)
             builder.setLargeIcon(
