@@ -30,6 +30,7 @@ include ':library:lib-logcat'          //--日志系统
 include ':library:lib-permission'  //--ActivityResult封装
 include ':library:lib-network'         //--网络请求的封装
 include ':library:lib-common'          //--网络公共配置的地方
+include ':library:lib-updata'          //--app内部更新
 //业务模块
 include ':model:model-splash'//启动页
 include ':model:model-home'//首页

@@ -2,11 +2,11 @@
 buildscript {
     dependencies {
         // 因为使用的 Kotlin 需要需要添加 Kotlin 插件
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.20"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20-RC'
     }
 }
 plugins {
-    id 'com.android.application' version '7.3.0-alpha09' apply false
-    id 'com.android.library' version '7.3.0-alpha09' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
+    id 'com.android.application' version '8.0.0-alpha02' apply false
+    id 'com.android.library' version '8.0.0-alpha02' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.20-RC' apply false
 }

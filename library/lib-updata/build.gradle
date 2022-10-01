@@ -1,0 +1,23 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.wangkai.version'
+}
+
+android {
+    compileSdk BuildConfig.compileSdk
+    defaultConfig {
+        minSdk BuildConfig.minSdk
+        targetSdk BuildConfig.targetSdk
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core:1.9.0'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'com.google.android.material:material:1.6.1'
+    //文件下载
+    api 'com.liulishuo.filedownloader:library:1.7.6'
+    implementation 'androidx.core:core-ktx:1.9.0'
+}
