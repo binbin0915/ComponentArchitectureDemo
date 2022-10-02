@@ -41,14 +41,90 @@ import java.util.Arrays
  */
 class AppUpdateUtils private constructor() {
     /**
-     * 下载任务
+     * 全局初始化，必须调用
+     *
+     * @param context
+     * @param config
      */
-    private lateinit var downloadTask: BaseDownloadTask
+    fun init(context: Application, config: UpdateConfig) {
+        if (isInit) return
+        isInit = true
+        mContext = context
+        updateConfig = config
+        updateUtils = AppUpdateUtils()
+        ResUtils.init(context)
+        //初始化文件下载库
+        val fileDownloadConnection: ConnectionCreator = FileDownloadUrlConnection.Creator(
+            FileDownloadUrlConnection.Configuration()
+                .connectTimeout(30000) // set connection timeout.
+                .readTimeout(30000) // set read timeout.
+        )
+        FileDownloader.setupOnApplicationOnCreate(mContext)
+            .connectionCreator(fileDownloadConnection).commit()
+    }
 
-    /**
-     * 本地保留下载信息
-     */
-    private lateinit var downloadInfo: DownloadInfo
+    companion object {
+        //下载任务
+        private lateinit var downloadTask: BaseDownloadTask
+
+        //本地保留下载信息
+        private lateinit var downloadInfo: DownloadInfo
+
+        //给框架提供上下文对象
+        private lateinit var mContext: Application
+
+        //更新工具类
+        private lateinit var updateUtils: AppUpdateUtils
+
+        //更新框架配置
+        private lateinit var updateConfig: UpdateConfig
+
+        //是否初始化
+        private var isInit = false
+
+        //是否开始下载
+        private var isDownloading = false
+
+        //apk下载的路径
+        private var downloadUpdateApkFilePath = ""
+
+        //AppDownloadListener的集合
+        private val appDownloadListenerList: MutableList<AppDownloadListener> = ArrayList()
+
+        //MD5校验监听
+        private val md5CheckListenerList: MutableList<MD5CheckListener> = ArrayList()
+
+        //更新信息回调
+        private val appUpdateInfoListenerList: MutableList<AppUpdateInfoListener> = ArrayList()
+
+        fun getInstance(): AppUpdateUtils {
+            return updateUtils
+        }
+
+        fun isDownloading(): Boolean {
+            checkInit()
+            return isDownloading
+        }
+
+        /**
+         * 初始化检测
+         *
+         * @return
+         */
+        private fun checkInit() {
+            if (!isInit) {
+                throw RuntimeException("AppUpdateUtils需要先调用init方法进行初始化才能使用")
+            }
+        }
+
+        /**
+         * 移除所有监听
+         */
+        fun clearAllListener() {
+            md5CheckListenerList.clear()
+            appDownloadListenerList.clear()
+        }
+    }
 
     /**
      * 检查更新 sdk自助请求接口
@@ -115,10 +191,8 @@ class AppUpdateUtils private constructor() {
                     //hasAffectCodes拥有字段强制更新
                     val hasAffectCodes = info.hasAffectCodes
                     if (!TextUtils.isEmpty(hasAffectCodes)) {
-                        val codes = listOf(
-                            *hasAffectCodes.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }
-                                .toTypedArray()
-                        )
+                        val codes = listOf(*hasAffectCodes.split("\\|".toRegex())
+                            .dropLastWhile { it.isEmpty() }.toTypedArray())
                         if (codes.contains(versionCode.toString() + "")) {
                             //包含这个版本 所以需要强制更新
                             info.forceUpdateFlag = 2
@@ -177,7 +251,7 @@ class AppUpdateUtils private constructor() {
     /**
      * 开始下载
      *
-     * @param info
+     * @param info 传入下载包信息
      */
     fun download(info: DownloadInfo) {
         checkInit()
@@ -259,14 +333,6 @@ class AppUpdateUtils private constructor() {
             override fun warn(task: BaseDownloadTask) {}
         }
 
-    /**
-     * 私有化构造方法
-     */
-    init {
-        appDownloadListenerList = ArrayList()
-        md5CheckListenerList = ArrayList()
-        appUpdateInfoListenerList = ArrayList()
-    }
 
     /**
      * @param e
@@ -403,7 +469,7 @@ class AppUpdateUtils private constructor() {
         if (modelClass is LibraryUpdateEntity) {
             if (updateConfig.methodType == TypeConfig.METHOD_GET) {
                 //GET请求
-                doGet(instance.context,
+                doGet(context,
                     updateConfig.baseUrl,
                     updateConfig.requestHeaders,
                     updateConfig.requestParams,
@@ -420,7 +486,7 @@ class AppUpdateUtils private constructor() {
                     })
             } else {
                 //POST请求
-                doPost(instance.context,
+                doPost(context,
                     updateConfig.baseUrl,
                     updateConfig.requestHeaders,
                     updateConfig.requestParams,
@@ -449,18 +515,17 @@ class AppUpdateUtils private constructor() {
             listenToUpdateInfo(true)
             return
         }
-        checkUpdate(
-            downloadInfo.apply {
-                forceUpdateFlag = libraryUpdateEntity.forceAppUpdateFlag()
-                prodVersionCode = libraryUpdateEntity.appVersionCode
-                prodVersionName = libraryUpdateEntity.appVersionName
-                fileSize = libraryUpdateEntity.appApkSize.toLong()
-                apkUrl = libraryUpdateEntity.appApkUrls
-                hasAffectCodes = libraryUpdateEntity.appHasAffectCodes
-                md5Check = libraryUpdateEntity.fileMd5Check
-                updateLog = libraryUpdateEntity.appUpdateLog
-                channel = libraryUpdateEntity.channel
-            })
+        checkUpdate(downloadInfo.apply {
+            forceUpdateFlag = libraryUpdateEntity.forceAppUpdateFlag()
+            prodVersionCode = libraryUpdateEntity.appVersionCode
+            prodVersionName = libraryUpdateEntity.appVersionName
+            fileSize = libraryUpdateEntity.appApkSize.toLong()
+            apkUrl = libraryUpdateEntity.appApkUrls
+            hasAffectCodes = libraryUpdateEntity.appHasAffectCodes
+            md5Check = libraryUpdateEntity.fileMd5Check
+            updateLog = libraryUpdateEntity.appUpdateLog
+            channel = libraryUpdateEntity.channel
+        })
     }
 
     fun addMd5CheckListener(md5CheckListener: MD5CheckListener?): AppUpdateUtils {
@@ -487,7 +552,7 @@ class AppUpdateUtils private constructor() {
         return this
     }
 
-    val allAppUpdateInfoListener: List<AppUpdateInfoListener>
+    private val allAppUpdateInfoListener: List<AppUpdateInfoListener>
         get() = ArrayList(appUpdateInfoListenerList)
     private val allAppDownloadListener: List<AppDownloadListener>
         get() = ArrayList(appDownloadListenerList)
@@ -502,89 +567,6 @@ class AppUpdateUtils private constructor() {
     private fun listenToUpdateInfo(isLatest: Boolean) {
         for (appUpdateInfoListener in allAppUpdateInfoListener) {
             appUpdateInfoListener.isLatestVersion(isLatest)
-        }
-    }
-
-    companion object {
-        private lateinit var mContext: Application
-        private lateinit var updateUtils: AppUpdateUtils
-        private lateinit var updateConfig: UpdateConfig
-
-        /**
-         * 是否初始化
-         */
-        private var isInit = false
-
-        /**
-         * 是否开始下载
-         */
-        private var isDownloading = false
-
-        /**
-         * apk下载的路径
-         */
-        private var downloadUpdateApkFilePath = ""
-
-        /**
-         * AppDownloadListener的集合
-         */
-        private lateinit var appDownloadListenerList: MutableList<AppDownloadListener>
-
-        //MD5校验监听
-        private lateinit var md5CheckListenerList: MutableList<MD5CheckListener>
-
-        //更新信息回调
-        private lateinit var appUpdateInfoListenerList: MutableList<AppUpdateInfoListener>
-
-        /**
-         * 全局初始化
-         *
-         * @param context
-         * @param config
-         */
-        fun init(context: Application, config: UpdateConfig) {
-            if (isInit) return
-            isInit = true
-            mContext = context
-            updateConfig = config
-            ResUtils.init(context)
-            //初始化文件下载库
-            val fileDownloadConnection: ConnectionCreator = FileDownloadUrlConnection.Creator(
-                FileDownloadUrlConnection.Configuration()
-                    .connectTimeout(30000) // set connection timeout.
-                    .readTimeout(30000) // set read timeout.
-            )
-            FileDownloader.setupOnApplicationOnCreate(mContext)
-                .connectionCreator(fileDownloadConnection).commit()
-        }
-
-        val instance: AppUpdateUtils
-            get() {
-                return updateUtils
-            }
-
-        fun isDownloading(): Boolean {
-            checkInit()
-            return isDownloading
-        }
-
-        /**
-         * 初始化检测
-         *
-         * @return
-         */
-        private fun checkInit() {
-            if (!isInit) {
-                throw RuntimeException("AppUpdateUtils需要先调用init方法进行初始化才能使用")
-            }
-        }
-
-        /**
-         * 移除所有监听
-         */
-        fun clearAllListener() {
-            md5CheckListenerList.clear()
-            appDownloadListenerList.clear()
         }
     }
 }

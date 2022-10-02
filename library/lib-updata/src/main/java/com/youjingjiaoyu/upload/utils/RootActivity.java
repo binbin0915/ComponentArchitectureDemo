@@ -18,6 +18,7 @@ import com.youjingjiaoyu.upload.service.UpdateService;
 
 /**
  * 添加一些常用的处理
+ * @author wangkai
  */
 public abstract class RootActivity extends AppCompatActivity {
 
