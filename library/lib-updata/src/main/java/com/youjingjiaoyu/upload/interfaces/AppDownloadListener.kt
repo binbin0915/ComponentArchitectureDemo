@@ -1,7 +1,9 @@
 package com.youjingjiaoyu.upload.interfaces
 
 /**
- * @author wangk
+ * app下载监听
+ *
+ * @author wangkai
  */
 interface AppDownloadListener {
     /**
@@ -23,7 +25,7 @@ interface AppDownloadListener {
      *
      * @param path 存储路径
      */
-    fun downloadComplete(path: String?)
+    fun downloadComplete(path: String)
 
     /**
      * 开始下载

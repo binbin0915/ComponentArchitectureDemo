@@ -20,4 +20,6 @@ dependencies {
     //文件下载
     api 'com.liulishuo.filedownloader:library:1.7.6'
     implementation 'androidx.core:core-ktx:1.9.0'
+    //公共基础包
+    implementation project(":library:lib-common")
 }

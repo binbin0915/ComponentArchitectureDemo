@@ -18,7 +18,7 @@ class UpdateReceiver : BroadcastReceiver() {
     private var lastProgress = 0
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
-        val notifyId = 1
+
         if (context.packageName + DOWNLOAD_ONLY == action) {
             //下载
             val progress = intent.getIntExtra(PROGRESS, 0)
@@ -27,11 +27,10 @@ class UpdateReceiver : BroadcastReceiver() {
             if (progress != -1) {
                 lastProgress = progress
             }
-            showNotification(context, notifyId, progress, systemService)
-
+            showNotification(context, progress, systemService)
             // 下载完成
             if (progress == 100) {
-                downloadComplete(notifyId, systemService)
+                downloadComplete(systemService)
             }
         } else if (context.packageName + RE_DOWNLOAD == action) {
             //重新下载
@@ -40,7 +39,7 @@ class UpdateReceiver : BroadcastReceiver() {
             //取消下载
             val systemService =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            downloadComplete(notifyId, systemService)
+            downloadComplete(systemService)
         }
     }
 
@@ -52,9 +51,9 @@ class UpdateReceiver : BroadcastReceiver() {
      * @param systemService
      */
     private fun downloadComplete(
-        notifyId: Int, systemService: NotificationManager
+        systemService: NotificationManager
     ) {
-        systemService.cancel(notifyId)
+        systemService.cancel(DOWNLOAD_NOTIFY_ID)
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
             systemService.deleteNotificationChannel(notificationChannel)
         }
@@ -68,7 +67,7 @@ class UpdateReceiver : BroadcastReceiver() {
      * @param systemService
      */
     private fun showNotification(
-        context: Context, id: Int, progress: Int, systemService: NotificationManager
+        context: Context, progress: Int, systemService: NotificationManager
     ) {
         val notificationName = "notification"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -125,11 +124,13 @@ class UpdateReceiver : BroadcastReceiver() {
         // 设置只响一次
         builder.setOnlyAlertOnce(true)
         val build = builder.build()
-        systemService.notify(id, build)
+        systemService.notify(DOWNLOAD_NOTIFY_ID, build)
     }
 
     companion object {
         private const val notificationChannel = "10000"
+
+        private const val DOWNLOAD_NOTIFY_ID = 1
 
         /**
          * 进度key

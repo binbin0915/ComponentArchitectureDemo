@@ -1,9 +1,9 @@
 package com.youjingjiaoyu.upload.interfaces
 
 /**
- * 检查版本更新的监听
+ * 检查版本更新的回调
  *
- * @author wangk
+ * @author wangkai
  */
 interface AppUpdateInfoListener {
     /**

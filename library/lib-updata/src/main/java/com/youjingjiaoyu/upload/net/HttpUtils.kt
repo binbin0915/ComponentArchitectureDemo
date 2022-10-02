@@ -3,7 +3,7 @@ package com.youjingjiaoyu.upload.net
 import android.accounts.NetworkErrorException
 import android.content.Context
 import android.text.TextUtils
-import com.youjingjiaoyu.upload.utils.JSONHelper
+import com.library.common.network.tools.json.JsonUtils
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -46,7 +46,7 @@ object HttpUtils {
         urlString: String,
         headers: Map<String, Any>,
         params: Map<String, Any>,
-        cls: Class<T>?,
+        cls: Class<T>,
         listener: HttpCallbackModelListener<Any>?
     ) {
         // 因为网络请求是耗时操作，所以需要另外开启一个线程来执行该任务。
@@ -90,11 +90,11 @@ object HttpUtils {
                     }
                     bf.close()
                     `is`.close()
-                    ResponseCall<T>(context, listener).doSuccess(
-                        JSONHelper.parseObject(
-                            buffer.toString(), cls
+                    JsonUtils.fromJson(buffer.toString(), cls)?.let {
+                        ResponseCall<T>(context, listener).doSuccess(
+                            it
                         )
-                    )
+                    }
                 } else {
                     if (listener != null) {
                         // 回调onError()方法
@@ -129,7 +129,7 @@ object HttpUtils {
         context: Context,
         urlString: String,
         headers: Map<String, Any>,
-        params: Map<String?, Any>,
+        params: Map<String, Any>,
         cls: Class<T>,
         listener: HttpCallbackModelListener<Any>?
     ) {
@@ -170,11 +170,11 @@ object HttpUtils {
                     }
                     bf.close()
                     `is`.close()
-                    ResponseCall<T>(context, listener).doSuccess(
-                        JSONHelper.parseObject(
-                            buffer.toString(), cls
+                    JsonUtils.fromJson(buffer.toString(),cls)?.let {
+                        ResponseCall<T>(context, listener).doSuccess(
+                            it
                         )
-                    )
+                    }
                 } else {
                     ResponseCall<T>(
                         context, listener

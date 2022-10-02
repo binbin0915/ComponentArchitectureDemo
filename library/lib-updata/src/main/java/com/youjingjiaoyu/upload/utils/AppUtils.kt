@@ -1,18 +1,13 @@
 package com.youjingjiaoyu.upload.utils
 
-import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
-import com.youjingjiaoyu.upload.R
-import com.youjingjiaoyu.upload.interfaces.OnDialogClickListener
 import java.io.File
 
 object AppUtils {
@@ -74,42 +69,8 @@ object AppUtils {
      */
     fun getAppRootPath(context: Context): String {
         //构建下载路径
-        val packageName = AppUpdateUtils.getInstance().context.packageName
+        val packageName = AppUpdateUtils.instance.context.packageName
         return context.externalCacheDir.toString() + "/" + packageName + "/apks"
-    }
-
-    /**
-     * 显示通用对话框
-     *
-     * @param activity
-     * @param msg
-     * @param clickListener
-     * @param cancelable
-     * @param title
-     * @param cancelText
-     * @param okText
-     */
-    fun showDialog(
-        activity: Activity,
-        msg: String?,
-        clickListener: OnDialogClickListener?,
-        cancelable: Boolean,
-        title: String?,
-        cancelText: String?,
-        okText: String?
-    ) {
-        if (!activity.isFinishing) {
-            AlertDialog.Builder(activity, R.style.AlertDialog).setTitle(title).setMessage(msg)
-                .setPositiveButton(
-                    okText
-                ) { dialog: DialogInterface?, which: Int ->
-                    clickListener?.onOkClick(dialog)
-                }.setNegativeButton(
-                    cancelText
-                ) { dialog: DialogInterface?, which: Int ->
-                    clickListener?.onCancelClick(dialog)
-                }.setCancelable(cancelable).create().show()
-        }
     }
 
     /**

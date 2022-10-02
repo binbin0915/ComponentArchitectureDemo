@@ -29,7 +29,6 @@
             android:theme="@style/DialogActivityTheme" />
 
         <service android:name=".service.UpdateService" /> <!-- 老版本的服务 -->
-        <service android:name=".utils.DownloadService" />
 
         <provider
             android:name=".utils.InstallFileProvider"

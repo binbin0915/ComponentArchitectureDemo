@@ -11,7 +11,7 @@ public class LogUtils {
      */
     public static void log(String msg) {
         if (!TextUtils.isEmpty(msg)) {
-            if (AppUpdateUtils.getInstance().getUpdateConfig().isDebug()) {
+            if (AppUpdateUtils.Companion.getInstance().getUpdateConfig().isDebug()) {
                 Log.e("【AppUpdateUtils】", msg);
             }
         }

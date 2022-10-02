@@ -1,9 +1,9 @@
 package com.youjingjiaoyu.upload.interfaces
 
 /**
- * MD5检验监听 如果开启了MD5校验才会回调
+ * MD5检验的回调 如果开启了MD5校验才会回调
  *
- * @author wangk
+ * @author wangkai
  */
 interface MD5CheckListener {
     /**

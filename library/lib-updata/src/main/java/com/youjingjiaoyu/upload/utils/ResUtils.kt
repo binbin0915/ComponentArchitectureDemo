@@ -1,5 +1,6 @@
 package com.youjingjiaoyu.upload.utils
 
+import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -14,23 +15,24 @@ import androidx.core.content.ContextCompat
 import java.util.Locale
 
 object ResUtils {
-    private var mContext: Context? = null
-    fun init(context: Context?) {
+    private lateinit var mContext: Application
+    fun init(context: Application) {
         mContext = context
     }
 
     private val context: Context
-        private get() = mContext!!
+        get() = mContext
 
     /**
      * 得到Resouce对象
      */
-    val resource: Resources
+    private val resource: Resources
         get() = context.resources
 
     /**
      * 得到String.xml中的字符串
      */
+    @JvmStatic
     fun getString(@StringRes resId: Int): String {
         return resource.getString(resId)
     }
@@ -38,6 +40,7 @@ object ResUtils {
     /**
      * 得到String.xml中的字符串,带占位符
      */
+    @JvmStatic
     fun getString(@StringRes id: Int, vararg formatArgs: Any?): String {
         return resource.getString(id, *formatArgs)
     }
@@ -45,13 +48,15 @@ object ResUtils {
     /**
      * 格式 String 字符版本
      */
-    fun getString(format: String?, vararg formatArgs: Any?): String {
-        return String.format(Locale.getDefault(), format!!, *formatArgs)
+    @JvmStatic
+    fun getString(format: String, vararg formatArgs: Any): String {
+        return String.format(Locale.getDefault(), format, *formatArgs)
     }
 
     /**
      * array.xml中的字符串数组
      */
+    @JvmStatic
     fun getStringArr(@ArrayRes resId: Int): Array<String> {
         return resource.getStringArray(resId)
     }
@@ -59,14 +64,17 @@ object ResUtils {
     /**
      * array.xml中的数组
      */
+    @JvmStatic
     fun getIntArr(@ArrayRes resId: Int): IntArray {
         return resource.getIntArray(resId)
     }
 
+    @JvmStatic
     fun getDimension(@DimenRes demenId: Int): Float {
         return resource.getDimension(demenId)
     }
 
+    @JvmStatic
     fun getDimensionPixelOffset(@DimenRes demenId: Int): Int {
         return resource.getDimensionPixelOffset(demenId)
     }
@@ -74,6 +82,7 @@ object ResUtils {
     /**
      * 得到colors.xml中的颜色
      */
+    @JvmStatic
     @ColorInt
     fun getColor(@ColorRes colorId: Int): Int {
         return ContextCompat.getColor(context, colorId)
@@ -85,10 +94,12 @@ object ResUtils {
      * @param resId 资源 id
      * @return Drawable
      */
+    @JvmStatic
     fun getDrawable(@DrawableRes resId: Int): Drawable {
         return resource.getDrawable(resId)
     }
 
+    @JvmStatic
     val configuration: Configuration
         get() = resource.configuration
 }

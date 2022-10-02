@@ -27,14 +27,11 @@ public abstract class RootActivity extends AppCompatActivity {
 
     private final MD5CheckListener md5CheckListener = obtainMd5CheckListener();
 
-    private final AppUpdateInfoListener appUpdateInfoListener = obtainAppUpdateInfoListener();
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         downloadInfo = getIntent().getParcelableExtra("info");
         AppUpdateUtils.Companion.getInstance().addAppDownloadListener(appDownloadListener);
-//        AppUpdateUtils.getInstance().addAppUpdateInfoListener(appUpdateInfoListener);
     }
 
     @Override
@@ -42,7 +39,6 @@ public abstract class RootActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         downloadInfo = getIntent().getParcelableExtra("info");
         AppUpdateUtils.Companion.getInstance().addAppDownloadListener(appDownloadListener);
-//        AppUpdateUtils.getInstance().addAppUpdateInfoListener(appUpdateInfoListener);
     }
 
     /**

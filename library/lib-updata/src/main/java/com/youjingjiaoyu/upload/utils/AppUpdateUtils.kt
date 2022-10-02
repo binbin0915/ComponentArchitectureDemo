@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Environment
 import android.text.TextUtils
+import com.library.common.network.tools.json.JsonUtils
 import com.liulishuo.filedownloader.BaseDownloadTask
 import com.liulishuo.filedownloader.FileDownloadLargeFileListener
 import com.liulishuo.filedownloader.FileDownloadListener
@@ -76,15 +77,15 @@ class AppUpdateUtils private constructor() {
             LogUtils.log("使用 DATA_SOURCE_TYPE_JSON 这种模式的时候，必须要配置UpdateConfig中的dataSourceType参数为 DATA_SOURCE_TYPE_JSON ")
             return
         }
-        if (updateConfig.modelClass == null || updateConfig.modelClass !is LibraryUpdateEntity) {
+        if (updateConfig.modelClass !is LibraryUpdateEntity) {
             LogUtils.log("使用 DATA_SOURCE_TYPE_JSON 这种模式的时候，必须要配置UpdateConfig中的modelClass参数，并且modelClass必须实现LibraryUpdateEntity接口")
             return
         }
         try {
-            val data = JSONHelper.parseObject(
+            //反序列化
+            JsonUtils.fromJson(
                 jsonData, (updateConfig.modelClass as LibraryUpdateEntity).javaClass
-            ) //反序列化
-            requestSuccess(data)
+            )?.let { requestSuccess(it) }
         } catch (e: Exception) {
             LogUtils.log("JSON解析异常，您提供的json数据无法正常解析成为modelClass")
         }
@@ -93,12 +94,8 @@ class AppUpdateUtils private constructor() {
     /**
      * 检查更新 调用者配置数据 最终三种方式都会到这里来 所以要做静默下载 在这里做就好了
      */
-    private fun checkUpdate(info: DownloadInfo?) {
+    private fun checkUpdate(info: DownloadInfo) {
         checkInit()
-        if (info == null) {
-            return
-        }
-
         //检查当前版本是否需要更新 如果app当前的版本号大于等于线上最新的版本号 不需要升级版本
         val versionCode = getVersionCode(mContext)
         if (versionCode >= info.prodVersionCode) {
@@ -112,25 +109,27 @@ class AppUpdateUtils private constructor() {
         //如果用户开启了静默下载 其实是否开启强制更新已经没有意义了
         if (!updateConfig.isAutoDownloadBackground) {
             //检查是否强制更新
-            if (info.getForceUpdateFlag() != 0) {
+            if (info.forceUpdateFlag != 0) {
                 //需要强制更新
-                if (info.getForceUpdateFlag() == 2) {
+                if (info.forceUpdateFlag == 2) {
                     //hasAffectCodes拥有字段强制更新
                     val hasAffectCodes = info.hasAffectCodes
                     if (!TextUtils.isEmpty(hasAffectCodes)) {
-                        val codes = Arrays.asList(*hasAffectCodes!!.split("\\|".toRegex())
-                            .dropLastWhile { it.isEmpty() }.toTypedArray())
+                        val codes = listOf(
+                            *hasAffectCodes.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }
+                                .toTypedArray()
+                        )
                         if (codes.contains(versionCode.toString() + "")) {
                             //包含这个版本 所以需要强制更新
-                            info.setForceUpdateFlag(2)
+                            info.forceUpdateFlag = 2
                         } else {
                             //不包含这个版本 所以此版本不需要强制更新
-                            info.setForceUpdateFlag(0)
+                            info.forceUpdateFlag = 0
                         }
                     }
                 } else {
                     //所有拥有字段强制更新
-                    info.setForceUpdateFlag(1)
+                    info.forceUpdateFlag = 1
                 }
             }
         }
@@ -185,7 +184,7 @@ class AppUpdateUtils private constructor() {
         downloadInfo = info
         FileDownloader.setup(mContext)
         downloadUpdateApkFilePath = getAppLocalPath(
-            mContext, info.prodVersionName!!
+            mContext, info.prodVersionName
         )
 
         //检查下本地文件的大小 如果大小和信息中的文件大小一样的就可以直接安装 否则就删除掉
@@ -314,9 +313,8 @@ class AppUpdateUtils private constructor() {
                     } else {
                         //校验失败
                         for (md5CheckListener in allMd5CheckListener) {
-                            md5CheckListener.fileMd5CheckFail(downloadInfo.md5Check!!, md5)
+                            md5CheckListener.fileMd5CheckFail(downloadInfo.md5Check, md5)
                         }
-                        LogUtils.log("文件MD5校验失败，originMD5：" + downloadInfo.md5Check + "  localMD5：" + md5)
                     }
                 } catch (e: Exception) {
                     LogUtils.log("文件MD5解析失败，抛出异常：" + e.message)
@@ -402,71 +400,67 @@ class AppUpdateUtils private constructor() {
     private fun getData() {
         val updateConfig = updateConfig
         val modelClass = updateConfig.modelClass
-        if (modelClass != null) {
-            if (modelClass is LibraryUpdateEntity) {
-                if (updateConfig.methodType == TypeConfig.METHOD_GET) {
-                    //GET请求
-                    doGet(
-                        instance.context,
-                        updateConfig.baseUrl,
-                        updateConfig.requestHeaders,
-                        updateConfig.requestParams,
-                        updateConfig.modelClass!!.javaClass,
-                        object : HttpCallbackModelListener<Any> {
-                            override fun onFinish(response: Any) {
-                                requestSuccess(response)
-                            }
+        if (modelClass is LibraryUpdateEntity) {
+            if (updateConfig.methodType == TypeConfig.METHOD_GET) {
+                //GET请求
+                doGet(instance.context,
+                    updateConfig.baseUrl,
+                    updateConfig.requestHeaders,
+                    updateConfig.requestParams,
+                    updateConfig.modelClass.javaClass,
+                    object : HttpCallbackModelListener<Any> {
+                        override fun onFinish(response: Any) {
+                            requestSuccess(response)
+                        }
 
-                            override fun onError(e: Exception?) {
-                                listenToUpdateInfo(true)
-                                LogUtils.log("GET请求抛出异常：" + e!!.message)
-                            }
-                        })
-                } else {
-                    //POST请求
-                    doPost(instance!!.context,
-                        updateConfig.baseUrl,
-                        updateConfig.requestHeaders!!,
-                        updateConfig.requestParams,
-                        updateConfig.modelClass!!.javaClass,
-                        object : HttpCallbackModelListener<Any> {
-                            override fun onFinish(response: Any) {
-                                requestSuccess(response)
-                            }
-
-                            override fun onError(e: Exception?) {
-                                listenToUpdateInfo(true)
-                                LogUtils.log("POST请求抛出异常：" + e!!.message)
-                            }
-                        })
-                }
+                        override fun onError(e: Exception?) {
+                            listenToUpdateInfo(true)
+                            LogUtils.log("GET请求抛出异常：" + e!!.message)
+                        }
+                    })
             } else {
-                listenToUpdateInfo(true)
-                throw RuntimeException(modelClass.javaClass.simpleName + "：未实现LibraryUpdateEntity接口")
+                //POST请求
+                doPost(instance.context,
+                    updateConfig.baseUrl,
+                    updateConfig.requestHeaders,
+                    updateConfig.requestParams,
+                    updateConfig.modelClass.javaClass,
+                    object : HttpCallbackModelListener<Any> {
+                        override fun onFinish(response: Any) {
+                            requestSuccess(response)
+                        }
+
+                        override fun onError(e: Exception?) {
+                            listenToUpdateInfo(true)
+                            LogUtils.log("POST请求抛出异常：" + e!!.message)
+                        }
+                    })
             }
+        } else {
+            listenToUpdateInfo(true)
+            throw RuntimeException(modelClass.javaClass.simpleName + "：未实现LibraryUpdateEntity接口")
         }
     }
 
     private fun requestSuccess(response: Any) {
         val libraryUpdateEntity = response as LibraryUpdateEntity
-        if (libraryUpdateEntity != null) {
-            //需要根据保本号判断是否有安装包
-            if (libraryUpdateEntity.appVersionCode == 0) {
-                listenToUpdateInfo(true)
-                return
-            }
-            checkUpdate(
-                DownloadInfo().setForceUpdateFlag(libraryUpdateEntity.forceAppUpdateFlag())
-                    .setProdVersionCode(libraryUpdateEntity.appVersionCode).setFileSize(
-                        libraryUpdateEntity.appApkSize!!.toLong()
-                    ).setProdVersionName(libraryUpdateEntity.appVersionName)
-                    .setApkUrl(libraryUpdateEntity.appApkUrls)
-                    .setHasAffectCodes(libraryUpdateEntity.appHasAffectCodes)
-                    .setMd5Check(libraryUpdateEntity.fileMd5Check)
-                    .setUpdateLog(libraryUpdateEntity.appUpdateLog)
-                    .setChannel(libraryUpdateEntity.channel)
-            )
+        //需要根据保本号判断是否有安装包
+        if (libraryUpdateEntity.appVersionCode == 0) {
+            listenToUpdateInfo(true)
+            return
         }
+        checkUpdate(
+            downloadInfo.apply {
+                forceUpdateFlag = libraryUpdateEntity.forceAppUpdateFlag()
+                prodVersionCode = libraryUpdateEntity.appVersionCode
+                prodVersionName = libraryUpdateEntity.appVersionName
+                fileSize = libraryUpdateEntity.appApkSize.toLong()
+                apkUrl = libraryUpdateEntity.appApkUrls
+                hasAffectCodes = libraryUpdateEntity.appHasAffectCodes
+                md5Check = libraryUpdateEntity.fileMd5Check
+                updateLog = libraryUpdateEntity.appUpdateLog
+                channel = libraryUpdateEntity.channel
+            })
     }
 
     fun addMd5CheckListener(md5CheckListener: MD5CheckListener?): AppUpdateUtils {
@@ -496,9 +490,9 @@ class AppUpdateUtils private constructor() {
     val allAppUpdateInfoListener: List<AppUpdateInfoListener>
         get() = ArrayList(appUpdateInfoListenerList)
     private val allAppDownloadListener: List<AppDownloadListener>
-        private get() = ArrayList(appDownloadListenerList)
+        get() = ArrayList(appDownloadListenerList)
     private val allMd5CheckListener: List<MD5CheckListener>
-        private get() = ArrayList(md5CheckListenerList)
+        get() = ArrayList(md5CheckListenerList)
 
     /**
      * 是否有新版本更新
@@ -534,13 +528,13 @@ class AppUpdateUtils private constructor() {
         /**
          * AppDownloadListener的集合
          */
-        private var appDownloadListenerList: MutableList<AppDownloadListener>
+        private lateinit var appDownloadListenerList: MutableList<AppDownloadListener>
 
         //MD5校验监听
-        private var md5CheckListenerList: MutableList<MD5CheckListener>
+        private lateinit var md5CheckListenerList: MutableList<MD5CheckListener>
 
         //更新信息回调
-        private var appUpdateInfoListenerList: MutableList<AppUpdateInfoListener>
+        private lateinit var appUpdateInfoListenerList: MutableList<AppUpdateInfoListener>
 
         /**
          * 全局初始化
@@ -549,21 +543,17 @@ class AppUpdateUtils private constructor() {
          * @param config
          */
         fun init(context: Application, config: UpdateConfig) {
+            if (isInit) return
             isInit = true
             mContext = context
             updateConfig = config
             ResUtils.init(context)
             //初始化文件下载库
-            val fileDownloadConnection: ConnectionCreator =
-                if (updateConfig.customDownloadConnectionCreator != null) ({
-                    updateConfig.customDownloadConnectionCreator
-                })!! else {
-                    FileDownloadUrlConnection.Creator(
-                        FileDownloadUrlConnection.Configuration()
-                            .connectTimeout(30000) // set connection timeout.
-                            .readTimeout(30000) // set read timeout.
-                    )
-                }
+            val fileDownloadConnection: ConnectionCreator = FileDownloadUrlConnection.Creator(
+                FileDownloadUrlConnection.Configuration()
+                    .connectTimeout(30000) // set connection timeout.
+                    .readTimeout(30000) // set read timeout.
+            )
             FileDownloader.setupOnApplicationOnCreate(mContext)
                 .connectionCreator(fileDownloadConnection).commit()
         }
@@ -592,9 +582,8 @@ class AppUpdateUtils private constructor() {
         /**
          * 移除所有监听
          */
-        protected fun clearAllListener() {
+        fun clearAllListener() {
             md5CheckListenerList.clear()
-            //        appUpdateInfoListenerList.clear();
             appDownloadListenerList.clear()
         }
     }
