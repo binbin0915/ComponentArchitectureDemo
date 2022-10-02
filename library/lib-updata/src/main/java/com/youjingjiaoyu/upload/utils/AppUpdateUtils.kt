@@ -33,7 +33,6 @@ import com.youjingjiaoyu.upload.utils.AppUtils.getAppRootPath
 import com.youjingjiaoyu.upload.utils.AppUtils.getVersionCode
 import com.youjingjiaoyu.upload.utils.AppUtils.installApkFile
 import java.io.File
-import java.util.Arrays
 
 /**
  * app更新的工具类
@@ -54,11 +53,12 @@ class AppUpdateUtils private constructor() {
         updateUtils = AppUpdateUtils()
         ResUtils.init(context)
         //初始化文件下载库
-        val fileDownloadConnection: ConnectionCreator = FileDownloadUrlConnection.Creator(
-            FileDownloadUrlConnection.Configuration()
-                .connectTimeout(30000) // set connection timeout.
-                .readTimeout(30000) // set read timeout.
-        )
+        val fileDownloadConnection: ConnectionCreator =
+            updateConfig.customDownloadConnectionCreator ?: FileDownloadUrlConnection.Creator(
+                FileDownloadUrlConnection.Configuration()
+                    .connectTimeout(30000) // set connection timeout.
+                    .readTimeout(30000) // set read timeout.
+            )
         FileDownloader.setupOnApplicationOnCreate(mContext)
             .connectionCreator(fileDownloadConnection).commit()
     }
@@ -220,7 +220,7 @@ class AppUpdateUtils private constructor() {
             type = TypeConfig.UI_THEME_A
         } else if (type == TypeConfig.UI_THEME_CUSTOM) {
             //回调接口
-            updateConfig.getCustomActivityClass(info)
+            updateConfig.customActivityClass?.startActivity(info)
             return
         }
 

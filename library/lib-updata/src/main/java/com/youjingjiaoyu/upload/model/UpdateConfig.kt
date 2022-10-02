@@ -29,7 +29,7 @@ data class UpdateConfig(
     var isAutoDownloadBackground: Boolean = false,
     //展示的自定义activity
     var customActivityClass: CustomActivityClass? = null,
-    //自定义下载
+    //自定义下载 -- 使用okhttp
     var customDownloadConnectionCreator: ConnectionCreator? = null,
 ) {
 
@@ -42,9 +42,5 @@ data class UpdateConfig(
          * @param info 下载信息
          */
         fun startActivity(info: DownloadInfo)
-    }
-
-    fun getCustomActivityClass(info: DownloadInfo) {
-        customActivityClass?.startActivity(info)
     }
 }

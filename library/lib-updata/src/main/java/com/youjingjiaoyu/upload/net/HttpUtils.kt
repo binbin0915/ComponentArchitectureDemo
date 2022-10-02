@@ -156,10 +156,10 @@ object HttpUtils {
                 httpUrlConnection.requestMethod = "POST"
                 if (httpUrlConnection.responseCode == 200) {
                     // 获取网络的输入流
-                    val `is` = httpUrlConnection.inputStream
+                    val inputStream = httpUrlConnection.inputStream
                     val bf = BufferedReader(
                         InputStreamReader(
-                            `is`, StandardCharsets.UTF_8
+                            inputStream, StandardCharsets.UTF_8
                         )
                     )
                     //最好在将字节流转换为字符流的时候 进行转码
@@ -169,8 +169,8 @@ object HttpUtils {
                         buffer.append(line)
                     }
                     bf.close()
-                    `is`.close()
-                    JsonUtils.fromJson(buffer.toString(),cls)?.let {
+                    inputStream.close()
+                    JsonUtils.fromJson(buffer.toString(), cls)?.let {
                         ResponseCall<T>(context, listener).doSuccess(
                             it
                         )

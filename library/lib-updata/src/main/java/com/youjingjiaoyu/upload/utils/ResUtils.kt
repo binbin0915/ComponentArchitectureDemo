@@ -12,6 +12,7 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import java.util.Locale
 
 object ResUtils {
@@ -95,8 +96,8 @@ object ResUtils {
      * @return Drawable
      */
     @JvmStatic
-    fun getDrawable(@DrawableRes resId: Int): Drawable {
-        return resource.getDrawable(resId)
+    fun getDrawable(res: Resources, @DrawableRes resId: Int, theme: Resources.Theme): Drawable? {
+        return ResourcesCompat.getDrawable(res, resId, theme)
     }
 
     @JvmStatic
