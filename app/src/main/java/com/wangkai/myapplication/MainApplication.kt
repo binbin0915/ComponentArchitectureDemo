@@ -19,6 +19,7 @@ import com.youjingjiaoyu.upload.interfaces.AppUpdateInfoListener
 import com.youjingjiaoyu.upload.model.TypeConfig
 import com.youjingjiaoyu.upload.model.UpdateConfig
 import com.youjingjiaoyu.upload.utils.AppUpdateUtils
+import com.youjingjiaoyu.upload.utils.LogUtils
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -139,7 +140,7 @@ class MainApplication : BaseApplication() {
 
         AppUpdateUtils.getInstance().addAppUpdateInfoListener(object : AppUpdateInfoListener {
             override fun isLatestVersion(isLatest: Boolean) {
-
+                LogUtils.log("isLatest:$isLatest")
             }
         })
     }

@@ -192,9 +192,8 @@ class AppUpdateUtils private constructor() {
                     //hasAffectCodes拥有字段强制更新
                     val hasAffectCodes = info.hasAffectCodes
                     if (!TextUtils.isEmpty(hasAffectCodes)) {
-                        val codes = listOf(
-                            *hasAffectCodes.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }
-                                .toTypedArray()
+                        val codes = listOf(*hasAffectCodes.split("\\|".toRegex())
+                            .dropLastWhile { it.isEmpty() }.toTypedArray()
                         )
                         if (codes.contains(versionCode.toString() + "")) {
                             //包含这个版本 所以需要强制更新
@@ -484,7 +483,6 @@ class AppUpdateUtils private constructor() {
 
                         override fun onError(e: Exception?) {
                             listenToUpdateInfo(true)
-                            LogUtils.log("GET请求抛出异常：" + e!!.message)
                         }
                     })
             } else {
@@ -513,22 +511,25 @@ class AppUpdateUtils private constructor() {
 
     private fun requestSuccess(response: Any) {
         val libraryUpdateEntity = response as LibraryUpdateEntity
+        LogUtils.log("请求成功：${libraryUpdateEntity.appVersionCode}")
         //需要根据保本号判断是否有安装包
         if (libraryUpdateEntity.appVersionCode == 0) {
             listenToUpdateInfo(true)
             return
         }
-        checkUpdate(downloadInfo.apply {
-            forceUpdateFlag = libraryUpdateEntity.forceAppUpdateFlag()
-            prodVersionCode = libraryUpdateEntity.appVersionCode
-            prodVersionName = libraryUpdateEntity.appVersionName
-            fileSize = libraryUpdateEntity.appApkSize.toLong()
-            apkUrl = libraryUpdateEntity.appApkUrls
-            hasAffectCodes = libraryUpdateEntity.appHasAffectCodes
-            md5Check = libraryUpdateEntity.fileMd5Check
-            updateLog = libraryUpdateEntity.appUpdateLog
-            channel = libraryUpdateEntity.channel
-        })
+        checkUpdate(
+            DownloadInfo(
+                forceUpdateFlag = libraryUpdateEntity.forceAppUpdateFlag(),
+                prodVersionCode = libraryUpdateEntity.appVersionCode,
+                prodVersionName = libraryUpdateEntity.appVersionName,
+                fileSize = libraryUpdateEntity.appApkSize.toLong(),
+                apkUrl = libraryUpdateEntity.appApkUrls,
+                hasAffectCodes = libraryUpdateEntity.appHasAffectCodes,
+                md5Check = libraryUpdateEntity.fileMd5Check,
+                updateLog = libraryUpdateEntity.appUpdateLog,
+                channel = libraryUpdateEntity.channel
+            )
+        )
     }
 
     fun addMd5CheckListener(md5CheckListener: MD5CheckListener?): AppUpdateUtils {

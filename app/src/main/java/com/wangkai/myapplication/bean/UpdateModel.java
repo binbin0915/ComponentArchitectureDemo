@@ -48,7 +48,7 @@ public class UpdateModel implements LibraryUpdateEntity {
      */
     @Override
     public int getAppVersionCode() {
-        if (data.getCv().isEmpty()) {
+        if (!data.getCv().isEmpty()) {
             return Integer.parseInt(data.getCv());
         }
         return 0;
