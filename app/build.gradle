@@ -81,6 +81,7 @@ dependencies {
     implementation Google.material
     //公共基础包
     implementation project(":library:lib-common")
+    implementation project(":library:lib-updata")
 
     //用于设置主题
     implementation AndroidX.appcompat

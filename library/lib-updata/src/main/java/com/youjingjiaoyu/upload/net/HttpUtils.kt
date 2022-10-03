@@ -4,6 +4,7 @@ import android.accounts.NetworkErrorException
 import android.content.Context
 import android.text.TextUtils
 import com.library.common.network.tools.json.JsonUtils
+import com.youjingjiaoyu.upload.utils.LogUtils
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -59,7 +60,7 @@ object HttpUtils {
                 params.forEach {
                     paramsStr.append(it.key)
                     paramsStr.append("=")
-                    paramsStr.append(it.key)
+                    paramsStr.append(it.value)
                     paramsStr.append("&")
                 }
                 if (paramsStr.isNotEmpty()) {
@@ -71,6 +72,7 @@ object HttpUtils {
                 } else {
                     URL("$urlString?$paramsStr")
                 }
+                LogUtils.log("buffer:$url")
                 httpUrlConnection = obtainConnection(url, "", headers, false)
                 httpUrlConnection.requestMethod = "GET"
                 // 响应码为200表示成功，否则失败。
@@ -90,10 +92,9 @@ object HttpUtils {
                     }
                     bf.close()
                     `is`.close()
+                    LogUtils.log("buffer:$buffer")
                     JsonUtils.fromJson(buffer.toString(), cls)?.let {
-                        ResponseCall<T>(context, listener).doSuccess(
-                            it
-                        )
+                        ResponseCall<T>(context, listener).doSuccess(it)
                     }
                 } else {
                     if (listener != null) {
@@ -138,7 +139,7 @@ object HttpUtils {
         params.forEach {
             paramsStr.append(it.key)
             paramsStr.append("=")
-            paramsStr.append(it.key)
+            paramsStr.append(it.value)
             paramsStr.append("&")
         }
         if (paramsStr.isNotEmpty()) {

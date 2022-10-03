@@ -13,7 +13,12 @@ import com.tencent.smtt.export.external.TbsCoreSettings
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.TbsListener
 import com.tencent.smtt.sdk.WebView
+import com.wangkai.myapplication.bean.UpdateModel
 import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
+import com.youjingjiaoyu.upload.interfaces.AppUpdateInfoListener
+import com.youjingjiaoyu.upload.model.TypeConfig
+import com.youjingjiaoyu.upload.model.UpdateConfig
+import com.youjingjiaoyu.upload.utils.AppUpdateUtils
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -27,12 +32,10 @@ import java.io.IOException
  */
 class MainApplication : BaseApplication() {
 
-    override fun appInit() {
-        /*---------------------------------------文件系统初始化--------------------------------------*/
+    override fun appInit() {/*---------------------------------------文件系统初始化--------------------------------------*/
         FileOperator.init(instance, BuildConfig.DEBUG)
 
-        /*----------------------------------------tbs相关------------------------------------------*/
-        /* [new] 独立Web进程 */
+        /*----------------------------------------tbs相关------------------------------------------*//* [new] 独立Web进程 */
         if (startX5WebProcessPreInitService()) {
             val map = HashMap<String, Any>()
             map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
@@ -89,10 +92,8 @@ class MainApplication : BaseApplication() {
 
             }
             QbSdk.initX5Environment(appContext, cb)
-        }
-        /*------------------------------------设置全局http响应-----------------------------------*/
-        GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())
-        /*-------------------------------------BRV相关------------------------------------------*/
+        }/*------------------------------------设置全局http响应-----------------------------------*/
+        GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())/*-------------------------------------BRV相关------------------------------------------*/
         /**
          *  推荐在Application中进行全局配置缺省页, 当然同样每个页面可以单独指定缺省页.
          *  具体查看 https://github.com/liangjingkanji/StateLayout
@@ -112,7 +113,35 @@ class MainApplication : BaseApplication() {
         }
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
             ClassicsFooter(context)
+        }/*-------------------------------------更新相关------------------------------------------*/
+        //设置请求头
+        val headers: MutableMap<String, Any> = HashMap()
+        headers["APP-Key"] = "APP-Secret"
+        headers["APP-Secret"] = "APP-Secret"
+        //设置请求体
+        val params: MutableMap<String, Any> = HashMap()
+        params["channel"] = "beisu100"
+        params["cv"] = "1"
+        val updateConfig = UpdateConfig(
+            baseUrl = "https://ceshi.new.beisu100.com/api/downapk/getapkinfo",
+            requestHeaders = headers,
+            requestParams = params,
+            modelClass = UpdateModel(),
+        ).apply {
+            isDebug = true
+            isAutoDownloadBackground = false
+            notificationIconRes = R.mipmap.app_ic_launcher
+            isShowNotification = true
+            dataSourceType = TypeConfig.DATA_SOURCE_TYPE_URL
+            uiThemeType = TypeConfig.UI_THEME_A
         }
+        AppUpdateUtils.init(this, updateConfig)
+
+        AppUpdateUtils.getInstance().addAppUpdateInfoListener(object : AppUpdateInfoListener {
+            override fun isLatestVersion(isLatest: Boolean) {
+
+            }
+        })
     }
 
     /**

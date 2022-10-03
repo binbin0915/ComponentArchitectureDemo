@@ -3,6 +3,7 @@ package com.youjingjiaoyu.upload.net
 import android.content.Context
 import android.os.Handler
 import android.os.Message
+import com.youjingjiaoyu.upload.utils.LogUtils
 
 class ResponseCall<T>(context: Context, listener: HttpCallbackModelListener<Any>?) {
     /**
@@ -17,6 +18,7 @@ class ResponseCall<T>(context: Context, listener: HttpCallbackModelListener<Any>
                 super.handleMessage(msg)
                 if (msg.what == 0) {
                     //成功
+                    LogUtils.log("buffer:${msg.obj}")
                     listener?.onFinish(msg.obj)
                 } else if (msg.what == 1) {
                     //失败

@@ -3,6 +3,9 @@ package com.youjingjiaoyu.upload.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
+/**
+ * @author wangkai
+ */
 public class LogUtils {
     /**
      * Log日志工具

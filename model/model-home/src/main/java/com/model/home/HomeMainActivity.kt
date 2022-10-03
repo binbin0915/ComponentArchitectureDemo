@@ -17,6 +17,7 @@ import com.model.home.databinding.HomeActivityMainBinding
 import com.model.home.pages.adapter.HomeViewPagerAdapter
 import com.model.home.viewmodel.HomeMainActivityShareViewModel
 import com.model.home.viewmodel.HomeMainActivityViewModel
+import com.youjingjiaoyu.upload.utils.AppUpdateUtils
 
 @Route(path = RouterPath.PAGE_HOME_MAIN_ACTIVITY, group = RouterPath.GROUP_HOME)
 class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMainBinding>() {
@@ -64,6 +65,7 @@ class HomeMainActivity : BaseActivity<HomeMainActivityViewModel, HomeActivityMai
     }
 
     override fun initData() {
+        AppUpdateUtils.getInstance().checkUpdate();
         /**
          * 侧边菜单动画
          */

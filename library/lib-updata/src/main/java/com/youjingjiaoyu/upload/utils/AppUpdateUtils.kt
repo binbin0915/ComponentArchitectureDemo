@@ -39,30 +39,6 @@ import java.io.File
  * @author wangkai
  */
 class AppUpdateUtils private constructor() {
-    /**
-     * 全局初始化，必须调用
-     *
-     * @param context
-     * @param config
-     */
-    fun init(context: Application, config: UpdateConfig) {
-        if (isInit) return
-        isInit = true
-        mContext = context
-        updateConfig = config
-        updateUtils = AppUpdateUtils()
-        ResUtils.init(context)
-        //初始化文件下载库
-        val fileDownloadConnection: ConnectionCreator =
-            updateConfig.customDownloadConnectionCreator ?: FileDownloadUrlConnection.Creator(
-                FileDownloadUrlConnection.Configuration()
-                    .connectTimeout(30000) // set connection timeout.
-                    .readTimeout(30000) // set read timeout.
-            )
-        FileDownloader.setupOnApplicationOnCreate(mContext)
-            .connectionCreator(fileDownloadConnection).commit()
-    }
-
     companion object {
         //下载任务
         private lateinit var downloadTask: BaseDownloadTask
@@ -116,6 +92,31 @@ class AppUpdateUtils private constructor() {
                 throw RuntimeException("AppUpdateUtils需要先调用init方法进行初始化才能使用")
             }
         }
+
+        /**
+         * 全局初始化，必须调用
+         *
+         * @param context 上下文对象
+         * @param config 更新的配置
+         */
+        fun init(context: Application, config: UpdateConfig) {
+            if (isInit) return
+            isInit = true
+            mContext = context
+            updateConfig = config
+            updateUtils = AppUpdateUtils()
+            ResUtils.init(context)
+            //初始化文件下载库
+            val fileDownloadConnection: ConnectionCreator =
+                updateConfig.customDownloadConnectionCreator ?: FileDownloadUrlConnection.Creator(
+                    FileDownloadUrlConnection.Configuration()
+                        .connectTimeout(30000) // set connection timeout.
+                        .readTimeout(30000) // set read timeout.
+                )
+            FileDownloader.setupOnApplicationOnCreate(mContext)
+                .connectionCreator(fileDownloadConnection).commit()
+        }
+
 
         /**
          * 移除所有监听
@@ -191,8 +192,10 @@ class AppUpdateUtils private constructor() {
                     //hasAffectCodes拥有字段强制更新
                     val hasAffectCodes = info.hasAffectCodes
                     if (!TextUtils.isEmpty(hasAffectCodes)) {
-                        val codes = listOf(*hasAffectCodes.split("\\|".toRegex())
-                            .dropLastWhile { it.isEmpty() }.toTypedArray())
+                        val codes = listOf(
+                            *hasAffectCodes.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }
+                                .toTypedArray()
+                        )
                         if (codes.contains(versionCode.toString() + "")) {
                             //包含这个版本 所以需要强制更新
                             info.forceUpdateFlag = 2

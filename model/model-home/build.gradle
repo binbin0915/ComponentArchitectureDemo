@@ -20,6 +20,7 @@ android {
 }
 
 dependencies {
+    implementation project(":library:lib-updata")
     implementation AndroidX.coreKtx
     implementation AndroidX.appcompat
     implementation Google.material
