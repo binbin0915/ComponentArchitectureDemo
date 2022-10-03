@@ -69,7 +69,7 @@ object AppUtils {
      */
     fun getAppRootPath(context: Context): String {
         //构建下载路径
-        val packageName = AppUpdateUtils.getInstance().context.packageName
+        val packageName = AppUpdateUtils.getInstance().getContext().packageName
         return context.externalCacheDir.toString() + "/" + packageName + "/apks"
     }
 

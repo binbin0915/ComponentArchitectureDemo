@@ -39,7 +39,40 @@ import java.io.File
  * @author wangkai
  */
 class AppUpdateUtils private constructor() {
+    /**
+     * 静态属性和方法
+     */
     companion object {
+        fun getInstance(): AppUpdateUtils {
+            checkInit()
+            return updateUtils
+        }
+
+        /**
+         * 对外提供全局初始化
+         *
+         * @param context 上下文对象
+         * @param config 更新的配置
+         */
+        fun init(context: Application, config: UpdateConfig) {
+            if (isInit) return
+            isInit = true
+            mContext = context
+            updateConfig = config
+            updateUtils = AppUpdateUtils()
+            ResUtils.init(context)
+            //初始化文件下载库
+            val fileDownloadConnection: ConnectionCreator =
+                updateConfig.customDownloadConnectionCreator ?: FileDownloadUrlConnection.Creator(
+                    FileDownloadUrlConnection.Configuration()
+                        .connectTimeout(30000) // set connection timeout.
+                        .readTimeout(30000) // set read timeout.
+                )
+            FileDownloader.setupOnApplicationOnCreate(mContext)
+                .connectionCreator(fileDownloadConnection).commit()
+        }
+
+        /*-----------------------------------------私有属性-----------------------------------------*/
         //下载任务
         private lateinit var downloadTask: BaseDownloadTask
 
@@ -73,15 +106,6 @@ class AppUpdateUtils private constructor() {
         //更新信息回调
         private val appUpdateInfoListenerList: MutableList<AppUpdateInfoListener> = ArrayList()
 
-        fun getInstance(): AppUpdateUtils {
-            return updateUtils
-        }
-
-        fun isDownloading(): Boolean {
-            checkInit()
-            return isDownloading
-        }
-
         /**
          * 初始化检测
          *
@@ -92,46 +116,21 @@ class AppUpdateUtils private constructor() {
                 throw RuntimeException("AppUpdateUtils需要先调用init方法进行初始化才能使用")
             }
         }
-
-        /**
-         * 全局初始化，必须调用
-         *
-         * @param context 上下文对象
-         * @param config 更新的配置
-         */
-        fun init(context: Application, config: UpdateConfig) {
-            if (isInit) return
-            isInit = true
-            mContext = context
-            updateConfig = config
-            updateUtils = AppUpdateUtils()
-            ResUtils.init(context)
-            //初始化文件下载库
-            val fileDownloadConnection: ConnectionCreator =
-                updateConfig.customDownloadConnectionCreator ?: FileDownloadUrlConnection.Creator(
-                    FileDownloadUrlConnection.Configuration()
-                        .connectTimeout(30000) // set connection timeout.
-                        .readTimeout(30000) // set read timeout.
-                )
-            FileDownloader.setupOnApplicationOnCreate(mContext)
-                .connectionCreator(fileDownloadConnection).commit()
-        }
-
-
-        /**
-         * 移除所有监听
-         */
-        fun clearAllListener() {
-            md5CheckListenerList.clear()
-            appDownloadListenerList.clear()
-        }
     }
+
+    /**
+     * 是否正在下载中
+     * @return isDownloading 是否正在下载
+     */
+    fun isDownloading(): Boolean {
+        return isDownloading
+    }
+
 
     /**
      * 检查更新 sdk自助请求接口
      */
     fun checkUpdate() {
-        checkInit()
         if (getUpdateConfig().dataSourceType != TypeConfig.DATA_SOURCE_TYPE_URL) {
             LogUtils.log("使用 DATA_SOURCE_TYPE_URL 这种模式的时候，必须要配置UpdateConfig中的dataSourceType参数才为 DATA_SOURCE_TYPE_URL ")
             return
@@ -172,7 +171,6 @@ class AppUpdateUtils private constructor() {
      * 检查更新 调用者配置数据 最终三种方式都会到这里来 所以要做静默下载 在这里做就好了
      */
     private fun checkUpdate(info: DownloadInfo) {
-        checkInit()
         //检查当前版本是否需要更新 如果app当前的版本号大于等于线上最新的版本号 不需要升级版本
         val versionCode = getVersionCode(mContext)
         if (versionCode >= info.prodVersionCode) {
@@ -256,7 +254,6 @@ class AppUpdateUtils private constructor() {
      * @param info 传入下载包信息
      */
     fun download(info: DownloadInfo) {
-        checkInit()
         downloadInfo = info
         FileDownloader.setup(mContext)
         downloadUpdateApkFilePath = getAppLocalPath(
@@ -298,6 +295,14 @@ class AppUpdateUtils private constructor() {
         isDownloading = false
         downloadTask.pause()
         cancelDownload(mContext)
+    }
+
+    /**
+     * 移除所有监听
+     */
+    fun clearAllListener() {
+        md5CheckListenerList.clear()
+        appDownloadListenerList.clear()
     }
 
     private val fileDownloadListener: FileDownloadListener =
@@ -436,11 +441,9 @@ class AppUpdateUtils private constructor() {
      *
      * @return
      */
-    val context: Context
-        get() {
-            checkInit()
-            return mContext
-        }
+    fun getContext(): Context {
+        return mContext
+    }
 
     /**
      * 重新下载
@@ -471,7 +474,7 @@ class AppUpdateUtils private constructor() {
         if (modelClass is LibraryUpdateEntity) {
             if (updateConfig.methodType == TypeConfig.METHOD_GET) {
                 //GET请求
-                doGet(context,
+                doGet(mContext,
                     updateConfig.baseUrl,
                     updateConfig.requestHeaders,
                     updateConfig.requestParams,
@@ -487,7 +490,7 @@ class AppUpdateUtils private constructor() {
                     })
             } else {
                 //POST请求
-                doPost(context,
+                doPost(mContext,
                     updateConfig.baseUrl,
                     updateConfig.requestHeaders,
                     updateConfig.requestParams,

@@ -18,6 +18,7 @@ import com.youjingjiaoyu.upload.service.UpdateService;
 
 /**
  * 添加一些常用的处理
+ *
  * @author wangkai
  */
 public abstract class RootActivity extends AppCompatActivity {
@@ -148,7 +149,7 @@ public abstract class RootActivity extends AppCompatActivity {
      * 下载
      */
     public void download() {
-        if (!AppUpdateUtils.Companion.isDownloading()) {
+        if (!AppUpdateUtils.Companion.getInstance().isDownloading()) {
             requestPermission();
         } else {
             pauseTask();
@@ -158,7 +159,7 @@ public abstract class RootActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AppUpdateUtils.Companion.clearAllListener();
+        AppUpdateUtils.Companion.getInstance().clearAllListener();
     }
 
     /**
