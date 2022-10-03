@@ -82,13 +82,6 @@ dependencies {
     //公共基础包
     implementation project(":library:lib-common")
 
-
-    // SDK（2.1.5及以上版本）已经将Java Crash和Native Crash捕获功能分开，如果想使用NDK库，需要配置： implementation 'com.tencent.bugly:nativecrashreport:latest.release'
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.6.1'
-    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    implementation 'com.tencent.bugly:nativecrashreport:3.9.2'
-    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
-
     //用于设置主题
     implementation AndroidX.appcompat
     implementation project(path: ':library:lib-file')
