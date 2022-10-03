@@ -5,7 +5,7 @@ import android.os.Handler
 import android.os.Message
 import com.youjingjiaoyu.upload.utils.LogUtils
 
-class ResponseCall<T>(context: Context, listener: HttpCallbackModelListener<Any>?) {
+class ResponseCall<T>(context: Context, listener: HttpCallbackModelListener<Any>) {
     /**
      * 用于在子线程和主线程的数据交换
      */
@@ -19,10 +19,10 @@ class ResponseCall<T>(context: Context, listener: HttpCallbackModelListener<Any>
                 if (msg.what == 0) {
                     //成功
                     LogUtils.log("buffer:${msg.obj}")
-                    listener?.onFinish(msg.obj)
+                    listener.onFinish(msg.obj)
                 } else if (msg.what == 1) {
                     //失败
-                    listener?.onError(msg.obj as Exception)
+                    listener.onError(msg.obj as Exception)
                 }
             }
         }

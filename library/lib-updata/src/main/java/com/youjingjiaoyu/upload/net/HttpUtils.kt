@@ -48,7 +48,7 @@ object HttpUtils {
         headers: Map<String, Any>,
         params: Map<String, Any>,
         cls: Class<T>,
-        listener: HttpCallbackModelListener<Any>?
+        listener: HttpCallbackModelListener<Any>
     ) {
         // 因为网络请求是耗时操作，所以需要另外开启一个线程来执行该任务。
         THREAD_POOL.execute {
@@ -97,18 +97,12 @@ object HttpUtils {
                         ResponseCall<T>(context, listener).doSuccess(it)
                     }
                 } else {
-                    if (listener != null) {
-                        // 回调onError()方法
-                        ResponseCall<Any>(
-                            context, listener
-                        ).doFail(NetworkErrorException("response err code:" + httpUrlConnection.responseCode))
-                    }
+                    ResponseCall<Any>(
+                        context, listener
+                    ).doFail(NetworkErrorException("response err code:" + httpUrlConnection.responseCode))
                 }
             } catch (e: Exception) {
-                if (listener != null) {
-                    // 回调onError()方法
-                    ResponseCall<Any>(context, listener).doFail(e)
-                }
+                ResponseCall<Any>(context, listener).doFail(e)
             } finally {
                 httpUrlConnection?.disconnect()
             }
@@ -132,7 +126,7 @@ object HttpUtils {
         headers: Map<String, Any>,
         params: Map<String, Any>,
         cls: Class<T>,
-        listener: HttpCallbackModelListener<Any>?
+        listener: HttpCallbackModelListener<Any>
     ) {
         val paramsStr = StringBuffer()
         // 组织请求参数
@@ -182,10 +176,7 @@ object HttpUtils {
                     ).doFail(NetworkErrorException("response err code:" + httpUrlConnection.responseCode))
                 }
             } catch (e: Exception) {
-                if (listener != null) {
-                    // 回调onError()方法
-                    ResponseCall<Any>(context, listener).doFail(e)
-                }
+                ResponseCall<Any>(context, listener).doFail(e)
             } finally {
                 httpUrlConnection?.disconnect()
             }

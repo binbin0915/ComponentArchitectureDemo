@@ -52,29 +52,12 @@ public abstract class RootActivity extends AppCompatActivity {
         if (AppUpdateUtils.Companion.getInstance().getUpdateConfig().isShowNotification()) {
             startService(new Intent(this, UpdateService.class));
         }
-        //直接下载
         doDownload();
         //区分后台下载
-//        if (AppUpdateUtils.getInstance().getUpdateConfig().isAutoDownloadBackground()) {
+//        if (AppUpdateUtils.Companion.getInstance().getUpdateConfig().isAutoDownloadBackground()) {
 //            doDownload();
 //        } else {
-//            if (!NetWorkUtils.getCurrentNetType(this).equals("wifi")) {
-//                AppUtils.showDialog(this, ResUtils.getString(R.string.wifi_tips), new OnDialogClickListener() {
-//                    @Override
-//                    public void onOkClick(DialogInterface dialog) {
-//                        dialog.dismiss();
-//                        //下载
-//                        doDownload();
-//                    }
-//
-//                    @Override
-//                    public void onCancelClick(DialogInterface dialog) {
-//                        dialog.dismiss();
-//                    }
-//                }, true, ResUtils.getString(R.string.tips), ResUtils.getString(R.string.cancel), ResUtils.getString(R.string.confirm));
-//            } else {
-//                doDownload();
-//            }
+//            doDownload();
 //        }
     }
 
