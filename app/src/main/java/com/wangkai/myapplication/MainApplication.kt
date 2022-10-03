@@ -20,6 +20,12 @@ import com.youjingjiaoyu.upload.model.TypeConfig
 import com.youjingjiaoyu.upload.model.UpdateConfig
 import com.youjingjiaoyu.upload.utils.AppUpdateUtils
 import com.youjingjiaoyu.upload.utils.LogUtils
+import org.acra.config.coreConfiguration
+import org.acra.config.httpSender
+import org.acra.config.httpSenderConfiguration
+import org.acra.data.StringFormat
+import org.acra.ktx.initAcra
+import org.acra.util.ToastSender
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -33,10 +39,27 @@ import java.io.IOException
  */
 class MainApplication : BaseApplication() {
 
-    override fun appInit() {/*---------------------------------------文件系统初始化--------------------------------------*/
+    override fun appInit() {
+
+
+        /*---------------------------------------崩溃日志系统初始化--------------------------------------*/
+
+        initAcra {
+            //core configuration:
+            buildConfigClass = BuildConfig::class.java
+            reportFormat = StringFormat.JSON
+        }
+
+        //以下部分详细介绍了崩溃报告的可能目标：服务器后端、电子邮件或您可以想象的任何其他目标（如果您实现发件人）。您甚至可以将报告发送到多个目标位置。
+        //所有官方报告发件人都支持两种类型的报告格式：和 （http 的表单数据兼容）。选择您的后端需要或您最喜欢的任何一个：StringFormat.JSON | StringFormat.KEY_VALUE_LIST
+        //无需用户交互即可发送报告的最便捷方式是通过 HTTP。
+
+
+        /*---------------------------------------文件操作系统初始化--------------------------------------*/
         FileOperator.init(instance, BuildConfig.DEBUG)
 
-        /*----------------------------------------tbs相关------------------------------------------*//* [new] 独立Web进程 */
+        /*----------------------------------------tbs相关------------------------------------------*/
+
         if (startX5WebProcessPreInitService()) {
             val map = HashMap<String, Any>()
             map[TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER] = true
@@ -94,12 +117,13 @@ class MainApplication : BaseApplication() {
             }
             QbSdk.initX5Environment(appContext, cb)
         }/*------------------------------------设置全局http响应-----------------------------------*/
-        GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())/*-------------------------------------BRV相关------------------------------------------*/
-        /**
-         *  推荐在Application中进行全局配置缺省页, 当然同样每个页面可以单独指定缺省页.
-         *  具体查看 https://github.com/liangjingkanji/StateLayout
-         */
+        GlobalHttpResponseProcessor.setResponseHandler(GlobalResponseHandler())
+
+        /*-------------------------------------BRV相关------------------------------------------*/
+
         StateConfig.apply {
+            // 推荐在Application中进行全局配置缺省页, 当然同样每个页面可以单独指定缺省页.
+            // 具体查看 https://github.com/liangjingkanji/StateLayout
             emptyLayout = com.library.widget.R.layout.mult_state_empty_retry
             errorLayout = com.library.widget.R.layout.mult_network_state_error
             loadingLayout = com.library.widget.R.layout.mult_state_loading

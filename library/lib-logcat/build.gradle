@@ -11,5 +11,8 @@ android {
 }
 
 dependencies {
-
+    def acraVersion = '5.9.6'
+    api "ch.acra:acra-http:$acraVersion"
+    api "ch.acra:acra-mail:$acraVersion"
+    api "ch.acra:acra-core:$acraVersion"
 }
