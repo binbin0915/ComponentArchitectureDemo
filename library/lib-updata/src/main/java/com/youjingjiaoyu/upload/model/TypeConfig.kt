@@ -1,5 +1,9 @@
 package com.youjingjiaoyu.upload.model
 
+/**
+ * 配置信息
+ * @author wangkai
+ */
 object TypeConfig {
     /**
      * 更新信息的来源

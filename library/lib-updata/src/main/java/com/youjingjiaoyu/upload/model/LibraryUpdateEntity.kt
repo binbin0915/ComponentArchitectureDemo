@@ -2,6 +2,7 @@ package com.youjingjiaoyu.upload.model
 
 /**
  * 请求链接地址时需要实现这个接口
+ * @author wangkai
  */
 interface LibraryUpdateEntity {
     /**

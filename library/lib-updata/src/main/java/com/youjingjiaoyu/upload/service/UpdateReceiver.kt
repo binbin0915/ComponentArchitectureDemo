@@ -111,7 +111,10 @@ class UpdateReceiver : BroadcastReceiver() {
             val intent = Intent(context.packageName + RE_DOWNLOAD)
             intent.setPackage(context.packageName)
             val pendingIntent = PendingIntent.getBroadcast(
-                context, REQUEST_CODE, intent, PendingIntent.FLAG_CANCEL_CURRENT
+                context,
+                REQUEST_CODE,
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             builder.setContentIntent(pendingIntent)
             // 通知栏标题

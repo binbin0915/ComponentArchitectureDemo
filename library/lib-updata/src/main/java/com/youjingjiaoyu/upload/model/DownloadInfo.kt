@@ -5,6 +5,7 @@ import android.os.Parcelable
 
 /**
  * 内部下载需要的信息
+ * @author wangkai
  */
 data class DownloadInfo(
     /**

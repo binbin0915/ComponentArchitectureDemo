@@ -2,6 +2,7 @@ package com.youjingjiaoyu.upload.net
 
 /**
  * HttpURLConnection网络请求返回监听器
+ * @author wangkai
  */
 interface HttpCallbackModelListener<T> {
     /**

@@ -18,6 +18,10 @@ import java.util.concurrent.LinkedBlockingDeque
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
+/**
+ * http请求工具类
+ * @author wangkai
+ */
 object HttpUtils {
     /**
      * 自定义线程池
