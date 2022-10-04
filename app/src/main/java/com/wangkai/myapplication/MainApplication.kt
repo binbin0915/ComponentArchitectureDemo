@@ -20,12 +20,9 @@ import com.youjingjiaoyu.upload.model.TypeConfig
 import com.youjingjiaoyu.upload.model.UpdateConfig
 import com.youjingjiaoyu.upload.utils.AppUpdateUtils
 import com.youjingjiaoyu.upload.utils.LogUtils
-import org.acra.config.coreConfiguration
-import org.acra.config.httpSender
-import org.acra.config.httpSenderConfiguration
+import org.acra.ACRA
 import org.acra.data.StringFormat
 import org.acra.ktx.initAcra
-import org.acra.util.ToastSender
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -44,6 +41,7 @@ class MainApplication : BaseApplication() {
 
         /*---------------------------------------崩溃日志系统初始化--------------------------------------*/
 
+        ACRA.DEV_LOGGING = true
         initAcra {
             //core configuration:
             buildConfigClass = BuildConfig::class.java
