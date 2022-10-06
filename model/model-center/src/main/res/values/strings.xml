@@ -1,3 +1,4 @@
 <resources>
     <string name="center_app_name">center模块</string>
+    <string name="center_title_activity_main_compose">MainComposeActivity</string>
 </resources>

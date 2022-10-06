@@ -1,5 +1,6 @@
 plugins {
     id 'com.wangkai.version'
+    id 'org.jetbrains.kotlin.android'
 }
 apply from: rootProject.file('app-model-build.gradle')
 android {
@@ -14,9 +15,32 @@ android {
         if (isRunModel.toBoolean()) {
             applicationId "com.model.center"
         }
+
+
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
     //统一资源前缀，规范资源引用
     resourcePrefix "center_"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.0-dev-k1.7.20-RC-a143c065804'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
 }
 dependencies {
     implementation AndroidX.coreKtx
@@ -33,4 +57,33 @@ dependencies {
     implementation project(":library:lib-widget")
     //公共基础包
     implementation project(":library:lib-common")
+
+
+    implementation 'androidx.compose.ui:ui:1.2.1'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.2.1'
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    implementation 'androidx.compose.foundation:foundation:1.2.1'
+    // Material Design
+    implementation 'androidx.compose.material:material:1.2.1'
+    // Material design icons
+    implementation 'androidx.compose.material:material-icons-core:1.2.1'
+    implementation 'androidx.compose.material:material-icons-extended:1.2.1'
+    // Integration with activities
+    implementation 'androidx.activity:activity-compose:1.5.1'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+    // Integration with observables
+    implementation 'androidx.compose.runtime:runtime-livedata:1.2.1'
+    implementation 'androidx.compose.runtime:runtime-rxjava2:1.2.1'
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.2.1'
+
+    debugImplementation "androidx.compose.ui:ui-tooling:1.2.1"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.2.1"
+
+    // When using a MDC theme
+    implementation "com.google.android.material:compose-theme-adapter:1.1.16"
+    // When using a AppCompat theme
+    implementation "com.google.accompanist:accompanist-appcompat-theme:0.25.1"
 }
