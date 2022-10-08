@@ -1,6 +1,3 @@
-plugins {
-    id 'com.wangkai.version'
-}
 apply from: rootProject.file('app-model-build.gradle')
 
 android {

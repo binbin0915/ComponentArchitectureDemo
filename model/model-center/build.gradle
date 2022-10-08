@@ -1,27 +1,18 @@
-plugins {
-    id 'com.wangkai.version'
-    id 'org.jetbrains.kotlin.android'
-}
 apply from: rootProject.file('app-model-build.gradle')
 android {
     defaultConfig {
         if (isRunModel.toBoolean()) {
             applicationId "com.model.center"
         }
-
-
-        vectorDrawables {
-            useSupportLibrary true
-        }
     }
     //统一资源前缀，规范资源引用
     resourcePrefix "center_"
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = '11'
+
+
+    defaultConfig {
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
     buildFeatures {
         compose true

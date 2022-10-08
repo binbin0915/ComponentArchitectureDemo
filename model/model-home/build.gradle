@@ -1,7 +1,5 @@
-plugins {
-    id 'com.wangkai.version'
-}
 apply from: rootProject.file('app-model-build.gradle')
+
 android {
     defaultConfig {
         if (isRunModel.toBoolean()) {
@@ -13,6 +11,7 @@ android {
 }
 
 dependencies {
+    //app更新
     implementation project(":library:lib-updata")
     //glide
     implementation 'com.github.bumptech.glide:glide:4.13.2'
