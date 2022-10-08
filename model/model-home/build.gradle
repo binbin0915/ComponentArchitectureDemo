@@ -17,8 +17,4 @@ dependencies {
     //glide
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
-    //组件包
-    implementation project(":library:lib-widget")
-    //公共基础包
-    implementation project(":library:lib-common")
 }

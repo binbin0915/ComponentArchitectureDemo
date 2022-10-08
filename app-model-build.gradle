@@ -87,4 +87,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-service:2.4.1'
+
+    //组件包
+    implementation project(":library:lib-widget")
+    //公共基础包
+    implementation project(":library:lib-common")
 }

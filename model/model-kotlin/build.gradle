@@ -20,11 +20,6 @@ dependencies {
     implementation 'com.github.kingideayou:MarkwonCodeEx:1.0.0'
     //ARCore
     implementation 'com.google.ar:core:1.31.0'
-
-    //组件包
-    implementation project(":library:lib-widget")
-    //公共基础包
-    implementation project(":library:lib-common")
     implementation project(path: ':library:lib-permission')
     implementation project(path: ':library:lib-file')
 }

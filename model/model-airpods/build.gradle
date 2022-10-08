@@ -13,8 +13,5 @@ android {
     resourcePrefix "airpods_"
 }
 dependencies {
-    //组件包
-    implementation project(":library:lib-widget")
-    //公共基础包
-    implementation project(":library:lib-common")
+
 }
