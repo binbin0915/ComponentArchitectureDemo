@@ -4,13 +4,6 @@ plugins {
 apply from: rootProject.file('app-model-build.gradle')
 
 android {
-    compileSdk BuildConfig.compileSdk
-    defaultConfig {
-        minSdk BuildConfig.minSdk
-        targetSdk BuildConfig.targetSdk
-        versionCode BuildConfig.versionCode
-        versionName BuildConfig.versionName
-    }
     defaultConfig {
         if (isRunModel.toBoolean()) {
             applicationId "com.model.airpods"
@@ -26,9 +19,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     //KTX
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-service:2.4.1'
     //组件包
     implementation project(":library:lib-widget")

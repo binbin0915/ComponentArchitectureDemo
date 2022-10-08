@@ -17,7 +17,7 @@ object AndroidX {
 
     const val legacySupportV4 = "androidx.legacy:legacy-support-v4:1.0.0"
 
-    const val coreKtx = "androidx.core:core-ktx:1.7.0"
+    const val coreKtx = "androidx.core:core-ktx:1.9.0"
     const val activityKtx = "androidx.activity:activity-ktx:1.2.0-alpha04"
 
     const val multidex = "androidx.multidex:multidex:2.0.1"
