@@ -1,15 +1,7 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'com.wangkai.version'
-}
+apply from: rootProject.file('app-library-build.gradle')
 /**
  * 日志系统
  * */
-android {
-    compileSdk BuildConfig.compileSdk
-}
-
 dependencies {
     def acraVersion = '5.9.6'
     api "ch.acra:acra-http:$acraVersion"

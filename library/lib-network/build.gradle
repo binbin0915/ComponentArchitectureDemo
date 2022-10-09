@@ -1,19 +1,10 @@
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id "kotlin-parcelize"
-    //kotlin替代注解
-    id "kotlin-kapt"
     id 'com.wangkai.version'
 }
-
+apply from: rootProject.file('app-library-build.gradle')
 /**
  * 网络系统
  * */
-android {
-    compileSdk BuildConfig.compileSdk
-}
-
 dependencies {
     //阿里云oss
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.12'

@@ -1,17 +1,4 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'com.wangkai.version'
-}
-
-android {
-    compileSdk BuildConfig.compileSdk
-    defaultConfig {
-        minSdk BuildConfig.minSdk
-        targetSdk BuildConfig.targetSdk
-    }
-}
-
+apply from: rootProject.file('app-library-build.gradle')
 dependencies {
     implementation 'androidx.core:core:1.9.0'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'

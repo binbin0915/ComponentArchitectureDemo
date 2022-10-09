@@ -1,28 +1,4 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'com.wangkai.version'
-}
-
-android {
-    compileSdk BuildConfig.compileSdk
-    defaultConfig {
-        minSdk BuildConfig.minSdk
-        targetSdk BuildConfig.targetSdk
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = '11'
-    }
-
-    viewBinding {
-        enabled = true
-    }
-}
+apply from: rootProject.file('app-library-build.gradle')
 //ARouter 配置
 kapt {
     arguments {
@@ -33,18 +9,18 @@ kapt {
  * 基础的MVVM架构封装*/
 dependencies {
     //MVVM主体框架 -- 依赖不对外开放
-    implementation AndroidX.coreKtx
-    implementation AndroidX.appcompat
-    implementation Google.material
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:latest.release'
+    implementation 'com.google.android.material:material:latest.release'
     //协程支持
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     //DataStore
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
     implementation 'androidx.datastore:datastore-preferences-core:1.0.0'
     //相关 ktx 拓展
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'    //Lifecycle 扩展库
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'    //Lifecycle 扩展库
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'    //livedata扩展库
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'    //viewModel扩展库
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'    //viewModel扩展库
     //UI 组件库
     implementation project(":library:lib-widget")
     //状态栏和单行蓝

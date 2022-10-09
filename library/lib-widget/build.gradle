@@ -1,34 +1,17 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'com.wangkai.version'
-}
+apply from: rootProject.file('app-library-build.gradle')
 /**
  * 常用组件的封装，或直接引入其他第三方库做统一依赖管理
  * */
-android {
-    compileSdk BuildConfig.compileSdk
-    defaultConfig {
-        minSdk BuildConfig.minSdk
-        targetSdk BuildConfig.targetSdk
-    }
-    buildFeatures {
-        viewBinding true
-    }
-}
-
 dependencies {
     //kotlin反射
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'
     //kotlin协程
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
-    //基础KTX拓展
-    implementation AndroidX.coreKtx
-    //AndroidJetpack基础组件
-    implementation AndroidX.appcompat
-    //material组件
-    implementation Google.material
-    //-------------------------------第三方开源库--------------------------------
+
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:latest.release'
+    implementation 'com.google.android.material:material:latest.release'
+    //-------------------------------第三方组件库--------------------------------
     api 'com.github.yinshuai0324:GeneralAppWidget:1.0.2'
     api "com.github.kongzue.DialogX:DialogX:0.0.45"
 }
