@@ -7,6 +7,7 @@ apply from: rootProject.file('app-library-build.gradle')
  * */
 android {
     compileSdk BuildConfig.compileSdk
+    namespace 'com.library.router'
 }
 
 //ARouter 配置

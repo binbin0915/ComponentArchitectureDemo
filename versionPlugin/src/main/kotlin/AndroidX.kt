@@ -10,7 +10,7 @@ object AndroidX {
      * appcompat中默认引入了很多库(比如fragment库、core库、annotation库等)，如果想使用其中某个库的更新版本，可以单独引用
      */
     const val appcompat = "androidx.appcompat:appcompat:latest.release"
-    const val constraintlayout = "androidx.constraintlayout:constraintlayout:1.1.3"
+    const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
     const val cardview = "androidx.cardview:cardview:1.0.0"
     const val recyclerView = "androidx.recyclerview:recyclerview:1.2.0-alpha03"
     const val vectordrawable = "androidx.vectordrawable:vectordrawable:1.1.0"

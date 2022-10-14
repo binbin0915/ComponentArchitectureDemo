@@ -6,7 +6,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:latest.release'
     implementation 'com.google.android.material:material:latest.release'
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     //preference持久化
     api "androidx.preference:preference-ktx:1.2.0"
 
@@ -39,4 +39,8 @@ dependencies {
     api project(":library:lib-router")
     //日志
     api project(":library:lib-logcat")
+}
+
+android {
+    namespace 'com.library.common'
 }

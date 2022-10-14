@@ -8,3 +8,7 @@ dependencies {
     api "ch.acra:acra-mail:$acraVersion"
     api "ch.acra:acra-core:$acraVersion"
 }
+
+android {
+    namespace 'com.library.logcat'
+}

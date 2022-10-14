@@ -2,15 +2,15 @@
 buildscript {
     dependencies {
         //gradle版本
-        classpath "com.android.tools.build:gradle:7.5.1"
+        classpath 'com.android.tools.build:gradle:8.0.0-alpha03'
         // 因为使用的 Kotlin 需要需要添加 Kotlin 插件
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20'
     }
 }
 plugins {
     //Android Gradle 插件版本说明：https://developer.android.google.cn/studio/releases/gradle-plugin?hl=zh-cn
-    id 'com.android.application' version '8.0.0-alpha02' apply false
-    id 'com.android.library' version '8.0.0-alpha02' apply false
+    id 'com.android.application' version '8.0.0-alpha03' apply false
+    id 'com.android.library' version '8.0.0-alpha03' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
 }
 

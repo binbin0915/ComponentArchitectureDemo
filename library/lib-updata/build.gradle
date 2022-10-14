@@ -10,3 +10,7 @@ dependencies {
     //公共基础包
     implementation project(":library:lib-common")
 }
+
+android {
+    namespace 'com.youjingjiaoyu.upload'
+}
