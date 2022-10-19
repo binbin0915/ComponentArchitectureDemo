@@ -44,3 +44,7 @@ dependencies {
 android {
     namespace 'com.library.common'
 }
+
+android {
+    namespace 'com.library.common'
+}
