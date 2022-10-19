@@ -49,9 +49,9 @@ class MainApplication : BaseApplication() {
             buildConfigClass = BuildConfig::class.java
             reportFormat = StringFormat.JSON
             httpSender {
-                uri = "http://39.106.144.234:8080/report"
-                basicAuthLogin = "f7qaphJvkbCl4ORq"
-                basicAuthPassword = "7ZQO1cHT9hZAQMCs"
+                uri = App.ACRA_HTTP
+                basicAuthLogin = App.ACRA_AuthLogin
+                basicAuthPassword = App.ACRA_AuthPassword
                 httpMethod = HttpSender.Method.POST
             }
         }
