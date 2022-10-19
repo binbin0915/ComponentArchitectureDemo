@@ -154,7 +154,7 @@ class MainApplication : BaseApplication() {
         params["channel"] = "beisu100"
         params["cv"] = "1"
         val updateConfig = UpdateConfig(
-            baseUrl = "https://ceshi.new.beisu100.com/api/downapk/getapkinfo",
+            baseUrl = App.Update_URL,
             requestHeaders = headers,
             requestParams = params,
             modelClass = UpdateModel(),
