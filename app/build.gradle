@@ -8,15 +8,15 @@ plugins {
 
 android {
     namespace 'com.wangkai.myapplication'
-    compileSdk BuildConfig.compileSdk
+    compileSdk 33
     /*默认配置*/
     defaultConfig {
         applicationId "com.wangkai.myapplication"
-        minSdk BuildConfig.minSdk
-        targetSdk BuildConfig.targetSdk
-        versionCode BuildConfig.versionCode
-        versionName BuildConfig.versionName
-        testInstrumentationRunner BuildConfig.testInstrumentationRunner
+        minSdk 21
+        targetSdk 33
+        versionCode 2
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //统一资源前缀，规范资源引用
         resourcePrefix "app_"
         ndk {
@@ -80,7 +80,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //主题包
-    implementation Google.material
+    implementation 'com.google.android.material:material:latest.release'
     //公共基础包
     implementation project(":library:lib-common")
     implementation project(":library:lib-updata")

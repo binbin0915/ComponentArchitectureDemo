@@ -1,12 +1,11 @@
 plugins {
-    id 'com.wangkai.version'
 }
 apply from: rootProject.file('app-library-build.gradle')
 /**
  * 基础路由系统，建立模块之间连接
  * */
 android {
-    compileSdk BuildConfig.compileSdk
+    compileSdk 33
     namespace 'com.library.router'
 }
 

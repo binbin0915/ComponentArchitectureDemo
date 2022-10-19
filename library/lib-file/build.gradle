@@ -1,5 +1,4 @@
 plugins {
-    id 'com.wangkai.version'
 }
 apply from: rootProject.file('app-library-build.gradle')
 /**

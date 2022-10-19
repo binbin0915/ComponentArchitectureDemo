@@ -2,8 +2,8 @@ apply from: rootProject.file('app-library-build.gradle')
 dependencies {
     implementation 'androidx.core:core:1.9.0'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.appcompat:appcompat:latest.release'
+    implementation 'com.google.android.material:material:latest.release'
     //文件下载
     api 'com.liulishuo.filedownloader:library:1.7.6'
     implementation 'androidx.core:core-ktx:1.9.0'
