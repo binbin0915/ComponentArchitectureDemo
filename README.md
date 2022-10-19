@@ -21,10 +21,10 @@ https://blog.didispace.com
 
 ## 运行环境
 
-[AndroidStudio dolphin | 2021.3.1 Canary3]  
-[支持的Android版本:minSdk 21 targetSdk 32]  
+[AndroidStudio dolphin | 2022.2.1 Canary 3]  
+[支持的Android版本:minSdk 21 targetSdk 33]  
 [JDK版本：OPENJDK 11]  
-[Gradle版本：7.4-bin]
+[Gradle版本：8.0.0-alpha03]
 
 <font color=Blue>Test</font>
 
