@@ -1,4 +1,4 @@
-package com.wangkai.test2
+package com.wangkai.myapplication
 
 class App {
     companion object {
