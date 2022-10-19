@@ -21,8 +21,10 @@ import com.youjingjiaoyu.upload.model.UpdateConfig
 import com.youjingjiaoyu.upload.utils.AppUpdateUtils
 import com.youjingjiaoyu.upload.utils.LogUtils
 import org.acra.ACRA
+import org.acra.config.httpSender
 import org.acra.data.StringFormat
 import org.acra.ktx.initAcra
+import org.acra.sender.HttpSender
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -46,6 +48,12 @@ class MainApplication : BaseApplication() {
             //core configuration:
             buildConfigClass = BuildConfig::class.java
             reportFormat = StringFormat.JSON
+            httpSender {
+                uri = "http://39.106.144.234:8080/report"
+                basicAuthLogin = "f7qaphJvkbCl4ORq"
+                basicAuthPassword = "7ZQO1cHT9hZAQMCs"
+                httpMethod = HttpSender.Method.POST
+            }
         }
 
         //以下部分详细介绍了崩溃报告的可能目标：服务器后端、电子邮件或您可以想象的任何其他目标（如果您实现发件人）。您甚至可以将报告发送到多个目标位置。
