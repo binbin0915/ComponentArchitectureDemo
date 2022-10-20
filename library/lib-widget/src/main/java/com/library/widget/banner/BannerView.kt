@@ -21,7 +21,7 @@ import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
 import com.library.widget.R
 import com.library.widget.banner.ext.dp
-import com.library.widget.databinding.ItemBannerImageBinding
+import com.library.widget.databinding.WidgetItemBannerImageBinding
 import kotlinx.coroutines.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.functions
@@ -33,7 +33,7 @@ class BannerView @JvmOverloads constructor(
     //指示器属性
     private var showIndicator = true
     private var indicatorBackground: Drawable = ColorDrawable(Color.TRANSPARENT)
-    private var indicatorDrawableResId = R.drawable.selector_banner_indicator
+    private var indicatorDrawableResId = R.drawable.widget_selector_banner_indicator
     private var indicatorHeight = 44.dp.toInt()
     private var indicatorSpacing = 16.dp.toInt()
     private var indicatorGravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
@@ -134,7 +134,7 @@ class BannerView @JvmOverloads constructor(
     }
 
     private fun initCustomAttrs(context: Context, attrs: AttributeSet) {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BannerView)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.Widget_BannerView)
         val count = typedArray.indexCount
         for (i in 0 until count) {
             initCustomAttr(typedArray.getIndex(i), typedArray)
@@ -144,121 +144,157 @@ class BannerView @JvmOverloads constructor(
 
     private fun initCustomAttr(attr: Int, typedArray: TypedArray) {
         when (attr) {
-            R.styleable.BannerView_showIndicator -> {
+            R.styleable.Widget_BannerView_widget_showIndicator -> {
                 showIndicator = typedArray.getBoolean(attr, showIndicator)
             }
-            R.styleable.BannerView_indicatorBackground -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorBackground -> {
                 indicatorBackground = typedArray.getDrawable(attr)!!
             }
-            R.styleable.BannerView_indicatorDrawable -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorDrawable -> {
                 indicatorDrawableResId = typedArray.getResourceId(attr, indicatorDrawableResId)
             }
-            R.styleable.BannerView_indicatorHeight -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorHeight -> {
                 indicatorHeight = typedArray.getDimensionPixelSize(attr, indicatorHeight)
             }
-            R.styleable.BannerView_indicatorSpacing -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorSpacing -> {
                 indicatorSpacing = typedArray.getDimensionPixelSize(attr, indicatorSpacing)
             }
-            R.styleable.BannerView_indicatorGravity -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorGravity -> {
                 indicatorGravity = typedArray.getInt(attr, indicatorGravity)
             }
-            R.styleable.BannerView_indicatorPaddingStart -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorPaddingStart -> {
                 indicatorPaddingStart =
                     typedArray.getDimensionPixelSize(attr, indicatorPaddingStart)
             }
-            R.styleable.BannerView_indicatorPaddingEnd -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorPaddingEnd -> {
                 indicatorPaddingEnd = typedArray.getDimensionPixelSize(attr, indicatorPaddingEnd)
             }
-            R.styleable.BannerView_indicatorMarginStart -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorMarginStart -> {
                 indicatorMarginStart = typedArray.getDimensionPixelSize(attr, indicatorMarginStart)
             }
-            R.styleable.BannerView_indicatorMarginEnd -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorMarginEnd -> {
                 indicatorMarginEnd = typedArray.getDimensionPixelSize(attr, indicatorMarginEnd)
             }
-            R.styleable.BannerView_indicatorMarginTop -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorMarginTop -> {
                 indicatorMarginTop = typedArray.getDimensionPixelSize(attr, indicatorMarginTop)
             }
-            R.styleable.BannerView_indicatorMarginBottom -> {
+
+            R.styleable.Widget_BannerView_widget_indicatorMarginBottom -> {
                 indicatorMarginBottom =
                     typedArray.getDimensionPixelSize(attr, indicatorMarginBottom)
             }
-            R.styleable.BannerView_isNumberIndicator -> {
+
+            R.styleable.Widget_BannerView_widget_isNumberIndicator -> {
                 isNumberIndicator = typedArray.getBoolean(attr, isNumberIndicator)
             }
-            R.styleable.BannerView_numberIndicatorTextColor -> {
+
+            R.styleable.Widget_BannerView_widget_numberIndicatorTextColor -> {
                 numberIndicatorTextColor = typedArray.getColor(attr, numberIndicatorTextColor)
             }
-            R.styleable.BannerView_numberIndicatorTextSize -> {
+
+            R.styleable.Widget_BannerView_widget_numberIndicatorTextSize -> {
                 numberIndicatorTextSize =
                     typedArray.getDimensionPixelSize(attr, numberIndicatorTextSize)
             }
-            R.styleable.BannerView_autoplay -> {
+
+            R.styleable.Widget_BannerView_widget_autoplay -> {
                 autoplay = typedArray.getBoolean(attr, autoplay)
             }
-            R.styleable.BannerView_loopPlay -> {
+
+            R.styleable.Widget_BannerView_widget_loopPlay -> {
                 loopPlay = typedArray.getBoolean(attr, loopPlay)
             }
-            R.styleable.BannerView_autoplayInterval -> {
+
+            R.styleable.Widget_BannerView_widget_autoplayInterval -> {
                 autoplayInterval = typedArray.getInt(attr, autoplayInterval)
             }
-            R.styleable.BannerView_pageChangeDuration -> {
+
+            R.styleable.Widget_BannerView_widget_pageChangeDuration -> {
                 pageChangeDuration = typedArray.getInt(attr, pageChangeDuration)
             }
-            R.styleable.BannerView_pageLimit -> {
+
+            R.styleable.Widget_BannerView_widget_pageLimit -> {
                 pageLimit = typedArray.getInt(attr, pageLimit)
             }
-            R.styleable.BannerView_pagePaddingTop -> {
+
+            R.styleable.Widget_BannerView_widget_pagePaddingTop -> {
                 pagePaddingTop = typedArray.getDimensionPixelSize(attr, pagePaddingTop)
             }
-            R.styleable.BannerView_pagePaddingBottom -> {
+
+            R.styleable.Widget_BannerView_widget_pagePaddingBottom -> {
                 pagePaddingBottom = typedArray.getDimensionPixelSize(attr, pagePaddingBottom)
             }
-            R.styleable.BannerView_pagePaddingStart -> {
+
+            R.styleable.Widget_BannerView_widget_pagePaddingStart -> {
                 pagePaddingStart = typedArray.getDimensionPixelSize(attr, pagePaddingStart)
             }
-            R.styleable.BannerView_pagePaddingEnd -> {
+
+            R.styleable.Widget_BannerView_widget_pagePaddingEnd -> {
                 pagePaddingEnd = typedArray.getDimensionPixelSize(attr, pagePaddingEnd)
             }
-            R.styleable.BannerView_showDisplayText -> {
+
+            R.styleable.Widget_BannerView_widget_showDisplayText -> {
                 showDisplayText = typedArray.getBoolean(attr, showDisplayText)
             }
-            R.styleable.BannerView_displayTextColor -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextColor -> {
                 displayTextColor = typedArray.getColor(attr, displayTextColor)
             }
-            R.styleable.BannerView_displayTextSize -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextSize -> {
                 displayTextSize = typedArray.getDimensionPixelSize(attr, displayTextSize)
             }
-            R.styleable.BannerView_displayTextLines -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextLines -> {
                 displayTextLines = typedArray.getInt(attr, displayTextLines)
             }
-            R.styleable.BannerView_displayTextStyle -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextStyle -> {
                 displayTextStyle = typedArray.getInt(attr, displayTextStyle)
             }
-            R.styleable.BannerView_displayTextBackground -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextBackground -> {
                 displayTextBackground = typedArray.getDrawable(attr)!!
             }
-            R.styleable.BannerView_displayTextBgHeight -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextBgHeight -> {
                 displayTextBgHeight = typedArray.getDimensionPixelSize(attr, displayTextBgHeight)
             }
-            R.styleable.BannerView_displayTextMarginTop -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextMarginTop -> {
                 displayTextMarginTop = typedArray.getDimensionPixelSize(attr, displayTextMarginTop)
             }
-            R.styleable.BannerView_displayTextMarginBottom -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextMarginBottom -> {
                 displayTextMarginBottom =
                     typedArray.getDimensionPixelSize(attr, displayTextMarginBottom)
             }
-            R.styleable.BannerView_displayTextPaddingStart -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextPaddingStart -> {
                 displayTextPaddingStart =
                     typedArray.getDimensionPixelSize(attr, displayTextPaddingStart)
             }
-            R.styleable.BannerView_displayTextPaddingEnd -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextPaddingEnd -> {
                 displayTextPaddingEnd =
                     typedArray.getDimensionPixelSize(attr, displayTextPaddingEnd)
             }
-            R.styleable.BannerView_displayTextGravity -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextGravity -> {
                 displayTextGravity = typedArray.getInt(attr, displayTextGravity)
             }
-            R.styleable.BannerView_displayTextLayoutGravity -> {
+
+            R.styleable.Widget_BannerView_widget_displayTextLayoutGravity -> {
                 displayTextLayoutGravity = typedArray.getInt(attr, displayTextLayoutGravity)
             }
         }
@@ -303,9 +339,9 @@ class BannerView @JvmOverloads constructor(
     fun <M> setData(
         dataList: List<M>,
         displayTextList: List<String>? = null,
-        bind: (ItemBannerImageBinding, M) -> Unit
+        bind: (WidgetItemBannerImageBinding, M) -> Unit
     ) {
-        setData(dataList, displayTextList, ItemBannerImageBinding::class, bind)
+        setData(dataList, displayTextList, WidgetItemBannerImageBinding::class, bind)
     }
 
     private fun <VB : ViewBinding, M> setData(
@@ -349,6 +385,7 @@ class BannerView @JvmOverloads constructor(
                     dataSize - 1 -> {
                         indicatorLp.setMargins(0, 0, 0, 0)
                     }
+
                     else -> {
                         indicatorLp.setMargins(0, 0, indicatorSpacing, 0)
                     }
@@ -372,7 +409,7 @@ class BannerView @JvmOverloads constructor(
             val realPosition = position % dataSize
             if (isNumberIndicator) {
                 numberTv.text = String.format(
-                    context.getString(R.string.number_tv), (realPosition + 1), dataSize
+                    context.getString(R.string.widget_number_tv), (realPosition + 1), dataSize
                 )
             } else {
                 indicatorParent.children.forEachIndexed { index, child ->
@@ -431,14 +468,17 @@ class BannerView @JvmOverloads constructor(
                 MotionEvent.ACTION_DOWN -> {
                     stopAutoplay()
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     //防止滑动冲突
                     requestDisallowInterceptTouchEvent(true)
                 }
+
                 MotionEvent.ACTION_UP -> {
                     startAutoplay()
                     requestDisallowInterceptTouchEvent(false)
                 }
+
                 MotionEvent.ACTION_CANCEL -> {
                     startAutoplay()
                     requestDisallowInterceptTouchEvent(false)

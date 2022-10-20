@@ -14,6 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:lottie_fileName="anim/anim_splash.json" />
+        app:lottie_fileName="anim/splash_anim_splash.json" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

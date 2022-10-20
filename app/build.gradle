@@ -32,12 +32,12 @@ android {
     productFlavors {
         app {
             applicationId "com.wangkai.myapplication"
-            versionName BuildConfig.versionName
+            versionName "1.0"
             manifestPlaceholders = [app_name: "@string/app_name",]
         }
         app_2 {
             applicationId "com.wangkai.test2"
-            versionName BuildConfig.versionName
+            versionName "1.0"
             manifestPlaceholders = [app_name: "@string/app_name",]
         }
     }
@@ -99,9 +99,10 @@ dependencies {
     kapt("com.google.auto.service:auto-service:1.0.1")
 
     //用于设置主题
-    implementation AndroidX.appcompat
-    implementation project(path: ':library:lib-file')
+    implementation 'androidx.appcompat:appcompat:latest.release'
+    implementation 'com.google.android.material:material:latest.release'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation project(path: ':library:lib-file')
     if (!isRunModel.toBoolean()) {
         implementation project(":model:model-splash")
         implementation project(":model:model-home")

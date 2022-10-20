@@ -9,7 +9,7 @@
         android:id="@+id/img_error"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:src="@mipmap/state_error" />
+        android:src="@mipmap/widget_state_error" />
 
     <TextView
         android:id="@+id/tv_error_msg"
@@ -21,4 +21,11 @@
         android:text="出错了"
         android:textColor="@android:color/darker_gray" />
 
+    <Button
+        android:id="@+id/retryBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="点击重试"
+        android:textColor="@android:color/primary_text_light" />
 </LinearLayout>

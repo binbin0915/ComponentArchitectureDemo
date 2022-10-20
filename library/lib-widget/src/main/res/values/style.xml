@@ -1,6 +1,6 @@
 <resources>
     <!--位于中间dialog的风格-->
-    <style name="DialogCentre">
+    <style name="Widget_DialogCentre">
         <!--设置dialog的背景-->
         <item name="android:windowBackground">@android:color/transparent</item>
         <!--设置Dialog的windowFrame框为无-->
@@ -20,7 +20,7 @@
     </style>
 
     <!--位于底部dialog的风格-->
-    <style name="DialogBottom" parent="@android:style/Theme.Dialog">
+    <style name="Widget_DialogBottom" parent="@android:style/Theme.Dialog">
         <!-- 背景透明 -->
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -38,16 +38,16 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
 
         <!-- Dialog进入及退出动画 -->
-        <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimation</item>
+        <item name="android:windowAnimationStyle">@style/Widget_ActionSheetDialogAnimation</item>
     </style>
 
     <!-- ActionSheet进出动画 -->
-    <style name="ActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
-        <item name="android:windowEnterAnimation">@anim/action_dialog_in</item>
-        <item name="android:windowExitAnimation">@anim/action_dialog_out</item>
+    <style name="Widget_ActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/widget_action_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/widget_action_dialog_out</item>
     </style>
 
-    <style name="ConfirmDialog" parent="android:Theme.Dialog">
+    <style name="Widget_ConfirmDialog" parent="android:Theme.Dialog">
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -57,7 +57,7 @@
         <item name="android:backgroundDimAmount">0.4</item>
     </style>
 
-    <style name="EditDialog" parent="android:Theme.Dialog">
+    <style name="Widget_EditDialog" parent="android:Theme.Dialog">
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -67,7 +67,7 @@
         <item name="android:backgroundDimAmount">0.4</item>
     </style>
 
-    <style name="BottomDialog" parent="android:Theme.Dialog">
+    <style name="Widget_BottomDialog" parent="android:Theme.Dialog">
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -77,7 +77,7 @@
         <item name="android:backgroundDimAmount">0.4</item>
     </style>
 
-    <style name="LoadingDialog" parent="@android:style/Theme.Dialog">
+    <style name="Widget_LoadingDialog" parent="@android:style/Theme.Dialog">
         <!--去掉Dialog的windowFrame框-->
         <item name="android:windowFrame">@null</item>
         <!--浮在activity之上-->

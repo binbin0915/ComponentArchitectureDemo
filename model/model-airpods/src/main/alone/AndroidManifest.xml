@@ -8,6 +8,6 @@
         android:label="@string/airpods_app_name"
         android:roundIcon="@mipmap/airpods_ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AirpodsTheme.MyApplication" />
+        android:theme="@style/CommonTheme.BaseApplication" />
 
 </manifest>

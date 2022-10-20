@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="MIDrawerView">
+    <declare-styleable name="Widget_MIDrawerView">
         <eat-comment />
-        <attr name="sliderType">
+        <attr name="widget_sliderType">
             <enum name="scroll" value="1"/>
             <enum name="doorIn" value="2"/>
             <enum name="doorOut" value="3"/>
@@ -11,19 +11,19 @@
     </declare-styleable>
 
     <!-- BannerView -->
-    <declare-styleable name="BannerView">
+    <declare-styleable name="Widget_BannerView">
         <!-- 是否显示指示器 -->
-        <attr name="showIndicator" format="boolean" />
+        <attr name="widget_showIndicator" format="boolean" />
         <!-- 指示器背景 -->
-        <attr name="indicatorBackground" format="reference|color" />
+        <attr name="widget_indicatorBackground" format="reference|color" />
         <!-- 指示器 -->
-        <attr name="indicatorDrawable" format="reference" />
+        <attr name="widget_indicatorDrawable" format="reference" />
         <!-- 指示器高度 -->
-        <attr name="indicatorHeight" format="dimension" />
+        <attr name="widget_indicatorHeight" format="dimension" />
         <!-- 指示器间距 -->
-        <attr name="indicatorSpacing" format="dimension" />
+        <attr name="widget_indicatorSpacing" format="dimension" />
         <!-- 指示器的位置 -->
-        <attr name="indicatorGravity" format="integer">
+        <attr name="widget_indicatorGravity" format="integer">
             <flag name="top" value="0x30" />
             <flag name="bottom" value="0x50" />
             <flag name="left" value="0x03" />
@@ -31,73 +31,73 @@
             <flag name="center_horizontal" value="0x01" />
         </attr>
         <!-- 指示器左内边距 -->
-        <attr name="indicatorPaddingStart" format="dimension" />
+        <attr name="widget_indicatorPaddingStart" format="dimension" />
         <!-- 指示器右内边距 -->
-        <attr name="indicatorPaddingEnd" format="dimension" />
+        <attr name="widget_indicatorPaddingEnd" format="dimension" />
         <!-- 指示器左外边距 -->
-        <attr name="indicatorMarginStart" format="dimension" />
+        <attr name="widget_indicatorMarginStart" format="dimension" />
         <!-- 指示器右外边距 -->
-        <attr name="indicatorMarginEnd" format="dimension" />
+        <attr name="widget_indicatorMarginEnd" format="dimension" />
         <!-- 指示器上外边距 -->
-        <attr name="indicatorMarginTop" format="dimension" />
+        <attr name="widget_indicatorMarginTop" format="dimension" />
         <!-- 指示器下外边距 -->
-        <attr name="indicatorMarginBottom" format="dimension" />
+        <attr name="widget_indicatorMarginBottom" format="dimension" />
 
         <!-- 是否是数字指示器 -->
-        <attr name="isNumberIndicator" format="boolean" />
+        <attr name="widget_isNumberIndicator" format="boolean" />
         <!-- 数字指示器文字颜色 -->
-        <attr name="numberIndicatorTextColor" format="reference|color" />
+        <attr name="widget_numberIndicatorTextColor" format="reference|color" />
         <!-- 数字指示器文字大小 -->
-        <attr name="numberIndicatorTextSize" format="dimension" />
+        <attr name="widget_numberIndicatorTextSize" format="dimension" />
 
         <!-- 是否开启自动轮播 -->
-        <attr name="autoplay" format="boolean" />
+        <attr name="widget_autoplay" format="boolean" />
         <!-- 是否开启循环播放 -->
-        <attr name="loopPlay" format="boolean" />
+        <attr name="widget_loopPlay" format="boolean" />
         <!-- 自动轮播的时间间隔 -->
-        <attr name="autoplayInterval" format="integer" />
+        <attr name="widget_autoplayInterval" format="integer" />
         <!-- 页码切换过程的时间长度 -->
-        <attr name="pageChangeDuration" format="integer" />
-        <attr name="pageLimit" format="integer" />
+        <attr name="widget_pageChangeDuration" format="integer" />
+        <attr name="widget_pageLimit" format="integer" />
         <!-- 页面区域距离 BannerView 顶部的距离 -->
-        <attr name="pagePaddingTop" format="dimension" />
+        <attr name="widget_pagePaddingTop" format="dimension" />
         <!-- 页面区域距离 BannerView 底部的距离 -->
-        <attr name="pagePaddingBottom" format="dimension" />
+        <attr name="widget_pagePaddingBottom" format="dimension" />
         <!-- 页面区域距离 BannerView 左边的距离 -->
-        <attr name="pagePaddingStart" format="dimension" />
+        <attr name="widget_pagePaddingStart" format="dimension" />
         <!-- 页面区域距离 BannerView 右边 的距离 -->
-        <attr name="pagePaddingEnd" format="dimension" />
+        <attr name="widget_pagePaddingEnd" format="dimension" />
 
         <!-- 是否显示文本 -->
-        <attr name="showDisplayText" format="boolean" />
+        <attr name="widget_showDisplayText" format="boolean" />
         <!-- 文本颜色 -->
-        <attr name="displayTextColor" format="reference|color" />
+        <attr name="widget_displayTextColor" format="reference|color" />
         <!-- 文本大小 -->
-        <attr name="displayTextSize" format="dimension" />
+        <attr name="widget_displayTextSize" format="dimension" />
         <!-- 文本最多显示行数 -->
-        <attr name="displayTextLines" format="integer" />
+        <attr name="widget_displayTextLines" format="integer" />
         <!-- 文本style Default text typeface style. -->
-        <attr name="displayTextStyle"  format="integer">
+        <attr name="widget_displayTextStyle"  format="integer">
             <flag name="normal" value="0" />
             <flag name="bold" value="1" />
             <flag name="italic" value="2" />
         </attr>
         <!-- 文本背景 -->
-        <attr name="displayTextBackground" format="reference|color" />
+        <attr name="widget_displayTextBackground" format="reference|color" />
         <!-- 文本背景高度 -->
-        <attr name="displayTextBgHeight" format="dimension" />
-        <attr name="displayTextMarginTop" format="dimension" />
-        <attr name="displayTextMarginBottom" format="dimension" />
-        <attr name="displayTextPaddingStart" format="dimension" />
-        <attr name="displayTextPaddingEnd" format="dimension" />
+        <attr name="widget_displayTextBgHeight" format="dimension" />
+        <attr name="widget_displayTextMarginTop" format="dimension" />
+        <attr name="widget_displayTextMarginBottom" format="dimension" />
+        <attr name="widget_displayTextPaddingStart" format="dimension" />
+        <attr name="widget_displayTextPaddingEnd" format="dimension" />
         <!-- 文本相对于父布局的位置 -->
-        <attr name="displayTextLayoutGravity" format="integer">
+        <attr name="widget_displayTextLayoutGravity" format="integer">
             <flag name="top" value="0x30" />
             <flag name="bottom" value="0x50" />
             <flag name="center_vertical" value="0x10" />
         </attr>
         <!-- 文本内部的位置 -->
-        <attr name="displayTextGravity" format="integer">
+        <attr name="widget_displayTextGravity" format="integer">
             <flag name="left" value="0x03" />
             <flag name="right" value="0x05" />
             <flag name="center_horizontal" value="0x01" />

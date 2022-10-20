@@ -130,9 +130,9 @@ class MainApplication : BaseApplication() {
         StateConfig.apply {
             // 推荐在Application中进行全局配置缺省页, 当然同样每个页面可以单独指定缺省页.
             // 具体查看 https://github.com/liangjingkanji/StateLayout
-            emptyLayout = com.library.widget.R.layout.mult_state_empty_retry
-            errorLayout = com.library.widget.R.layout.mult_network_state_error
-            loadingLayout = com.library.widget.R.layout.mult_state_loading
+            emptyLayout = com.library.widget.R.layout.widget_mult_state_empty_retry
+            errorLayout = com.library.widget.R.layout.widget_mult_network_state_error
+            loadingLayout = com.library.widget.R.layout.widget_mult_state_loading
             setRetryIds(com.library.widget.R.id.retryBtn)
             onLoading {
                 // 此生命周期可以拿到LoadingLayout创建的视图对象, 可以进行动画设置或点击事件.

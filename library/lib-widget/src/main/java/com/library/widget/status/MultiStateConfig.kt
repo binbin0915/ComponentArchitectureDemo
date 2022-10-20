@@ -14,12 +14,12 @@ data class MultiStateConfig(
     val errorMsg: String = "哎呀,出错了",
     val networkErrorMsg: String = "网络异常",
     @DrawableRes
-    val networkErrorIcon: Int = R.mipmap.state_error,
+    val networkErrorIcon: Int = R.mipmap.widget_state_error,
     @DrawableRes
-    val errorIcon: Int = R.mipmap.state_error,
+    val errorIcon: Int = R.mipmap.widget_state_error,
     val emptyMsg: String = "这里什么都没有",
     @DrawableRes
-    val emptyIcon: Int = R.mipmap.state_empty,
+    val emptyIcon: Int = R.mipmap.widget_state_empty,
     val loadingMsg: String = "正在加载中...",
     var alphaDuration: Long = 500
 ) {
@@ -28,11 +28,11 @@ data class MultiStateConfig(
         private var errorMsg: String = "哎呀,出错了"
 
         @DrawableRes
-        private var errorIcon: Int = R.mipmap.state_error
+        private var errorIcon: Int = R.mipmap.widget_state_error
         private var emptyMsg: String = "这里什么都没有"
 
         @DrawableRes
-        private var emptyIcon: Int = R.mipmap.state_empty
+        private var emptyIcon: Int = R.mipmap.widget_state_empty
         private var loadingMsg: String = "正在加载中..."
         private var alphaDuration: Long = 500
 

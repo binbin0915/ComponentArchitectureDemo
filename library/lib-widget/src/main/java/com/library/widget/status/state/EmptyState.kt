@@ -27,7 +27,7 @@ class EmptyState : MultiState() {
         inflater: LayoutInflater,
         container: MultiStateContainer
     ): View {
-        return inflater.inflate(R.layout.mult_state_empty, container, false)
+        return inflater.inflate(R.layout.widget_mult_state_empty, container, false)
     }
 
     override fun onMultiStateViewCreate(view: View) {

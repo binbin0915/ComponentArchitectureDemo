@@ -32,7 +32,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/home_app_name"
                 android:scaleType="fitXY"
-                android:src="@drawable/pic_me1"
+                android:src="@drawable/home_pic_me1"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.5" />
 
