@@ -1,4 +1,4 @@
-package com.model.center.activity.compose.ui.theme
+package com.wangkai.compose.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

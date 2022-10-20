@@ -1,0 +1,19 @@
+apply from: rootProject.file('app-model-build.gradle')
+
+android {
+    namespace 'com.wangkai.compose'
+    defaultConfig {
+        if (isRunModel.toBoolean()) {
+            applicationId "com.wangkai.compose"
+        }
+    }
+    buildFeatures {
+        compose true
+    }
+    //统一资源前缀，规范资源引用
+    resourcePrefix "compose_"
+}
+
+dependencies {
+
+}

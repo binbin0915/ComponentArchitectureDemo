@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.model.center">
+    package="com.wangkai.compose">
 
     <application
         android:name="com.library.base.application.DebugApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/center_app_name"
+        android:label="@string/compose_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/CenterTheme.MyApplication">
-        <activity android:name=".activity.CenterMainActivity"
+        android:theme="@style/Compose_Theme.MyApplication">
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

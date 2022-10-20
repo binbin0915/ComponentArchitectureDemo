@@ -3,15 +3,6 @@
 
     <application>
         <activity
-            android:name=".activity.compose.MainComposeActivity"
-            android:exported="false"
-            android:label="@string/center_title_activity_main_compose"
-            android:theme="@style/CenterTheme.MyApplication">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activity.CenterMainActivity"
             android:exported="false" />
     </application>
