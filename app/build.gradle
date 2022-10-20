@@ -64,6 +64,10 @@ android {
             productFlavors.app.signingConfig signingConfigs.app
             productFlavors.app_2.signingConfig signingConfigs.app_2
         }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
     /*编译选项*/
     compileOptions {
@@ -110,5 +114,6 @@ dependencies {
         implementation project(":model:model-kotlin")
         implementation project(":model:model-airpods")
         implementation project(":model:model-center")
+        implementation project(":model:model-compose")
     }
 }
