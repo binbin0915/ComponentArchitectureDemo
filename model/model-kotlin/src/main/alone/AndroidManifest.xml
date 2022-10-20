@@ -4,7 +4,7 @@
 
     <application
         android:name="com.library.base.application.DebugApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/mykotlin_ic_launcher"
         android:label="@string/mykotlin_app_name"
         android:roundIcon="@mipmap/mykotlin_ic_launcher_round"

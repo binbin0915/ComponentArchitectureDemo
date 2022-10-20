@@ -4,7 +4,7 @@
 
     <application
         android:name="com.library.base.application.DebugApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/center_ic_launcher"
         android:label="@string/center_app_name"
         android:roundIcon="@mipmap/center_ic_launcher_round"
