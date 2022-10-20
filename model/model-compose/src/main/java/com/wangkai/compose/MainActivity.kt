@@ -1,4 +1,4 @@
-package com.model.center.activity.compose
+package com.wangkai.compose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,13 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.model.center.activity.compose.ui.theme.MyApplicationTheme
+import com.wangkai.compose.ui.layout.Greeting
+import com.wangkai.compose.ui.theme.MyApplicationTheme
 
-class MainComposeActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -26,21 +24,5 @@ class MainComposeActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-/**
- * 预览函数
- */
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        Greeting("Android")
     }
 }
