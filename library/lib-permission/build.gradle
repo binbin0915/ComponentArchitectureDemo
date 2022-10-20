@@ -1,13 +1,11 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-}
+apply from: rootProject.file('app-library-build.gradle')
 /**
  * 权限系统和系统跳转操作的封装
  * */
 android {
     namespace 'com.library.lib_activityresult'
-    compileSdk 33
+    //统一资源前缀，规范资源引用
+    resourcePrefix "activityresult_"
 }
 
 dependencies {

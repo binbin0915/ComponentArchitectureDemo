@@ -2,10 +2,11 @@ apply from: rootProject.file('app-library-build.gradle')
 /**
  * 日志系统
  * */
-dependencies {
-
-}
-
 android {
     namespace 'com.library.logcat'
+    //统一资源前缀，规范资源引用
+    resourcePrefix "logcat_"
+}
+dependencies {
+
 }

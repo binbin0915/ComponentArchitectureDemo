@@ -1,4 +1,10 @@
 apply from: rootProject.file('app-library-build.gradle')
+
+android {
+    namespace 'com.youjingjiaoyu.upload'
+    //统一资源前缀，规范资源引用
+    resourcePrefix "upload_"
+}
 dependencies {
     implementation 'androidx.core:core:1.9.0'
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
@@ -9,12 +15,4 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     //公共基础包
     implementation project(":library:lib-common")
-}
-
-android {
-    namespace 'com.youjingjiaoyu.upload'
-}
-
-android {
-    namespace 'com.youjingjiaoyu.upload'
 }

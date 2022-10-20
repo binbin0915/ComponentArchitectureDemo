@@ -6,6 +6,8 @@ apply from: rootProject.file('app-library-build.gradle')
  * */
 android {
     namespace 'ando.file'
+    //统一资源前缀，规范资源引用
+    resourcePrefix "file_"
 }
 
 dependencies {

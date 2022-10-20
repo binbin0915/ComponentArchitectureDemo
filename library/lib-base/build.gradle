@@ -1,12 +1,17 @@
 apply from: rootProject.file('app-library-build.gradle')
+/*mvvm基础框架*/
+android {
+    namespace 'com.library.base'
+    //统一资源前缀，规范资源引用
+    resourcePrefix "base_"
+}
 //ARouter 配置
 kapt {
     arguments {
         arg("AROUTER_MODULE_NAME", project.getName())
     }
 }
-/**
- * 基础的MVVM架构封装*/
+
 dependencies {
     //MVVM主体框架 -- 依赖不对外开放
     implementation 'androidx.core:core-ktx:1.9.0'
@@ -33,12 +38,4 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-v4'
     }
     kapt 'com.alibaba:arouter-compiler:1.5.2'    //ARouter路由compiler
-}
-
-android {
-    namespace 'com.library.base'
-}
-
-android {
-    namespace 'com.library.base'
 }

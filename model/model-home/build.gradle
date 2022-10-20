@@ -1,6 +1,7 @@
 apply from: rootProject.file('app-model-build.gradle')
 
 android {
+    namespace 'com.model.home'
     defaultConfig {
         if (isRunModel.toBoolean()) {
             applicationId "com.model.home"
@@ -8,7 +9,6 @@ android {
     }
     //统一资源前缀，规范资源引用
     resourcePrefix "home_"
-    namespace 'com.model.home'
 }
 
 dependencies {

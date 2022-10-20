@@ -2,6 +2,11 @@ apply from: rootProject.file('app-library-build.gradle')
 /**
  * 常用组件的封装，或直接引入其他第三方库做统一依赖管理
  * */
+android {
+    namespace 'com.library.widget'
+    //统一资源前缀，规范资源引用
+    resourcePrefix "widget_"
+}
 dependencies {
     //kotlin反射
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'
@@ -14,12 +19,4 @@ dependencies {
     //-------------------------------第三方组件库--------------------------------
     api 'com.github.yinshuai0324:GeneralAppWidget:1.0.2'
     api "com.github.kongzue.DialogX:DialogX:0.0.45"
-}
-
-android {
-    namespace 'com.library.widget'
-}
-
-android {
-    namespace 'com.library.widget'
 }

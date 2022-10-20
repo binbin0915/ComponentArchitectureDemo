@@ -13,7 +13,3 @@ android {
     //统一资源前缀，规范资源引用
     resourcePrefix "compose_"
 }
-
-dependencies {
-
-}

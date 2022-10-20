@@ -1,6 +1,7 @@
 apply from: rootProject.file('app-model-build.gradle')
 
 android {
+    namespace 'com.model.splash'
     defaultConfig {
         if (isRunModel.toBoolean()) {
             applicationId "com.model.splash"
@@ -8,7 +9,6 @@ android {
     }
     //统一资源前缀，规范资源引用
     resourcePrefix "splash_"
-    namespace 'com.model.splash'
 }
 dependencies {
 

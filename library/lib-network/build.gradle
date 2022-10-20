@@ -4,6 +4,11 @@ apply from: rootProject.file('app-library-build.gradle')
 /**
  * 网络系统
  * */
+android {
+    namespace 'com.wangkai.remote'
+    //统一资源前缀，规范资源引用
+    resourcePrefix "remote_"
+}
 dependencies {
     //阿里云oss
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.12'
@@ -17,12 +22,4 @@ dependencies {
         exclude group: 'com.google.code.gson', module: "gson"
     }
     implementation 'com.google.code.gson:gson:2.9.1'
-}
-
-android {
-    namespace 'com.wangkai.remote'
-}
-
-android {
-    namespace 'com.wangkai.remote'
 }

@@ -8,6 +8,8 @@ plugins {
 
 android {
     namespace 'com.wangkai.myapplication'
+    //统一资源前缀，规范资源引用
+    resourcePrefix "app_"
     compileSdk 33
     /*默认配置*/
     defaultConfig {

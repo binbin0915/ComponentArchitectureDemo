@@ -5,8 +5,9 @@ apply from: rootProject.file('app-library-build.gradle')
  * 基础路由系统，建立模块之间连接
  * */
 android {
-    compileSdk 33
     namespace 'com.library.router'
+    //统一资源前缀，规范资源引用
+    resourcePrefix "router_"
 }
 
 //ARouter 配置
