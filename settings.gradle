@@ -60,4 +60,4 @@ include ':model:model-airpods'//airpods弹窗模块
 include ':model:model-center'//个人中心
 include ':model:model-compose'//compose示例
 //依赖管理
-includeBuild("versionPlugin")
+//includeBuild("versionPlugin")
