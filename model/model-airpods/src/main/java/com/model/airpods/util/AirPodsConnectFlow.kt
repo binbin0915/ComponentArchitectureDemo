@@ -11,7 +11,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.annotation.CheckResult
 import androidx.lifecycle.MutableLiveData
-import com.library.logcat.AppLog
+import com.library.logcat.LogU
 import com.model.airpods.model.ConnectionState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -27,7 +27,7 @@ val airPodsConnectionState = MutableLiveData<ConnectionState>()
 @ExperimentalCoroutinesApi
 fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow {
     checkMainThread()
-    AppLog.log(TAG,"注册蓝牙连接状态变化广播....")
+    LogU.log(TAG,"注册蓝牙连接状态变化广播....")
     val filter: IntentFilter = IntentFilter().apply {
         addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
         addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED)
@@ -37,7 +37,7 @@ fun Context.fromBroadCast(): Flow<ConnectionState> = callbackFlow {
     }
     val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            AppLog.log(TAG,"收到了连接状态变化的广播....")
+            LogU.log(TAG,"收到了连接状态变化的广播....")
             val event = intent.parseIntent()
             safeOffer(event)
         }

@@ -1,6 +1,6 @@
 package com.library.common.network.interceptor
 
-import com.library.logcat.AppLog
+import com.library.logcat.LogU
 import com.library.logcat.LogcatLevel
 import com.wangkai.remote.log.HttpLogPrinter
 
@@ -12,18 +12,18 @@ class LoggerHttpLogPrinterImpl : HttpLogPrinter {
         get() = true
 
     override fun printDebugLog(tag: String, content: Any) {
-        AppLog.log(LogcatLevel.DEBUG, tag, content.toString())
+        LogU.log(LogcatLevel.DEBUG, tag, content.toString())
     }
 
     override fun printInfoLog(tag: String, content: Any) {
-        AppLog.log(LogcatLevel.INFO, tag, content.toString())
+        LogU.log(LogcatLevel.INFO, tag, content.toString())
     }
 
     override fun printWarningLog(tag: String, content: Any) {
-        AppLog.log(LogcatLevel.WARN, tag, content.toString())
+        LogU.log(LogcatLevel.WARN, tag, content.toString())
     }
 
     override fun printErrorLog(tag: String, content: Any) {
-        AppLog.log(LogcatLevel.ERROR, tag, content.toString())
+        LogU.log(LogcatLevel.ERROR, tag, content.toString())
     }
 }

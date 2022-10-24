@@ -1,10 +1,9 @@
 package com.model.login.service
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.library.logcat.AppLog
+import com.library.logcat.LogU
 import com.library.router.RouterPath
 import com.library.router.service.LoginService
 
@@ -24,6 +23,6 @@ class LoginServiceImp : LoginService {
 
 
     override fun init(context: Context?) {
-        AppLog.log("LoginServiceImp init")
+        LogU.log("LoginServiceImp init")
     }
 }

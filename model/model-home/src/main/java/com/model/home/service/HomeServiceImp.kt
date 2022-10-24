@@ -2,7 +2,7 @@ package com.model.home.service
 
 import android.content.Context
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.library.logcat.AppLog
+import com.library.logcat.LogU
 import com.library.router.RouterPath
 import com.library.router.service.HomeService
 
@@ -20,6 +20,6 @@ class HomeServiceImp : HomeService {
     }
 
     override fun init(context: Context?) {
-        AppLog.log("HomeServiceImp init")
+        LogU.log("HomeServiceImp init")
     }
 }

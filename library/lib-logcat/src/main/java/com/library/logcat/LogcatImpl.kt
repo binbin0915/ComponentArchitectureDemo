@@ -11,7 +11,7 @@ import android.util.Log
 class LogcatImpl : LogcatService {
 
 
-    fun log(level: LogcatLevel, tag: String? = AppLog.logTag, msg: String?) {
+    fun log(level: LogcatLevel, tag: String? = LogU.logTag, msg: String?) {
         when (level) {
             LogcatLevel.INFO -> logI(tag = tag, msg = msg)
             LogcatLevel.DEBUG -> logD(tag = tag, msg = msg)
@@ -25,37 +25,37 @@ class LogcatImpl : LogcatService {
     }
 
     override fun logI(tag: String?, msg: String?) {
-        if (AppLog.isOpenLogcat && msg != null) {
+        if (LogU.isOpenLogcat && msg != null) {
             Log.i(tag, msg)
         }
     }
 
     override fun logD(tag: String?, msg: String?) {
-        if (AppLog.isOpenLogcat && msg != null) {
+        if (LogU.isOpenLogcat && msg != null) {
             Log.d(tag, msg)
         }
     }
 
     override fun logE(tag: String?, msg: String?) {
-        if (AppLog.isOpenLogcat && msg != null) {
+        if (LogU.isOpenLogcat && msg != null) {
             Log.e(tag, msg)
         }
     }
 
     override fun logV(tag: String?, msg: String?) {
-        if (AppLog.isOpenLogcat && msg != null) {
+        if (LogU.isOpenLogcat && msg != null) {
             Log.v(tag, msg)
         }
     }
 
     override fun logW(tag: String?, msg: String?) {
-        if (AppLog.isOpenLogcat && msg != null) {
+        if (LogU.isOpenLogcat && msg != null) {
             Log.w(tag, msg)
         }
     }
 
     override fun logJson(tag: String?, msg: String?) {
-        if (AppLog.isOpenLogcat && msg != null) {
+        if (LogU.isOpenLogcat && msg != null) {
             Log.i(tag, msg)
         }
     }
@@ -65,7 +65,7 @@ class LogcatImpl : LogcatService {
     }
 
     override fun logData(tag: String?, msg: String?) {
-        if (AppLog.isOpenLogcat && msg != null) {
+        if (LogU.isOpenLogcat && msg != null) {
             Log.i(tag, msg)
         }
     }
