@@ -1,7 +1,7 @@
 apply from: rootProject.file('app-library-build.gradle')
 
 android {
-    namespace 'com.youjingjiaoyu.upload'
+    namespace 'com.wangkai.upload'
     //统一资源前缀，规范资源引用
     resourcePrefix "upload_"
 }

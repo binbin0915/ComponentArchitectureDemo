@@ -94,10 +94,10 @@ class UpdateReceiver : BroadcastReceiver() {
                 )
             )
         } else {
-            builder.setSmallIcon(R.mipmap.ic_launcher)
+            builder.setSmallIcon(R.mipmap.upload_ic_launcher)
             builder.setLargeIcon(
                 BitmapFactory.decodeResource(
-                    context.resources, R.mipmap.ic_launcher
+                    context.resources, R.mipmap.upload_ic_launcher
                 )
             )
         }

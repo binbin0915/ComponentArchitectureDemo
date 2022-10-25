@@ -32,7 +32,7 @@ public class UpdateType3Activity extends RootActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_type3);
+        setContentView(R.layout.upload_activity_update_type3);
 
         findView();
 

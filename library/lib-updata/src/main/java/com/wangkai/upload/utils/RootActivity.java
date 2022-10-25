@@ -114,7 +114,7 @@ public abstract class RootActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.dialog_enter, R.anim.dialog_out);
+        overridePendingTransition(R.anim.upload_dialog_enter, R.anim.upload_dialog_out);
     }
 
     @Override
