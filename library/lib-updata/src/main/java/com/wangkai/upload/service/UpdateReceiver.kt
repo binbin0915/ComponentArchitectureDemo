@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.service
+package com.wangkai.upload.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -9,10 +9,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
-import com.youjingjiaoyu.upload.R
-import com.youjingjiaoyu.upload.utils.AppUpdateUtils
-import com.youjingjiaoyu.upload.utils.AppUtils
-import com.youjingjiaoyu.upload.utils.ResUtils
+import com.wangkai.upload.R
+import com.wangkai.upload.utils.AppUpdateUtils
+import com.wangkai.upload.utils.AppUtils
+import com.wangkai.upload.utils.ResUtils
 
 class UpdateReceiver : BroadcastReceiver() {
     private var lastProgress = 0

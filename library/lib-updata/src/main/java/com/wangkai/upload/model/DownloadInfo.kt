@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.model
+package com.wangkai.upload.model
 
 import android.os.Parcel
 import android.os.Parcelable

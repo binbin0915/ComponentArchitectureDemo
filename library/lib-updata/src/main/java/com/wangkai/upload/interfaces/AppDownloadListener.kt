@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.interfaces
+package com.wangkai.upload.interfaces
 
 /**
  * app下载监听

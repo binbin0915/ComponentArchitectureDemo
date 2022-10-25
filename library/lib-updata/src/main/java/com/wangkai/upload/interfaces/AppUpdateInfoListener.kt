@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.interfaces
+package com.wangkai.upload.interfaces
 
 /**
  * 检查版本更新的回调

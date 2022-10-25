@@ -1,9 +1,9 @@
-package com.youjingjiaoyu.upload.net
+package com.wangkai.upload.net
 
 import android.content.Context
 import android.os.Handler
 import android.os.Message
-import com.youjingjiaoyu.upload.utils.LogUtils
+import com.wangkai.upload.utils.LogUtils
 
 class ResponseCall<T>(context: Context, listener: HttpCallbackModelListener<Any>) {
     /**

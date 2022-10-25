@@ -1,8 +1,7 @@
-package com.youjingjiaoyu.upload.utils
+package com.wangkai.upload.utils
 
 import java.io.File
 import java.io.FileInputStream
-import java.io.IOException
 import java.security.MessageDigest
 
 /**

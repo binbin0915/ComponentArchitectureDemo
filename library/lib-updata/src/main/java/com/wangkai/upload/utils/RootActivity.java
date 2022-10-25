@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.utils;
+package com.wangkai.upload.utils;
 
 
 import android.content.Context;
@@ -9,12 +9,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.youjingjiaoyu.upload.R;
-import com.youjingjiaoyu.upload.interfaces.AppDownloadListener;
-import com.youjingjiaoyu.upload.interfaces.AppUpdateInfoListener;
-import com.youjingjiaoyu.upload.interfaces.MD5CheckListener;
-import com.youjingjiaoyu.upload.model.DownloadInfo;
-import com.youjingjiaoyu.upload.service.UpdateService;
+import com.wangkai.upload.R;
+import com.wangkai.upload.interfaces.AppDownloadListener;
+import com.wangkai.upload.interfaces.AppUpdateInfoListener;
+import com.wangkai.upload.interfaces.MD5CheckListener;
+import com.wangkai.upload.model.DownloadInfo;
+import com.wangkai.upload.service.UpdateService;
 
 /**
  * 添加一些常用的处理

@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.utils
+package com.wangkai.upload.utils
 
 import android.app.Application
 import android.content.Context

@@ -1,10 +1,10 @@
-package com.youjingjiaoyu.upload.net
+package com.wangkai.upload.net
 
 import android.accounts.NetworkErrorException
 import android.content.Context
 import android.text.TextUtils
 import com.library.common.network.tools.json.JsonUtils
-import com.youjingjiaoyu.upload.utils.LogUtils
+import com.wangkai.upload.utils.LogUtils
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader

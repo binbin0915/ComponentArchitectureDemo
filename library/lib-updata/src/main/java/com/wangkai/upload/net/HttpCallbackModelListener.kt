@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.net
+package com.wangkai.upload.net
 
 /**
  * HttpURLConnection网络请求返回监听器

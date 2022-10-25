@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.utils
+package com.wangkai.upload.utils
 
 import androidx.core.content.FileProvider
 

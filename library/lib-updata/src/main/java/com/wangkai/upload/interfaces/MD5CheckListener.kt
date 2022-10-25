@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.interfaces
+package com.wangkai.upload.interfaces
 
 /**
  * MD5检验的回调 如果开启了MD5校验才会回调

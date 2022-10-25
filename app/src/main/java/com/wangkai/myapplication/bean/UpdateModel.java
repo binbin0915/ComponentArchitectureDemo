@@ -2,7 +2,7 @@ package com.wangkai.myapplication.bean;
 
 import androidx.annotation.NonNull;
 
-import com.youjingjiaoyu.upload.model.LibraryUpdateEntity;
+import com.wangkai.upload.model.LibraryUpdateEntity;
 
 /**
  * 这个model是调用接口之后返回的数据

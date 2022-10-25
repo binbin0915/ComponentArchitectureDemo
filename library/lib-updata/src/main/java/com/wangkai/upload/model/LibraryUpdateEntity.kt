@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.model
+package com.wangkai.upload.model
 
 /**
  * 请求链接地址时需要实现这个接口

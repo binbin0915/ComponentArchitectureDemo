@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.activity;
+package com.wangkai.upload.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,14 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.youjingjiaoyu.upload.R;
-import com.youjingjiaoyu.upload.interfaces.AppDownloadListener;
-import com.youjingjiaoyu.upload.interfaces.AppUpdateInfoListener;
-import com.youjingjiaoyu.upload.interfaces.MD5CheckListener;
-import com.youjingjiaoyu.upload.model.DownloadInfo;
-import com.youjingjiaoyu.upload.utils.LogUtils;
-import com.youjingjiaoyu.upload.utils.ResUtils;
-import com.youjingjiaoyu.upload.utils.RootActivity;
+import com.wangkai.upload.R;
+import com.wangkai.upload.interfaces.AppDownloadListener;
+import com.wangkai.upload.interfaces.AppUpdateInfoListener;
+import com.wangkai.upload.interfaces.MD5CheckListener;
+import com.wangkai.upload.model.DownloadInfo;
+import com.wangkai.upload.utils.LogUtils;
+import com.wangkai.upload.utils.ResUtils;
+import com.wangkai.upload.utils.RootActivity;
 
 /**
  * 默认提供的样式

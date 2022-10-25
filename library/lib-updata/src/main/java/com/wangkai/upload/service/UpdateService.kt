@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.service
+package com.wangkai.upload.service
 
 import android.app.Service
 import android.content.Intent

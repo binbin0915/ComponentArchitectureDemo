@@ -1,13 +1,13 @@
-package com.youjingjiaoyu.upload.activity
+package com.wangkai.upload.activity
 
 import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
-import com.youjingjiaoyu.upload.interfaces.AppDownloadListener
-import com.youjingjiaoyu.upload.interfaces.AppUpdateInfoListener
-import com.youjingjiaoyu.upload.interfaces.MD5CheckListener
-import com.youjingjiaoyu.upload.model.DownloadInfo
-import com.youjingjiaoyu.upload.utils.RootActivity
+import com.wangkai.upload.interfaces.AppDownloadListener
+import com.wangkai.upload.interfaces.AppUpdateInfoListener
+import com.wangkai.upload.interfaces.MD5CheckListener
+import com.wangkai.upload.model.DownloadInfo
+import com.wangkai.upload.utils.RootActivity
 
 /**
  * 后台更新静默下载

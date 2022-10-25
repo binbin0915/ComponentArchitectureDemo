@@ -1,4 +1,4 @@
-package com.youjingjiaoyu.upload.utils
+package com.wangkai.upload.utils
 
 import android.app.Application
 import android.content.Context
@@ -12,26 +12,26 @@ import com.liulishuo.filedownloader.FileDownloader
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection
 import com.liulishuo.filedownloader.util.FileDownloadHelper.ConnectionCreator
 import com.liulishuo.filedownloader.util.FileDownloadUtils
-import com.youjingjiaoyu.upload.activity.UpdateBackgroundActivity
-import com.youjingjiaoyu.upload.activity.UpdateType3Activity
-import com.youjingjiaoyu.upload.interfaces.AppDownloadListener
-import com.youjingjiaoyu.upload.interfaces.AppUpdateInfoListener
-import com.youjingjiaoyu.upload.interfaces.MD5CheckListener
-import com.youjingjiaoyu.upload.model.DownloadInfo
-import com.youjingjiaoyu.upload.model.LibraryUpdateEntity
-import com.youjingjiaoyu.upload.model.TypeConfig
-import com.youjingjiaoyu.upload.model.UpdateConfig
-import com.youjingjiaoyu.upload.net.HttpCallbackModelListener
-import com.youjingjiaoyu.upload.net.HttpUtils.doGet
-import com.youjingjiaoyu.upload.net.HttpUtils.doPost
-import com.youjingjiaoyu.upload.service.UpdateReceiver.Companion.cancelDownload
-import com.youjingjiaoyu.upload.service.UpdateReceiver.Companion.send
-import com.youjingjiaoyu.upload.utils.AppUtils.delAllFile
-import com.youjingjiaoyu.upload.utils.AppUtils.deleteFile
-import com.youjingjiaoyu.upload.utils.AppUtils.getAppLocalPath
-import com.youjingjiaoyu.upload.utils.AppUtils.getAppRootPath
-import com.youjingjiaoyu.upload.utils.AppUtils.getVersionCode
-import com.youjingjiaoyu.upload.utils.AppUtils.installApkFile
+import com.wangkai.upload.activity.UpdateBackgroundActivity
+import com.wangkai.upload.activity.UpdateType3Activity
+import com.wangkai.upload.interfaces.AppDownloadListener
+import com.wangkai.upload.interfaces.AppUpdateInfoListener
+import com.wangkai.upload.interfaces.MD5CheckListener
+import com.wangkai.upload.model.DownloadInfo
+import com.wangkai.upload.model.LibraryUpdateEntity
+import com.wangkai.upload.model.TypeConfig
+import com.wangkai.upload.model.UpdateConfig
+import com.wangkai.upload.net.HttpCallbackModelListener
+import com.wangkai.upload.net.HttpUtils.doGet
+import com.wangkai.upload.net.HttpUtils.doPost
+import com.wangkai.upload.service.UpdateReceiver.Companion.cancelDownload
+import com.wangkai.upload.service.UpdateReceiver.Companion.send
+import com.wangkai.upload.utils.AppUtils.delAllFile
+import com.wangkai.upload.utils.AppUtils.deleteFile
+import com.wangkai.upload.utils.AppUtils.getAppLocalPath
+import com.wangkai.upload.utils.AppUtils.getAppRootPath
+import com.wangkai.upload.utils.AppUtils.getVersionCode
+import com.wangkai.upload.utils.AppUtils.installApkFile
 import java.io.File
 
 /**
