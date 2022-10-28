@@ -37,7 +37,7 @@ class HomeFragment4 : BaseFragment<BaseViewModel, HomeFragmentPage4Binding>(), O
 
     override fun initData() {
         viewBinding.loginBtn.setOnClickListener {
-            JumpActivity.jump(RouterPath.GROUP_LOGIN, RouterPath.PAGE_LOGIN_ACTIVITY)
+            JumpActivity.jump(RouterPath.GROUP_CENTER, RouterPath.PAGE_CENTER_MAIN_ACTIVITY)
         }
     }
 
