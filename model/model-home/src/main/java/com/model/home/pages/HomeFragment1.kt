@@ -1,12 +1,11 @@
 package com.model.home.pages
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
+import coil.load
 import com.library.base.expand.ToastType
 import com.library.base.view.fragment.BaseFragment
 import com.library.base.viewmodel.BaseViewModel
@@ -75,7 +74,7 @@ class HomeFragment1 : BaseFragment<BaseViewModel, HomeFragmentPage1Binding>(),
         viewBinding.homeBanner.setData(
             dataList3,
             dataList3.map { it.displayText }) { itemBinding, data ->
-            Glide.with(this).load(data.imageUrl).into(itemBinding.root)
+            itemBinding.root.load(data.imageUrl)
             itemBinding.root.setOnClickListener {
                 Toast.makeText(context, "${data.displayText}: 被点击了！", Toast.LENGTH_SHORT).show()
             }

@@ -1,8 +1,9 @@
 package com.model.home.activity
 
+import android.widget.ImageView
 import android.widget.TextView
+import coil.load
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.bumptech.glide.Glide
 import com.drake.brv.BindingAdapter
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.setup
@@ -45,13 +46,13 @@ class HomeMultiTypeBrvActivity :
                     R.layout.home_item_multi_type1 -> {
                         val simpleModel1: MultiModel1 = getModel()
                         findView<TextView>(R.id.tv_multi1).text = simpleModel1.type
-                        Glide.with(context).load(simpleModel1.url).into(findView(R.id.iv_multi1))
+                        findView<ImageView>(R.id.iv_multi1).load(simpleModel1.url)
                     }
 
                     R.layout.home_item_multi_type2 -> {
                         val simpleModel2: MultiModel2 = getModel()
                         findView<TextView>(R.id.tv_multi2).text = simpleModel2.type
-                        Glide.with(context).load(simpleModel2.url).into(findView(R.id.iv_multi2))
+                        findView<ImageView>(R.id.iv_multi2).load(simpleModel2.url)
                     }
                 }
             }

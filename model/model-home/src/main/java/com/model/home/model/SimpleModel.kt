@@ -17,7 +17,7 @@
 package com.model.home.model
 
 import android.widget.TextView
-import com.bumptech.glide.Glide
+import coil.load
 import com.drake.brv.BindingAdapter
 import com.drake.brv.item.ItemBind
 import com.model.home.R
@@ -31,7 +31,9 @@ data class SimpleModel(var name: String, var url: String) : ItemBind {
         // 使用不同的方法来获取视图控件
         holder.findView<TextView>(R.id.tv_simple).text = name // 使用findById
         val viewBinding = HomeItemSimpleBinding.bind(holder.itemView) // 使用ViewBinding
-        Glide.with(holder.context).load(url).into(viewBinding.ivSimple)
+        viewBinding.ivSimple.load(url) {
+
+        }
         // val dataBinding = holder.getBinding<ItemMultiTypeOneBinding>() // 使用DataBinding
     }
 }
