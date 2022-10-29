@@ -9,7 +9,7 @@ import android.bluetooth.le.ScanSettings
 import android.content.Context
 import androidx.annotation.CheckResult
 import androidx.lifecycle.MutableLiveData
-import com.library.logcat.LogU
+import com.library.logcat.Logcat
 import com.model.airpods.model.BatteryState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -40,7 +40,7 @@ val airPodsBatteryState = MutableLiveData<BatteryState>()
 @CheckResult
 @ExperimentalCoroutinesApi
 fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
-    LogU.log(TAG, "获取设备电量信息333333.....")
+    Logcat.log(TAG, "获取设备电量信息333333.....")
     checkMainThread()
     val manager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
     val scanCallback = object : ScanCallback() {
@@ -58,7 +58,7 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
 
         override fun onScanFailed(errorCode: Int) {
             //扫描失败
-            LogU.log(TAG, "扫描失败.....errorCode:$errorCode")
+            Logcat.log(TAG, "扫描失败.....errorCode:$errorCode")
             super.onScanFailed(errorCode)
         }
     }
@@ -93,7 +93,7 @@ fun Context.batteryState(): Flow<ScanResult> = callbackFlow {
 //    manager.adapter.bluetoothLeScanner.startScan(scanCallback)
     //等待关闭
     awaitClose {
-        LogU.log(TAG, "关闭扫描......")
+        Logcat.log(TAG, "关闭扫描......")
         manager.adapter.bluetoothLeScanner.stopScan(scanCallback)
     }
 }.conflate().filter {

@@ -9,7 +9,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.transition.TransitionManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.library.logcat.LogU
+import com.library.logcat.Logcat
 import com.model.airpods.R
 import com.model.airpods.databinding.AirpodsLayoutPopupBinding
 import com.model.airpods.model.BatteryState
@@ -45,7 +45,7 @@ class AnPodsDialog constructor(
         AirpodsLayoutPopupBinding.inflate(LayoutInflater.from(getContext()))
 
     init {
-        LogU.log(TAG, "初始化耳机dialog")
+        Logcat.log(TAG, "初始化耳机dialog")
         setContentView(airpodsLayoutPopupBinding.root)
         applyConstraintSet.clone(airpodsLayoutPopupBinding.anpodsPanel)
         window?.run {

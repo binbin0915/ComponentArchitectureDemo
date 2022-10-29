@@ -10,40 +10,40 @@ interface LogcatService {
     /**
      * 打印Info日志
      */
-    fun logI(tag: String? = LogU.logTag, msg: String?)
+    fun logI(tag: String? = Logcat.logTag, msg: String?)
 
     /**
      * 打印Debug日志
      */
-    fun logD(tag: String? = LogU.logTag, msg: String?)
+    fun logD(tag: String? = Logcat.logTag, msg: String?)
 
     /**
      * 打印错误日志
      */
-    fun logE(tag: String? = LogU.logTag, msg: String?)
+    fun logE(tag: String? = Logcat.logTag, msg: String?)
 
     /**
      * 打印Verbose日志
      */
-    fun logV(tag: String? = LogU.logTag, msg: String?)
+    fun logV(tag: String? = Logcat.logTag, msg: String?)
 
     /**
      * 打印警告日志
      */
-    fun logW(tag: String? = LogU.logTag, msg: String?)
+    fun logW(tag: String? = Logcat.logTag, msg: String?)
 
     /**
      * 打印Json日志
      */
-    fun logJson(tag: String? = LogU.logTag, msg: String?)
+    fun logJson(tag: String? = Logcat.logTag, msg: String?)
 
     /**
      * 打印对象日志
      */
-    fun logObj(tag: String? = LogU.logTag, msg: String?)
+    fun logObj(tag: String? = Logcat.logTag, msg: String?)
 
     /**
      * 打印实体类日志
      */
-    fun logData(tag: String? = LogU.logTag, msg: String?)
+    fun logData(tag: String? = Logcat.logTag, msg: String?)
 }

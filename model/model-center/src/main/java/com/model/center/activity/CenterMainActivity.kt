@@ -4,7 +4,7 @@ import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
-import com.library.logcat.LogU
+import com.library.logcat.Logcat
 import com.library.router.RouterPath
 import com.model.center.database.UserDataBase
 import com.model.center.databinding.CenterActivityCenterMainBinding
@@ -36,7 +36,7 @@ class CenterMainActivity : BaseActivity<BaseViewModel, CenterActivityCenterMainB
             emit(UserDataBase.getUserDB().getUserDao().getAllUser())
         }.flowOn(Dispatchers.IO)
             .onEach {//数据更新
-                LogU.log(it.toString())
+                Logcat.log(it.toString())
             }.launchIn(lifecycleScope)
     }
 }

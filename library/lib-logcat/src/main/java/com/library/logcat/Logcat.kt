@@ -7,7 +7,7 @@ package com.library.logcat
  * 创建时间：2022/03/18
  * @author：WangKai
  */
-object LogU {
+object Logcat {
     /**
      * 日志的Tag
      */

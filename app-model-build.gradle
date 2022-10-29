@@ -1,14 +1,10 @@
-apply plugin: getModelType()
 apply plugin: "kotlin-android"
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.kotlin.android'
-
-String getModelType() {
-    if (isRunModel.toBoolean()) {
-        return "com.android.application"
-    } else {
-        return "com.android.library"
-    }
+if (isRunModel.toBoolean()) {
+    apply plugin: "com.android.application"
+} else {
+    apply plugin: "com.android.library"
 }
 
 android {

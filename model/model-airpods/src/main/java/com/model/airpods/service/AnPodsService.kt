@@ -10,7 +10,7 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
-import com.library.logcat.LogU
+import com.library.logcat.Logcat
 import com.model.airpods.R
 import com.model.airpods.model.BatteryState
 import com.model.airpods.model.ConnectionState
@@ -37,7 +37,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     private lateinit var detectJob: Job
 
     private val anPodsDialog by lazy {
-        LogU.log(TAG, "anPodsDialog被延迟初始化了.....")
+        Logcat.log(TAG, "anPodsDialog被延迟初始化了.....")
         AnPodsDialog(applicationContext)
     }
     private val notifyManager: NotificationManager by lazy {
@@ -52,7 +52,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     }
 
     override fun onCreate() {
-        LogU.log(TAG, "创建了AnPodsService....")
+        Logcat.log(TAG, "创建了AnPodsService....")
         super.onCreate()
         //创建通知渠道
         createNotification()
@@ -71,10 +71,10 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         connectionJob = lifecycleScope.launch {
             getConnected().also {
                 if (it.isConnected) {
-                    LogU.log(TAG, "已经连接了.....")
+                    Logcat.log(TAG, "已经连接了.....")
                     airPodsConnectionState.value = it
                 } else {
-                    LogU.log(TAG, "还没有连接.....")
+                    Logcat.log(TAG, "还没有连接.....")
                 }
             }
         }
@@ -85,25 +85,25 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
      */
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun detectBattery() {
-        LogU.log(TAG, "获取设备电量信息111111.....")
+        Logcat.log(TAG, "获取设备电量信息111111.....")
         if (::detectJob.isInitialized) {
             if (detectJob.isActive) {
                 return
             }
             detectJob.cancel()
         }
-        LogU.log(TAG, "获取设备电量信息222222.....")
+        Logcat.log(TAG, "获取设备电量信息222222.....")
         detectJob = batteryState().map {
             it.parse("auto")
         }.catch {
-            LogU.log(TAG, "获取设备电量: onError=${it.message}")
+            Logcat.log(TAG, "获取设备电量: onError=${it.message}")
         }.onEach {
-            LogU.log(TAG, "获取设备电量: result:$it")
+            Logcat.log(TAG, "获取设备电量: result:$it")
             airPodsBatteryState.value = it
         }.onStart {
-            LogU.log(TAG, "获取设备电量: onStart")
+            Logcat.log(TAG, "获取设备电量: onStart")
         }.onCompletion {
-            LogU.log(TAG, "获取设备电量: onCompletion")
+            Logcat.log(TAG, "获取设备电量: onCompletion")
         }.launchIn(lifecycleScope)
     }
 
@@ -117,10 +117,10 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
                 airPodsConnectionState.value = it
                 //蓝牙连接时弹窗，断开时取消弹窗
                 if (it.isConnected) {
-                    LogU.log(TAG, "蓝牙连接时弹窗.....")
+                    Logcat.log(TAG, "蓝牙连接时弹窗.....")
                     anPodsDialog.show()
                 } else {
-                    LogU.log(TAG, "没有连接不显示弹窗.....")
+                    Logcat.log(TAG, "没有连接不显示弹窗.....")
                     anPodsDialog.onBackPressed()
                 }
             }
@@ -132,10 +132,10 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         airPodsConnectionState.observe({ lifecycle }) {
             connectionJob.cancel()
             anPodsDialog.updateConnectedDevice(it)
-            LogU.log(TAG, "收到了连接状态变化的livedata.....")
+            Logcat.log(TAG, "收到了连接状态变化的livedata.....")
             //已连接--获取设备电量信息
             if (it.isConnected) {
-                LogU.log(TAG, "已连接,获取设备电量信息.....")
+                Logcat.log(TAG, "已连接,获取设备电量信息.....")
                 updateWidgetUI(notification, connectionState = it)
                 detectBattery()
             }
@@ -145,7 +145,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
         airPodsBatteryState.observe({ lifecycle }) {
             val state = airPodsConnectionState.value
             if (state == null || !state.isConnected) return@observe
-            LogU.log(TAG, "收到了耳机电量信息变化的livedata.....")
+            Logcat.log(TAG, "收到了耳机电量信息变化的livedata.....")
             updateWidgetUI(notification, connectionState = state)
             anPodsDialog.updateUI(it)
         }
@@ -218,7 +218,7 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        LogU.log(TAG, "AnPodsService onStartCommand....")
+        Logcat.log(TAG, "AnPodsService onStartCommand....")
         if (intent?.action == ACTION_POPUP) {
             anPodsDialog.show()
             checkConnection()
@@ -233,10 +233,10 @@ class AnPodsService : LifecycleService(), CoroutineScope by MainScope() {
 
     override fun onDestroy() {
         super.onDestroy()
-        LogU.log(TAG, "AnPodsService被销毁....")
+        Logcat.log(TAG, "AnPodsService被销毁....")
         if (::detectJob.isInitialized) {
             if (detectJob.isActive) {
-                LogU.log(TAG, "已经有获取电量的扫描.....")
+                Logcat.log(TAG, "已经有获取电量的扫描.....")
                 return
             }
         }

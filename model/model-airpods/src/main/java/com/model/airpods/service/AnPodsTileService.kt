@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ServiceLifecycleDispatcher
-import com.library.logcat.LogU
+import com.library.logcat.Logcat
 import com.model.airpods.R
 import com.model.airpods.util.*
 
@@ -231,16 +231,16 @@ class AnPodsTileService : TileService(), LifecycleOwner {
      */
     override fun onClick() {
         super.onClick()
-        LogU.log(TAG, "点击了磁贴....")
+        Logcat.log(TAG, "点击了磁贴....")
         /*Android 8.0 不再允许后台进程直接通过startService方式去启动服务，改为startForegroundService方式启动*/
         val intent = Intent(this, AnPodsService::class.java).apply {
             action = ACTION_POPUP
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LogU.log(TAG, "通过磁贴启动服务8.0以上....")
+            Logcat.log(TAG, "通过磁贴启动服务8.0以上....")
             startForegroundService(intent)
         } else {
-            LogU.log(TAG, "通过磁贴启动服务8.0以下....")
+            Logcat.log(TAG, "通过磁贴启动服务8.0以下....")
             startService(intent)
         }
 

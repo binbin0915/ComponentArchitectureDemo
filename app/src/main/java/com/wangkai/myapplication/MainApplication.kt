@@ -5,7 +5,7 @@ import android.content.Intent
 import android.text.TextUtils
 import com.drake.statelayout.StateConfig
 import com.library.base.application.BaseApplication
-import com.library.logcat.LogU
+import com.library.logcat.Logcat
 import com.library.logcat.LogcatLevel
 import com.library.logcat.LogcatTag
 import com.scwang.smart.refresh.footer.ClassicsFooter
@@ -83,14 +83,14 @@ class MainApplication : BaseApplication() {
                  * @param arg0 是否使用X5内核，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
                  */
                 override fun onViewInitFinished(arg0: Boolean) {
-                    LogU.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 预初始化结束:$arg0")
+                    Logcat.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 预初始化结束:$arg0")
                 }
 
                 /**
                  * 内核初始化完成，可能为系统内核，也可能为系统内核
                  */
                 override fun onCoreInitFinished() {
-                    LogU.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 内核初始化完成")
+                    Logcat.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 内核初始化完成")
                 }
             }
             QbSdk.setTbsListener(object : TbsListener {
@@ -98,14 +98,14 @@ class MainApplication : BaseApplication() {
                  * @param stateCode 用户可处理错误码
                  */
                 override fun onDownloadFinish(stateCode: Int) {
-                    LogU.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 下载结束：$stateCode")
+                    Logcat.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 下载结束：$stateCode")
                 }
 
                 /**
                  * @param stateCode
                  */
                 override fun onInstallFinish(stateCode: Int) {
-                    LogU.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 安装完成：$stateCode")
+                    Logcat.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 安装完成：$stateCode")
                 }
 
                 /**
@@ -113,12 +113,12 @@ class MainApplication : BaseApplication() {
                  * @param progress 0 - 100
                  */
                 override fun onDownloadProgress(progress: Int) {
-                    LogU.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 下载进度:$progress%")
+                    Logcat.log(LogcatTag.APP_TBS_TAG, "腾讯X5内核 下载进度:$progress%")
                 }
             })
             if (!QbSdk.isTbsCoreInited()) {
                 // preInit只需要调用一次，如果已经完成了初始化，那么就直接构造view
-                LogU.log(LogcatLevel.ERROR, LogcatTag.APP_TBS_TAG, "预加载中...preInitX5WebCore")
+                Logcat.log(LogcatLevel.ERROR, LogcatTag.APP_TBS_TAG, "预加载中...preInitX5WebCore")
                 QbSdk.preInit(applicationContext, cb)// 设置X5初始化完成的回调接口
             }
             QbSdk.initX5Environment(appContext, cb)
@@ -170,7 +170,7 @@ class MainApplication : BaseApplication() {
 
         AppUpdateUtils.getInstance().addAppUpdateInfoListener(object : AppUpdateInfoListener {
             override fun isLatestVersion(isLatest: Boolean) {
-                LogU.log(LogcatTag.APP_UPLOAD_TAG, "isLatest:$isLatest")
+                Logcat.log(LogcatTag.APP_UPLOAD_TAG, "isLatest:$isLatest")
             }
         })
     }
@@ -189,7 +189,7 @@ class MainApplication : BaseApplication() {
         val currentProcessName = QbSdk.getCurrentProcessName(this)
         // 设置多进程数据目录隔离，不设置的话系统内核多个进程使用WebView会crash，X5下可能ANR
         WebView.setDataDirectorySuffix(QbSdk.getCurrentProcessName(this))
-        LogU.log(LogcatTag.APP_TBS_TAG, "进程名：$currentProcessName")
+        Logcat.log(LogcatTag.APP_TBS_TAG, "进程名：$currentProcessName")
         if (currentProcessName == this.packageName) {
             startService(Intent(this, X5ProcessInitService::class.java))
             return true
