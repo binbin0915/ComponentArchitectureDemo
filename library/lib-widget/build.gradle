@@ -19,4 +19,9 @@ dependencies {
     //-------------------------------第三方组件库--------------------------------
     api 'com.github.yinshuai0324:GeneralAppWidget:1.0.2'
     api "com.github.kongzue.DialogX:DialogX:0.0.45"
+    //Android界最万能的TabLayout(不仅仅是TabLayout), 支持任意类型的item, 支持Drawable类型的指示器,智能开启滚动,支持横竖向布局等
+    //https://github.com/angcyo/DslTabLayout.git
+
+    //一个从音频计算振幅并提供不同格式数据的 android 库。根据这些数据，您可以绘制波形。Android 音频幅度库。
+    //https://github.com/lincollincol/Amplituda.git
 }

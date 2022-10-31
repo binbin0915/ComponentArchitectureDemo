@@ -18,4 +18,8 @@ dependencies {
     implementation 'androidx.exifinterface:exifinterface:1.3.3'
     //kotlin反射
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.20'
+    // 图片视频编辑
+    // https://github.com/imgly/vesdk-android-demo.git
+    // 视频裁剪压缩
+    // https://github.com/a914-gowtham/android-video-trimmer.git
 }
