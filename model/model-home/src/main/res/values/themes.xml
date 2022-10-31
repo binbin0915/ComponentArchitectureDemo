@@ -2,13 +2,13 @@
     <!-- Base application theme. -->
     <style name="HomeTheme.BaseApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/color_purple_500</item>
-        <item name="colorPrimaryVariant">@color/color_purple_700</item>
+        <item name="colorPrimary">@color/common_color_purple_500</item>
+        <item name="colorPrimaryVariant">@color/common_color_purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/color_teal_200</item>
-        <item name="colorSecondaryVariant">@color/color_teal_700</item>
-        <item name="colorOnSecondary">@color/color_black</item>
+        <item name="colorSecondary">@color/common_color_teal_200</item>
+        <item name="colorSecondaryVariant">@color/common_color_teal_700</item>
+        <item name="colorOnSecondary">@color/common_color_black</item>
         <!-- Customize your theme here. -->
     </style>
 

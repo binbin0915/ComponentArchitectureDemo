@@ -2,20 +2,20 @@
     <!--APP夜间模式的主题-->
     <style name="CommonTheme.BaseApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/color_purple_200</item>
-        <item name="colorPrimaryVariant">@color/color_purple_700</item>
-        <item name="colorOnPrimary">@color/color_black</item>
+        <item name="colorPrimary">@color/common_color_purple_200</item>
+        <item name="colorPrimaryVariant">@color/common_color_purple_700</item>
+        <item name="colorOnPrimary">@color/common_color_black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/color_teal_200</item>
-        <item name="colorSecondaryVariant">@color/color_teal_200</item>
-        <item name="colorOnSecondary">@color/color_black</item>
+        <item name="colorSecondary">@color/common_color_teal_200</item>
+        <item name="colorSecondaryVariant">@color/common_color_teal_200</item>
+        <item name="colorOnSecondary">@color/common_color_black</item>
         <item name="colorError">#F44336</item>
         <item name="colorOnError">#FFFFFF</item>
         <item name="colorSurface">#FFFFFF</item>
         <item name="colorOnSurface">#212121</item>
-        <item name="android:colorBackground">@color/color_black</item>
+        <item name="android:colorBackground">@color/common_color_black</item>
         <item name="colorOnBackground">#212121</item>
-        <item name="android:windowBackground">@color/color_black</item>
+        <item name="android:windowBackground">@color/common_color_black</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>

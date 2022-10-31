@@ -14,7 +14,7 @@
         android:id="@+id/fragment4_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_red_500"
+        android:background="@color/common_color_red_500"
         android:elevation="0dp"
         app:layout_behavior="com.model.home.pages.widget.AppbarZoomBehavior">
 
@@ -79,7 +79,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="当前只是演示模块之前的通讯"
-                    android:textColor="@color/color_pink_900" />
+                    android:textColor="@color/common_color_pink_900" />
             </androidx.cardview.widget.CardView>
 
 
@@ -89,7 +89,7 @@
                 android:layout_height="1000dp"
                 android:layout_marginTop="10dp"
                 android:text="当前用户信息:未登录"
-                android:textColor="@color/color_pink_900"
+                android:textColor="@color/common_color_pink_900"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment4_cardView" />

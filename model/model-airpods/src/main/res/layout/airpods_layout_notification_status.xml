@@ -38,7 +38,7 @@
             android:layout_toStartOf="@id/leftPodImg"
             android:gravity="center|bottom"
             android:text="-"
-            android:textColor="@color/color_black"
+            android:textColor="@color/common_color_black"
             tools:text="100%" />
 
     </RelativeLayout>
@@ -72,7 +72,7 @@
             android:layout_toEndOf="@id/rightPodImg"
             android:gravity="center|bottom"
             android:text="-"
-            android:textColor="@color/color_black"
+            android:textColor="@color/common_color_black"
             tools:text="100%" />
 
     </RelativeLayout>
@@ -106,7 +106,7 @@
             android:layout_toEndOf="@id/podCaseImg"
             android:gravity="center|bottom"
             android:text="-"
-            android:textColor="@color/color_black"
+            android:textColor="@color/common_color_black"
             tools:text="100%" />
 
     </RelativeLayout>
@@ -120,7 +120,7 @@
         android:layout_marginEnd="8dp"
         android:gravity="center"
         android:maxLines="2"
-        android:textColor="@color/color_black"
+        android:textColor="@color/common_color_black"
         android:textSize="12sp"
         tools:text="Broncho's AirPods" />
 
