@@ -1,6 +1,5 @@
 package com.library.common.network.tools.coroutine
 
-import android.util.Log
 import com.wangkai.remote.data.HttpResponseParsable
 import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 import com.wangkai.remote.tools.handler.RestApiException
