@@ -1,4 +1,4 @@
-package com.library.launcher
+package com.library.launcher.permission.base
 
 import android.app.Activity
 import androidx.activity.ComponentActivity

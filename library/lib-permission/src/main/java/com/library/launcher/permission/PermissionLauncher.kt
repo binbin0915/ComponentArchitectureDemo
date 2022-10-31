@@ -1,7 +1,7 @@
 package com.library.launcher.permission
 
 import androidx.activity.result.contract.ActivityResultContracts
-import com.library.launcher.BaseLauncher
+import com.library.launcher.permission.base.BaseLauncher
 import com.library.launcher.permission.builder.PermissionBuilder
 
 /**

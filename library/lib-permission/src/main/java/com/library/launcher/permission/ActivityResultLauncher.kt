@@ -3,7 +3,7 @@ package com.library.launcher.permission
 import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import com.library.launcher.BaseLauncher
+import com.library.launcher.permission.base.BaseLauncher
 
 /**
  * 启动activity，前往设置手动开启权限（后期可封装成方法）

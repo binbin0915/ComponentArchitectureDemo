@@ -3,7 +3,7 @@ package com.library.launcher.permission
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import com.library.launcher.BaseLauncher
+import com.library.launcher.permission.base.BaseLauncher
 
 /**
  * 多权限同时申请
