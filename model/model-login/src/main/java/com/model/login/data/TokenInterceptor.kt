@@ -6,6 +6,7 @@ import com.library.base.datastore.DataStoreUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -23,8 +24,7 @@ class TokenInterceptor : Interceptor {
         val url = request.url.toString()
         if (url.isNotEmpty() && url.contains("/api/login")) {
             //登录接口获取token并保存
-            Log.e("AAAAAAAWAWAAAAAAAAAAAA", "登录获取到：:${response.headers["Authorization"]}")
-            CoroutineScope(Dispatchers.IO).launch {
+            runBlocking {
                 response.headers["Authorization"]?.run {
                     DataStoreUtils.put(BaseApplication.appContext, "Authorization", this)
                 }
