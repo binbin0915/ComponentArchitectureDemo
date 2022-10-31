@@ -3,6 +3,8 @@
     <!--夜间模式-->
     <color name="common_mode_color_white">#000000</color>
 
+    <!--透明-->
+    <color name="common_color_transparent">#00000000</color>
     <!-- 红Red -->
     <color name="common_color_red_50">#fde0dc</color>
     <color name="common_color_red_100">#f9bdbb</color>
