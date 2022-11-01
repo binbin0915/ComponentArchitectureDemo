@@ -44,7 +44,7 @@ class MainApplication : BaseApplication() {
 
         /*---------------------------------------崩溃日志系统初始化--------------------------------------*/
 
-        ACRA.DEV_LOGGING = true
+        ACRA.DEV_LOGGING = BuildConfig.DEBUG
         initAcra {
             //core configuration:
             buildConfigClass = BuildConfig::class.java
