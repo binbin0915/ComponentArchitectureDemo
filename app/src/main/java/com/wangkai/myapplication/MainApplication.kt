@@ -8,6 +8,8 @@ import com.library.base.application.BaseApplication
 import com.library.logcat.Logcat
 import com.library.logcat.LogcatLevel
 import com.library.logcat.LogcatTag
+import com.model.center.dao.UserDao
+import com.model.center.database.CenterModuleDatabase
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -16,6 +18,7 @@ import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.TbsListener
 import com.tencent.smtt.sdk.WebView
 import com.wangkai.myapplication.bean.UpdateModel
+import com.wangkai.myapplication.database.RoomDBUtils
 import com.wangkai.remote.tools.handler.GlobalHttpResponseProcessor
 import com.wangkai.upload.interfaces.AppUpdateInfoListener
 import com.wangkai.upload.model.TypeConfig
@@ -61,6 +64,14 @@ class MainApplication : BaseApplication() {
         //所有官方报告发件人都支持两种类型的报告格式：和 （http 的表单数据兼容）。选择您的后端需要或您最喜欢的任何一个：StringFormat.JSON | StringFormat.KEY_VALUE_LIST
         //无需用户交互即可发送报告的最便捷方式是通过 HTTP。
 
+
+        /*--------------------------------------------room----------------------------------------*/
+        RoomDBUtils.init(appContext)
+        CenterModuleDatabase.onGetDaoCallback = object : CenterModuleDatabase.OnGetDaoCallback {
+            override fun onGetUserDao(): UserDao {
+                return RoomDBUtils.getDB().userDao()
+            }
+        }
 
         /*---------------------------------------文件操作系统初始化--------------------------------------*/
         FileOperator.init(instance, BuildConfig.DEBUG)

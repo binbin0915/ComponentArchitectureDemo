@@ -1,4 +1,4 @@
-package com.library.base.datastore
+package com.library.base.database
 
 import android.content.Context
 import androidx.datastore.core.DataStore

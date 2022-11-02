@@ -6,7 +6,7 @@ import com.library.base.view.activity.BaseActivity
 import com.library.base.viewmodel.BaseViewModel
 import com.library.logcat.Logcat
 import com.library.router.RouterPath
-import com.model.center.database.UserDataBase
+import com.model.center.database.CenterModuleDatabase
 import com.model.center.databinding.CenterActivityCenterMainBinding
 import com.model.center.entity.User
 import kotlinx.coroutines.Dispatchers
@@ -26,14 +26,14 @@ class CenterMainActivity : BaseActivity<BaseViewModel, CenterActivityCenterMainB
         val user1 = User("小明", 12)
         val user2 = User("小红", 18)
         val user3 = User("小清", 20)
-        UserDataBase.getUserDB().getUserDao().insertUsers(user1, user2, user3)
+        CenterModuleDatabase.getUserDao().insertUsers(user1, user2, user3)
         //删除id为3的User
-        UserDataBase.getUserDB().getUserDao().deleteUser(User(3))
+        CenterModuleDatabase.getUserDao().deleteUser(User(3))
         //修改，将第一个数据修改名称与age
-        UserDataBase.getUserDB().getUserDao().updateUser(User(1, "大明明3333", 15))
+        CenterModuleDatabase.getUserDao().updateUser(User(1, "大明明3333", 15))
         //查询
         flow {//用Flow查询
-            emit(UserDataBase.getUserDB().getUserDao().getAllUser())
+            emit(CenterModuleDatabase.getUserDao().getAllUser())
         }.flowOn(Dispatchers.IO)
             .onEach {//数据更新
                 Logcat.log(it.toString())

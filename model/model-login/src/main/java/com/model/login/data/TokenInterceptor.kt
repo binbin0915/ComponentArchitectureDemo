@@ -1,11 +1,7 @@
 package com.model.login.data
 
-import android.util.Log
 import com.library.base.application.BaseApplication
-import com.library.base.datastore.DataStoreUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.library.base.database.DataStoreUtils
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response

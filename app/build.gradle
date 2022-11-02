@@ -96,6 +96,13 @@ dependencies {
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-core:$acraVersion"
 
+
+    //room
+    implementation "androidx.room:room-runtime:2.4.3"
+    annotationProcessor "androidx.room:room-compiler:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+    implementation("androidx.room:room-ktx:2.4.3")
+
     //ACRA needs the following dependencies to use a custom report sender
     compileOnly("com.google.auto.service:auto-service-annotations:1.0.1")
     //or for kotlin sources (requires kapt gradle plugin):
