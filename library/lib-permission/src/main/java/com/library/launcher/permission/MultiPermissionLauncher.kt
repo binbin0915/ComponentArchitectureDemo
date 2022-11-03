@@ -1,8 +1,6 @@
 package com.library.launcher.permission
 
-import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import com.library.launcher.permission.base.BaseLauncher
 
 /**
@@ -32,7 +30,6 @@ class MultiPermissionLauncher :
         launcher.launch(permissions)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityResult(result: Map<String, Boolean>?) {
         //过滤 value 为 false 的元素并转换为 list
         val deniedList = result!!.filter { !it.value }.map { it.key }
