@@ -12,6 +12,6 @@ import com.model.center.entity.User
     version = 1,
     exportSchema = false
 )
-abstract class RoomDataBase : RoomDatabase() {
+abstract class AppRoomDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 }

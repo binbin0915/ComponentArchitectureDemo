@@ -18,10 +18,10 @@ import com.library.logcat.Logcat
  * @author wangkai
  */
 object RoomDBUtils {
-    private lateinit var dataBase: RoomDataBase
+    private lateinit var dataBase: AppRoomDatabase
     private const val DB_NAME = "test_info"
     fun init(context: Context) {
-        dataBase = Room.databaseBuilder(context, RoomDataBase::class.java, DB_NAME)
+        dataBase = Room.databaseBuilder(context, AppRoomDatabase::class.java, DB_NAME)
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
@@ -43,12 +43,12 @@ object RoomDBUtils {
     //PUBLICATION：会调用多次初始化方法，但只有第一次的有效。
     //NONE：会调用多次，且会改变常量的值为最后一次的值。单例模式：懒汉式，线程不安全
     //初始化，这里要采用单例，不然会有坑（表数据变化时，可能会监听不了）
-    private val db: RoomDataBase by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+    private val db: AppRoomDatabase by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
         dataBase
     }
 
 
-    fun getDB(): RoomDataBase {
+    fun getDB(): AppRoomDatabase {
         return if (::dataBase.isInitialized) {
             db
         } else {
